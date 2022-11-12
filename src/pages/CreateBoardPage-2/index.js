@@ -10,9 +10,7 @@ function CreateBoardSection2() {
   return (
     <MainContainer>
       <UserInputSection />
-      <PageFooter>
-        <FooterButton color={"#3a3a3a"} text={"다음"} onClick={handleOnclick} />
-      </PageFooter>
+      <FooterButton color={"#3a3a3a"} text={"다음"} onClick={handleOnclick} />
     </MainContainer>
   );
 }
@@ -24,14 +22,4 @@ const MainContainer = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-`;
-
-const PageFooter = styled.div`
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
 `;
