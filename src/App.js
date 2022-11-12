@@ -1,9 +1,10 @@
-import React from 'react'
-import './App.css';
-import { Routes, BrowserRouter, Route } from 'react-router-dom'
-import BoardOnMessagingPage from './pages/BoardOnMessagingPage/index'
-import { RecoilRoot } from 'recoil'
-import MakeMemoPage from './pages/MakeMemoPage';
+import React from "react";
+import "./App.css";
+import { Routes, BrowserRouter, Route } from "react-router-dom";
+import BoardOnMessagingPage from "./pages/BoardOnMessagingPage/index";
+import { RecoilRoot } from "recoil";
+import MakeMemoPage from "./pages/MakeMemoPage";
+import CreateBoardSection2 from "./pages/CreateBoardPage-2";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/bomp" element={<BoardOnMessagingPage />} />
             <Route path="/mmp" element={<MakeMemoPage />} />
+            <Route path="/createBoard/2" element={<CreateBoardSection2 />} />
             <Route path="/" element={<>test</>} />
           </Routes>
         </BrowserRouter>
