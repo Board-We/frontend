@@ -1,8 +1,9 @@
-import React from 'react'
-import './App.css';
-import { Routes, BrowserRouter, Route } from 'react-router-dom'
-import BoardOnMessagingPage from './pages/BoardOnMessagingPage/index'
-import { RecoilRoot } from 'recoil'
+import React from "react";
+import "./App.css";
+import { Routes, BrowserRouter, Route } from "react-router-dom";
+import BoardOnMessagingPage from "./pages/BoardOnMessagingPage/index";
+import { RecoilRoot } from "recoil";
+import CreateBoardPage from "./pages/CreateBoardPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/bomp" element={<BoardOnMessagingPage />} />
+            <Route path="/board/new" element={<CreateBoardPage />} />
             <Route path="/" element={<>test</>} />
           </Routes>
         </BrowserRouter>
