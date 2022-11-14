@@ -4,6 +4,7 @@ import { Routes, BrowserRouter, Route } from "react-router-dom";
 import BoardOnMessagingPage from "./pages/BoardOnMessagingPage/index";
 import { RecoilRoot } from "recoil";
 import CreateBoardPage from "./pages/CreateBoardPage";
+import MakeMemoPage from "./pages/MakeMemoPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/bomp" element={<BoardOnMessagingPage />} />
             <Route path="/board/new" element={<CreateBoardPage />} />
+            <Route path="/mmp" element={<MakeMemoPage />} />
             <Route path="/" element={<>test</>} />
           </Routes>
         </BrowserRouter>

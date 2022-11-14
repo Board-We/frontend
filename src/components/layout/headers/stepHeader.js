@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StepHeader = ({ title, onClick }) => {
   return (
     <StepHeaderContainer>
-      <GotoBack onClick={onClick}>{"<"}</GotoBack>
+      <GoBackStepButton onClick={onClick}>{"<"}</GoBackStepButton>
       <StepHeaderTitle>{title}</StepHeaderTitle>
     </StepHeaderContainer>
   );
@@ -25,7 +25,7 @@ const StepHeaderTitle = styled.div`
   width: 100%;
 `;
 
-const GotoBack = styled.button`
+const GoBackStepButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;

@@ -5,6 +5,21 @@ export const boardState = atom({
   default: {
     name: "boardName",
     description: "boardDescription",
+    tags: [],
+    attachableTerm: {
+      start: undefined,
+      end: undefined,
+    },
+    openTerm: {
+      start: undefined,
+      end: undefined,
+    },
+    password: undefined,
+    privateMode: false,
+    background: "#ffffff",
+    font: "san-serif",
+    memoTypes: [],
+    memoColors: ["white", "grey", "red", "blue", "yellow"],
   },
 });
 

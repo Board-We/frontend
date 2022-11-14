@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CreateBoardStep1 from "./CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
-import NextStepButton from "../../components/buttons/nextStepButton";
+import FooterButton from "../../components/buttons/FooterButton";
 
 const controlCreatBoardStep = (stepId = 0) => {
   switch (stepId) {
@@ -28,7 +28,12 @@ const CreateBoardPage = () => {
           {controlCreatBoardStep(currentStepId)}
         </CreateBoardBody>
         <PageFooter>
-          <NextStepButton onClick={handleClickNext} />
+          <FooterButton
+            color="black"
+            fontColor="white"
+            text="다음"
+            onClick={handleClickNext}
+          />
         </PageFooter>
       </CreateBoardContainer>
     </PageWrapper>
