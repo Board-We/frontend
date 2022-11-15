@@ -4,7 +4,7 @@ import styled from "styled-components";
 import TextInput from "../../../components/TextInput";
 import { boardState } from "../../../store";
 
-function UserInputSection() {
+function CreateBoardStep2() {
   const [board, setBoard] = useRecoilState(boardState);
 
   const handlePassword = (e) => {
@@ -23,7 +23,6 @@ function UserInputSection() {
   };
 
   console.log(board);
-
   return (
     <>
       <SubContainer>
@@ -36,6 +35,7 @@ function UserInputSection() {
           style={{
             display: "flex",
             flexDirection: "column",
+            alignItems: "flex-start",
           }}
         >
           <div style={{ marginBottom: "1rem" }}>
@@ -60,6 +60,7 @@ function UserInputSection() {
           style={{
             display: "flex",
             flexDirection: "column",
+            alignItems: "flex-start",
           }}
         >
           <div style={{ marginBottom: "1rem" }}>
@@ -107,12 +108,12 @@ function UserInputSection() {
   );
 }
 
-export default UserInputSection;
+export default CreateBoardStep2;
 
 export const SubContainer = styled.div`
-  margin: 30px 20px 30px 20px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 2rem;
   h1 {
     font-size: 18px;
     text-align: left;
@@ -122,9 +123,9 @@ export const SubContainer = styled.div`
 export const CommonSpan = styled.span`
   text-align: left;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 15px;
-  margin-top: 8px;
+  margin-top: 0.5rem;
   color: #797979;
 `;
 
