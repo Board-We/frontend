@@ -33,3 +33,8 @@ export const selectedMemoColorState = atom({
     key: "selectedMemoColorState",
     default: undefined
 })
+
+export const createBoardStepId = atom({
+  key: "createBoardStepId",
+  default: 0,
+});

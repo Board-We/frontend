@@ -2,11 +2,10 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil"
 import styled from "styled-components"
-import ChipButton from "../../components/chipButton"
+import ChipButton from "../../components/buttons/chipButton"
 import { boardState } from "../../store"
 
 const BoardOnMessagingPage = () => {
-
     const [board, setBoard] = useRecoilState(boardState)
     const navigate = useNavigate()
 
@@ -51,42 +50,42 @@ const BoardOnMessagingPage = () => {
 }
 
 const PageWrapper = styled.div`
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const BoardContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-top: 12rem;
-    background: ${props => props.url ? `url(${props.url})` : '#ffffffff'};
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 12rem;
+  background: ${(props) => (props.url ? `url(${props.url})` : "#ffffffff")};
+`;
 
 const BoardTitleText = styled.span`
-    font-size: 2rem;
-`
+  font-size: 2rem;
+`;
 
 const BoardDescriptionText = styled.span`
-    font-size: 1rem;
-`
+  font-size: 1rem;
+`;
 
 const PageFooter = styled.div`
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 10%;
-    background-color: #DDDDDD;
-`
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 10%;
+  background-color: #dddddd;
+`;
 
-export default BoardOnMessagingPage
+export default BoardOnMessagingPage;
