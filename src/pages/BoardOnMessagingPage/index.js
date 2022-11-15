@@ -1,16 +1,37 @@
 import React from "react"
-import { useRecoilValue } from "recoil"
+import { useNavigate } from "react-router-dom"
+import { useRecoilState } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../components/chipButton"
 import { boardState } from "../../store"
 
 const BoardOnMessagingPage = () => {
 
-    const board = useRecoilValue(boardState)
+    const [board, setBoard] = useRecoilState(boardState)
+    const navigate = useNavigate()
 
     const onClickChipButton = () => {
-        console.log('onClickChipButton')
+        getBoardInfo()
+        navigate('/mmp')
     }
+
+    const getBoardInfo = () => {
+        setBoard({
+            ...board,
+            background: "red",
+            memoTypes: [
+                "https://cdn.pixabay.com/photo/2016/04/22/10/16/paper-1345510_960_720.jpg",
+                "https://cdn.pixabay.com/photo/2018/04/11/09/04/paper-clip-3309924_960_720.png",
+                "https://cdn.pixabay.com/photo/2016/05/20/14/14/open-spiral-notebook-1405082_960_720.png"
+            ],
+            memoColors: [
+                "red",
+                "green",
+                "blue"
+            ]
+        })
+    }
+
 
     return (
         <PageWrapper>
