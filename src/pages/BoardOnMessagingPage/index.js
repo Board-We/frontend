@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../components/buttons/chipButton"
+import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader"
 import { boardState } from "../../store"
 
 const BoardOnMessagingPage = () => {
@@ -17,7 +18,6 @@ const BoardOnMessagingPage = () => {
     const getBoardInfo = () => {
         setBoard({
             ...board,
-            background: "red",
             memoTypes: [
                 "https://cdn.pixabay.com/photo/2016/04/22/10/16/paper-1345510_960_720.jpg",
                 "https://cdn.pixabay.com/photo/2018/04/11/09/04/paper-clip-3309924_960_720.png",
@@ -34,7 +34,8 @@ const BoardOnMessagingPage = () => {
 
     return (
         <PageWrapper>
-            <BoardContainer url={board.background}>
+            <ServiceNameHeader />
+            <BoardContainer background={board.background}>
                 <BoardTitleText>{board.name}</BoardTitleText>
                 <BoardDescriptionText>{board.description}</BoardDescriptionText>
             </BoardContainer>
@@ -43,6 +44,8 @@ const BoardOnMessagingPage = () => {
                     onClick={onClickChipButton}
                     text={"롤링 페이퍼 남기기"}
                     flat
+                    color={"#5B5B5B"}
+                    fontColor={"#FFFFFF"}
                 />
             </PageFooter>
         </PageWrapper>
@@ -50,42 +53,47 @@ const BoardOnMessagingPage = () => {
 }
 
 const PageWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `;
 
 const BoardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 12rem;
-  background: ${(props) => (props.url ? `url(${props.url})` : "#ffffffff")};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 2rem;
+    background: ${(props) => (props.background.includes('http') ? `url(${props.background})` : props.background)};
 `;
 
 const BoardTitleText = styled.span`
-  font-size: 2rem;
+    margin-top: 8rem;
+    font-size: 2rem;
 `;
 
 const BoardDescriptionText = styled.span`
-  font-size: 1rem;
+    margin-top: 2rem;
+    font-size: 1rem;
 `;
 
 const PageFooter = styled.div`
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 10%;
-  background-color: #dddddd;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 12%;
+    background-color: #dddddd;
 `;
 
-export default BoardOnMessagingPage;
+export default BoardOnMessagingPage

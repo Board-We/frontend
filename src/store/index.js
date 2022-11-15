@@ -17,7 +17,7 @@ export const boardState = atom({
         },
         password: undefined,
         privateMode: false,
-        background: "#ffffff",
+        background: "#AB2323",
         font: 'san-serif',
         memoTypes: [],
         memoColors: ["white", "grey", "red", "blue", "yellow"]

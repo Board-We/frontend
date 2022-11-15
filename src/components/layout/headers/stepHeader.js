@@ -17,7 +17,7 @@ const StepHeaderContainer = styled.div`
   display: flex;
   justify-content: center;
   padding: 1rem;
-  box-sizing: border-box;
+  height: 2rem;
 `;
 
 const StepHeaderTitle = styled.div`
