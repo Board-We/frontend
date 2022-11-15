@@ -26,7 +26,6 @@ const Button = styled.div`
   padding: 0.75rem 0 0.75rem 0;
   width: 100%;
   max-width: 700px;
-  height: 1.25rem;
   font-size: 1rem;
   color: ${(props) => (props.fontColor ? props.fontColor : "white")};
   background-color: ${(props) => (props.color ? props.color : "grey")};
