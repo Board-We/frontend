@@ -5,7 +5,7 @@ import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButton";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
-import CreateBoardStep3 from "./Steps/CreateBoardStep3";
+// import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 
 const controlCreatBoardStep = (stepId = 0) => {
   switch (stepId) {
@@ -13,8 +13,8 @@ const controlCreatBoardStep = (stepId = 0) => {
       return <CreateBoardStep1 />;
     case 1:
       return <CreateBoardStep2 />;
-    case 2:
-      return <CreateBoardStep3 />;
+    // case 2:
+    //   return <CreateBoardStep3 />;
     default:
       break;
   }
@@ -70,12 +70,10 @@ const CreateBoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
 `;
 
 const CreateBoardBody = styled.div`
   width: 100%;
-  margin-top: 5rem;
   display: flex;
   flex-direction: column;
   padding: 0 1rem;
