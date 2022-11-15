@@ -1,6 +1,26 @@
+import { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import TextInput from "../../../components/TextInput";
+import { boardState } from "../../../store";
 
 const CreateBoardStep1 = () => {
+  const [board, setBoard] = useRecoilState(boardState);
+  const [boardNameLength, setBoardNameLength] = useState(0);
+  const [boardDescriptionLength, setBoardDescriptionLength] = useState(0);
+
+  const handleChangeBoardName = (e) => {
+    setBoardNameLength(e.target.value.length);
+    const currentBoardState = { ...board, name: e.target.value };
+    setBoard(currentBoardState);
+  };
+
+  const handleChangeBoardDescription = (e) => {
+    setBoardDescriptionLength(e.target.value.length);
+    const currentBoardState = { ...board, description: e.target.value };
+    setBoard(currentBoardState);
+  };
+
   return (
     <>
       <CreateBoardStep>
@@ -9,12 +29,18 @@ const CreateBoardStep1 = () => {
             * 보드의 이름을 <br /> 작성해주세요.
           </p>
         </CreateBoardDescriptionText>
-        <CreateBoardInput placeholder="어떤 주제의 보드인가요?" />
+        <TextInput
+          commonSize={true}
+          placeholder="어떤 주제의 보드인가요?"
+          type="text"
+          onChange={handleChangeBoardName}
+          disabled={boardNameLength === 50}
+        />
         <CreateBoardGuide>
           <CreateBoardExample>
             <p>eg. 김땡땡 생일 축하해~!</p>
           </CreateBoardExample>
-          <TextCounter>0/50</TextCounter>
+          <TextCounter>{boardNameLength}/50</TextCounter>
         </CreateBoardGuide>
       </CreateBoardStep>
       <CreateBoardStep>
@@ -27,12 +53,18 @@ const CreateBoardStep1 = () => {
             작성해주세요.
           </p>
         </CreateBoardDescriptionText>
-        <CreateBoardInput placeholder="간단하게 추가 설명을 작성해주세요." />
+        <TextInput
+          commonSize={true}
+          placeholder="간단하게 추가 설명을 작성해주세요."
+          type="text"
+          onChange={handleChangeBoardDescription}
+          disabled={boardDescriptionLength === 50}
+        />
         <CreateBoardGuide>
           <CreateBoardExample>
             <p>eg. 이 보드는 3일동안만 사용할 수 있어요~!</p>
           </CreateBoardExample>
-          <TextCounter>0/50</TextCounter>
+          <TextCounter>{boardDescriptionLength}/50</TextCounter>
         </CreateBoardGuide>
       </CreateBoardStep>
       <CreateBoardStep>
@@ -41,7 +73,7 @@ const CreateBoardStep1 = () => {
             보드에 대한 <br /> 태그를 붙여주세요.
           </p>
         </CreateBoardDescriptionText>
-        <CreateBoardInput placeholder="#" />
+        <TextInput commonSize={true} placeholder="#" type="text" />
       </CreateBoardStep>
     </>
   );
@@ -64,15 +96,6 @@ const CreateBoardDescriptionText = styled.div`
     text-align: left;
     font-weight: 600;
   }
-`;
-
-const CreateBoardInput = styled.input`
-  width: 100%;
-  background-color: #dddddd;
-  border: none;
-  padding: 1rem;
-  border-radius: 0.2rem;
-  box-sizing: border-box;
 `;
 
 const CreateBoardGuide = styled.div`
