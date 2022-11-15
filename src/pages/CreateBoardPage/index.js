@@ -1,14 +1,20 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import CreateBoardStep1 from "./CreateBoardStep1";
+import CreateBoardStep1 from "./Steps/CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButton";
+import CreateBoardStep2 from "./Steps/CreateBoardStep2";
+import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 
 const controlCreatBoardStep = (stepId = 0) => {
   switch (stepId) {
     case 0:
       return <CreateBoardStep1 />;
+    case 1:
+      return <CreateBoardStep2 />;
+    case 2:
+      return <CreateBoardStep3 />;
     default:
       break;
   }
@@ -17,13 +23,20 @@ const controlCreatBoardStep = (stepId = 0) => {
 
 const CreateBoardPage = () => {
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
+
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
   };
+
+  const handleClickBefore = () => {
+    console.log("hi");
+    setCurrentStepId((prev) => prev - 1);
+  };
+
   return (
     <PageWrapper>
       <CreateBoardContainer>
-        <StepHeader title="보드 제작하기" />
+        <StepHeader title="보드 제작하기" onClick={handleClickBefore} />
         <CreateBoardBody>
           {controlCreatBoardStep(currentStepId)}
         </CreateBoardBody>
