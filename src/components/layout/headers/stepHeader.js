@@ -21,11 +21,16 @@ const StepHeaderContainer = styled.div`
 `;
 
 const StepHeaderTitle = styled.div`
-  font-size: 1.2rem;
   width: 100%;
+  position: relative;
+  font-size: 1.2rem;
 `;
 
 const GoBackStepButton = styled.button`
+  position: absolute;
+  left: 5%;
+  top: 0;
+  bottom: 0;
   background-color: transparent;
   border: none;
   cursor: pointer;
