@@ -5,6 +5,7 @@ import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButton";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
+import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 // import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 
 const controlCreatBoardStep = (stepId = 0) => {
@@ -15,6 +16,8 @@ const controlCreatBoardStep = (stepId = 0) => {
       return <CreateBoardStep2 />;
     // case 2:
     //   return <CreateBoardStep3 />;
+    case 3:
+      return <CreateBoardStep3 />;
     default:
       break;
   }
