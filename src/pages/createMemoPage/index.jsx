@@ -3,9 +3,8 @@ import { useEffect } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import EndStep from './steps/endStep'
-import FirstStep from './steps/firstStep'
+import MakingStep from './steps/makingStep'
 import LandingStep from './steps/landingStep'
-import SecondStep from './steps/secondStep'
 
 const CreateMemoPage = () => {
     const navigate = useNavigate()
@@ -18,8 +17,7 @@ const CreateMemoPage = () => {
         <PageWrapper>
             <Routes>
                 <Route path="/landing" element={<LandingStep />} />
-                <Route path="/step1" element={<FirstStep />} />
-                <Route path="/step2" element={<SecondStep />} />
+                <Route path="/making" element={<MakingStep />} />
                 <Route path="/end" element={<EndStep />} />
             </Routes>
         </PageWrapper >

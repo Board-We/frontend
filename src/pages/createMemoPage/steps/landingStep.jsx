@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../../components/buttons/chipButton"
@@ -12,7 +12,7 @@ const LandingStep = ({ }) => {
 
     const onClickMMP = () => {
         getMemoInfo(board.id)
-        navigate("/memo/step1")
+        navigate("/memo/making")
     }
 
     const getMemoInfo = (boardId) => {

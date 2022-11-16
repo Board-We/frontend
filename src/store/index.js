@@ -24,15 +24,13 @@ export const boardState = atom({
   },
 });
 
-export const selectedMemoTypeState = atom({
-  key: "selectedMemoTypeState",
-  default: undefined,
-});
-
-export const selectedMemoColorState = atom({
-  key: "selectedMemoColorState",
-  default: undefined,
-});
+export const memoState = atom({
+    key: "memoState",
+    default: {
+        text: "",
+        background: null,
+    }
+})
 
 export const createBoardStepId = atom({
   key: "createBoardStepId",
