@@ -5,7 +5,9 @@ import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButton";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
-// import CreateBoardStep3 from "./Steps/CreateBoardStep3";
+import CreateBoardStep3 from "./Steps/CreateBoardStep3";
+import CreateBoardStep4 from "./Steps/CreateBoardStep4";
+import { useNavigate } from "react-router-dom";
 
 const controlCreatBoardStep = (stepId = 0) => {
   switch (stepId) {
@@ -13,8 +15,10 @@ const controlCreatBoardStep = (stepId = 0) => {
       return <CreateBoardStep1 />;
     case 1:
       return <CreateBoardStep2 />;
-    // case 2:
-    //   return <CreateBoardStep3 />;
+    case 2:
+      return <CreateBoardStep3 />;
+    case 3:
+      return <CreateBoardStep4 />;
     default:
       break;
   }
@@ -22,6 +26,8 @@ const controlCreatBoardStep = (stepId = 0) => {
 };
 
 const CreateBoardPage = () => {
+  const navigate = useNavigate();
+  const finalStepId = 3;
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
 
   const handleClickNext = () => {
@@ -29,14 +35,20 @@ const CreateBoardPage = () => {
   };
 
   const handleClickBefore = () => {
-    console.log("hi");
     setCurrentStepId((prev) => prev - 1);
   };
 
+  const handleClickGoToBoard = () => {
+    // To Do: 생성된 보드 링크로 이동
+  };
   return (
     <PageWrapper>
       <CreateBoardContainer>
-        <StepHeader title="보드 제작하기" onClick={handleClickBefore} />
+        <StepHeader
+          title="보드 제작하기"
+          onClick={handleClickBefore}
+          isFinalStep={currentStepId === finalStepId}
+        />
         <CreateBoardBody>
           {controlCreatBoardStep(currentStepId)}
         </CreateBoardBody>
@@ -44,8 +56,12 @@ const CreateBoardPage = () => {
           <FooterButton
             color="black"
             fontColor="white"
-            text="다음"
-            onClick={handleClickNext}
+            text={currentStepId === finalStepId ? "내 보드로 이동하기" : "다음"}
+            onClick={
+              currentStepId === finalStepId
+                ? handleClickGoToBoard
+                : handleClickNext
+            }
           />
         </PageFooter>
       </CreateBoardContainer>

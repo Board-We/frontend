@@ -1,13 +1,21 @@
 import styled from "styled-components";
 import { ReactComponent as Chevron } from "../../../assets/chevron.svg";
+import { ReactComponent as Close } from "../../../assets/close.svg";
 
-const StepHeader = ({ title, onClick }) => {
+const StepHeader = ({ title, onClick, isFinalStep }) => {
   return (
     <StepHeaderContainer>
-      <GoBackStepButton onClick={onClick}>
-        <Chevron />
-      </GoBackStepButton>
+      {isFinalStep || (
+        <GoBackStepButton onClick={onClick}>
+          <Chevron />
+        </GoBackStepButton>
+      )}
       <StepHeaderTitle>{title}</StepHeaderTitle>
+      {isFinalStep && (
+        <CloseButton>
+          <Close />
+        </CloseButton>
+      )}
     </StepHeaderContainer>
   );
 };
@@ -30,6 +38,16 @@ const StepHeaderTitle = styled.div`
 const GoBackStepButton = styled.button`
   position: absolute;
   left: 5%;
+  top: 0;
+  bottom: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  right: 5%;
   top: 0;
   bottom: 0;
   background-color: transparent;
