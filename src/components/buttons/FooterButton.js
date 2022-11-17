@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const FooterButton = ({ color, fontColor, text, onClick }) => {
+const FooterButton = ({ color, fontColor, text, onClick, disabled }) => {
   return (
     <ButtonWrapper>
-      <Button color={color} fontColor={fontColor} text={text} onClick={onClick}>
+      <Button color={color} fontColor={fontColor} text={text} onClick={onClick} disabled={disabled}>
         {text}
       </Button>
     </ButtonWrapper>
@@ -26,10 +26,12 @@ const Button = styled.div`
   padding: 0.75rem 0 0.75rem 0;
   width: 100%;
   max-width: 700px;
+  height: 3rem;
   font-size: 1rem;
   color: ${(props) => (props.fontColor ? props.fontColor : "white")};
   background-color: ${(props) => (props.color ? props.color : "grey")};
-  cursor: pointer;
+  opacity: ${(props) => props.disabled ? '0.4' : null};
+  cursor: ${(props) => props.disabled ? 'not-allowed' : 'pointer'};
   user-select: none;
 `;
 
