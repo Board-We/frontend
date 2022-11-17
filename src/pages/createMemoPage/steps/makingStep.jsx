@@ -42,7 +42,7 @@ const MakingStep = () => {
     }
 
     const onClickBack = () => {
-        
+
         navigate(-1)
     }
 
@@ -60,10 +60,12 @@ const MakingStep = () => {
     return (
         <PageWrapper>
             <StepHeader title={"롤링페이퍼 작성하기"} onClick={onClickBack} />
-            <MemoTextContainer background={memo.background} onClick={onClickMemoTextZone}>
-                <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
-                <MemoTextIndicator>{memo.text.length}/50</MemoTextIndicator>
-            </MemoTextContainer>
+            <BoardArea background={board.background}>
+                <MemoTextContainer background={memo.background} onClick={onClickMemoTextZone}>
+                    <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
+                    <MemoTextIndicator>{memo.text.length}/50</MemoTextIndicator>
+                </MemoTextContainer>
+            </BoardArea>
             <OptionContainer>
                 <OptionMenuContainer>
                     {
@@ -77,9 +79,9 @@ const MakingStep = () => {
                         options[selectedOption].value.map((el, i) => {
                             return (
                                 selectedOption === 0
-                                    ? <ColorButton color={el} onClick={() => onChangeBackground(el)} selected={memo.background===el} key={i} />
+                                    ? <ColorButton color={el} onClick={() => onChangeBackground(el)} selected={memo.background === el} key={i} />
                                     : selectedOption === 1
-                                        ? <ImageButton imageUrl={el} onClick={() => onChangeBackground(el)} selected={memo.background===el} key={i} />
+                                        ? <ImageButton imageUrl={el} onClick={() => onChangeBackground(el)} selected={memo.background === el} key={i} />
                                         : null
                             )
                         })
@@ -98,13 +100,22 @@ const PageWrapper = styled.div`
     height: 100vh;
 `
 
-const MemoTextContainer = styled.div`
+const BoardArea = styled.div`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
+    background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+`
+
+const MemoTextContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    height: 75%;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
