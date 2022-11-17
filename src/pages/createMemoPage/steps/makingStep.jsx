@@ -6,8 +6,9 @@ import styled from "styled-components"
 import FooterButton from "../../../components/buttons/FooterButton"
 import ImageButton from "../../../components/buttons/ImageButton"
 import { boardState, memoState } from "../../../store"
+import MemoTextArea from "../components/memoTextArea"
 
-const MakingStep = ({ }) => {
+const MakingStep = () => {
 
     const board = useRecoilValue(boardState)
     const $memo = useRef()
@@ -42,7 +43,7 @@ const MakingStep = ({ }) => {
     return (
         <PageWrapper>
             <MemoTextContainer background={board.background} onClick={onClickMemoTextZone}>
-                <MemoTextTA ref={$memo} value={memo.text} onChange={onChangeText} lineHeight={memo.text.split('\n').length} />
+                <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
                 <MemoTextIndicator>{memo.text.length}/50</MemoTextIndicator>
             </MemoTextContainer>
             <OptionContainer>
@@ -57,7 +58,7 @@ const MakingStep = ({ }) => {
 
                 </OptionValueContainer>
             </OptionContainer>
-            <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} fontColor={"#FFFFFF"} />
+            <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} fontColor={"#FFFFFF"} onClick={onClickMakeMemo} />
         </PageWrapper>
     )
 }
@@ -73,20 +74,8 @@ const MemoTextContainer = styled.div`
     justify-content: center;
     width: 100%;
     height: 100vw;
+    max-height: 700px;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
-`
-
-const MemoTextTA = styled.textarea`
-    height: ${props => `${props.lineHeight + 0.5}rem`};
-    font-size: 1rem;
-    line-height: 1rem;
-    text-align: center;
-    resize: none;
-    border: 0;
-    width: 80%;
-    background: transparent;
-    outline: 0;
-    overflow: hidden;
 `
 
 const MemoTextIndicator = styled.span`
