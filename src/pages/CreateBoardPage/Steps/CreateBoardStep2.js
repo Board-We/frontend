@@ -27,9 +27,8 @@ function CreateBoardStep2() {
     <>
       <SubContainer>
         <h1>
-          * 롤링페이퍼를 <br />
-          작성할수 있는 기간은 <br />
-          언제인가요?
+          * 롤링페이퍼를 수집할수 있는 기간은 <br />
+          &nbsp;언제인가요?
         </h1>
         <div
           style={{
@@ -38,32 +37,7 @@ function CreateBoardStep2() {
             alignItems: "flex-start",
           }}
         >
-          <div style={{ marginBottom: "1rem" }}>
-            <TextInput placeholder="YYYY.MM.DD" />{" "}
-            <TextInput placeholder="00:00" /> 부터
-          </div>
-          <div>
-            <TextInput placeholder="YYYY.MM.DD" />{" "}
-            <TextInput placeholder="00:00" /> 까지
-          </div>
-        </div>
-        <CommonSpan>1시간부터 한달까지 설정할 수 있어요</CommonSpan>
-      </SubContainer>
-
-      <SubContainer>
-        <h1>
-          * 롤링페이퍼를 <br />
-          확인할수 있는 기간은 <br />
-          언제인가요?
-        </h1>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}
-        >
-          <div style={{ marginBottom: "1rem" }}>
+          <div style={{ marginTop: "0.5rem" }}>
             <TextInput placeholder="YYYY.MM.DD" />{" "}
             <TextInput placeholder="00:00" /> 부터
           </div>
@@ -73,24 +47,49 @@ function CreateBoardStep2() {
           </div>
         </div>
         <CommonSpan>
-          작성기간 이후부터 설정 할 수 있어요
+          기간은 최소 1시간부터 한달까지 설정할 수 있어요.
+        </CommonSpan>
+      </SubContainer>
+
+      <SubContainer>
+        <h1>
+          * 롤링페이퍼를 확인할수 있는 기간은 <br />
+          &nbsp;언제인가요?
+        </h1>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          <div style={{ marginTop: "0.5rem" }}>
+            <TextInput placeholder="YYYY.MM.DD" />{" "}
+            <TextInput placeholder="00:00" /> 부터
+          </div>
+          <div>
+            <TextInput placeholder="YYYY.MM.DD" />{" "}
+            <TextInput placeholder="00:00" /> 까지
+          </div>
+        </div>
+        <CommonSpan>
+          작성기간 이후부터 설정 할 수 있어요.
           <br />
-          최대 한달까지 설정할 수 있어요.
+          기간은 최소 1시간부터 한달까지 설정할 수 있어요.
         </CommonSpan>
       </SubContainer>
 
       <SubContainer>
         <h1>보드의 비밀번호를 설정할 수 있어요.</h1>
+        <CommonSpan>
+          비밀번호로 보드에 붙여진 롤링페이퍼를 삭제할 수 있어요.
+        </CommonSpan>
         <TextInput
           type={"password"}
-          placeholder="영어와 숫자가 섞인 8자 이상의 비밀번호를 입력해주세요."
+          placeholder="4자 이상 입력해주세요."
           onChange={handlePassword}
           commonSize
         />
-        <CommonSpan>
-          설정된 비밀번호는 롤링페이퍼를 삭제하거나 프라이빗 모드로 사용할 수
-          있어요.
-        </CommonSpan>
 
         <CheckBoxLabel htmlFor="private-mode">
           <CheckBoxInput
@@ -113,18 +112,19 @@ export default CreateBoardStep2;
 export const SubContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   h1 {
-    font-size: 18px;
+    font-size: 1.1rem;
     text-align: left;
+    margin-bottom: 0;
   }
 `;
 
 export const CommonSpan = styled.span`
   text-align: left;
   font-weight: 500;
-  font-size: 0.75rem;
-  line-height: 15px;
+  font-size: 0.7rem;
+
   margin-top: 0.5rem;
   color: #797979;
 `;
