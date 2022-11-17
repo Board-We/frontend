@@ -1,7 +1,6 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import BoardCanvas from "../../../components/BoardCanvas";
-import FooterButton from "../../../components/buttons/FooterButton";
 import { boardState } from "../../../store";
 
 const CreateBoardStep4 = () => {

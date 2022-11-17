@@ -7,6 +7,7 @@ import FooterButton from "../../components/buttons/FooterButton";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
+import { useNavigate } from "react-router-dom";
 
 const controlCreatBoardStep = (stepId = 0) => {
   switch (stepId) {
@@ -25,6 +26,7 @@ const controlCreatBoardStep = (stepId = 0) => {
 };
 
 const CreateBoardPage = () => {
+  const navigate = useNavigate();
   const finalStepId = 3;
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
 
@@ -36,6 +38,9 @@ const CreateBoardPage = () => {
     setCurrentStepId((prev) => prev - 1);
   };
 
+  const handleClickGoToBoard = () => {
+    // To Do: 생성된 보드 링크로 이동
+  };
   return (
     <PageWrapper>
       <CreateBoardContainer>
@@ -51,8 +56,12 @@ const CreateBoardPage = () => {
           <FooterButton
             color="black"
             fontColor="white"
-            text="다음"
-            onClick={handleClickNext}
+            text={currentStepId === finalStepId ? "내 보드로 이동하기" : "다음"}
+            onClick={
+              currentStepId === finalStepId
+                ? handleClickGoToBoard
+                : handleClickNext
+            }
           />
         </PageFooter>
       </CreateBoardContainer>
