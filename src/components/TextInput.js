@@ -16,12 +16,13 @@ function TextInput({ commonSize, placeholder, type, onChange, disabled }) {
 export default TextInput;
 
 const InputArea = styled.input`
-  width: ${(props) => (props.commonSize === true ? "100%" : "200px")};
+  width: ${(props) => (props.commonSize === true ? "100%" : "40%")};
   height: 2.75rem;
   padding: 1rem;
   border: none;
   border-radius: 4px;
   background-color: #f3f3f3;
+  margin-top: 1rem;
   &:focus {
     outline: none;
   }
