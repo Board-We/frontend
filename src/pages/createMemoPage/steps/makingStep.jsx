@@ -63,7 +63,7 @@ const MakingStep = () => {
             <BoardArea background={board.background}>
                 <MemoTextContainer background={memo.background} onClick={onClickMemoTextZone}>
                     <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
-                    <MemoTextIndicator>{memo.text.length}/50</MemoTextIndicator>
+                    <MemoTextIndicator>{memo.text.length > 9 ? memo.text.length : ` ${memo.text.length}`}/50</MemoTextIndicator>
                 </MemoTextContainer>
             </BoardArea>
             <OptionContainer>
@@ -105,8 +105,8 @@ const BoardArea = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
+    min-width: 100vw;
+    min-height: 100vw;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
@@ -119,10 +119,21 @@ const MemoTextContainer = styled.div`
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
-const MemoTextIndicator = styled.span`
+const MemoTextIndicator = styled.pre`
     position: absolute;
-    right: 1rem;
-    bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    bottom: 0;
+    width: 4rem;
+    height: 1.75rem;
+    padding: 0.25rem;
+    margin: 0.5rem;
+    background-color: #0000007f;
+    color: #ffffffcc;
+    font-weight: bold;
+    border-radius: 0.5rem;
 `
 
 const OptionContainer = styled.div`

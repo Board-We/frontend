@@ -24,9 +24,11 @@ const EndStep = () => {
     return (
         <PageWrapper>
             <ServiceNameHeader />
-            <MemoTextContainer background={board.background}>
-                <MemoTextArea text={memo.text} disabled={true} />
-            </MemoTextContainer>
+            <BoardArea background={board.background}>
+                <MemoTextContainer background={memo.background}>
+                    <MemoTextResult>{memo.text}</MemoTextResult>
+                </MemoTextContainer>
+            </BoardArea>
             <Alertcontainer>
                 <span>롤링페이퍼 작성이<br />완료되었습니다!</span>
                 <span>이 롤링페이퍼는 {board.attachableTerm[0]}에 공개될 예정입니다.</span>
@@ -46,14 +48,28 @@ const PageWrapper = styled.div`
     padding-top: 2rem;
 `
 
-const MemoTextContainer = styled.div`
+const BoardArea = styled.div`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100vw;
+    min-width: 100vw;
+    min-height: 100vw;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+`
+
+const MemoTextContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    height: 75%;
+    background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+`
+
+const MemoTextResult = styled.div`
+    width: 100%;
+    height: fit-content;
 `
 
 const Alertcontainer = styled.div`

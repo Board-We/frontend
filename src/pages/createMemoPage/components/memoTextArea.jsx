@@ -11,9 +11,14 @@ const MemoTextArea = forwardRef(({ text = "", onChange, disabled = false }, ref)
         setLineHeight(`${scrollHeight}px`)
     }
 
+    const onChangeMemoTextTA = (e) => {
+        onChange(e);
+        resize();
+    }
+
     return (
         <ComponentWrapper>
-            <MemoTextTA ref={ref} value={text} onChange={onChange} height={lineHeight} disabled={disabled} onKeyDown={resize} />
+            <MemoTextTA ref={ref} value={text} onChange={onChangeMemoTextTA} height={lineHeight} disabled={disabled} />
         </ComponentWrapper>
     )
 })
