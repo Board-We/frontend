@@ -1,21 +1,31 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
-const ServiceNameHeader = ( {} ) => {
-    return (
-        <ComponentWrapper>
-            ServiceName
-        </ComponentWrapper>
-    )
-}
+const ServiceNameHeader = () => {
+  return (
+    <ComponentWrapper>
+      <ServiceNameHeaderContainer>
+        <ServiceNameHeaderTitle>Side project</ServiceNameHeaderTitle>
+      </ServiceNameHeaderContainer>
+    </ComponentWrapper>
+  );
+};
 
 const ComponentWrapper = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2rem;
-    background-color: yellow;
-`
+  width: 100vw;
+  max-width: 700px;
+  position: fixed;
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem;
+  background-color: white;
+`;
 
-export default ServiceNameHeader
+const ServiceNameHeaderTitle = styled.div`
+  font-size: 1.2rem;
+  font-weight: 600;
+`;
+
+const ServiceNameHeaderContainer = styled.div``;
+
+export default ServiceNameHeader;

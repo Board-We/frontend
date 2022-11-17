@@ -3,6 +3,7 @@ import "./App.css";
 import { Routes, BrowserRouter, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import CreateBoardPage from "./pages/CreateBoardPage";
+import BoardPage from "./pages/BoardPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/board/new" element={<CreateBoardPage />} />
+            <Route path="/board" element={<BoardPage />} />
             <Route path="/" element={<>test</>} />
           </Routes>
         </BrowserRouter>
