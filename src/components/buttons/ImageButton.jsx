@@ -31,8 +31,8 @@ const ComponentWrapper = styled.div`
 `
 
 const ContentImage = styled.img`
-    width: 1.5rem;
-    height: 1.5rem;
+    width: ${props => props.text !== "" ? `1.5rem` : `100%`};
+    height: ${props => props.text !== "" ? `1.5rem` : `100%`};
 `
 
 const ContentText = styled.span`

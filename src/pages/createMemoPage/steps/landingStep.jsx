@@ -5,7 +5,7 @@ import styled from "styled-components"
 import ChipButton from "../../../components/buttons/chipButton"
 import { boardState } from "../../../store"
 
-const LandingStep = ({ }) => {
+const LandingStep = () => {
 
     const [board, setBoard] = useRecoilState(boardState)
     const navigate = useNavigate()

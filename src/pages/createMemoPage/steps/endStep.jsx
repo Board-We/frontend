@@ -53,7 +53,6 @@ const MemoTextContainer = styled.div`
     justify-content: center;
     width: 100%;
     height: 100vw;
-    max-height: 700px;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
