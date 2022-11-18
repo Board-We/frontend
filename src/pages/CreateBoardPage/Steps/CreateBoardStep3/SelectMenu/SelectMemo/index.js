@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import SelectBasicMemoType from "./SelectBasicMemoType";
 import SelectFontType from "./SelectFontType";
 
 function SelectMemo() {
-  const [buttonSelect, setButtonSelect] = useState(null);
+  const [buttonSelect, setButtonSelect] = useState("0");
   const buttonValue = ["기본 메모지", "이미지", "글자 종류"];
   const handleClick = (e) => {
     setButtonSelect(e.target.value);
@@ -11,6 +12,8 @@ function SelectMemo() {
   console.log(buttonSelect);
   const renderMemoType = () => {
     switch (buttonSelect) {
+      case "0":
+        return <SelectBasicMemoType />;
       case "2":
         console.log("ok");
         return <SelectFontType />;
@@ -48,7 +51,7 @@ const MemoPickerContainer = styled.div`
   align-items: flex-start;
   background-color: #eeeeee;
   margin-top: 2rem;
-  height: 70vh;
+  height: 90vh;
 `;
 
 const ButtonContainer = styled.div`

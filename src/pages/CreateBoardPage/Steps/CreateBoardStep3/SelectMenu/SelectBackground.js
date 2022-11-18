@@ -142,9 +142,14 @@ const ColorPickerContainer = styled.div`
   display: flex;
 `;
 
-const ColorPickerPreview = styled.div`
+const ColorPickerPreview = styled.div.attrs((props) => {
+  return {
+    style: {
+      background: props.color,
+    },
+  };
+})`
   width: 10rem;
-  background-color: ${(props) => props.color};
   height: 25vh;
   margin-right: 1rem;
   border-radius: 4px;

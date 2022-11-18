@@ -39,3 +39,5 @@ const ComponentWrapper = styled.div`
   box-shadow: ${(props) => (props.flat ? "" : "2px 2px 8px black")};
   user-select: none;
 `;
+
+export default ChipButton;
