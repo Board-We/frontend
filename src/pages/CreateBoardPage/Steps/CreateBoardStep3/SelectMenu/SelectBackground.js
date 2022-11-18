@@ -97,13 +97,13 @@ const SubContainer = styled.div`
   margin-top: 1rem;
   h1 {
     text-align: left;
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin: 0.7rem 0;
   }
   p {
     text-align: left;
     font-weight: 500;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     margin-bottom: 0.7rem;
     color: #797979;
   }
@@ -134,7 +134,7 @@ const ImageThumbnail = styled.img`
 `;
 
 const ColorPickerInput = styled.input`
-  width: 30vw;
+  width: 25vw;
   height: 10vh;
 `;
 
@@ -143,7 +143,7 @@ const ColorPickerContainer = styled.div`
 `;
 
 const ColorPickerPreview = styled.div`
-  width: 15rem;
+  width: 10rem;
   background-color: ${(props) => props.color};
   height: 25vh;
   margin-right: 1rem;
