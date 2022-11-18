@@ -1,40 +1,38 @@
 import { atom } from "recoil";
 
 export const boardState = atom({
-  key: "boardState",
-  default: {
-    id: "1",
-    name: "boardName",
-    description: "boardDescription",
-    tags: [],
-    attachableTerm: {
-      start: undefined,
-      end: undefined,
+    key: "boardState",
+    default: {
+        id: "1",
+        name: "boardName",
+        description: "boardDescription",
+        tags: [],
+        attachableTerm: {
+            start: undefined,
+            end: undefined,
+        },
+        openTerm: {
+            start: undefined,
+            end: undefined,
+        },
+        password: undefined,
+        privateMode: false,
+        background: "#AB2323",
+        font: "san-serif",
+        memoTypes: [],
+        memoColors: ["white", "grey", "red", "blue", "yellow"],
     },
-    openTerm: {
-      start: undefined,
-      end: undefined,
-    },
-    password: undefined,
-    privateMode: false,
-    background: "#AB2323",
-    font: "san-serif",
-    memoTypes: [],
-    memoColors: ["white", "grey", "red", "blue", "yellow"],
-  },
 });
 
-export const selectedMemoTypeState = atom({
-  key: "selectedMemoTypeState",
-  default: undefined,
-});
-
-export const selectedMemoColorState = atom({
-  key: "selectedMemoColorState",
-  default: undefined,
-});
+export const memoState = atom({
+    key: "memoState",
+    default: {
+        text: "",
+        background: "black",
+    }
+})
 
 export const createBoardStepId = atom({
-  key: "createBoardStepId",
-  default: 0,
+    key: "createBoardStepId",
+    default: 0,
 });
