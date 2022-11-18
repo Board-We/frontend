@@ -4,7 +4,13 @@ import styled from "styled-components";
 const FooterButton = ({ color, fontColor, text, onClick, disabled }) => {
   return (
     <ButtonWrapper>
-      <Button color={color} fontColor={fontColor} text={text} onClick={onClick} disabled={disabled}>
+      <Button
+        color={color}
+        fontColor={fontColor}
+        text={text}
+        onClick={onClick}
+        disabled={disabled}
+      >
         {text}
       </Button>
     </ButtonWrapper>
@@ -30,8 +36,8 @@ const Button = styled.div`
   font-size: 1rem;
   color: ${(props) => (props.fontColor ? props.fontColor : "white")};
   background-color: ${(props) => (props.color ? props.color : "grey")};
-  opacity: ${(props) => props.disabled ? '0.4' : null};
-  cursor: ${(props) => props.disabled ? 'not-allowed' : 'pointer'};
+  opacity: ${(props) => (props.disabled ? "0.4" : null)};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   user-select: none;
 `;
 

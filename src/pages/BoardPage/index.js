@@ -2,23 +2,103 @@ import styled from "styled-components";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import ChipButton from "../../components/buttons/chipButton";
 import Memo from "../../components/memo";
+import { useState } from "react";
+import PasswordModal from "./BoardPageModal/PasswordModal";
+import RemoveModeHeader from "../../components/layout/headers/removeModeHeader";
+import AlertModal from "../../components/modals/alertModal";
 
 const BoardPage = () => {
+  const [isOpenPasswordModal, setIsOpenPasswordModal] = useState(false);
+  const [isOpenSuccessRemoveModal, setIsOpenSuccessRemoveModal] =
+    useState(false);
+  const [isRemoveMemoMode, setIsRemoveMemoMode] = useState(false);
+  const [checkedList, setCheckedList] = useState([]);
+
+  const handleClickShare = () => {
+    // To do: 보드 링크 공유
+  };
+
+  const handleClickConfig = () => {
+    setIsOpenPasswordModal(true);
+  };
+  const handleClosePasswordModal = () => {
+    setIsOpenPasswordModal(false);
+  };
+  const handleSuccessPasswordModal = () => {
+    setIsRemoveMemoMode(true);
+  };
+  const handleClickCancelRemoveMode = () => {
+    setIsRemoveMemoMode(false);
+  };
+
+  const handleClickRemoveMemo = () => {
+    // To Do: 메모 삭제 API 요청
+    setIsOpenSuccessRemoveModal(true);
+    setIsRemoveMemoMode(false);
+  };
+  const handleCloseConfirmRemoveModal = () => {
+    setIsOpenSuccessRemoveModal(false);
+  };
+
+  const handleChangeCheckbox = (e) => {
+    const checked = e.target.checked;
+    if (checked) setCheckedList([...checkedList, e.target.value]);
+    else setCheckedList(checkedList.filter((id) => id !== e.target.value));
+  };
+  console.log(checkedList);
   return (
     <PageWrapper>
       <BoardContainer>
-        <ServiceNameHeader />
+        {isRemoveMemoMode ? (
+          <RemoveModeHeader
+            onClickCancel={handleClickCancelRemoveMode}
+            onClickRemove={handleClickRemoveMemo}
+          />
+        ) : (
+          <ServiceNameHeader
+            canShare={true}
+            canConfig={true}
+            onClickShare={handleClickShare}
+            onClickConfig={handleClickConfig}
+          />
+        )}
         <BoardBody>
           <BoardName>보드 이름</BoardName>
           <BoardDescription>보드 설명 보드 설명 어쩌구 저쩌구</BoardDescription>
           <BoardMemoGrid>
-            <Memo text="메모 내용 어쩌구 저쩌구" />
-            <Memo text="메모 내용 어쩌구 저쩌구" />
-            <Memo text="메모 내용 어쩌구 저쩌구" />
+            <Memo
+              key={1}
+              id={1}
+              text="메모 내용 어쩌구 저쩌구"
+              isRemoveMode={isRemoveMemoMode}
+              onChange={handleChangeCheckbox}
+            />
+            <Memo
+              key={2}
+              id={2}
+              text="메모 내용 어쩌구 저쩌구"
+              isRemoveMode={isRemoveMemoMode}
+              onChange={handleChangeCheckbox}
+            />
           </BoardMemoGrid>
-          <ChipButton text="롤링페이퍼 붙이기" />
+          {!isRemoveMemoMode ? <ChipButton text="롤링페이퍼 붙이기" /> : null}
         </BoardBody>
       </BoardContainer>
+      {isOpenPasswordModal && (
+        <PasswordModal
+          open={isOpenPasswordModal}
+          onClose={handleClosePasswordModal}
+          onSuccess={handleSuccessPasswordModal}
+          height="50vh"
+        />
+      )}
+      {isOpenSuccessRemoveModal && (
+        <AlertModal
+          open={isOpenSuccessRemoveModal}
+          onClose={handleCloseConfirmRemoveModal}
+          text="메모가 삭제되었습니다."
+        />
+      )}
     </PageWrapper>
   );
 };
