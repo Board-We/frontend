@@ -6,6 +6,7 @@ import { boardState } from "../../../../../store";
 const SelectBackground = ({ setBoardURL }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const [imageFile, setImageFile] = useState(null);
+
   const fileInputRef = useRef(null);
 
   const handleFileInput = () => {
@@ -19,7 +20,6 @@ const SelectBackground = ({ setBoardURL }) => {
   const uploadBackground = (e) => {
     const fileImage = e.target.files;
     const length = fileImage?.length;
-
     if (fileImage && fileImage[0]) {
       const url = URL.createObjectURL(fileImage[0]);
 
