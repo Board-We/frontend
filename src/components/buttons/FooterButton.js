@@ -18,7 +18,6 @@ const FooterButton = ({ color, fontColor, text, onClick, disabled }) => {
 };
 const ButtonWrapper = styled.div`
   position: fixed;
-  width: 100%;
   bottom: 0px;
   left: 0px;
   display: flex;
