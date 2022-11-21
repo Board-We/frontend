@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SelectBasicMemoType from "./SelectBasicMemoType";
 import SelectFontType from "./SelectFontType";
+import SelectImage from "./SelectImage";
 
 function SelectMemo() {
   const [buttonSelect, setButtonSelect] = useState("0");
   const buttonValue = ["기본 메모지", "이미지", "글자 종류"];
+
   const handleClick = (e) => {
     setButtonSelect(e.target.value);
   };
-  console.log(buttonSelect);
+
   const renderMemoType = () => {
     switch (buttonSelect) {
       case "0":
         return <SelectBasicMemoType />;
+      case "1":
+        return <SelectImage />;
       case "2":
-        console.log("ok");
         return <SelectFontType />;
       default:
         break;

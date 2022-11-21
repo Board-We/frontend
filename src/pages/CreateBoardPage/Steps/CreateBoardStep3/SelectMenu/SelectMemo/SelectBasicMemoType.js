@@ -128,7 +128,6 @@ function SelectBasicMemoType() {
 
         <FontColorPickerInput
           type="color"
-          value="#ffffff"
           onChange={handleChangeFontColor}
           ref={inputFontRef}
         />
@@ -138,6 +137,7 @@ function SelectBasicMemoType() {
           color={memoColor[0]}
           value="1"
           onClick={handleFontPicker}
+          disabled={!memoColor[0] ? true : false}
         >
           1
         </FontPreviewBox1>
@@ -145,6 +145,7 @@ function SelectBasicMemoType() {
           color={memoColor[1]}
           value="2"
           onClick={handleFontPicker}
+          disabled={!memoColor[1] ? true : false}
         >
           2
         </FontPreviewBox2>
@@ -152,6 +153,7 @@ function SelectBasicMemoType() {
           color={memoColor[2]}
           value="3"
           onClick={handleFontPicker}
+          disabled={!memoColor[2] ? true : false}
         >
           3
         </FontPreviewBox3>
