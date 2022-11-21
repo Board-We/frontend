@@ -11,8 +11,12 @@ const SelectFontType = () => {
   return (
     <FontSelectContainer>
       <p>보드에 전부 적용될 서체입니다.</p>
-      {fontType?.map((item) => {
-        return <FontItem>{item}</FontItem>;
+      {fontType?.map((item, idx) => {
+        return (
+          <React.Fragment key={idx}>
+            <FontItem>{item}</FontItem>
+          </React.Fragment>
+        );
       })}
     </FontSelectContainer>
   );
@@ -31,10 +35,11 @@ const FontSelectContainer = styled.div`
 const FontItem = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: white;
   border-radius: 4px;
-  padding-left: 1rem;
-  width: 17rem;
+
+  width: 18.5rem;
   height: 2rem;
   margin-bottom: 1rem;
   cursor: pointer;
