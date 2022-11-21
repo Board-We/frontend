@@ -65,6 +65,7 @@ const MemoTextContainer = styled.div`
     width: 75%;
     height: 75%;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+    padding: 4.5rem; // padding value of text area
 `
 
 const MemoTextResult = styled.div`

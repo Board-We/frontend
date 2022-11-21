@@ -94,8 +94,9 @@ const BoardPage = () => {
       )}
       {isOpenSuccessRemoveModal && (
         <AlertModal
-          open={isOpenSuccessRemoveModal}
-          onClose={handleCloseConfirmRemoveModal}
+          open={[isOpenSuccessRemoveModal]}
+          onClickArray={[handleCloseConfirmRemoveModal]}
+          buttonTextArray={["확인"]}
           text="메모가 삭제되었습니다."
         />
       )}

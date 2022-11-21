@@ -8,6 +8,7 @@ import ColorButton from "../../../components/buttons/colorbutton"
 import FooterButton from "../../../components/buttons/FooterButton"
 import ImageButton from "../../../components/buttons/ImageButton"
 import StepHeader from "../../../components/layout/headers/stepHeader"
+import AlertModal from "../../../components/modals/alertModal"
 import { boardState, memoState } from "../../../store"
 import MemoTextArea from "../components/memoTextArea"
 
@@ -17,6 +18,7 @@ const MakingStep = () => {
     const $memo = useRef()
     const [memo, setMemo] = useRecoilState(memoState)
     const [selectedOption, setSelectedOption] = useState(0)
+    const [alertOpen, setAlertOpen] = useState(false)
     const navigate = useNavigate()
 
     const options = [
@@ -42,8 +44,15 @@ const MakingStep = () => {
     }
 
     const onClickBack = () => {
+        setAlertOpen(true)
+    }
 
+    const goBack = () => {
         navigate(-1)
+    }
+
+    const cancelBack = () => {
+        setAlertOpen(false)
     }
 
     const onClickMemoTextZone = () => {
@@ -53,13 +62,17 @@ const MakingStep = () => {
     const onClickOption = (option) => setSelectedOption(option)
 
     const onClickMakeMemo = () => {
-
         navigate("/memo/end")
     }
 
     return (
         <PageWrapper>
             <StepHeader title={"롤링페이퍼 작성하기"} onClick={onClickBack} />
+            {
+                alertOpen ?
+                    <AlertModal open={alertOpen} buttonTextArray={["중단하기", "편집으로 돌아가기"]} onClickArray={[goBack, cancelBack]} text={"편집을 중단할까요?"} />
+                    : null
+            }
             <BoardArea background={board.background}>
                 <MemoTextContainer background={memo.background} onClick={onClickMemoTextZone}>
                     <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
@@ -105,8 +118,10 @@ const BoardArea = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 100vw;
-    min-height: 100vw;
+    width: 100vw;
+    height: 100vw;
+    max-width: 700px;
+    max-height: 700px;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
