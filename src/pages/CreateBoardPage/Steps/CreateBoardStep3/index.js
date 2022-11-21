@@ -8,6 +8,7 @@ import SelectTheme from "./SelectMenu/SelectTheme";
 
 function CreateBoardStep3() {
   const [selectState, setSelectState] = useState("");
+  const btnValue = ["테마", "배경", "메모지"];
   const [boardURL, setBoardURL] = useState("");
   const [board, setBoard] = useRecoilState(boardState);
 
@@ -17,11 +18,11 @@ function CreateBoardStep3() {
 
   const renderingPicker = () => {
     switch (selectState) {
-      case "theme":
+      case "0":
         return <SelectTheme />;
-      case "background":
+      case "1":
         return <SelectBackground setBoardURL={setBoardURL} />;
-      case "memo":
+      case "2":
         return <SelectMemo />;
       default:
         break;
@@ -35,17 +36,19 @@ function CreateBoardStep3() {
         <BoardCanvas />
       </BoardArea>
       <SelectButtonArea>
-        <SelectButton value="theme" onClick={selectCtrl}>
-          테마
-        </SelectButton>
-
-        <SelectButton value="background" onClick={selectCtrl}>
-          배경
-        </SelectButton>
-
-        <SelectButton value="memo" onClick={selectCtrl}>
-          메모지
-        </SelectButton>
+        {btnValue.map((value, idx) => {
+          return (
+            <React.Fragment key={idx}>
+              <SelectButton
+                value={idx}
+                className={"btn" + (idx == selectState ? " active" : "")}
+                onClick={selectCtrl}
+              >
+                {value}
+              </SelectButton>
+            </React.Fragment>
+          );
+        })}
       </SelectButtonArea>
       {renderingPicker()}
     </>
@@ -91,4 +94,8 @@ const SelectButton = styled.button`
   border-radius: 8px;
   user-select: none;
   cursor: pointer;
+  &.active {
+    color: white;
+    background-color: #626262;
+  }
 `;
