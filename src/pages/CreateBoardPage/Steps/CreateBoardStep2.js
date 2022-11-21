@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import TextInput from "../../../components/TextInput";
 import { boardState } from "../../../store";
 
 function CreateBoardStep2() {
+  const buttonValue = ["공개 모드", "프라이빗 모드"];
   const [board, setBoard] = useRecoilState(boardState);
+  const [active, setActive] = useState("0");
 
   const handlePassword = (e) => {
     let setInput = { ...board, password: e.target.value };
@@ -13,16 +15,21 @@ function CreateBoardStep2() {
   };
 
   const handlePrivateMode = (e) => {
-    if (e.target.checked) {
-      let setPrivateTrue = { ...board, privateMode: true };
-      setBoard(setPrivateTrue);
-    } else {
-      let setPrivateFalse = { ...board, privateMode: false };
-      setBoard(setPrivateFalse);
-    }
+    setActive((prev) => {
+      return e.target.value;
+    });
   };
 
-  console.log(board);
+  useEffect(() => {
+    if (active === "0") {
+      let setPrivateFalse = { ...board, privateMode: false };
+      setBoard(setPrivateFalse);
+    } else {
+      let setPrivateTrue = { ...board, privateMode: true };
+      setBoard(setPrivateTrue);
+    }
+  }, [active]);
+
   return (
     <>
       <SubContainer>
@@ -91,16 +98,24 @@ function CreateBoardStep2() {
           commonSize
         />
 
-        <CheckBoxLabel htmlFor="private-mode">
-          <CheckBoxInput
-            type="checkbox"
-            id="private-mode"
-            onChange={handlePrivateMode}
-          />
-          <p>프라이빗 모드</p>
-        </CheckBoxLabel>
-        <CommonSpan style={{ marginLeft: "2rem", marginTop: 0 }}>
-          비밀번호가 있는 사람만 들어올수 있어요.
+        <ButtonContainer>
+          {buttonValue.map((item, idx) => {
+            return (
+              <React.Fragment key={idx}>
+                <ModeButton
+                  value={idx}
+                  className={idx == active ? "active" : ""}
+                  onClick={handlePrivateMode}
+                >
+                  {item}
+                </ModeButton>
+              </React.Fragment>
+            );
+          })}
+        </ButtonContainer>
+        <CommonSpan>
+          공개 모드 : 비밀번호로 삭제할 수 있어요. <br />
+          프라이빗 모드 : 비밀번호가 있어야 보드를 확인할 수 있어요.
         </CommonSpan>
       </SubContainer>
     </>
@@ -123,34 +138,27 @@ export const SubContainer = styled.div`
 export const CommonSpan = styled.span`
   text-align: left;
   font-weight: 500;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 
   margin-top: 0.5rem;
   color: #797979;
 `;
 
-const CheckBoxLabel = styled.label`
-  display: flex;
-  align-items: center;
-  user-select: none;
-  margin-top: 2rem;
-  p {
-    margin-left: 0.25rem;
-  }
+const ButtonContainer = styled.div`
+  width: 100%;
+  margin-top: 0.75rem;
+  background-color: #f0f0f0;
+  border-radius: 4px;
 `;
-const CheckBoxInput = styled.input`
-  appearance: none;
-  appearance: none;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 1.5px solid gainsboro;
-  border-radius: 0.4rem;
 
-  &:checked {
-    border-color: transparent;
-    background-size: 100% 100%;
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-color: gray;
+const ModeButton = styled.button`
+  width: 50%;
+  height: 2.5rem;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  &.active {
+    background-color: #d9d9d9;
+    font-weight: 600;
   }
 `;
