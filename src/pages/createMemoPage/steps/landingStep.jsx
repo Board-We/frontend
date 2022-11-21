@@ -50,7 +50,6 @@ const PageWrapper = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-top: 2rem;
 `
 
 const BoardInfoContainer = styled.div`

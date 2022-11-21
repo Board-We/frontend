@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import Backdrop from "./backdrop";
 
-const AlertModal = ({ open, onClose, text }) => {
+const AlertModal = ({ open, onClickArray, buttonTextArray, text, onClose }) => {
   useEffect(() => {
     const body = document.querySelector("body");
     body.style.overflow = open ? "hidden" : "auto";
@@ -11,7 +11,11 @@ const AlertModal = ({ open, onClose, text }) => {
     <>
       <ModalContainer>
         <ModalDescription>{text}</ModalDescription>
-        <CloseButton onClick={onClose}>확인</CloseButton>
+        {
+          buttonTextArray.map((el, i) => {
+            return <ButtonStyle onClick={onClickArray[i]} key={el}>{el}</ButtonStyle>
+          })
+        }
       </ModalContainer>
       <Backdrop onClick={onClose}></Backdrop>
     </>
@@ -42,7 +46,7 @@ const ModalContainer = styled.div`
 
 const ModalDescription = styled.div``;
 
-const CloseButton = styled.div`
+const ButtonStyle = styled.div`
   background-color: #868686;
   padding: 0.5rem 3rem;
   border-radius: 0.3rem;
