@@ -2,20 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 function SelectBasicMemoType() {
-  const [color, setColor] = useState("#ffffff");
+  const [color, setColor] = useState("#ffffff"); // for preview
+
+  const [memoColor, setMemoColor] = useState(["", "", ""]);
+  const [fontColor, setFontColor] = useState(["", "", ""]);
+
   const [buttonValue, setButtonValue] = useState();
   const [buttonFontValue, setFontButtonValue] = useState();
-
-  const [memoColor1, setMemoColor1] = useState("");
-  const [memoColor2, setMemoColor2] = useState("");
-  const [memoColor3, setMemoColor3] = useState("");
 
   const [fontBackgrond, setFontBackground] = useState("");
 
   const inputMemoRef = useRef(null);
   const inputFontRef = useRef(null);
 
-  const handlePicker = (e) => {
+  const handleBgPicker = (e) => {
     inputMemoRef.current?.click();
     setButtonValue(e.target.value);
   };
@@ -27,26 +27,63 @@ function SelectBasicMemoType() {
     });
   };
 
-  const handleChangeColor = (e) => {
+  const handleChangeBgColor = (e) => {
     setColor(e.target.value);
+    const copyArr = [...memoColor];
     if (buttonValue === "1") {
-      setMemoColor1(e.target.value);
+      copyArr[0] = e.target.value;
+      setMemoColor(copyArr);
     } else if (buttonValue === "2") {
-      setMemoColor2(e.target.value);
+      copyArr[1] = e.target.value;
+      setMemoColor(copyArr);
     } else if (buttonValue === "3") {
-      setMemoColor3(e.target.value);
+      copyArr[2] = e.target.value;
+      setMemoColor(copyArr);
+    }
+  };
+
+  const handleChangeFontColor = (e) => {
+    const copyArr = [...fontColor];
+    if (buttonFontValue === "1") {
+      copyArr[0] = e.target.value;
+      setFontColor(copyArr);
+    } else if (buttonFontValue === "2") {
+      copyArr[1] = e.target.value;
+      setFontColor(copyArr);
+    } else if (buttonFontValue === "3") {
+      copyArr[2] = e.target.value;
+      setFontColor(copyArr);
+    }
+  };
+
+  const renderFontPreview = () => {
+    switch (buttonFontValue) {
+      case "1":
+        return (
+          <FontPreview1 color={fontColor[0]}>롤링 페이퍼 남기기</FontPreview1>
+        );
+      case "2":
+        return (
+          <FontPreview2 color={fontColor[1]}>롤링 페이퍼 남기기</FontPreview2>
+        );
+      case "3":
+        return (
+          <FontPreview3 color={fontColor[2]}>롤링 페이퍼 남기기</FontPreview3>
+        );
+      default:
+        break;
     }
   };
 
   useEffect(() => {
     if (buttonFontValue === "1") {
-      setFontBackground((prev) => memoColor1);
+      setFontBackground((prev) => memoColor[0]);
     } else if (buttonFontValue === "2") {
-      setFontBackground((prev) => memoColor2);
+      setFontBackground((prev) => memoColor[1]);
     } else if (buttonFontValue === "3") {
-      setFontBackground((prev) => memoColor3);
+      setFontBackground((prev) => memoColor[2]);
     }
-  }, [buttonFontValue]);
+  }, [buttonFontValue, memoColor]);
 
   return (
     <MemoSelectContainer>
@@ -56,65 +93,68 @@ function SelectBasicMemoType() {
         <ColorPickerInput
           type="color"
           value={color}
-          onChange={handleChangeColor}
+          onChange={handleChangeBgColor}
           ref={inputMemoRef}
         />
       </ColorPickerContainer>
       <ColorPreviewContainer>
-        <ColorPreviewBox1 color={memoColor1} value="1" onClick={handlePicker}>
+        <ColorPreviewBox1
+          color={memoColor[0]}
+          value="1"
+          onClick={handleBgPicker}
+        >
           1
         </ColorPreviewBox1>
-        <ColorPreviewBox2 color={memoColor2} value="2" onClick={handlePicker}>
+        <ColorPreviewBox2
+          color={memoColor[1]}
+          value="2"
+          onClick={handleBgPicker}
+        >
           2
         </ColorPreviewBox2>
-        <ColorPreviewBox3 color={memoColor3} value="3" onClick={handlePicker}>
+        <ColorPreviewBox3
+          color={memoColor[2]}
+          value="3"
+          onClick={handleBgPicker}
+        >
           3
         </ColorPreviewBox3>
       </ColorPreviewContainer>
       <p>롤링페이퍼에 쓰여질 글자의 색상입니다.</p>
       <ColorPickerContainer>
         <FontPickerPreview backgrondColor={fontBackgrond}>
-          <p>롤링페이퍼 남기기</p>
+          {renderFontPreview()}
         </FontPickerPreview>
-        {/* 
+
         <FontColorPickerInput
           type="color"
-          value={color}
-          onChange={handleChangeColor}
+          value="#ffffff"
+          onChange={handleChangeFontColor}
           ref={inputFontRef}
-        /> */}
+        />
       </ColorPickerContainer>
       <ColorPreviewContainer>
         <FontPreviewBox1
-          color={memoColor1}
+          color={memoColor[0]}
           value="1"
           onClick={handleFontPicker}
         >
           1
         </FontPreviewBox1>
         <FontPreviewBox2
-          color={memoColor2}
+          color={memoColor[1]}
           value="2"
           onClick={handleFontPicker}
         >
           2
         </FontPreviewBox2>
         <FontPreviewBox3
-          color={memoColor3}
+          color={memoColor[2]}
           value="3"
           onClick={handleFontPicker}
         >
           3
         </FontPreviewBox3>
-        {/* <ColorPreviewBox1 color={memoColor1} value="1" onClick={handlePicker}>
-          1
-        </ColorPreviewBox1>
-        <ColorPreviewBox2 color={memoColor2} value="2" onClick={handlePicker}>
-          2
-        </ColorPreviewBox2>
-        <ColorPreviewBox3 color={memoColor3} value="3" onClick={handlePicker}>
-          3
-        </ColorPreviewBox3> */}
       </ColorPreviewContainer>
     </MemoSelectContainer>
   );
@@ -198,18 +238,30 @@ const ColorPreviewBox3 = styled(ColorPreviewBox1).attrs((props) => {
 })``;
 
 const FontPickerPreview = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 10rem;
   height: 20vh;
   margin-right: 1rem;
   border-radius: 4px;
   background-color: ${(props) =>
     props.backgrondColor ? props.backgrondColor : "white"};
-  p {
-    color: white;
-  }
 `;
 
 const FontColorPickerInput = styled(ColorPickerInput)``;
+
+const FontPreview1 = styled.p.attrs((props) => {
+  return {
+    style: {
+      color: props.color ? props.color : "white",
+    },
+  };
+})``;
+
+const FontPreview2 = styled(FontPreview1)``;
+
+const FontPreview3 = styled(FontPreview1)``;
 
 const FontPreviewBox1 = styled(ColorPreviewBox1)``;
 
