@@ -4,21 +4,23 @@ import styled from 'styled-components'
 
 const MemoTextArea = forwardRef(({ text = "", onChange, disabled = false }, ref) => {
 
-    const [lineHeight, setLineHeight] = useState('16px')
-
-    const resize = () => {
-        const scrollHeight = ref.current.scrollHeight
-        setLineHeight(`${scrollHeight}px`)
-    }
+    const [innerText , setInnerText] = useState("")
 
     const onChangeMemoTextTA = (e) => {
-        onChange(e);
-        resize();
+        const newText = e.target.innerText
+        if (newText.length > 50 || newText.split('\n').length > 5) {
+            e.target.innerText = innerText
+            return
+        }
+
+        setInnerText(newText)
+        onChange(newText);
+        console.log(e.target.innerText)
     }
 
     return (
         <ComponentWrapper>
-            <MemoTextTA ref={ref} value={text} onChange={onChangeMemoTextTA} height={lineHeight} disabled={disabled} placeholder={"남기고 싶은 내용을\n마음껏 작성해주세요!"} />
+            <MemoTextTA ref={ref} onInput={onChangeMemoTextTA} suppressContentEditableWarning={true} contentEditable={!disabled} placeholder={"남기고 싶은 내용을\n마음껏 작성해주세요!"}></MemoTextTA>
         </ComponentWrapper>
     )
 })
@@ -27,8 +29,8 @@ const ComponentWrapper = styled.div`
     
 `
 
-const MemoTextTA = styled.textarea`
-    height: ${props => props.height};
+const MemoTextTA = styled.div`
+    height: fit-content;
     font-size: 1rem;
     line-height: 1rem;
     text-align: center;

@@ -32,10 +32,8 @@ const MakingStep = () => {
         setMemo({ ...memo, background: initMemoBackground })
     }, [])
 
-    const onChangeText = (e) => {
-        const newText = e.target.value
-
-        if (newText.length > 50 || newText.split('\n').length > 5) return
+    const onChangeText = (text) => {
+        const newText = text
         setMemo({ ...memo, text: newText })
     }
 
@@ -83,7 +81,8 @@ const MakingStep = () => {
                 <OptionMenuContainer>
                     {
                         options.map((el, i) => {
-                            if (el.value) return <ChipButton imageUrl={el.imgUrl} text={el.text} selected={selectedOption === i} onClick={() => { onClickOption(i) }} key={i} />
+                            if (el.value) return <ChipButton imageUrl={el.imgUrl} text={el.text} selected={selectedOption === i} onClick={() => { onClickOption(i) }} key={i} flat round={false} />
+                            else return null
                         })
                     }
                 </OptionMenuContainer>
