@@ -4,6 +4,7 @@ import { useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
+import ChipButton from "../../../components/buttons/chipButton"
 import ColorButton from "../../../components/buttons/colorbutton"
 import FooterButton from "../../../components/buttons/FooterButton"
 import ImageButton from "../../../components/buttons/ImageButton"
@@ -22,9 +23,8 @@ const MakingStep = () => {
     const navigate = useNavigate()
 
     const options = [
-        { imgUrl: "https://cdns.iconmonstr.com/wp-content/releases/preview/2015/240/iconmonstr-paint-bucket-10.png", text: "색상", value: ["white", "red", "blue", "green"] },
-        { imgUrl: "https://st3.depositphotos.com/6628792/14552/v/450/depositphotos_145521931-stock-illustration-text-mini-line-icon.jpg", text: "종류", value: ["white", "red", "blue", "green"] },
-        { imgUrl: "https://thumbs.dreamstime.com/b/sticker-icon-laugh-emoji-black-simple-glyth-color-cute-vector-design-illustration-web-icons-graphics-146773607.jpg", text: "스티커" },
+        { imgUrl: "https://cdns.iconmonstr.com/wp-content/releases/preview/2015/240/iconmonstr-paint-bucket-10.png", text: "메모지", value: ["white", "red", "blue", "green"] },
+        { imgUrl: "https://st3.depositphotos.com/6628792/14552/v/450/depositphotos_145521931-stock-illustration-text-mini-line-icon.jpg", text: "테마", value: ["white", "red", "blue", "green"] },
     ]
 
     useEffect(() => {
@@ -76,14 +76,14 @@ const MakingStep = () => {
             <BoardArea background={board.background}>
                 <MemoTextContainer background={memo.background} onClick={onClickMemoTextZone}>
                     <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
-                    <MemoTextIndicator>{memo.text.length > 9 ? memo.text.length : ` ${memo.text.length}`}/50</MemoTextIndicator>
                 </MemoTextContainer>
+                <MemoTextIndicator>{memo.text.length > 9 ? memo.text.length : ` ${memo.text.length}`}/50</MemoTextIndicator>
             </BoardArea>
             <OptionContainer>
                 <OptionMenuContainer>
                     {
                         options.map((el, i) => {
-                            if (el.value) return <ImageButton imageUrl={el.imgUrl} text={el.text} selected={selectedOption === i} onClick={() => { onClickOption(i) }} key={i} />
+                            if (el.value) return <ChipButton imageUrl={el.imgUrl} text={el.text} selected={selectedOption === i} onClick={() => { onClickOption(i) }} key={i} />
                         })
                     }
                 </OptionMenuContainer>
@@ -132,6 +132,7 @@ const MemoTextContainer = styled.div`
     width: 75%;
     height: 75%;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+    border-radius: 0.5rem;
 `
 
 const MemoTextIndicator = styled.pre`
@@ -139,16 +140,16 @@ const MemoTextIndicator = styled.pre`
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 0;
-    bottom: 0;
-    width: 4rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    width: 3.5rem;
     height: 1.75rem;
     padding: 0.25rem;
-    margin: 0.5rem;
     background-color: #0000007f;
     color: #ffffffcc;
     font-weight: bold;
     border-radius: 0.5rem;
+    margin: 0;
 `
 
 const OptionContainer = styled.div`

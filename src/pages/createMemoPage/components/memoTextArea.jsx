@@ -18,7 +18,7 @@ const MemoTextArea = forwardRef(({ text = "", onChange, disabled = false }, ref)
 
     return (
         <ComponentWrapper>
-            <MemoTextTA ref={ref} value={text} onChange={onChangeMemoTextTA} height={lineHeight} disabled={disabled} />
+            <MemoTextTA ref={ref} value={text} onChange={onChangeMemoTextTA} height={lineHeight} disabled={disabled} placeholder={"남기고 싶은 내용을\n마음껏 작성해주세요!"} />
         </ComponentWrapper>
     )
 })
