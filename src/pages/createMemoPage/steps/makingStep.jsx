@@ -18,17 +18,23 @@ const MakingStep = () => {
     const board = useRecoilValue(boardState)
     const $memo = useRef()
     const [memo, setMemo] = useRecoilState(memoState)
-    const [selectedOption, setSelectedOption] = useState(0)
+    const [memoBackground, setMemoBackground] = useState(undefined)
     const [alertOpen, setAlertOpen] = useState(false)
     const navigate = useNavigate()
 
-    const options = [
-        { imgUrl: "https://cdns.iconmonstr.com/wp-content/releases/preview/2015/240/iconmonstr-paint-bucket-10.png", text: "메모지", value: ["white", "red", "blue", "green"] },
-        { imgUrl: "https://st3.depositphotos.com/6628792/14552/v/450/depositphotos_145521931-stock-illustration-text-mini-line-icon.jpg", text: "테마", value: ["white", "red", "blue", "green"] },
-    ]
+    const memoBackgroundOptions = {
+        image: [
+
+        ],
+        color: [
+            "white",
+            "red",
+            "green"
+        ]
+    }
 
     useEffect(() => {
-        const initMemoBackground = options[0].value[0]
+        const initMemoBackground = memoBackgroundOptions.image[0] ? memoBackgroundOptions.image[0] : memoBackgroundOptions.color[0]
         setMemo({ ...memo, background: initMemoBackground })
     }, [])
 
@@ -57,7 +63,7 @@ const MakingStep = () => {
         $memo.current.focus()
     }
 
-    const onClickOption = (option) => setSelectedOption(option)
+    const onClickOption = (option) => setMemoBackground(option)
 
     const onClickMakeMemo = () => {
         navigate("/memo/end")
@@ -78,27 +84,7 @@ const MakingStep = () => {
                 <MemoTextIndicator>{memo.text.length > 9 ? memo.text.length : ` ${memo.text.length}`}/50</MemoTextIndicator>
             </BoardArea>
             <OptionContainer>
-                <OptionMenuContainer>
-                    {
-                        options.map((el, i) => {
-                            if (el.value) return <ChipButton imageUrl={el.imgUrl} text={el.text} selected={selectedOption === i} onClick={() => { onClickOption(i) }} key={i} flat round={false} />
-                            else return null
-                        })
-                    }
-                </OptionMenuContainer>
-                <OptionValueContainer>
-                    {
-                        options[selectedOption].value.map((el, i) => {
-                            return (
-                                selectedOption === 0
-                                    ? <ColorButton color={el} onClick={() => onChangeBackground(el)} selected={memo.background === el} key={i} />
-                                    : selectedOption === 1
-                                        ? <ImageButton imageUrl={el} onClick={() => onChangeBackground(el)} selected={memo.background === el} key={i} />
-                                        : null
-                            )
-                        })
-                    }
-                </OptionValueContainer>
+
             </OptionContainer>
             <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} fontColor={"#FFFFFF"} onClick={onClickMakeMemo} />
         </PageWrapper>
