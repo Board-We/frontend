@@ -39,6 +39,7 @@ const MemoTextTA = styled.div`
     background: transparent;
     outline: 0;
     overflow: hidden;
+    word-break: break-word;
     :disabled{
         background-color: inherit;
         color: inherit;

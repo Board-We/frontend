@@ -4,10 +4,7 @@ import { useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
-import ChipButton from "../../../components/buttons/chipButton"
-import ColorButton from "../../../components/buttons/colorbutton"
 import FooterButton from "../../../components/buttons/FooterButton"
-import ImageButton from "../../../components/buttons/ImageButton"
 import StepHeader from "../../../components/layout/headers/stepHeader"
 import MemoPaper from "../../../components/memoPaper"
 import AlertModal from "../../../components/modals/alertModal"
@@ -19,7 +16,6 @@ const MakingStep = () => {
     const board = useRecoilValue(boardState)
     const $memo = useRef()
     const [memo, setMemo] = useRecoilState(memoState)
-    const [memoBackground, setMemoBackground] = useState(undefined)
     const [alertOpen, setAlertOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -28,24 +24,23 @@ const MakingStep = () => {
 
         ],
         color: [
-            "white",
-            "red",
-            "green"
+            { background: "white", textColor: "black" },
+            { background: "red", textColor: "white" },
+            { background: "green", textColor: "white" },
+            { background: "blue", textColor: "white" },
+            { background: "orange", textColor: "white" },
+            { background: "yellow", textColor: "black" },
         ]
     }
 
     useEffect(() => {
-        const initMemoBackground = memoBackgroundOptions.image[0] ? memoBackgroundOptions.image[0] : memoBackgroundOptions.color[0]
-        setMemo({ ...memo, background: initMemoBackground })
+        const initMemoStyle = memoBackgroundOptions.image[0] ? memoBackgroundOptions.image[0] : memoBackgroundOptions.color[0]
+        setMemo({ ...memo, style: initMemoStyle })
     }, [])
 
     const onChangeText = (text) => {
         const newText = text
         setMemo({ ...memo, text: newText })
-    }
-
-    const onChangeBackground = (newbackground) => {
-        setMemo({ ...memo, background: newbackground })
     }
 
     const onClickBack = () => {
@@ -64,10 +59,12 @@ const MakingStep = () => {
         $memo.current.focus()
     }
 
-    const onClickOption = (option) => setMemoBackground(option)
-
     const onClickMakeMemo = () => {
         navigate("/memo/end")
+    }
+
+    const onClickMemoPaper = (option) => {
+        setMemo({ ...memo, style: option })
     }
 
     return (
@@ -79,24 +76,33 @@ const MakingStep = () => {
                     : null
             }
             <BoardArea background={board.background}>
-                <MemoTextContainer background={memo.background} onClick={onClickMemoTextZone}>
+                <MemoTextContainer background={memo.style.background} color={memo.style.textColor} onClick={onClickMemoTextZone}>
                     <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
                 </MemoTextContainer>
                 <MemoTextIndicator>{memo.text.length > 9 ? memo.text.length : ` ${memo.text.length}`}/50</MemoTextIndicator>
             </BoardArea>
-            <OptionContainer>
-                {
-                    memoBackgroundOptions.image.map((el) => {
-                        return <>{el}</>
-                    })
-                }
-                {
-                    memoBackgroundOptions.color.map((el) => {
-                        return <MemoPaper background={el} text={"텍스트"} color={"black"}></MemoPaper>
-                    })
-                }
-            </OptionContainer>
-            <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} fontColor={"#FFFFFF"} onClick={onClickMakeMemo} />
+            <OptionArea>
+                <span>메모지를 선택해주세요</span>
+                <OptionContainer>
+                    {
+                        memoBackgroundOptions.image.map(el => {
+                            return <Option key={el} onClick={() => onClickMemoPaper(el)}>{el}</Option>
+                        })
+                    }
+                    {
+                        memoBackgroundOptions.color.map(el => {
+                            return <Option key={JSON.stringify(el)} onClick={() => onClickMemoPaper(el)}>
+                                <MemoPaper
+                                    background={el.background}
+                                    text={"텍스트"}
+                                    color={el.textColor}
+                                    isSelected={JSON.stringify(el) === JSON.stringify(memo.style)} />
+                            </Option>
+                        })
+                    }
+                </OptionContainer>
+            </OptionArea>
+            <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} textColor={"#FFFFFF"} onClick={onClickMakeMemo} />
         </PageWrapper>
     )
 }
@@ -113,8 +119,8 @@ const BoardArea = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100vw;
-    height: 100vw;
+    min-width: 100vw;
+    min-height: 100vw;
     max-width: 700px;
     max-height: 700px;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
@@ -127,6 +133,7 @@ const MemoTextContainer = styled.div`
     width: 75%;
     height: 75%;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+    color: ${props => props.color};
     border-radius: 0.5rem;
     padding: 0 15%;
 `
@@ -148,12 +155,29 @@ const MemoTextIndicator = styled.pre`
     margin: 0;
 `
 
-const OptionContainer = styled.div`
+const OptionArea = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
+    align-items: flex-start;
+    padding: 0.5rem;
+`
+
+const OptionContainer = styled.ul`
+    width: 100%;
+    height: 100%;
+    list-style: none;
     flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    clear: both;
+`
+
+const Option = styled.li`
+    position: relative;
+    float: left;
+    margin: 0.5rem;
 `
 
 export default MakingStep

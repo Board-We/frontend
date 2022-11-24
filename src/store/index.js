@@ -28,7 +28,10 @@ export const memoState = atom({
     key: "memoState",
     default: {
         text: "",
-        background: "black",
+        style: {
+            textColor: "black",
+            background: "white"
+        }
     }
 })
 
