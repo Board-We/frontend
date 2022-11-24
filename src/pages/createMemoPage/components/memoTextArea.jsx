@@ -15,7 +15,6 @@ const MemoTextArea = forwardRef(({ text = "", onChange, disabled = false }, ref)
 
         setInnerText(newText)
         onChange(newText);
-        console.log(e.target.innerText)
     }
 
     return (

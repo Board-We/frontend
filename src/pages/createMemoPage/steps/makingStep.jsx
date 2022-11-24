@@ -9,6 +9,7 @@ import ColorButton from "../../../components/buttons/colorbutton"
 import FooterButton from "../../../components/buttons/FooterButton"
 import ImageButton from "../../../components/buttons/ImageButton"
 import StepHeader from "../../../components/layout/headers/stepHeader"
+import MemoPaper from "../../../components/memoPaper"
 import AlertModal from "../../../components/modals/alertModal"
 import { boardState, memoState } from "../../../store"
 import MemoTextArea from "../components/memoTextArea"
@@ -84,7 +85,16 @@ const MakingStep = () => {
                 <MemoTextIndicator>{memo.text.length > 9 ? memo.text.length : ` ${memo.text.length}`}/50</MemoTextIndicator>
             </BoardArea>
             <OptionContainer>
-
+                {
+                    memoBackgroundOptions.image.map((el) => {
+                        return <>{el}</>
+                    })
+                }
+                {
+                    memoBackgroundOptions.color.map((el) => {
+                        return <MemoPaper background={el} text={"텍스트"} color={"black"}></MemoPaper>
+                    })
+                }
             </OptionContainer>
             <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} fontColor={"#FFFFFF"} onClick={onClickMakeMemo} />
         </PageWrapper>
@@ -118,6 +128,7 @@ const MemoTextContainer = styled.div`
     height: 75%;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     border-radius: 0.5rem;
+    padding: 0 15%;
 `
 
 const MemoTextIndicator = styled.pre`
@@ -141,23 +152,6 @@ const OptionContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
-    flex-grow: 1;
-`
-
-const OptionMenuContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding: 0.25rem 1rem;
-`
-
-const OptionValueContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding: 0.25rem 1rem;
-    background-color: #EEEEEE;
     height: 100%;
     flex-grow: 1;
 `
