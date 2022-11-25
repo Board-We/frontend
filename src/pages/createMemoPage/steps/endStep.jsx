@@ -25,7 +25,7 @@ const EndStep = () => {
         <PageWrapper>
             <ServiceNameHeader />
             <BoardArea background={board.background}>
-                <MemoTextContainer background={memo.background}>
+                <MemoTextContainer background={memo.style.background} color={memo.style.textColor}>
                     <MemoTextResult>{memo.text}</MemoTextResult>
                 </MemoTextContainer>
             </BoardArea>
@@ -55,6 +55,8 @@ const BoardArea = styled.div`
     justify-content: center;
     min-width: 100vw;
     min-height: 100vw;
+    max-width: 700px;
+    max-height: 700px;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
@@ -65,7 +67,9 @@ const MemoTextContainer = styled.div`
     width: 75%;
     height: 75%;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+    color: ${props => props.color};
     padding: 4.5rem; // padding value of text area
+    border-radius: 0.5rem;
 `
 
 const MemoTextResult = styled.div`
