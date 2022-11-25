@@ -9,15 +9,15 @@ import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useNavigate } from "react-router-dom";
 
-const controlCreatBoardStep = (stepId = 0) => {
+const controlCreatBoardStep = (stepId = 1) => {
   switch (stepId) {
-    case 0:
-      return <CreateBoardStep1 />;
     case 1:
-      return <CreateBoardStep2 />;
+      return <CreateBoardStep1 />;
     case 2:
-      return <CreateBoardStep3 />;
+      return <CreateBoardStep2 />;
     case 3:
+      return <CreateBoardStep3 />;
+    case 4:
       return <CreateBoardStep4 />;
     default:
       break;
@@ -27,7 +27,7 @@ const controlCreatBoardStep = (stepId = 0) => {
 
 const CreateBoardPage = () => {
   const navigate = useNavigate();
-  const finalStepId = 3;
+  const finalStepId = 4;
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
 
   const handleClickNext = () => {
@@ -49,6 +49,10 @@ const CreateBoardPage = () => {
           onClick={handleClickBefore}
           isFinalStep={currentStepId === finalStepId}
         />
+        <ProgressBarContainer>
+          <ProgressBar width={currentStepId} />
+        </ProgressBarContainer>
+
         <CreateBoardBody>
           {controlCreatBoardStep(currentStepId)}
         </CreateBoardBody>
@@ -86,6 +90,19 @@ const CreateBoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const ProgressBarContainer = styled.div`
+  width: 100%;
+  height: 0.4vh;
+  background-color: #d9d9d9;
+`;
+
+const ProgressBar = styled.div`
+  margin-right: auto;
+  width: ${(props) => props.width * 20}%;
+  background-color: black;
+  height: inherit;
 `;
 
 const CreateBoardBody = styled.div`
