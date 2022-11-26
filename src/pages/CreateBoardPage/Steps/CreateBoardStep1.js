@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import TextInput from "../../../components/TextInput";
+import TextLengthValidator from "../../../components/textLengthValidator";
 import { boardState } from "../../../store";
 
 const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
@@ -9,13 +10,16 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   const [boardName, setBoardName] = useState("");
 
   const handleChangeBoardName = (e) => {
-    if (boardName.length >= 1 && boardName.length < 21)
-      setDisabledFooterButton(false);
-    else if (boardName.length >= 21) setDisabledFooterButton(true);
     setBoardName(e.target.value);
     const currentBoardState = { ...board, name: e.target.value };
     setBoard(currentBoardState);
   };
+
+  useEffect(() => {
+    boardName.length >= 1 && boardName.length < 21
+      ? setDisabledFooterButton(false)
+      : setDisabledFooterButton(true);
+  }, [boardName, setDisabledFooterButton]);
 
   return (
     <>
@@ -32,9 +36,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
           maxLength={21}
         />
         <CreateBoardGuide>
-          <TextCounter isOverLegth={boardName.length === 21}>
-            {boardName.length} / 20
-          </TextCounter>
+          <TextLengthValidator maxLength={20} text={boardName} />
         </CreateBoardGuide>
       </CreateBoardStep>
     </>
@@ -75,14 +77,4 @@ const CreateBoardGuide = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-top: 0.5rem;
-`;
-
-const TextCounter = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  color: ${(props) => (props.isOverLegth ? "red" : "gray")};
-  p {
-    font-size: 0.8rem;
-  }
 `;
