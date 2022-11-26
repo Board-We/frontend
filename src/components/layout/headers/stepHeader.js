@@ -27,7 +27,7 @@ const StepHeaderContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem 0;
 `;
 
 const StepHeaderTitle = styled.div`

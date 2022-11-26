@@ -1,7 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-function TextInput({ commonSize, placeholder, type, onChange, disabled }) {
+function TextInput({
+  commonSize,
+  placeholder,
+  type,
+  onChange,
+  disabled,
+  maxLength,
+}) {
   return (
     <InputArea
       commonSize={commonSize}
@@ -9,6 +16,7 @@ function TextInput({ commonSize, placeholder, type, onChange, disabled }) {
       type={type}
       onChange={onChange}
       disabled={disabled}
+      maxLength={maxLength}
     />
   );
 }
@@ -18,11 +26,12 @@ export default TextInput;
 const InputArea = styled.input`
   width: ${(props) => (props.commonSize === true ? "100%" : "40%")};
   height: 2.75rem;
-  padding: 1rem;
-  border: none;
-  border-radius: 4px;
-  background-color: #f3f3f3;
+  outline: none;
+  border-style: hidden;
+  border-bottom: 0.1rem solid #b4b4b4;
   margin-top: 1rem;
+  font-size: 1.2rem;
+
   &:focus {
     outline: none;
   }

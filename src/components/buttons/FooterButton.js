@@ -17,25 +17,25 @@ const FooterButton = ({ color, fontColor, text, onClick, disabled }) => {
   );
 };
 const ButtonWrapper = styled.div`
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
+  position: absolute;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  padding: 1.2rem;
 `;
 const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 0 0.75rem 0;
+  padding: 1.2rem;
   width: 100%;
-  max-width: 700px;
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
 
-  font-size: 1rem;
   color: ${(props) => (props.fontColor ? props.fontColor : "white")};
-  background-color: ${(props) => (props.color ? props.color : "grey")};
+  background-color: ${(props) => (props.disabled ? "#D6D6D6" : "black")};
   opacity: ${(props) => (props.disabled ? "0.4" : null)};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   user-select: none;

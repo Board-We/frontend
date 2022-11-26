@@ -25,24 +25,15 @@ export const boardState = atom({
 });
 
 export const memoState = atom({
-<<<<<<< HEAD
   key: "memoState",
   default: {
     text: "",
-    background: "black",
+    style: {
+      textColor: "black",
+      background: "white",
+    },
   },
 });
-=======
-    key: "memoState",
-    default: {
-        text: "",
-        style: {
-            textColor: "black",
-            background: "white"
-        }
-    }
-})
->>>>>>> 573d5623a7b7c3b512b3e5746d876c57902f4bda
 
 export const createBoardStepId = atom({
   key: "createBoardStepId",

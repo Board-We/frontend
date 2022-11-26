@@ -8,11 +8,14 @@ import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const controlCreatBoardStep = (stepId = 1) => {
+const controlCreatBoardStep = ({ stepId = 1, setDisabledFooterButton }) => {
   switch (stepId) {
     case 1:
-      return <CreateBoardStep1 />;
+      return (
+        <CreateBoardStep1 setDisabledFooterButton={setDisabledFooterButton} />
+      );
     case 2:
       return <CreateBoardStep2 />;
     case 3:
@@ -29,6 +32,7 @@ const CreateBoardPage = () => {
   const navigate = useNavigate();
   const finalStepId = 4;
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
+  const [disabledFooterButton, setDisabledFooterButton] = useState(true);
 
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
@@ -45,22 +49,22 @@ const CreateBoardPage = () => {
     <PageWrapper>
       <CreateBoardContainer>
         <StepHeader
-          title="보드 제작하기"
+          title="새 보드 만들기"
           onClick={handleClickBefore}
           isFinalStep={currentStepId === finalStepId}
         />
         <ProgressBarContainer>
           <ProgressBar width={currentStepId} />
         </ProgressBarContainer>
-
         <CreateBoardBody>
-          {controlCreatBoardStep(currentStepId)}
+          {controlCreatBoardStep({ currentStepId, setDisabledFooterButton })}
         </CreateBoardBody>
         <PageFooter>
           <FooterButton
             color="black"
             fontColor="white"
             text={currentStepId === finalStepId ? "내 보드로 이동하기" : "다음"}
+            disabled={disabledFooterButton}
             onClick={
               currentStepId === finalStepId
                 ? handleClickGoToBoard
@@ -110,6 +114,7 @@ const CreateBoardBody = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1rem;
+  padding: 3rem 2rem;
 `;
 
 const PageFooter = styled.div`
