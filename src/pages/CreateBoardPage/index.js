@@ -17,7 +17,9 @@ const controlCreatBoardStep = ({ stepId = 1, setDisabledFooterButton }) => {
         <CreateBoardStep1 setDisabledFooterButton={setDisabledFooterButton} />
       );
     case 2:
-      return <CreateBoardStep2 />;
+      return (
+        <CreateBoardStep2 setDisabledFooterButton={setDisabledFooterButton} />
+      );
     case 3:
       return <CreateBoardStep3 />;
     case 4:
@@ -33,7 +35,7 @@ const CreateBoardPage = () => {
   const finalStepId = 4;
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);
-
+  console.log(currentStepId);
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
   };

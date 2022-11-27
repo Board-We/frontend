@@ -1,20 +1,34 @@
 import styled from "styled-components";
 
-const TextLengthValidator = ({ maxLength, text }) => {
+const TextLengthValidator = ({ maxLength, text, isValidLength }) => {
   return (
-    <TextCounter isOverLegth={text.length > maxLength}>
-      {text.length} / {maxLength}
-    </TextCounter>
+    <TextLengthValidatorContainer>
+      {!isValidLength && (
+        <InvalidMessageText>{`${maxLength}자 이내로 작성해주세요`}</InvalidMessageText>
+      )}
+      <TextCounter isOverLength={!isValidLength}>
+        {text.length} / {maxLength}
+      </TextCounter>
+    </TextLengthValidatorContainer>
   );
 };
 
 export default TextLengthValidator;
 
-const TextCounter = styled.div`
+const TextLengthValidatorContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  color: ${(props) => (props.isOverLegth ? "red" : "gray")};
+  position: relative;
+`;
+
+const InvalidMessageText = styled.div`
+  color: red;
+`;
+
+const TextCounter = styled.div`
+  position: absolute;
+  right: 0;
+  color: ${(props) => (props.isOverLength ? "red" : "gray")};
   p {
     font-size: 0.8rem;
   }

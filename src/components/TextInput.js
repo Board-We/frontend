@@ -1,27 +1,55 @@
 import React from "react";
 import styled from "styled-components";
+import { ReactComponent as Delete } from "../assets/delete.svg";
+import { ReactComponent as AlertExclamation } from "../assets/alertExclamation.svg";
 
 function TextInput({
+  value,
   commonSize,
   placeholder,
   type,
   onChange,
   disabled,
-  maxLength,
+  inputMaxLength,
+  setTextState,
+  isValidLength,
 }) {
+  const handleClickDeleteText = () => {
+    setTextState("");
+  };
   return (
-    <InputArea
-      commonSize={commonSize}
-      placeholder={placeholder}
-      type={type}
-      onChange={onChange}
-      disabled={disabled}
-      maxLength={maxLength}
-    />
+    <InputContainer>
+      <InputArea
+        value={value}
+        commonSize={commonSize}
+        placeholder={placeholder}
+        type={type}
+        onChange={onChange}
+        disabled={disabled}
+        maxLength={inputMaxLength}
+      />
+      {isValidLength ? (
+        <DeleteButton onClick={handleClickDeleteText}>
+          <Delete />
+        </DeleteButton>
+      ) : (
+        <AlertExclamationWrapper>
+          <AlertExclamation />
+        </AlertExclamationWrapper>
+      )}
+    </InputContainer>
   );
 }
 
 export default TextInput;
+
+const InputContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+`;
 
 const InputArea = styled.input`
   width: ${(props) => (props.commonSize === true ? "100%" : "40%")};
@@ -35,4 +63,22 @@ const InputArea = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+const DeleteButton = styled.button`
+  position: absolute;
+  right: 2%;
+  bottom: 10%;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const AlertExclamationWrapper = styled.div`
+  position: absolute;
+  right: 2%;
+  bottom: 10%;
 `;

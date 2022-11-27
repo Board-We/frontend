@@ -6,8 +6,10 @@ import TextLengthValidator from "../../../components/textLengthValidator";
 import { boardState } from "../../../store";
 
 const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
+  const maxLength = 20;
   const [board, setBoard] = useRecoilState(boardState);
   const [boardName, setBoardName] = useState("");
+  const [isValidLength, setIsValidLength] = useState(true);
 
   const handleChangeBoardName = (e) => {
     setBoardName(e.target.value);
@@ -16,10 +18,15 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   };
 
   useEffect(() => {
-    boardName.length >= 1 && boardName.length < 21
+    boardName.length >= 1 && boardName.length < maxLength + 1
       ? setDisabledFooterButton(false)
       : setDisabledFooterButton(true);
   }, [boardName, setDisabledFooterButton]);
+
+  useEffect(() => {
+    if (boardName.length > maxLength) setIsValidLength(false);
+    else setIsValidLength(true);
+  }, [boardName, maxLength, setIsValidLength]);
 
   return (
     <>
@@ -29,14 +36,21 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
           <p>보드의 제목은 무엇인가요?</p>
         </CreateBoardDescriptionText>
         <TextInput
+          value={boardName}
           commonSize={true}
           placeholder="ex. 김땡땡 생일 축하해~!"
           type="text"
           onChange={handleChangeBoardName}
-          maxLength={21}
+          inputMaxLength={maxLength + 1}
+          setTextState={setBoardName}
+          isValidLength={isValidLength}
         />
         <CreateBoardGuide>
-          <TextLengthValidator maxLength={20} text={boardName} />
+          <TextLengthValidator
+            maxLength={maxLength}
+            text={boardName}
+            isValidLength={isValidLength}
+          />
         </CreateBoardGuide>
       </CreateBoardStep>
     </>
