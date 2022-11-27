@@ -10,16 +10,15 @@ import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const controlCreatBoardStep = ({ stepId = 1, setDisabledFooterButton }) => {
+const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
   switch (stepId) {
-    case 1:
+    case 1: {
       return (
         <CreateBoardStep1 setDisabledFooterButton={setDisabledFooterButton} />
       );
+    }
     case 2:
-      return (
-        <CreateBoardStep2 setDisabledFooterButton={setDisabledFooterButton} />
-      );
+      return <CreateBoardStep2 />;
     case 3:
       return <CreateBoardStep3 />;
     case 4:
@@ -35,7 +34,7 @@ const CreateBoardPage = () => {
   const finalStepId = 4;
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);
-  console.log(currentStepId);
+
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
   };
@@ -47,6 +46,7 @@ const CreateBoardPage = () => {
   const handleClickGoToBoard = () => {
     // To Do: 생성된 보드 링크로 이동
   };
+
   return (
     <PageWrapper>
       <CreateBoardContainer>
@@ -59,7 +59,7 @@ const CreateBoardPage = () => {
           <ProgressBar width={currentStepId} />
         </ProgressBarContainer>
         <CreateBoardBody>
-          {controlCreatBoardStep({ currentStepId, setDisabledFooterButton })}
+          {controlCreatBoardStep(currentStepId, setDisabledFooterButton)}
         </CreateBoardBody>
         <PageFooter>
           <FooterButton
