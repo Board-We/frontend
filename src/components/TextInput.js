@@ -48,6 +48,7 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-bottom: 0.1rem solid #b4b4b4;
   position: relative;
 `;
 
@@ -56,10 +57,10 @@ const InputArea = styled.input`
   height: 2.75rem;
   outline: none;
   border-style: hidden;
-  border-bottom: 0.1rem solid #b4b4b4;
+  border: none;
   margin-top: 1rem;
   font-size: 1.2rem;
-
+  padding-right: 4rem;
   &:focus {
     outline: none;
   }
@@ -67,18 +68,20 @@ const InputArea = styled.input`
 
 const DeleteButton = styled.button`
   position: absolute;
-  right: 2%;
-  bottom: 10%;
+  right: 1%;
+  top: 50%;
+  margin: auto;
+  transform: translate(-50%);
   border: none;
   background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
+  padding: 0;
 `;
 
 const AlertExclamationWrapper = styled.div`
   position: absolute;
-  right: 2%;
-  bottom: 10%;
+  right: 1%;
+  top: 50%;
+  margin: auto;
+  transform: translate(-50%);
 `;

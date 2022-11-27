@@ -4,21 +4,29 @@ import CreateBoardStep1 from "./Steps/CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButton";
-import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 
 const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
   switch (stepId) {
     case 1: {
       return (
-        <CreateBoardStep1 setDisabledFooterButton={setDisabledFooterButton} />
+        <CreateBoardStep1
+          stepId={stepId}
+          setDisabledFooterButton={setDisabledFooterButton}
+        />
       );
     }
     case 2:
-      return <CreateBoardStep2 />;
+      return (
+        <CreateBoardStep2
+          stepId={stepId}
+          setDisabledFooterButton={setDisabledFooterButton}
+        />
+      );
     case 3:
       return <CreateBoardStep3 />;
     case 4:

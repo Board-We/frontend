@@ -5,7 +5,7 @@ import TextInput from "../../../components/TextInput";
 import TextLengthValidator from "../../../components/textLengthValidator";
 import { boardState } from "../../../store";
 
-const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
+const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
   const maxLength = 20;
   const [board, setBoard] = useRecoilState(boardState);
   const [boardName, setBoardName] = useState("");
@@ -29,37 +29,35 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   }, [boardName, maxLength, setIsValidLength]);
 
   return (
-    <>
-      <CreateBoardStep>
-        <CreateBoardStepCounter>1/4단계</CreateBoardStepCounter>
-        <CreateBoardDescriptionText>
-          <p>보드의 제목은 무엇인가요?</p>
-        </CreateBoardDescriptionText>
-        <TextInput
-          value={boardName}
-          commonSize={true}
-          placeholder="ex. 김땡땡 생일 축하해~!"
-          type="text"
-          onChange={handleChangeBoardName}
-          inputMaxLength={maxLength + 1}
-          setTextState={setBoardName}
+    <CreateBoardStepContainer>
+      <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
+      <CreateBoardDescriptionText>
+        <p>보드의 제목은 무엇인가요?</p>
+      </CreateBoardDescriptionText>
+      <TextInput
+        value={boardName}
+        commonSize={true}
+        placeholder="ex. 김땡땡 생일 축하해~!"
+        type="text"
+        onChange={handleChangeBoardName}
+        inputMaxLength={maxLength + 1}
+        setTextState={setBoardName}
+        isValidLength={isValidLength}
+      />
+      <CreateBoardGuide>
+        <TextLengthValidator
+          maxLength={maxLength}
+          text={boardName}
           isValidLength={isValidLength}
         />
-        <CreateBoardGuide>
-          <TextLengthValidator
-            maxLength={maxLength}
-            text={boardName}
-            isValidLength={isValidLength}
-          />
-        </CreateBoardGuide>
-      </CreateBoardStep>
-    </>
+      </CreateBoardGuide>
+    </CreateBoardStepContainer>
   );
 };
 
 export default CreateBoardStep1;
 
-const CreateBoardStep = styled.div`
+const CreateBoardStepContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
