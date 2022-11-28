@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
 import FooterButton from "../../../components/buttons/FooterButton"
+import Subtitle from "../../../components/label/subtitle"
 import StepHeader from "../../../components/layout/headers/stepHeader"
 import MemoPaper from "../../../components/memoPaper"
 import AlertModal from "../../../components/modals/alertModal"
@@ -77,12 +78,13 @@ const MakingStep = () => {
             }
             <BoardArea background={board.background}>
                 <MemoTextContainer background={memo.style.background} color={memo.style.textColor} onClick={onClickMemoTextZone}>
+                    {memo.text.length == 0 ? <MemoPlaceHolder>남기고 싶은 내용을<br />마음껏 작성해주세요!</MemoPlaceHolder> : null}
                     <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
                 </MemoTextContainer>
-                <MemoTextIndicator>{memo.text.length > 9 ? memo.text.length : ` ${memo.text.length}`}/50</MemoTextIndicator>
+                <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
             </BoardArea>
             <OptionArea>
-                <span>메모지를 선택해주세요</span>
+                <Subtitle text={"메모지를 선택해주세요."} />
                 <OptionContainer>
                     {
                         memoBackgroundOptions.image.map(el => {
@@ -119,8 +121,8 @@ const BoardArea = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 100vw;
-    min-height: 100vw;
+    width: 100vw;
+    height: 100vw;
     max-width: 700px;
     max-height: 700px;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
@@ -130,12 +132,21 @@ const MemoTextContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 75%;
-    height: 75%;
+    width: 80%;
+    height: 80%;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     color: ${props => props.color};
     border-radius: 0.5rem;
-    padding: 0 15%;
+    padding: 0 1.25rem;
+`
+
+const MemoPlaceHolder = styled.span`
+    width: 100%;
+    opacity: 0.4;
+    color: #000000;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.875rem;
 `
 
 const MemoTextIndicator = styled.pre`
@@ -143,14 +154,10 @@ const MemoTextIndicator = styled.pre`
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 0.5rem;
-    bottom: 0.5rem;
-    width: 3.5rem;
-    height: 1.75rem;
-    padding: 0.25rem;
-    background-color: #0000007f;
-    color: #ffffffcc;
-    font-weight: bold;
+    right: 2.5rem;
+    bottom: 0.75rem;
+    color: black;
+    font-weight: 500;
     border-radius: 0.5rem;
     margin: 0;
 `
@@ -171,13 +178,13 @@ const OptionContainer = styled.ul`
     flex-grow: 1;
     margin: 0;
     padding: 0;
-    clear: both;
+    margin-top: 1rem;
 `
 
 const Option = styled.li`
     position: relative;
     float: left;
-    margin: 0.5rem;
+    margin: 0.25rem;
 `
 
 export default MakingStep

@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../../components/buttons/chipButton"
+import Description from "../../../components/label/description"
+import Tag from "../../../components/label/tag"
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader"
 import { boardState } from "../../../store"
+import Title from "../../../components/label/title"
 
 const LandingStep = () => {
 
@@ -33,10 +36,18 @@ const LandingStep = () => {
         <PageWrapper>
             <ServiceNameHeader />
             <BoardInfoContainer background={board.background}>
-                <span>{board.name}</span>
-                <span>{board.tags}</span>
-                <span>{board.description}</span>
-                <span>이 롤링페이퍼는 {board.openTerm.start}부터 확인가능합니다</span>
+                <Title text={board.name} />
+                <TagWrapper>
+                    {
+                        board.tags.map(el => {
+                            return (
+                                <Tag text={`#${el}`} />
+                            )
+                        })
+                    }
+                </TagWrapper>
+                <Description text={board.description} />
+                {/* <span>이 롤링페이퍼는 {board.openTerm.start}부터 확인가능합니다</span> */}
             </BoardInfoContainer>
             <InputContainer>
                 <ChipButton onClick={onClickMMP} text={"롤링페이퍼 남기기"} flat />
@@ -55,11 +66,18 @@ const PageWrapper = styled.div`
 const BoardInfoContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-end;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     width: 100%;
-    height: 80%;
+    height: 90%;
+    padding: 2rem;
+`
+
+const TagWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin: 0rem 1.5rem;
 `
 
 const InputContainer = styled.div`

@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom"
 import { useRecoilValue } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../../components/buttons/chipButton"
+import Description from "../../../components/label/description"
+import Tag from "../../../components/label/tag"
+import Title from "../../../components/label/title"
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader"
 import { boardState, memoState } from "../../../store"
-import MemoTextArea from "../components/memoTextArea"
 
 const EndStep = () => {
 
@@ -17,7 +19,7 @@ const EndStep = () => {
         navigate("/memo/landing")
     }
 
-    const onClickMakeBoard = () => {
+    const onClickTopBoard = () => {
         navigate("/board/new")
     }
 
@@ -25,15 +27,18 @@ const EndStep = () => {
         <PageWrapper>
             <ServiceNameHeader />
             <BoardArea background={board.background}>
+                <Title text={board.name} />
+                <Tag />
+                <Description text={board.description} />
                 <MemoTextContainer background={memo.style.background} color={memo.style.textColor}>
                     <MemoTextResult>{memo.text}</MemoTextResult>
                 </MemoTextContainer>
+                <Title>롤링페이퍼가 작성되었어요!</Title>
+                <Description>이 롤링페이퍼는 {board.attachableTerm[0]}에 공개될 예정입니다.</Description>
             </BoardArea>
             <Alertcontainer>
-                <span>롤링페이퍼 작성이<br />완료되었습니다!</span>
-                <span>이 롤링페이퍼는 {board.attachableTerm[0]}에 공개될 예정입니다.</span>
-                <ChipButton width={"16.8rem"} flat color={"black"} background={"#E8E8E8"} text={"롤링페이퍼 더 붙이기"} onClick={onClickMoreMemo} />
-                <ChipButton width={"16.8rem"} flat text={"나도 롤링페이퍼 만들래"} onClick={onClickMakeBoard} />
+                <ChipButton flat fit color={"black"} background={"#E8E8E8"} text={"인기보드 보기"} onClick={onClickTopBoard} />
+                <ChipButton flat fit text={"롤링페이퍼 더 붙이기"} onClick={onClickMoreMemo} />
             </Alertcontainer>
         </PageWrapper>
     )
@@ -51,12 +56,12 @@ const PageWrapper = styled.div`
 const BoardArea = styled.div`
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 100vw;
-    min-height: 100vw;
+    width: 100%;
     max-width: 700px;
-    max-height: 700px;
+    height: fit-content;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
@@ -64,8 +69,8 @@ const MemoTextContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 75%;
-    height: 75%;
+    width: 15rem;
+    height: 15rem;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     color: ${props => props.color};
     padding: 4.5rem; // padding value of text area
@@ -73,13 +78,13 @@ const MemoTextContainer = styled.div`
 `
 
 const MemoTextResult = styled.div`
-    width: 100%;
+    width: 80%;
     height: fit-content;
 `
 
 const Alertcontainer = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 100%;

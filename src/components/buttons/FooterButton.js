@@ -17,12 +17,13 @@ const FooterButton = ({ color, fontColor, text, onClick, disabled }) => {
   );
 };
 const ButtonWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
+  max-width: 700px;
   padding: 1.2rem;
 `;
 const Button = styled.div`
@@ -30,10 +31,10 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1.2rem;
-  width: 100%;
+  width: 100vw;
+  max-width: 700px;
   border-radius: 0.5rem;
   font-size: 1.3rem;
-
   color: ${(props) => (props.fontColor ? props.fontColor : "white")};
   background-color: ${(props) => (props.disabled ? "#D6D6D6" : "black")};
   opacity: ${(props) => (props.disabled ? "0.4" : null)};

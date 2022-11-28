@@ -28,6 +28,8 @@ const StepHeaderContainer = styled.div`
   display: flex;
   justify-content: center;
   padding: 1.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 500;
 `;
 
 const StepHeaderTitle = styled.div`

@@ -8,7 +8,7 @@ const MemoTextArea = forwardRef(({ text = "", onChange, disabled = false }, ref)
 
     const onChangeMemoTextTA = (e) => {
         const newText = e.target.innerText
-        if (newText.length > 50 || newText.split('\n').length > 5) {
+        if (newText.length > 100 || newText.split('\n').length > 5) {
             e.target.innerText = innerText
             return
         }
@@ -30,8 +30,9 @@ const ComponentWrapper = styled.div`
 
 const MemoTextTA = styled.div`
     height: fit-content;
-    font-size: 1rem;
-    line-height: 1rem;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.875rem;
     text-align: center;
     resize: none;
     border: 0;
