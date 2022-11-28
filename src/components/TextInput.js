@@ -18,7 +18,7 @@ function TextInput({
     setTextState("");
   };
   return (
-    <InputContainer>
+    <InputContainer isValidLength={isValidLength}>
       <InputArea
         value={value}
         commonSize={commonSize}
@@ -48,7 +48,9 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 0.1rem solid #b4b4b4;
+  border-bottom: ${(props) =>
+    props.isValidLength ? "0.1rem solid #b4b4b4" : "0.1rem solid #FF0000"};
+
   position: relative;
 `;
 
