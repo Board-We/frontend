@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
@@ -7,6 +7,7 @@ import CreateMemoPage from "./pages/createMemoPage";
 import BoardPage from "./pages/BoardPage";
 
 function App() {
+
   return (
     <RecoilRoot>
       <div className="App">
@@ -14,7 +15,7 @@ function App() {
           <Routes>
             <Route path="/board/new" element={<CreateBoardPage />} />
             <Route path="/memo/*" element={<CreateMemoPage />}></Route>
-            <Route path="/board" element={<BoardPage />} />
+            <Route path="/board/*" element={<BoardPage />} />
             <Route path="/" element={<>test</>} />
           </Routes>
         </BrowserRouter>

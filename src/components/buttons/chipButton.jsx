@@ -7,9 +7,10 @@ const ChipButton = ({
     color = "white",
     round,
     flat,
-    fit=false,
+    fit = false,
     text,
     onClick,
+    children
 }) => {
     return (
         <ComponentWrapper
@@ -22,6 +23,7 @@ const ChipButton = ({
             onClick={onClick}
         >
             {text}
+            {children}
         </ComponentWrapper>
     );
 };
@@ -30,7 +32,7 @@ const ComponentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${props => props.fit ? `0.25rem 0.5rem` : `1.5rem 3rem`};
+  padding: ${props => props.fit ? `0.25rem 1.25rem` : `1.5rem 3rem`};
   width: ${(props) => (props.width ? props.width : "fit-content")};
   height: 3rem;
   font-size: 1rem;

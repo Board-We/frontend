@@ -31,15 +31,15 @@ const ServiceNameHeader = ({
 };
 
 const ComponentWrapper = styled.div`
-  width: 100vw;
-  max-width: 700px;
-  height: 4rem;
+  width: 100%;
+  height: 3rem;
   position: fixed;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 1rem;
+  padding-left: 1rem;
   background-color: white;
+  z-index: 999999;
 `;
 
 const ServiceNameHeaderTitle = styled.div`

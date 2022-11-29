@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
 import FooterButton from "../../../components/buttons/FooterButton"
-import Subtitle from "../../../components/label/subtitle"
+import SmallTitle from "../../../components/label/smallTitle"
 import StepHeader from "../../../components/layout/headers/stepHeader"
 import MemoPaper from "../../../components/memoPaper"
 import AlertModal from "../../../components/modals/alertModal"
@@ -37,7 +37,7 @@ const MakingStep = () => {
     useEffect(() => {
         const initMemoStyle = memoBackgroundOptions.image[0] ? memoBackgroundOptions.image[0] : memoBackgroundOptions.color[0]
         setMemo({ ...memo, style: initMemoStyle })
-    }, [])
+    }, [board])
 
     const onChangeText = (text) => {
         const newText = text
@@ -68,14 +68,20 @@ const MakingStep = () => {
         setMemo({ ...memo, style: option })
     }
 
+    const alertOption = {
+        buttonTextArray: ["중단하기", "편집으로 돌아가기"],
+        onClickArray: [goBack, cancelBack]
+    }
+
+
     return (
         <PageWrapper>
-            <StepHeader title={"롤링페이퍼 작성하기"} onClick={onClickBack} />
             {
                 alertOpen ?
-                    <AlertModal open={alertOpen} buttonTextArray={["중단하기", "편집으로 돌아가기"]} onClickArray={[goBack, cancelBack]} text={"편집을 중단할까요?"} />
+                    <AlertModal open={alertOpen} buttonTextArray={alertOption.buttonTextArray} onClickArray={alertOption.onClickArray} text={"편집을 중단할까요?"} />
                     : null
             }
+            <StepHeader title={"롤링페이퍼 작성하기"} onClick={onClickBack} />
             <BoardArea background={board.background}>
                 <MemoTextContainer background={memo.style.background} color={memo.style.textColor} onClick={onClickMemoTextZone}>
                     {memo.text.length == 0 ? <MemoPlaceHolder>남기고 싶은 내용을<br />마음껏 작성해주세요!</MemoPlaceHolder> : null}
@@ -84,7 +90,7 @@ const MakingStep = () => {
                 <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
             </BoardArea>
             <OptionArea>
-                <Subtitle text={"메모지를 선택해주세요."} />
+                <SmallTitle text={"메모지를 선택해주세요."} />
                 <OptionContainer>
                     {
                         memoBackgroundOptions.image.map(el => {
@@ -104,8 +110,11 @@ const MakingStep = () => {
                     }
                 </OptionContainer>
             </OptionArea>
-            <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} textColor={"#FFFFFF"} onClick={onClickMakeMemo} />
+            <FooterButtonArea>
+                <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} textColor={"#FFFFFF"} onClick={onClickMakeMemo} filled={true} flat={true} />
+            </FooterButtonArea>
         </PageWrapper>
+
     )
 }
 
@@ -113,7 +122,7 @@ const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
 `
 
 const BoardArea = styled.div`
@@ -123,8 +132,8 @@ const BoardArea = styled.div`
     justify-content: center;
     width: 100vw;
     height: 100vw;
-    max-width: 700px;
-    max-height: 700px;
+    max-width: 600px;
+    max-height: 600px;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
@@ -138,6 +147,8 @@ const MemoTextContainer = styled.div`
     color: ${props => props.color};
     border-radius: 0.5rem;
     padding: 0 1.25rem;
+    font-size: 1rem;
+    font-weight: 400;
 `
 
 const MemoPlaceHolder = styled.span`
@@ -173,18 +184,25 @@ const OptionArea = styled.div`
 
 const OptionContainer = styled.ul`
     width: 100%;
-    height: 100%;
     list-style: none;
-    flex-grow: 1;
     margin: 0;
     padding: 0;
     margin-top: 1rem;
+    overflow: scroll;
+    flex-grow: 1;
 `
 
 const Option = styled.li`
-    position: relative;
     float: left;
     margin: 0.25rem;
+`
+
+const FooterButtonArea = styled.div`
+    display: inline-flex;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    flex-grow: 1;
 `
 
 export default MakingStep
