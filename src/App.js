@@ -5,6 +5,7 @@ import { RecoilRoot } from "recoil";
 import CreateBoardPage from "./pages/CreateBoardPage";
 import CreateMemoPage from "./pages/createMemoPage";
 import BoardPage from "./pages/BoardPage";
+import Main from "./pages/MainPage";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
             <Route path="/board/new" element={<CreateBoardPage />} />
             <Route path="/memo/*" element={<CreateMemoPage />}></Route>
             <Route path="/board" element={<BoardPage />} />
-            <Route path="/" element={<>test</>} />
+            <Route path="/" element={<Main />} />
           </Routes>
         </BrowserRouter>
       </div>

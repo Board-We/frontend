@@ -30,7 +30,7 @@ export default Main;
 const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -38,6 +38,7 @@ const PageWrapper = styled.div`
 
 const MainPageContainer = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,7 +54,7 @@ const MainPageBody = styled.div`
 
 const ServiceMainImage = styled.div`
   width: 100%;
-  height: 40vh;
+  height: 40rem;
   background-color: #d9d9d9;
 `;
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import SlideModal from "../../../components/modals/slideModal";
 import TextInput from "../../../components/TextInput";
 import TextLengthValidator from "../../../components/textLengthValidator";
 import { boardState } from "../../../store";
@@ -29,29 +30,32 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
   }, [boardName, maxLength, setIsValidLength]);
 
   return (
-    <CreateBoardStepContainer>
-      <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
-      <CreateBoardDescriptionText>
-        <p>보드의 제목은 무엇인가요?</p>
-      </CreateBoardDescriptionText>
-      <TextInput
-        value={boardName}
-        commonSize={true}
-        placeholder="ex. 김땡땡 생일 축하해~!"
-        type="text"
-        onChange={handleChangeBoardName}
-        inputMaxLength={maxLength + 1}
-        setTextState={setBoardName}
-        isValidLength={isValidLength}
-      />
-      <CreateBoardGuide>
-        <TextLengthValidator
-          maxLength={maxLength}
-          text={boardName}
+    <>
+      <CreateBoardStepContainer>
+        <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
+        <CreateBoardDescriptionText>
+          <p>보드의 제목은 무엇인가요?</p>
+        </CreateBoardDescriptionText>
+        <TextInput
+          value={boardName}
+          commonSize={true}
+          placeholder="ex. 김땡땡 생일 축하해~!"
+          type="text"
+          onChange={handleChangeBoardName}
+          inputMaxLength={maxLength + 1}
+          setTextState={setBoardName}
           isValidLength={isValidLength}
         />
-      </CreateBoardGuide>
-    </CreateBoardStepContainer>
+        <CreateBoardGuide>
+          <TextLengthValidator
+            maxLength={maxLength}
+            text={boardName}
+            isValidLength={isValidLength}
+          />
+        </CreateBoardGuide>
+      </CreateBoardStepContainer>
+      <SlideModal />
+    </>
   );
 };
 
