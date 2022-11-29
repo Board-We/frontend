@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CreateBoardStep1 from "./Steps/CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
-import FooterButton from "../../components/buttons/FooterButton";
+import FooterButton from "../../components/buttons/FooterButtonFixed";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useNavigate } from "react-router-dom";
@@ -128,5 +128,7 @@ const CreateBoardBody = styled.div`
 `;
 
 const PageFooter = styled.div`
+  display: flex;
   width: 100%;
+  flex-grow: 1;
 `;

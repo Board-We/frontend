@@ -24,10 +24,11 @@ export default StepHeader;
 
 const StepHeaderContainer = styled.div`
   width: 100%;
+  height: 3rem;
   position: relative;
   display: flex;
   justify-content: center;
-  padding: 1.5rem 0;
+  align-items: center;
   font-size: 1.25rem;
   font-weight: 500;
 `;

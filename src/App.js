@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
@@ -8,6 +8,11 @@ import BoardPage from "./pages/BoardPage";
 import Main from "./pages/MainPage";
 
 function App() {
+
+  useEffect(()=>{
+    console.log(document.styleSheets)
+  }, [])
+
   return (
     <RecoilRoot>
       <div className="App">
