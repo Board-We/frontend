@@ -6,7 +6,6 @@ import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButtonFixed";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 import CreateBoardStep4 from "./CreateBoardStep4.js";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep5 from "./Steps/CreateBoardStep5";
@@ -46,7 +45,6 @@ const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
 };
 
 const CreateBoardPage = () => {
-  const navigate = useNavigate();
   const finalStepId = 6;
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);
