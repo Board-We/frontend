@@ -35,7 +35,7 @@ const ModalContainer = styled.div`
   right: 0;
   left: 0;
   margin: auto auto;
-  z-index: 1500;
+  z-index: 9999999;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../assets/close.svg";
 import { ReactComponent as Remove } from "../../../assets/remove.svg";

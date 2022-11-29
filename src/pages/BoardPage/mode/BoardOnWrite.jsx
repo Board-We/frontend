@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilState } from "recoil"
 import styled from "styled-components"
@@ -9,10 +9,14 @@ import ServiceNameHeader from "../../../components/layout/headers/serviceNameHea
 import { boardState } from "../../../store"
 import Title from "../../../components/label/title"
 
-const LandingStep = () => {
+const BoardOnWrite = () => {
 
     const [board, setBoard] = useRecoilState(boardState)
     const navigate = useNavigate()
+
+    useEffect(()=>{
+        console.log(new Date())
+    })
 
     const onClickMMP = () => {
         getMemoInfo(board.id)
@@ -34,14 +38,13 @@ const LandingStep = () => {
 
     return (
         <PageWrapper>
-            <ServiceNameHeader />
             <BoardInfoContainer background={board.background}>
                 <Title text={board.name} />
                 <TagWrapper>
                     {
                         board.tags.map(el => {
                             return (
-                                <Tag text={`#${el}`} />
+                                <Tag text={`#${el}`} key={el} />
                             )
                         })
                     }
@@ -87,4 +90,4 @@ const InputContainer = styled.div`
     flex-grow: 1;
 `
 
-export default LandingStep
+export default BoardOnWrite

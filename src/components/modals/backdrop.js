@@ -17,4 +17,5 @@ const BackDropOverlay = styled.div`
   width: 100%;
   height: 100vh;
   opacity: 0.5;
+  z-index: 999999;
 `;

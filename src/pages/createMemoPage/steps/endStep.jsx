@@ -6,7 +6,6 @@ import ChipButton from "../../../components/buttons/chipButton"
 import Description from "../../../components/label/description"
 import SmallTitle from "../../../components/label/smallTitle"
 import Tag from "../../../components/label/tag"
-import Title from "../../../components/label/title"
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader"
 import { boardState, memoState } from "../../../store"
 import MemoTextArea from "../components/memoTextArea"
@@ -18,11 +17,7 @@ const EndStep = () => {
     const navigate = useNavigate()
 
     const onClickMoreMemo = () => {
-        navigate("/memo/landing")
-    }
-
-    const onClickTopBoard = () => {
-        navigate("/board/new")
+        navigate("/board/onWrite")
     }
 
     return (
@@ -35,7 +30,7 @@ const EndStep = () => {
                         {
                             board.tags.map(el => {
                                 return (
-                                    <Tag text={`#${el}`} size="small" />
+                                    <Tag text={`#${el}`} size="small" key={el} />
                                 )
                             })
                         }
