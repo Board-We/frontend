@@ -77,7 +77,7 @@ const BoardInfoContainer = styled.div`
 const TagWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    margin: 0rem 1.5rem;
+    margin: 0.5rem 0;
 `
 
 const InputContainer = styled.div`

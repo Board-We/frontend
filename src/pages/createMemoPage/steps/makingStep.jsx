@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
 import FooterButton from "../../../components/buttons/FooterButton"
+import SmallTitle from "../../../components/label/smallTitle"
 import Subtitle from "../../../components/label/subtitle"
 import StepHeader from "../../../components/layout/headers/stepHeader"
 import MemoPaper from "../../../components/memoPaper"
@@ -84,7 +85,7 @@ const MakingStep = () => {
                 <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
             </BoardArea>
             <OptionArea>
-                <Subtitle text={"메모지를 선택해주세요."} />
+                <SmallTitle text={"메모지를 선택해주세요."} />
                 <OptionContainer>
                     {
                         memoBackgroundOptions.image.map(el => {
@@ -104,7 +105,9 @@ const MakingStep = () => {
                     }
                 </OptionContainer>
             </OptionArea>
-            <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} textColor={"#FFFFFF"} onClick={onClickMakeMemo} />
+            <FooterButtonArea>
+                <FooterButton text={"완료"} disabled={memo.text.length === 0} color={"#3A3A3A"} textColor={"#FFFFFF"} onClick={onClickMakeMemo} filled={true} flat={true} />
+            </FooterButtonArea>
         </PageWrapper>
     )
 }
@@ -113,7 +116,8 @@ const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    position: relative;
 `
 
 const BoardArea = styled.div`
@@ -123,8 +127,8 @@ const BoardArea = styled.div`
     justify-content: center;
     width: 100vw;
     height: 100vw;
-    max-width: 700px;
-    max-height: 700px;
+    max-width: 600px;
+    max-height: 600px;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
 `
 
@@ -138,6 +142,8 @@ const MemoTextContainer = styled.div`
     color: ${props => props.color};
     border-radius: 0.5rem;
     padding: 0 1.25rem;
+    font-size: 1rem;
+    font-weight: 400;
 `
 
 const MemoPlaceHolder = styled.span`
@@ -173,18 +179,26 @@ const OptionArea = styled.div`
 
 const OptionContainer = styled.ul`
     width: 100%;
-    height: 100%;
     list-style: none;
-    flex-grow: 1;
     margin: 0;
     padding: 0;
     margin-top: 1rem;
+    overflow: scroll;
+    flex-grow: 1;
 `
 
 const Option = styled.li`
     position: relative;
     float: left;
     margin: 0.25rem;
+`
+
+const FooterButtonArea = styled.div`
+    display: inline-flex;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    flex-grow: 1;
 `
 
 export default MakingStep

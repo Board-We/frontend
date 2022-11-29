@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Tag = ({ text, color = "black" }) => {
+const Tag = ({ text, color = "black", size="medium" }) => {
     return (
-        <ComponentWrapper color={color}>{text}</ComponentWrapper>
+        <ComponentWrapper color={color} size={size}>{text}</ComponentWrapper>
     )
 }
 
 const ComponentWrapper = styled.span`
-    font-size: 1.2rem;
+    font-size: ${props => props.size === "large" ? `1.25rem` : props.size === "medium" ? `1.0rem` : `0.875rem`};
     font-weight: 400;
     color: ${props => props.color};
     opacity: 0.8;

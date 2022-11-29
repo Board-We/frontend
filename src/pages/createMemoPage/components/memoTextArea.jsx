@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const MemoTextArea = forwardRef(({ text = "", onChange, disabled = false }, ref) => {
 
-    const [innerText , setInnerText] = useState("")
+    const [innerText, setInnerText] = useState("")
 
     const onChangeMemoTextTA = (e) => {
         const newText = e.target.innerText
@@ -19,7 +19,12 @@ const MemoTextArea = forwardRef(({ text = "", onChange, disabled = false }, ref)
 
     return (
         <ComponentWrapper>
-            <MemoTextTA ref={ref} onInput={onChangeMemoTextTA} suppressContentEditableWarning={true} contentEditable={!disabled} placeholder={"남기고 싶은 내용을\n마음껏 작성해주세요!"}></MemoTextTA>
+            <MemoTextTA ref={ref} onInput={onChangeMemoTextTA} suppressContentEditableWarning={true} contentEditable={!disabled} placeholder={"남기고 싶은 내용을\n마음껏 작성해주세요!"}>
+                {
+                    disabled ? text : null
+                }
+
+            </MemoTextTA>
         </ComponentWrapper>
     )
 })

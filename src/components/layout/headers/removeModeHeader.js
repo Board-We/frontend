@@ -28,7 +28,7 @@ export default RemoveModeHeader;
 
 const ComponentWrapper = styled.div`
   width: 100vw;
-  max-width: 700px;
+  max-width: 600px;
   height: 4rem;
   position: fixed;
   display: flex;
