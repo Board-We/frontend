@@ -7,7 +7,6 @@ import { boardState } from "../../../store";
 const CompleteCreate = () => {
   const [board, setBoard] = useRecoilState(boardState);
 
-  const mockTag = ["1", "2", "3"];
   return (
     <>
       <FinalStepDescription>보드가 완성되었어요!</FinalStepDescription>
@@ -16,9 +15,9 @@ const CompleteCreate = () => {
         <BoardDescriptionContainer>
           <p>{board.name}</p>
           <TagContainer>
-            {mockTag.map((item) => {
+            {board.tags?.map((item) => {
               return (
-                <React.Fragment>
+                <React.Fragment key={item}>
                   <TagSpan>{`#${item}`}</TagSpan>
                 </React.Fragment>
               );
