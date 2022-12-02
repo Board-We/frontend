@@ -49,7 +49,7 @@ const MakingStep = () => {
     }
 
     const goBack = () => {
-        navigate(-1)
+        navigate("/board/onWrite")
     }
 
     const cancelBack = () => {
