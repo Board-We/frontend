@@ -3,10 +3,26 @@ import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal.js";
 import { ReactComponent as Vector } from "../../../assets/Vector.svg";
 import ModalContents from "./ModalContents/index.js";
+import { useRecoilState } from "recoil";
+import { boardState, setDateStepId } from "../../../store/index.js";
+import { setCurrentDay } from "../../../utils/setCurrentDay.js";
 
 function CreateBoardStep4({ setDisabledFooterButton }) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(true);
 
+  const [board, setBoard] = useRecoilState(boardState);
+  const [step, setStep] = useRecoilState(setDateStepId);
+
+  const handleAttachableTerm = () => {
+    setModalOpen(true);
+    setStep(1);
+  };
+
+  const handleOpenTerm = () => {
+    setModalOpen(true);
+    setStep(3);
+  };
+  console.log(setCurrentDay());
   return (
     <>
       <CreateBoardStepContainer>
@@ -16,10 +32,10 @@ function CreateBoardStep4({ setDisabledFooterButton }) {
           <span>친구들이 롤링페이퍼를 작성할 수 있어요.</span>
         </CreateBoardDescriptionText>
 
-        <SetTimeWrapper>
+        <SetTimeWrapper onClick={handleAttachableTerm}>
           <SetTimeContainer>
-            <p>오늘 10시부터</p>
-            <p>~ 11월28일 10시 까지</p>
+            <p>{board.attachableTerm.start}부터</p>
+            <p>~ {board.attachableTerm.end} 까지</p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />
@@ -31,10 +47,10 @@ function CreateBoardStep4({ setDisabledFooterButton }) {
           <span>친구들이 롤링페이퍼를 확인할 수 있어요.</span>
         </CreateBoardDescriptionText>
 
-        <SetTimeWrapper>
+        <SetTimeWrapper onClick={handleOpenTerm}>
           <SetTimeContainer>
-            <p>오늘 10시부터</p>
-            <p>~ 11월28일 10시 까지</p>
+            <p>{board.openTerm.start}부터</p>
+            <p>~ {board.openTerm.end} 까지</p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />
@@ -43,8 +59,8 @@ function CreateBoardStep4({ setDisabledFooterButton }) {
       </CreateBoardStepContainer>
       {modalOpen && (
         <SlideModal
-          height="60vh"
-          children={<ModalContents />}
+          height="65vh"
+          children={<ModalContents setModalOpen={setModalOpen} />}
           open={modalOpen}
         />
       )}
