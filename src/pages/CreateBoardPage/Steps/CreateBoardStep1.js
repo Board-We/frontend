@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import TextInput from "../../../components/TextInput";
@@ -7,6 +7,8 @@ import { boardState } from "../../../store";
 
 const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
   const maxLength = 20;
+  const inputRef = useRef();
+
   const [board, setBoard] = useRecoilState(boardState);
   const [boardName, setBoardName] = useState("");
   const [isValidLength, setIsValidLength] = useState(true);
@@ -28,6 +30,10 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
     else setIsValidLength(true);
   }, [boardName, maxLength, setIsValidLength]);
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <CreateBoardStepContainer>
       <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
@@ -43,6 +49,7 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
         inputMaxLength={maxLength + 1}
         setTextState={setBoardName}
         isValidLength={isValidLength}
+        ref={inputRef}
       />
       <CreateBoardGuide>
         <TextLengthValidator
