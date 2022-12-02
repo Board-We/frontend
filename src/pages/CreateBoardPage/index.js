@@ -5,9 +5,11 @@ import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButtonFixed";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
-import CreateBoardStep4 from "./Steps/CreateBoardStep4";
+import CreateBoardStep4 from "./CreateBoardStep4.js";
 import { useState } from "react";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
+import CreateBoardStep5 from "./Steps/CreateBoardStep5";
+import CompleteCreate from "./Steps/CompleteCreate";
 
 const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
   switch (stepId) {
@@ -30,6 +32,12 @@ const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
       return <CreateBoardStep3 />;
     case 4:
       return <CreateBoardStep4 />;
+    case 5:
+      return (
+        <CreateBoardStep5 setDisabledFooterButton={setDisabledFooterButton} />
+      );
+    case 6:
+      return <CompleteCreate />;
     default:
       break;
   }
@@ -37,7 +45,7 @@ const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
 };
 
 const CreateBoardPage = () => {
-  const finalStepId = 4;
+  const finalStepId = 6;
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);
 
@@ -61,9 +69,12 @@ const CreateBoardPage = () => {
           onClick={handleClickBefore}
           isFinalStep={currentStepId === finalStepId}
         />
-        <ProgressBarContainer>
-          <ProgressBar width={currentStepId} />
-        </ProgressBarContainer>
+        {currentStepId < 6 && (
+          <ProgressBarContainer>
+            <ProgressBar width={currentStepId} />
+          </ProgressBarContainer>
+        )}
+
         <CreateBoardBody>
           {controlCreatBoardStep(currentStepId, setDisabledFooterButton)}
         </CreateBoardBody>
@@ -112,7 +123,7 @@ const ProgressBarContainer = styled.div`
 
 const ProgressBar = styled.div`
   margin-right: auto;
-  width: ${(props) => props.width * 20}%;
+  width: ${(props) => props.width * 15}%;
   background-color: black;
   height: inherit;
 `;

@@ -13,6 +13,6 @@ const BoardContainer = styled.div.attrs((props) => ({
   },
 }))`
   width: 100%;
-  height: 55vh;
+  height: 50vh;
   border-radius: 4px;
 `;
