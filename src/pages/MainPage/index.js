@@ -1,12 +1,45 @@
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
-import EnterWithLink from "./components/EnterWithLink";
-import ReccomendBoard from "./components/ReccomendBoard";
+import EnterLinkInput from "./components/EnterLinkInput";
+import ReccomendBoardSlide from "./components/ReccomendBoardSlide/index";
+import ServiceFooter from "./components/ServiceFooter";
 
 const Main = () => {
+  const navigate = useNavigate();
+  const [isFooter, setIsFooter] = useState(false);
+  const [mobileStartY, setMobileStartY] = useState(0);
+
+  const handleClickCreateNewboard = () => {
+    navigate("/board/new");
+  };
+
+  const handleWheelPage = (e) => {
+    if (e.deltaY > 0) setIsFooter(true);
+  };
+
+  // mobile event handlers
+  const handleTouchStartPage = (e) => {
+    const startY = e.touches[0].pageY;
+
+    setMobileStartY(startY);
+  };
+
+  const handleTouchMovePage = (e) => {
+    console.log("asdfadsf");
+    const deltaY = mobileStartY - e.touches[0].pageY;
+
+    if (deltaY > 0) setIsFooter(true);
+  };
+
   return (
-    <PageWrapper>
+    <PageWrapper
+      onWheel={handleWheelPage}
+      onTouchStart={handleTouchStartPage}
+      onTouchMove={handleTouchMovePage}
+    >
       <MainPageContainer>
         <ServiceNameHeader
           canShare={false}
@@ -16,10 +49,16 @@ const Main = () => {
         />
         <ServiceMainImage />
         <MainPageBody>
-          <EnterWithLink />
-          <ReccomendBoard />
-          <ChipButton text="새 보드 만들기" width="100%" />
+          <EnterLinkInput />
+          <ReccomendBoardSlide />
+          <ChipButton
+            text="새 보드 만들기"
+            width="100%"
+            onClick={handleClickCreateNewboard}
+          />
         </MainPageBody>
+
+        {isFooter && <ServiceFooter />}
       </MainPageContainer>
     </PageWrapper>
   );
@@ -30,7 +69,6 @@ export default Main;
 const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -54,12 +92,6 @@ const MainPageBody = styled.div`
 
 const ServiceMainImage = styled.div`
   width: 100%;
-  height: 40rem;
+  height: 40vh;
   background-color: #d9d9d9;
-`;
-
-const PageFooter = styled.div`
-  width: 100%;
-  height: 10rem;
-  background-color: #f0f0f0;
 `;

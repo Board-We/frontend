@@ -54,7 +54,6 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
           />
         </CreateBoardGuide>
       </CreateBoardStepContainer>
-      <SlideModal />
     </>
   );
 };

@@ -1,21 +1,22 @@
 import styled from "styled-components";
 
-const EnterWithLink = () => {
+const EnterLinkInput = () => {
   return (
-    <EnterWithLinkContainer>
+    <EnterLinkInputContainer>
       <p>보드 링크로 입장하기</p>
-      <EnterWithLinkBody>
-        <EnterWithLinkInput placeholder="링크를 입력하세요" />
-        <EnterWithLinkButton>확인</EnterWithLinkButton>
-      </EnterWithLinkBody>
-    </EnterWithLinkContainer>
+      <EnterLinkInputBody>
+        <LinkTextInput placeholder="링크를 입력하세요" />
+        <SubmitButton>확인</SubmitButton>
+      </EnterLinkInputBody>
+    </EnterLinkInputContainer>
   );
 };
 
-export default EnterWithLink;
+export default EnterLinkInput;
 
-const EnterWithLinkContainer = styled.div`
+const EnterLinkInputContainer = styled.div`
   width: 100%;
+  height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,11 +28,11 @@ const EnterWithLinkContainer = styled.div`
     text-align: start;
     margin: 0;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 `;
 
-const EnterWithLinkBody = styled.div`
+const EnterLinkInputBody = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -39,16 +40,17 @@ const EnterWithLinkBody = styled.div`
   margin-top: 1rem;
 `;
 
-const EnterWithLinkInput = styled.input`
+const LinkTextInput = styled.input`
   width: 100%;
   border: none;
   border-radius: 1.2rem;
   padding: 1rem;
   margin-right: 1rem;
   background-color: #efeff0;
+  font-size: 1rem;
 `;
 
-const EnterWithLinkButton = styled.button`
+const SubmitButton = styled.button`
   width: 20%;
   height: 100%;
   background-color: #8d8d8d;

@@ -32,6 +32,7 @@ const ServiceNameHeader = ({
 
 const ComponentWrapper = styled.div`
   width: 100%;
+  max-width: 600px;
   height: 3rem;
   position: fixed;
   display: flex;

@@ -1,38 +1,39 @@
 import styled from "styled-components";
-import Slider from "./Slider";
+import BoardSlider from "./BoardSlider";
 
-const ReccomendBoard = () => {
+const ReccomendBoardSlide = () => {
   return (
-    <ReccomendBoardContainer>
-      <ReccomendBoardHeader>
+    <ReccomendBoardSlideContainer>
+      <ReccomendBoardSlideHeader>
         <p>인기 보드 추천</p>
         <p>공개한 보드는 랜덤으로 추천됩니다!</p>
-      </ReccomendBoardHeader>
-      <ReccomendBoardBody>
-        <Slider />
-      </ReccomendBoardBody>
-    </ReccomendBoardContainer>
+      </ReccomendBoardSlideHeader>
+      <ReccomendBoardSlideBody>
+        <BoardSlider />
+      </ReccomendBoardSlideBody>
+    </ReccomendBoardSlideContainer>
   );
 };
 
-export default ReccomendBoard;
+export default ReccomendBoardSlide;
 
-const ReccomendBoardContainer = styled.div`
+const ReccomendBoardSlideContainer = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
 `;
 
-const ReccomendBoardHeader = styled.div`
+const ReccomendBoardSlideHeader = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-top: 1rem;
 
   p:first-child {
     font-size: 1.1rem;
@@ -48,7 +49,7 @@ const ReccomendBoardHeader = styled.div`
   }
 `;
 
-const ReccomendBoardBody = styled.div`
+const ReccomendBoardSlideBody = styled.div`
   width: 100%;
   height: 100%;
 `;
