@@ -1,45 +1,56 @@
-import React from "react";
+import React, { forwardRef, useEffect } from "react";
 import styled from "styled-components";
 import { ReactComponent as Delete } from "../assets/delete.svg";
 import { ReactComponent as AlertExclamation } from "../assets/alertExclamation.svg";
 
-function TextInput({
-  value,
-  commonSize,
-  placeholder,
-  type,
-  onChange,
-  disabled,
-  inputMaxLength,
-  setTextState,
-  isValidLength,
-}) {
-  const handleClickDeleteText = () => {
-    setTextState("");
-  };
-  return (
-    <InputContainer isValidLength={isValidLength}>
-      <InputArea
-        value={value}
-        commonSize={commonSize}
-        placeholder={placeholder}
-        type={type}
-        onChange={onChange}
-        disabled={disabled}
-        maxLength={inputMaxLength}
-      />
-      {isValidLength ? (
-        <DeleteButton onClick={handleClickDeleteText}>
-          <Delete />
-        </DeleteButton>
-      ) : (
-        <AlertExclamationWrapper>
-          <AlertExclamation />
-        </AlertExclamationWrapper>
-      )}
-    </InputContainer>
-  );
-}
+const TextInput = forwardRef(
+  (
+    {
+      value,
+      commonSize,
+      placeholder,
+      type,
+      onChange,
+      disabled,
+      inputMaxLength,
+      setTextState,
+      isValidLength,
+    },
+    ref
+  ) => {
+    const handleClickDeleteText = () => {
+      setTextState("");
+    };
+
+    return (
+      <InputContainer isValidLength={isValidLength}>
+        <InputArea
+          value={value}
+          commonSize={commonSize}
+          placeholder={placeholder}
+          type={type}
+          onChange={onChange}
+          disabled={disabled}
+          maxLength={inputMaxLength}
+          ref={function (ref) {
+            if (ref !== null) {
+              ref.focus();
+            }
+          }}
+        />
+        {isValidLength ? (
+          <DeleteButton onClick={handleClickDeleteText}>
+            <Delete />
+          </DeleteButton>
+        ) : (
+          <AlertExclamationWrapper>
+            <AlertExclamation />
+          </AlertExclamationWrapper>
+        )}
+      </InputContainer>
+    );
+  }
+);
 
 export default TextInput;
 

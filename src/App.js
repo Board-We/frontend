@@ -8,11 +8,6 @@ import BoardPage from "./pages/BoardPage";
 import Main from "./pages/MainPage";
 
 function App() {
-
-  useEffect(()=>{
-    console.log(document.styleSheets)
-  }, [])
-
   return (
     <RecoilRoot>
       <div className="App">
@@ -20,7 +15,7 @@ function App() {
           <Routes>
             <Route path="/board/new" element={<CreateBoardPage />} />
             <Route path="/memo/*" element={<CreateMemoPage />}></Route>
-            <Route path="/board" element={<BoardPage />} />
+            <Route path="/board/*" element={<BoardPage />} />
             <Route path="/" element={<Main />} />
           </Routes>
         </BrowserRouter>

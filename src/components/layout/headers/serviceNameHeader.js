@@ -4,30 +4,30 @@ import { ReactComponent as Share } from "../../../assets/share.svg";
 import { ReactComponent as Config } from "../../../assets/config.svg";
 
 const ServiceNameHeader = ({
-  canShare,
-  canConfig,
-  onClickShare,
-  onClickConfig,
+    canShare,
+    canConfig,
+    onClickShare,
+    onClickConfig,
 }) => {
-  return (
-    <ComponentWrapper>
-      <ServiceNameHeaderContainer>
-        <ServiceNameHeaderTitle>Side project</ServiceNameHeaderTitle>
-        <ServiceNameHeaderButtonGroup>
-          {canShare && (
-            <ShareButton onClick={onClickShare}>
-              <Share />
-            </ShareButton>
-          )}
-          {canConfig && (
-            <ConfigButton onClick={onClickConfig}>
-              <Config />
-            </ConfigButton>
-          )}
-        </ServiceNameHeaderButtonGroup>
-      </ServiceNameHeaderContainer>
-    </ComponentWrapper>
-  );
+    return (
+        <ComponentWrapper>
+            <ServiceNameHeaderContainer>
+                <ServiceNameHeaderTitle>Side project</ServiceNameHeaderTitle>
+                <ServiceNameHeaderButtonGroup>
+                    {canShare && (
+                        <ShareButton onClick={onClickShare}>
+                            <Share />
+                        </ShareButton>
+                    )}
+                    {canConfig && (
+                        <ConfigButton onClick={onClickConfig}>
+                            <Config />
+                        </ConfigButton>
+                    )}
+                </ServiceNameHeaderButtonGroup>
+            </ServiceNameHeaderContainer>
+        </ComponentWrapper>
+    );
 };
 
 const ComponentWrapper = styled.div`

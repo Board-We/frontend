@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Tag = ({ text, color = "black", size="medium" }) => {
+const Tag = ({ text, color = "black", size = "medium", children }) => {
     return (
-        <ComponentWrapper color={color} size={size}>{text}</ComponentWrapper>
+        <ComponentWrapper color={color} size={size}>{text}{children}</ComponentWrapper>
     )
 }
 

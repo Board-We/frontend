@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
@@ -8,6 +8,8 @@ import { boardState } from "../../../store";
 
 const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
   const maxLength = 20;
+  const inputRef = useRef();
+
   const [board, setBoard] = useRecoilState(boardState);
   const [boardName, setBoardName] = useState("");
   const [isValidLength, setIsValidLength] = useState(true);
@@ -29,32 +31,35 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
     else setIsValidLength(true);
   }, [boardName, maxLength, setIsValidLength]);
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
-    <>
-      <CreateBoardStepContainer>
-        <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
-        <CreateBoardDescriptionText>
-          <p>보드의 제목은 무엇인가요?</p>
-        </CreateBoardDescriptionText>
-        <TextInput
-          value={boardName}
-          commonSize={true}
-          placeholder="ex. 김땡땡 생일 축하해~!"
-          type="text"
-          onChange={handleChangeBoardName}
-          inputMaxLength={maxLength + 1}
-          setTextState={setBoardName}
+    <CreateBoardStepContainer>
+      <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
+      <CreateBoardDescriptionText>
+        <p>보드의 제목은 무엇인가요?</p>
+      </CreateBoardDescriptionText>
+      <TextInput
+        value={boardName}
+        commonSize={true}
+        placeholder="ex. 김땡땡 생일 축하해~!"
+        type="text"
+        onChange={handleChangeBoardName}
+        inputMaxLength={maxLength + 1}
+        setTextState={setBoardName}
+        isValidLength={isValidLength}
+        ref={inputRef}
+      />
+      <CreateBoardGuide>
+        <TextLengthValidator
+          maxLength={maxLength}
+          text={boardName}
           isValidLength={isValidLength}
         />
-        <CreateBoardGuide>
-          <TextLengthValidator
-            maxLength={maxLength}
-            text={boardName}
-            isValidLength={isValidLength}
-          />
-        </CreateBoardGuide>
-      </CreateBoardStepContainer>
-    </>
+      </CreateBoardGuide>
+    </CreateBoardStepContainer>
   );
 };
 
