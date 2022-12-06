@@ -20,7 +20,7 @@ export default SlideModal;
 const ModalContainer = styled.div`
   position: fixed;
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   height: ${(props) => `${props.height}`};
   bottom: 0;
   right: 0;

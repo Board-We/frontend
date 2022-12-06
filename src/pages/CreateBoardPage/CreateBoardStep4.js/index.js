@@ -25,7 +25,6 @@ function CreateBoardStep4({ setDisabledFooterButton }) {
     setModalOpen(true);
     setStep(3);
   };
-
   return (
     <>
       <CreateBoardStepContainer>

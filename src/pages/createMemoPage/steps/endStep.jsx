@@ -38,7 +38,7 @@ const EndStep = () => {
                     <Description text={board.description} size="small" />
                 </BoardInfoContainer>
                 <MemoTextContainer background={memo.style.background} color={memo.style.textColor}>
-                    <MemoTextArea text={memo.text} disabled={true}/>
+                    <MemoTextArea text={memo.text} disabled={true} />
                 </MemoTextContainer>
             </BoardArea>
             <SmallTitle>롤링페이퍼가 작성되었어요!</SmallTitle>
@@ -74,6 +74,9 @@ const BoardArea = styled.div`
     line-height: 1.75rem;
     height: fit-content;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 `
 
 const BoardInfoContainer = styled.div`

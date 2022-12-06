@@ -11,30 +11,33 @@ import BoardOnWaitWrite from './mode/BoardOnWaitWrite'
 import BoardOnWrite from './mode/BoardOnWrite'
 
 const BoardPage = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-    useEffect(() => {
-        // navigate("/board/onWaitWrite")
-    }, [])
-
-    return (
-        <PageWrapper>
-            <div>board route</div>            
-            <Routes>
-                <Route path="/onWaitWrite" element={<BoardOnWaitWrite/>} />
-                <Route path="/onWrite" element={<BoardOnWrite/>} />
-                <Route path="/onWaitOpen" element={<BoardOnWaitOpen/>} />
-                <Route path="/onOpen" element={<BoardOnOpen/>} />
-                <Route path="/onEnd" element={<BoardOnEnd/>} />
-                <Route path="/404" element={<Board404/>} />
-            </Routes>
-        </PageWrapper >
-    )
+  return (
+    <PageWrapper>
+      <ServiceNameHeader />
+      <SlidesContainer>
+        <Routes>
+          <Route path="/onWaitWrite" element={<BoardOnWaitWrite />} />
+          <Route path="/onWrite" element={<BoardOnWrite />} />
+          <Route path="/onWaitOpen" element={<BoardOnWaitOpen />} />
+          <Route path="/onOpen" element={<BoardOnOpen />} />
+          <Route path="/onEnd" element={<BoardOnEnd />} />
+          <Route path="/404" element={<Board404 />} />
+        </Routes>
+      </SlidesContainer>
+    </PageWrapper >
+  )
 }
 
 const PageWrapper = styled.div`
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+`
+
+const SlidesContainer = styled.div`
+  padding-top: 3rem;
+  height: 100%;
 `
 
 export default BoardPage
