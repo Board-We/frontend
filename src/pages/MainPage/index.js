@@ -44,20 +44,21 @@ const Main = () => {
         <ServiceNameHeader
           canShare={false}
           canConfig={false}
+          canSearch={true}
           onClickConfig={false}
           onClickShare={false}
         />
-        <ServiceMainImage />
-        <MainPageBody>
-          <EnterLinkInput />
-          <ReccomendBoardSlide />
+        <ServiceMainImage>
           <ChipButton
             text="새 보드 만들기"
             width="100%"
             onClick={handleClickCreateNewboard}
           />
+        </ServiceMainImage>
+        <MainPageBody>
+          <EnterLinkInput />
+          <ReccomendBoardSlide />
         </MainPageBody>
-
         {isFooter && <ServiceFooter />}
       </MainPageContainer>
     </PageWrapper>
@@ -92,6 +93,10 @@ const MainPageBody = styled.div`
 
 const ServiceMainImage = styled.div`
   width: 100%;
-  height: 40vh;
+  height: 100vh;
   background-color: #d9d9d9;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
