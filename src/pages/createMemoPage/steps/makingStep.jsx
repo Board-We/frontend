@@ -9,14 +9,14 @@ import SmallTitle from "../../../components/label/smallTitle"
 import StepHeader from "../../../components/layout/headers/stepHeader"
 import MemoPaper from "../../../components/memoPaper"
 import AlertModal from "../../../components/modals/alertModal"
-import { boardState, memoState } from "../../../store"
+import { boardState, memoStyleState } from "../../../store"
 import MemoTextArea from "../components/memoTextArea"
 
 const MakingStep = () => {
 
     const board = useRecoilValue(boardState)
     const $memo = useRef()
-    const [memo, setMemo] = useRecoilState(memoState)
+    const [memo, setMemo] = useRecoilState(memoStyleState)
     const [alertOpen, setAlertOpen] = useState(false)
     const navigate = useNavigate()
 

@@ -29,8 +29,8 @@ export const boardState = atom({
   },
 });
 
-export const memoState = atom({
-  key: "memoState",
+export const memoStyleState = atom({
+  key: "memoStyleState",
   default: {
     text: "",
     style: {
