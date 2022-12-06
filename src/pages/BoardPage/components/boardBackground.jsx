@@ -5,22 +5,23 @@ import Description from '../../../components/label/description'
 import SmallTitle from '../../../components/label/smallTitle'
 import Tag from '../../../components/label/tag'
 
-const BoardBackground = ({ boardInfo, centerContent }) => {
+const BoardBackground = ({ boardInfo, centerContent=null }) => {
 
     return (
         <ComponentWrapper background={boardInfo.background}>
+            <BackgroundImageContainer background={boardInfo.background}/>
             <CenterContentContainer>
                 {centerContent}
             </CenterContentContainer>
-            <SmallTitle>{boardInfo.name}</SmallTitle>
+            <SmallTitle color='white' style={{zIndex: 1}}>{boardInfo.name}</SmallTitle>
             <Tags>
                 {
                     boardInfo.tags.map(el => {
-                        return <Tag key={el}>{`#${el}`}</Tag>
+                        return <Tag key={el} color='white'>{`#${el}`}</Tag>
                     })
                 }
             </Tags>
-            <Description>{boardInfo.description}</Description>
+            <Description color='white'>{boardInfo.description}</Description>
         </ComponentWrapper>
     )
 }
@@ -30,7 +31,7 @@ const ComponentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding: 1.5rem;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     background-position: center;
@@ -41,6 +42,16 @@ const ComponentWrapper = styled.div`
     line-height: 2rem;
 `
 
+const BackgroundImageContainer = styled.div`
+    background-color: rgba(28, 27, 31, 0.6);
+    width: inherit;
+    height: inherit;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index: 0;
+`
+
 const CenterContentContainer = styled.div`
     position: absolute;
     display: flex;
@@ -48,7 +59,7 @@ const CenterContentContainer = styled.div`
     top:0;
     width: inherit;
     height: inherit;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
 `
 

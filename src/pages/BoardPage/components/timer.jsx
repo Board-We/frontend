@@ -97,11 +97,10 @@ const ComponentWrapper = styled.div`
     background: #373737;
     align-items: center;
     justify-content: center;
-    width: fit-content;
-    padding: 1.5rem 0.5rem;
-    border-radius: 0.75rem;
-    color: white;
-    opacity: 0.6;
+    width: 100%;
+    padding: 1rem 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1;
 `
 
 const NumberpadWrapper = styled.div`
@@ -126,8 +125,8 @@ const NumberPannel = styled.div`
     font-weight: 600;
     border-radius: 0.5rem;
     margin: 0.15rem;
-    background: white;
-    color: black;
+    background: #464849;
+    color: white;
 `
 
 export default Timer
