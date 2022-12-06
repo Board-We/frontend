@@ -17,7 +17,7 @@ export const boardState = atom({
         },
         password: undefined,
         privateMode: false,
-        background: "https://upload.wikimedia.org/wikipedia/commons/0/0f/IU_posing_for_Marie_Claire_Korea_March_2022_issue_03.jpg",
+        background: "https://w.namu.la/s/0d9ec42cc9c1007454e7c91cebf3d5126b3b5486efa6085223c744dfc053cef11a715a85ccfc19e8c008f9d2949b5304fc90704d8d94e319beb39471561ec89f37ff80705192dd92dc4dbf8997b754df08e61688928fc1243527ca8822a6a564",
         font: "san-serif",
         memoTypes: [],
         memoColors: ["white", "grey", "red", "blue", "yellow"],

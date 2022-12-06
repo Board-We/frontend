@@ -5,10 +5,13 @@ import Description from '../../../components/label/description'
 import SmallTitle from '../../../components/label/smallTitle'
 import Tag from '../../../components/label/tag'
 
-const BoardBackground = ({ boardInfo }) => {
+const BoardBackground = ({ boardInfo, centerContent }) => {
 
     return (
         <ComponentWrapper background={boardInfo.background}>
+            <CenterContentContainer>
+                {centerContent}
+            </CenterContentContainer>
             <SmallTitle>{boardInfo.name}</SmallTitle>
             <Tags>
                 {
@@ -23,6 +26,7 @@ const BoardBackground = ({ boardInfo }) => {
 }
 
 const ComponentWrapper = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -35,6 +39,17 @@ const ComponentWrapper = styled.div`
     width: 100%;
     height: 80vh;
     line-height: 2rem;
+`
+
+const CenterContentContainer = styled.div`
+    position: absolute;
+    display: flex;
+    left:0;
+    top:0;
+    width: inherit;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
 `
 
 const Tags = styled.div`

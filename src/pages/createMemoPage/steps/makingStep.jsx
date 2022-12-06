@@ -81,7 +81,7 @@ const MakingStep = () => {
                     <AlertModal open={alertOpen} buttonTextArray={alertOption.buttonTextArray} onClickArray={alertOption.onClickArray} text={"편집을 중단할까요?"} />
                     : null
             }
-            <StepHeader title={"롤링페이퍼 작성하기"} onClick={onClickBack} />
+            <StepHeader title={"러브레터 작성하기"} onClick={onClickBack} />
             <BoardArea background={board.background}>
                 <MemoTextContainer background={memo.style.background} color={memo.style.textColor} onClick={onClickMemoTextZone}>
                     {memo.text.length == 0 ? <MemoPlaceHolder>남기고 싶은 내용을<br />마음껏 작성해주세요!</MemoPlaceHolder> : null}
@@ -134,7 +134,11 @@ const BoardArea = styled.div`
     height: 100vw;
     max-width: 600px;
     max-height: 600px;
-    background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+    background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};    
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
 `
 
 const MemoTextContainer = styled.div`

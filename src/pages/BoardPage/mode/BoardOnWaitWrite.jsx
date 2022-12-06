@@ -1,11 +1,8 @@
 import React from "react"
 import { useEffect } from "react"
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilState } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../../components/buttons/chipButton"
-import Description from "../../../components/label/description"
-import Subtitle from "../../../components/label/subtitle"
-import Tag from "../../../components/label/tag"
 import { boardState } from "../../../store"
 import BoardBackground from "../components/boardBackground"
 import Buttons from "../components/buttons"
@@ -21,7 +18,7 @@ const BoardOnWaitWrite = () => {
 
     //test code
     const makeTestData = () => {
-        const randomDateTime = new Date(new Date().getTime() + 4)
+        const randomDateTime = new Date(new Date().getTime() + 10)
         setBoard({
             ...board,
             attachableTerm: {
@@ -31,11 +28,14 @@ const BoardOnWaitWrite = () => {
         })
     }
 
+    const getTimer = () => {
+        return <Timer duedate={board.attachableTerm.start} text="후에 작성할 수 있습니다." />
+    }
+
     return (
         <PageWrapper>
-            <BoardBackground boardInfo={board}>
+            <BoardBackground boardInfo={board} centerContent={getTimer()}>
             </BoardBackground>
-            <Timer duedate={board.attachableTerm.start} />
             <Buttons>
                 <ChipButton background="#5B5B5B" flat>나도 롤링페이퍼 만들래</ChipButton>
             </Buttons>
