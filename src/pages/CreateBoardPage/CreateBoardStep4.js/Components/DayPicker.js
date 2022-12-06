@@ -3,7 +3,14 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { boardState, setDateStepId } from "../../../../store";
 
-const DayPicker = ({ date, time, setDate, setTime }) => {
+const DayPicker = ({
+  date,
+  time,
+  setDate,
+  setTime,
+  defaultDate,
+  defaultTime,
+}) => {
   const [step, setStep] = useRecoilState(setDateStepId);
   const [board, setBoard] = useRecoilState(boardState);
 
@@ -65,8 +72,8 @@ const DayPicker = ({ date, time, setDate, setTime }) => {
 
   return (
     <Container>
-      <DatePicker type="date" value={date} onChange={handleDate} />
-      <TimePicker type="time" value={time} onChange={handleTime} />
+      <DatePicker type="date" value={defaultDate} onChange={handleDate} />
+      <TimePicker type="time" value={defaultTime} onChange={handleTime} />
     </Container>
   );
 };

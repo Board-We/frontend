@@ -1,4 +1,8 @@
 import { atom } from "recoil";
+import {
+  setDefaultAttachableDay,
+  setDefaultOpenDay,
+} from "../utils/setDefaultDay";
 
 export const boardState = atom({
   key: "boardState",
@@ -8,12 +12,12 @@ export const boardState = atom({
     description: "boardDescription",
     tags: ["tag1", "tag2", "tag3"],
     attachableTerm: {
-      start: undefined,
-      end: undefined,
+      start: setDefaultAttachableDay(true),
+      end: setDefaultAttachableDay(false),
     },
     openTerm: {
-      start: undefined,
-      end: undefined,
+      start: setDefaultOpenDay(true),
+      end: setDefaultOpenDay(false),
     },
     password: undefined,
     privateMode: false,
