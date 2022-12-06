@@ -13,6 +13,8 @@ export default Backdrop;
 
 const BackDropOverlay = styled.div`
   position: fixed;
+  top: 0;
+  left: 0;
   background: #000000;
   top: 0;
   left: 0;
