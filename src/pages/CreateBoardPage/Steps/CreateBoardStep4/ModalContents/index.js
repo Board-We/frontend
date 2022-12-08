@@ -1,17 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { ReactComponent as Close } from "../../../../assets/close.svg";
-import { boardState, setDateStepId } from "../../../../store";
+import { ReactComponent as Close } from "../../../../../assets/close.svg";
+import { setDateStepId } from "../../../../../store";
 import SetAttachableEndTerm from "./SetAttachableEndTerm";
 import SetAttachableStartTerm from "./SetAttachableStartTerm";
 import SetOpenEndTerm from "./SetOpenEndTerm";
 import SetOpenStartTerm from "./SetOpenStartTerm";
 function ModalContents({ setModalOpen }) {
-  // TO do
-
   const [step, setStep] = useRecoilState(setDateStepId);
-  const [board, setBoard] = useRecoilState(boardState);
 
   const handleStepClick = () => {
     setStep((prev) => prev + 1);
@@ -23,9 +20,9 @@ function ModalContents({ setModalOpen }) {
         return <SetAttachableStartTerm />;
       case 2:
         return <SetAttachableEndTerm />;
-      case 3:
-        return <SetOpenStartTerm />;
       case 4:
+        return <SetOpenStartTerm />;
+      case 5:
         return <SetOpenEndTerm />;
       default:
         break;
@@ -33,9 +30,9 @@ function ModalContents({ setModalOpen }) {
   };
 
   useEffect(() => {
-    if (step === 5) {
+    if (step === 3 || step === 6) {
       setModalOpen(false);
-      setStep(0);
+      setStep(1);
     }
   }, [setModalOpen, setStep, step]);
 
@@ -89,7 +86,7 @@ const StepDiscription = ({ step, setStep, setModalOpen }) => {
       <CloseButton
         onClick={() => {
           setModalOpen(false);
-          setStep(0);
+          setStep(1);
         }}
       >
         <Close />

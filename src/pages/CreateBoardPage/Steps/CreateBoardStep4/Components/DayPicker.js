@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { boardState, setDateStepId } from "../../../../store";
+import { boardState, setDateStepId } from "../../../../../store";
 
 const DayPicker = ({
   date,

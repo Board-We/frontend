@@ -5,11 +5,12 @@ import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButtonFixed";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
-import CreateBoardStep4 from "./CreateBoardStep4.js";
+
 import { useState } from "react";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep5 from "./Steps/CreateBoardStep5";
 import CompleteCreate from "./Steps/CompleteCreate";
+import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 
 const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
   switch (stepId) {

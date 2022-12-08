@@ -8,9 +8,6 @@ export const setDefaultAttachableDay = (isStart) => {
   if (isStart) {
     month = ("0" + (today.getMonth() + 1)).slice(-2);
     day = ("0" + today.getDate()).slice(-2);
-    console.log(isStart);
-    console.log("m", month);
-    console.log("d", day);
   } else {
     month = ("0" + (today.getMonth() + 1)).slice(-2);
     day = ("0" + (today.getDate() + 7)).slice(-2);
