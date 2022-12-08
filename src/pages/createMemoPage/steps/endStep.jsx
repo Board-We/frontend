@@ -7,13 +7,13 @@ import Description from "../../../components/label/description"
 import SmallTitle from "../../../components/label/smallTitle"
 import Tag from "../../../components/label/tag"
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader"
-import { boardState, memoState } from "../../../store"
+import { boardState, memoStyleState } from "../../../store"
 import MemoTextArea from "../components/memoTextArea"
 
 const EndStep = () => {
 
     const board = useRecoilValue(boardState)
-    const memo = useRecoilValue(memoState)
+    const memo = useRecoilValue(memoStyleState)
     const navigate = useNavigate()
 
     const onClickMoreMemo = () => {

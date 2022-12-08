@@ -20,11 +20,12 @@ export default ReccomendBoardSlide;
 const ReccomendBoardSlideContainer = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
+  margin-top: 5.5rem;
 `;
 
 const ReccomendBoardSlideHeader = styled.div`

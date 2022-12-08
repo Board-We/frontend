@@ -1,14 +1,23 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
+import AlertModal from "../../components/modals/alertModal";
 import EnterLinkInput from "./components/EnterLinkInput";
 import ReccomendBoardSlide from "./components/ReccomendBoardSlide/index";
+import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
 
 const Main = () => {
   const navigate = useNavigate();
+
+  const [isSearchMode, setIsSearchMode] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState([1]);
+
+  const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(true);
+
   const [isFooter, setIsFooter] = useState(false);
   const [mobileStartY, setMobileStartY] = useState(0);
 
@@ -34,34 +43,64 @@ const Main = () => {
     if (deltaY > 0) setIsFooter(true);
   };
 
+  const handleClickSearch = () => {
+    setIsSearchMode(true);
+  };
+
+  const handleCloseInvalidLinkModal = () => {
+    setIsOpenInvalidLinkModal(false);
+  };
+
   return (
-    <PageWrapper
-      onWheel={handleWheelPage}
-      onTouchStart={handleTouchStartPage}
-      onTouchMove={handleTouchMovePage}
-    >
-      <MainPageContainer>
-        <ServiceNameHeader
-          canShare={false}
-          canConfig={false}
-          canSearch={true}
-          onClickConfig={false}
-          onClickShare={false}
-        />
-        <ServiceMainImage>
-          <ChipButton
-            text="새 보드 만들기"
-            width="100%"
-            onClick={handleClickCreateNewboard}
+    <>
+      <PageWrapper
+        onWheel={handleWheelPage}
+        onTouchStart={handleTouchStartPage}
+        onTouchMove={handleTouchMovePage}
+      >
+        <MainPageContainer>
+          <ServiceNameHeader
+            isSearchMode={isSearchMode}
+            setIsSearchMode={setIsSearchMode}
+            setKeyword={setKeyword}
+            canShare={false}
+            canConfig={false}
+            canSearch={true}
+            onClickSearch={handleClickSearch}
+            onClickConfig={false}
+            onClickShare={false}
           />
-        </ServiceMainImage>
-        <MainPageBody>
-          <EnterLinkInput />
-          <ReccomendBoardSlide />
-        </MainPageBody>
-        {isFooter && <ServiceFooter />}
-      </MainPageContainer>
-    </PageWrapper>
+          {!isSearchMode ? (
+            <>
+              <ServiceMainImage>
+                <ChipButton
+                  text="새 보드 만들기"
+                  width="100%"
+                  onClick={handleClickCreateNewboard}
+                  flat
+                />
+              </ServiceMainImage>
+              <MainPageBody>
+                <EnterLinkInput />
+                <ReccomendBoardSlide />
+              </MainPageBody>
+              {isFooter && <ServiceFooter />}
+            </>
+          ) : (
+            <SearchPage results={results} />
+          )}
+        </MainPageContainer>
+      </PageWrapper>
+      {isOpenInvalidLinkModal && (
+        <AlertModal
+          open={isOpenInvalidLinkModal}
+          text="유효하지 않은 링크입니다."
+          buttonTextArray={["확인"]}
+          onClickArray={[handleCloseInvalidLinkModal]}
+          onClose={handleCloseInvalidLinkModal}
+        />
+      )}
+    </>
   );
 };
 
@@ -73,11 +112,11 @@ const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  overflow: hidden;
 `;
 
 const MainPageContainer = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,9 +132,9 @@ const MainPageBody = styled.div`
 
 const ServiceMainImage = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 96vh;
   background-color: #d9d9d9;
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
