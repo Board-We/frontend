@@ -5,10 +5,9 @@ import { ReactComponent as Vector } from "../../../assets/Vector.svg";
 import ModalContents from "./ModalContents/index.js";
 import { useRecoilState } from "recoil";
 import { boardState, setDateStepId } from "../../../store/index.js";
-// import { setCurrentDay } from "../../../utils/setCurrentDay.js";
 
 function CreateBoardStep4({ setDisabledFooterButton }) {
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [board, setBoard] = useRecoilState(boardState);
   const [step, setStep] = useRecoilState(setDateStepId);
@@ -16,13 +15,16 @@ function CreateBoardStep4({ setDisabledFooterButton }) {
   const handleAttachableTerm = () => {
     setModalOpen(true);
     setStep(1);
+    if (step === 3) {
+      setModalOpen(false);
+      setStep(1);
+    }
   };
 
   const handleOpenTerm = () => {
     setModalOpen(true);
     setStep(3);
   };
-  // console.log(setCurrentDay());
   return (
     <>
       <CreateBoardStepContainer>

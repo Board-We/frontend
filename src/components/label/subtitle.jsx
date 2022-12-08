@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Subtitle = ({ text, color = "black" }) => {
+const Subtitle = ({ text, color = "black", style}) => {
     return (
-        <ComponentWrapper color={color}>{text}</ComponentWrapper>
+        <ComponentWrapper styled={style} color={color}>{text}</ComponentWrapper>
     )
 }
 

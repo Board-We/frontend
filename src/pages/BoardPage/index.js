@@ -26,7 +26,7 @@ const BoardPage = () => {
           <Route path="/404" element={<Board404 />} />
         </Routes>
       </SlidesContainer>
-    </PageWrapper >
+    </PageWrapper>
   )
 }
 
