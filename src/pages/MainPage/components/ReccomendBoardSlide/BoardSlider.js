@@ -68,9 +68,9 @@ const BoardSlider = () => {
 export default BoardSlider;
 
 const BoardSliderContainer = styled.div`
-  position: relative;
+  position: absolute;
   width: 100%;
-  height: 32vh;
+  height: 31vh;
   overflow: hidden;
   display: flex;
   align-items: center;

@@ -4,7 +4,6 @@ import { ReactComponent as Share } from "../../../assets/share.svg";
 import { ReactComponent as Config } from "../../../assets/config.svg";
 import { ReactComponent as Search } from "../../../assets/search.svg";
 import { ReactComponent as ChevronLeft } from "../../../assets/chevronLeft.svg";
-import { useNavigate } from "react-router-dom";
 
 const ServiceNameHeader = ({
   isSearchMode,
@@ -17,8 +16,6 @@ const ServiceNameHeader = ({
   onClickShare,
   onClickConfig,
 }) => {
-  const navigate = useNavigate();
-
   const handleClickChevronLeft = () => {
     setIsSearchMode(false);
   };
@@ -59,6 +56,7 @@ const ServiceNameHeader = ({
           <SearchInput
             onChange={handleChangeSearchInput}
             isSearchMode={isSearchMode}
+            placeholder="보드를 검색하세요."
           />
         )}
       </ServiceNameHeaderContainer>
@@ -70,13 +68,11 @@ const ComponentWrapper = styled.div`
   width: 100%;
   max-width: 600px;
   height: 3rem;
-  position: fixed;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   padding: 0.5rem;
   background-color: white;
-  z-index: 999999;
 `;
 
 const ServiceNameHeaderContainer = styled.div`
@@ -112,7 +108,7 @@ const moveSearchButton = keyframes`
 
 
 100% {
-  right: 85%;
+  right: 87%;
 }
 
 

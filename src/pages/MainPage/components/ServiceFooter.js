@@ -22,7 +22,7 @@ const ServiceFooterContainer = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 1rem;
+  margin-top: 20rem;
 `;
 
 const ServiceFooterTitle = styled.div`
