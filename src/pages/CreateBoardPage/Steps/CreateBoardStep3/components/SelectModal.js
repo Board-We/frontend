@@ -18,7 +18,7 @@ export default SelectModal;
 const ModalContainer = styled.div`
   position: fixed;
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   height: ${(props) => `${props.height}`};
   bottom: 0;
   right: 0;
@@ -29,4 +29,6 @@ const ModalContainer = styled.div`
   flex-direction: column;
   z-index: 1500;
   padding: 1rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 `;

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import SlideModal from "../../../components/modals/slideModal";
 import TextInput from "../../../components/TextInput";
 import TextLengthValidator from "../../../components/textLengthValidator";
 import { boardState } from "../../../store";
