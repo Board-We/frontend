@@ -16,7 +16,7 @@ const Main = () => {
   const [keyword, setKeyword] = useState("");
   const [results, setResults] = useState([1]);
 
-  const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(true);
+  const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
 
   const [isFooter, setIsFooter] = useState(false);
   const [mobileStartY, setMobileStartY] = useState(0);
