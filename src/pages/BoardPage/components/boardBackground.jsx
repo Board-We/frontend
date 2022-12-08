@@ -5,23 +5,29 @@ import Description from '../../../components/label/description'
 import SmallTitle from '../../../components/label/smallTitle'
 import Tag from '../../../components/label/tag'
 
-const BoardBackground = ({ boardInfo, centerContent=null }) => {
+const BoardBackground = ({ boardInfo, centerContent, backgroundRepeat }) => {
+
+    useEffect(()=>{
+        console.log(backgroundRepeat)
+    }, [])
 
     return (
-        <ComponentWrapper background={boardInfo.background}>
-            <BackgroundImageContainer background={boardInfo.background}/>
+        <ComponentWrapper background={boardInfo.background} backgroundRepeat={backgroundRepeat}>
+            <Blind />
             <CenterContentContainer>
                 {centerContent}
             </CenterContentContainer>
-            <SmallTitle color='white' style={{zIndex: 1}}>{boardInfo.name}</SmallTitle>
-            <Tags>
-                {
-                    boardInfo.tags.map(el => {
-                        return <Tag key={el} color='white'>{`#${el}`}</Tag>
-                    })
-                }
-            </Tags>
-            <Description color='white'>{boardInfo.description}</Description>
+            <ContentContainer>
+                <SmallTitle color="white">{boardInfo.name}</SmallTitle>
+                <Tags>
+                    {
+                        boardInfo.tags.map(el => {
+                            return <Tag color="white" key={el}>{`#${el}`}</Tag>
+                        })
+                    }
+                </Tags>
+                <Description color={"white"}>{boardInfo.description}</Description>
+            </ContentContainer>
         </ComponentWrapper>
     )
 }
@@ -36,20 +42,21 @@ const ComponentWrapper = styled.div`
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: ${props => props.backgroundRepeat ? `repeat` : `no-repeat`};
     width: 100%;
-    height: 80vh;
+    height: 100%;
     line-height: 2rem;
 `
 
-const BackgroundImageContainer = styled.div`
-    background-color: rgba(28, 27, 31, 0.6);
-    width: inherit;
-    height: inherit;
-    position:absolute;
+const Blind = styled.div`
+    position: absolute;
     top:0;
     left:0;
-    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.3;
+    z-index: 1;
 `
 
 const CenterContentContainer = styled.div`
@@ -59,8 +66,15 @@ const CenterContentContainer = styled.div`
     top:0;
     width: inherit;
     height: inherit;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
+    z-index: 2;
+`
+
+const ContentContainer = styled.div`
+    padding: 0;
+    margin:0;
+    z-index: 2;
 `
 
 const Tags = styled.div`
