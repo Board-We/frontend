@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReactComponent as Chevron } from "../../../assets/chevron.svg";
+import { ReactComponent as ChevronRight } from "../../../assets/chevronRight.svg";
 import { ReactComponent as Close } from "../../../assets/close.svg";
 
 const StepHeader = ({ title, onClick, isFinalStep }) => {
@@ -7,7 +7,7 @@ const StepHeader = ({ title, onClick, isFinalStep }) => {
     <StepHeaderContainer>
       {isFinalStep || (
         <GoBackStepButton onClick={onClick}>
-          <Chevron />
+          <ChevronRight />
         </GoBackStepButton>
       )}
       <StepHeaderTitle>{title}</StepHeaderTitle>

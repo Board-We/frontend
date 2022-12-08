@@ -1,14 +1,17 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import EnterLinkInput from "./components/EnterLinkInput";
 import ReccomendBoardSlide from "./components/ReccomendBoardSlide/index";
+import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
 
 const Main = () => {
   const navigate = useNavigate();
+  const [isSearchMode, setIsSearchMode] = useState(false);
+  const [keyword, setKeyword] = useState("");
   const [isFooter, setIsFooter] = useState(false);
   const [mobileStartY, setMobileStartY] = useState(0);
 
@@ -34,6 +37,10 @@ const Main = () => {
     if (deltaY > 0) setIsFooter(true);
   };
 
+  const handleClickSearch = () => {
+    setIsSearchMode(true);
+  };
+
   return (
     <PageWrapper
       onWheel={handleWheelPage}
@@ -42,24 +49,35 @@ const Main = () => {
     >
       <MainPageContainer>
         <ServiceNameHeader
+          isSearchMode={isSearchMode}
+          setIsSearchMode={setIsSearchMode}
+          setKeyword={setKeyword}
           canShare={false}
           canConfig={false}
           canSearch={true}
+          onClickSearch={handleClickSearch}
           onClickConfig={false}
           onClickShare={false}
         />
-        <ServiceMainImage>
-          <ChipButton
-            text="새 보드 만들기"
-            width="100%"
-            onClick={handleClickCreateNewboard}
-          />
-        </ServiceMainImage>
-        <MainPageBody>
-          <EnterLinkInput />
-          <ReccomendBoardSlide />
-        </MainPageBody>
-        {isFooter && <ServiceFooter />}
+        {!isSearchMode ? (
+          <>
+            <ServiceMainImage>
+              <ChipButton
+                text="새 보드 만들기"
+                width="100%"
+                onClick={handleClickCreateNewboard}
+                flat
+              />
+            </ServiceMainImage>
+            <MainPageBody>
+              <EnterLinkInput />
+              <ReccomendBoardSlide />
+            </MainPageBody>
+            {isFooter && <ServiceFooter />}
+          </>
+        ) : (
+          <SearchPage />
+        )}
       </MainPageContainer>
     </PageWrapper>
   );
@@ -77,7 +95,6 @@ const PageWrapper = styled.div`
 
 const MainPageContainer = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
