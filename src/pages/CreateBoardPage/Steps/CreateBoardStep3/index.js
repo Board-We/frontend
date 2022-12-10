@@ -3,10 +3,8 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { boardState } from "../../../../store";
 import SelectModal from "./components/SelectModal";
-import SelectMenu from "./SelectMenu";
-import SelectBackground from "./SelectMenu/SelectBackground";
+import SelectMenu from "./SelectMenu/SelectBackground";
 import SelectMemo from "./SelectMenu/SelectMemo";
-import SelectTheme from "./SelectMenu/SelectTheme";
 
 function CreateBoardStep3() {
   const [selectState, setSelectState] = useState("");
@@ -14,8 +12,14 @@ function CreateBoardStep3() {
   const [boardURL, setBoardURL] = useState("");
   const [board, setBoard] = useRecoilState(boardState);
   const [modalOpen, setModalOpen] = useState(true);
+
   const selectCtrl = (e) => {
     setSelectState(e.target.value);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+    setSelectState("");
   };
 
   const renderingPicker = () => {
@@ -25,13 +29,22 @@ function CreateBoardStep3() {
           <SelectModal
             height={"38vh"}
             open={modalOpen}
+            onClose={handleClose}
+            isBackground={true}
             children={<SelectMenu />}
           />
         );
       case "1":
-        return <SelectModal height={"70vh"} />;
-      case "2":
-        return <SelectMemo />;
+        return (
+          <SelectModal
+            height={"50vh"}
+            open={modalOpen}
+            onClose={handleClose}
+            isBackground={false}
+            children={<SelectMemo />}
+          />
+        );
+
       default:
         break;
     }
@@ -119,7 +132,7 @@ const BoardPreview = () => {
   const [board, setBoard] = useRecoilState(boardState);
   console.log(board.background);
   return (
-    <BoardContainer url={board.background} color={board.background}>
+    <BoardContainer background={board.background}>
       <DescriptionContainer>
         <p>{board.name}</p>
         <TagContainer>
@@ -159,7 +172,9 @@ const BoardPreview = () => {
 const BoardContainer = styled.div.attrs((props) => {
   return {
     style: {
-      background: props.color ? props.color : `url(${props.url})`,
+      background: props.background.includes("http")
+        ? `url(${props.background})`
+        : props.background,
     },
   };
 })`
