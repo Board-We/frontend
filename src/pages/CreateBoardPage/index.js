@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CreateBoardStep1 from "./Steps/CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId } from "../../store";
-import FooterButton from "../../components/buttons/FooterButtonFixed";
+import FooterButton from "../../components/buttons/FooterButton";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 
 import { useState } from "react";
@@ -138,7 +138,6 @@ const CreateBoardBody = styled.div`
 `;
 
 const PageFooter = styled.div`
-  display: flex;
-  width: 100%;
-  flex-grow: 1;
+  position: absolute;
+  bottom: 0;
 `;
