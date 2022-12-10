@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { ReactComponent as Pen } from "../../../../assets/pen.svg";
 
-const Slide = () => {
+const Slide = ({ boardLink, boardName, boardViews, boardBackground }) => {
   return (
-    <SlideContainer>
+    <SlideContainer boardBackground={boardBackground}>
       <SlideTopDescription>
-        메모 수 <Pen />
+        {boardViews} <Pen />
       </SlideTopDescription>
-      <SlideBottomDescription>보드 이름</SlideBottomDescription>
+      <SlideBottomDescription>{boardName}</SlideBottomDescription>
     </SlideContainer>
   );
 };
