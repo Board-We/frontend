@@ -6,7 +6,7 @@ import { boardState, setDateStepId } from "../../../../store/index.js";
 import SlideModal from "../../../../components/modals/slideModal";
 import ModalContents from "./ModalContents";
 
-function CreateBoardStep4({ setDisabledFooterButton }) {
+function CreateBoardStep4({}) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [board, setBoard] = useRecoilState(boardState);
@@ -32,8 +32,8 @@ function CreateBoardStep4({ setDisabledFooterButton }) {
 
         <SetTimeWrapper onClick={handleAttachableTerm}>
           <SetTimeContainer>
-            <p>{board.attachableTerm.start}부터</p>
-            <p>~ {board.attachableTerm.end} 까지</p>
+            <p>{String(board.writingStartTime)}부터</p>
+            <p>~ {String(board.writingEndTime)} 까지</p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />
@@ -47,8 +47,8 @@ function CreateBoardStep4({ setDisabledFooterButton }) {
 
         <SetTimeWrapper onClick={handleOpenTerm}>
           <SetTimeContainer>
-            <p>{board.openTerm.start}부터</p>
-            <p>~ {board.openTerm.end} 까지</p>
+            <p>{String(board.openStartTime)}부터</p>
+            <p>~ {String(board.openEndTime)} 까지</p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />
