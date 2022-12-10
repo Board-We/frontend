@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const MemoPaper = ({ text, background="", color, isSelected }) => {
+const MemoPaper = ({ text, background = "", color, isSelected }) => {
     return (
         <ComponentWrapper background={background} color={color} isSelected={isSelected}>
             {text}
@@ -15,6 +15,8 @@ const ComponentWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
+    justify-self: center;
     width: 5.5rem;
     height: 5.5rem;
     font-size: 1rem;

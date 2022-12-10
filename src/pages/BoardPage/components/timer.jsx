@@ -16,10 +16,8 @@ const Timer = ({ duedate, onTimeOver, text = "" }) => {
     const interval = useRef()
 
     useEffect(() => {
-        if (duedate) {
-            const newTimeRemain = duedate.getTime() - (new Date()).getTime()
-            setTimeRemain(newTimeRemain)
-        }
+        const newTimeRemain = duedate.getTime() - (new Date()).getTime()
+        setTimeRemain(newTimeRemain)
 
         if (interval.current) clearInterval(interval.current)
 

@@ -1,17 +1,23 @@
 import styled from "styled-components";
-import { useState } from "react";
 import BoardBackground from "../components/boardBackground";
 import { useRecoilValue } from "recoil";
 import { boardState } from "../../../store";
+import MemoPaper from "../../../components/memoPaper";
 
 const BoardOnOpen = () => {
-    useState(false);
-  const board = useRecoilValue(boardState)
 
+  const board = useRecoilValue(boardState)
 
   return (
     <PageWrapper>
-      <BoardBackground boardInfo={board}/>
+      <BoardBackground boardInfo={board} backgroundRepeat={true} />
+      <MemoContainer offsetTop={offsetTopOfMemoContainer}>
+        {
+          board.memos.map((el, i) => {
+            return <MemoPaper key={`${el}${i}`} text={el.memoContent} />
+          })
+        }
+      </MemoContainer>
     </PageWrapper>
   );
 };
@@ -21,8 +27,31 @@ export default BoardOnOpen;
 const PageWrapper = styled.div`
   position: relative;
   width: 100%;
+  height: 100%;
   display: flex;
-  min-height: 100vh;
   justify-content: center;
   align-items: flex-start;
+`
+
+const MemoContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  padding-top: ${props => `${props.offsetTop}px`};
+  padding-bottom: 3rem;
+  width: 100%;
+  display: grid;
+  height: 1px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  overflow: scroll;
+  gap: 1rem;
+  z-index: 3;
+  &::-webkit-scrollbar{
+    width: 0;
+  }
+`
+
+const Dummy = styled.div`
+  display: inline-block;
+  height: 40vh;
 `
