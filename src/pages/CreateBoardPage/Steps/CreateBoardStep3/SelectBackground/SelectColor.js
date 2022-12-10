@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { boardState } from "../../../../../store";
 
-const SelectBackground = ({ setBoardURL }) => {
+const SelectColor = ({ setBoardURL }) => {
   const [board, setBoard] = useRecoilState(boardState);
 
   const handleBoardColor = (e) => {
@@ -27,7 +27,7 @@ const SelectBackground = ({ setBoardURL }) => {
   );
 };
 
-export default SelectBackground;
+export default SelectColor;
 
 const SubContainer = styled.div`
   margin-left: 1rem;
@@ -53,17 +53,4 @@ const ColorPickerInput = styled.input`
 
 const ColorPickerContainer = styled.div`
   display: flex;
-`;
-
-const ColorPickerPreview = styled.div.attrs((props) => {
-  return {
-    style: {
-      background: props.color,
-    },
-  };
-})`
-  width: 10rem;
-  height: 25vh;
-  margin-right: 1rem;
-  border-radius: 4px;
 `;

@@ -2,10 +2,10 @@ import React, { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { boardState } from "../../../../../store";
-import SelectBackground from "./SelectBackground";
+import SelectColor from "./SelectColor";
 import SelectFont from "./SelectFont";
 
-const SelectMenu = () => {
+const SelectBackground = () => {
   const [imageFile, setImageFile] = useState(null);
   const buttonValue = ["배경 색", "글자 종류"];
   const [board, setBoard] = useRecoilState(boardState);
@@ -41,15 +41,13 @@ const SelectMenu = () => {
   const renderModalContents = () => {
     switch (btnValue) {
       case "0":
-        return <SelectBackground />;
+        return <SelectColor />;
       case "1":
         return <SelectFont />;
       default:
         break;
     }
   };
-
-  console.log(btnValue);
 
   return (
     <>
@@ -73,8 +71,12 @@ const SelectMenu = () => {
         />
         {buttonValue.map((item, idx) => {
           return (
-            <React.Fragment>
-              <Button value={idx} onClick={handleButtonClick}>
+            <React.Fragment key={item}>
+              <Button
+                value={idx}
+                onClick={handleButtonClick}
+                className={idx == btnValue ? "active" : ""}
+              >
                 {item}
               </Button>
             </React.Fragment>
@@ -86,7 +88,7 @@ const SelectMenu = () => {
   );
 };
 
-export default SelectMenu;
+export default SelectBackground;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -100,6 +102,7 @@ const ButtonContainer = styled.div`
     opacity: 0.8;
     border-radius: 40px;
     border: none;
+    cursor: pointer;
   }
 `;
 
@@ -115,4 +118,8 @@ const Button = styled.button`
   border-radius: 40px;
   border: none;
   margin-right: 1rem;
+  &.active {
+    color: white;
+    background-color: #626262;
+  }
 `;
