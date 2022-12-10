@@ -3,27 +3,15 @@ import BoardBackground from "../components/boardBackground";
 import { useRecoilValue } from "recoil";
 import { boardState } from "../../../store";
 import MemoPaper from "../../../components/memoPaper";
-import { useEffect, useState } from "react";
 
 const BoardOnOpen = () => {
 
   const board = useRecoilValue(boardState)
-  const [offsetTopOfMemoContainer, setOffsetTopOfMemoContainer] = useState(0)
-
-
-  useEffect(() => {
-    const descDOM = document.getElementById("descib")
-    const bottomPositionOfDescDOM = descDOM.offsetTop + descDOM.offsetHeight
-    console.log(bottomPositionOfDescDOM)
-    console.log(document.body.offsetHeight)
-    console.log(document.body.offsetHeight - bottomPositionOfDescDOM)
-    setOffsetTopOfMemoContainer(document.body.offsetHeight - bottomPositionOfDescDOM)
-  }, [])
 
   return (
     <PageWrapper>
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
-      <MemoContainer offsetTop={offsetTopOfMemoContainer}>
+      <MemoContainer>
         {
           board.memos.map((el, i) => {
             return <MemoPaper key={`${el}${i}`} text={el.memoContent} />
@@ -48,7 +36,7 @@ const PageWrapper = styled.div`
 const MemoContainer = styled.div`
   position: absolute;
   bottom: 0;
-  padding-top: ${props => `${props.offsetTop}px`};
+  padding-top: 100%;
   padding-bottom: 3rem;
   width: 100%;
   display: grid;

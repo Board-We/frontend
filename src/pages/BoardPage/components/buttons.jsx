@@ -14,6 +14,7 @@ const ComponentWrapper = styled.div`
     align-items: center;
     justify-content: center;
     flex-grow: 1;
+    padding: 1.25rem;
 `
 
 
