@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Description = ({ text, color = "black", size = "medium", children, style }) => {
     return (
-        <ComponentWrapper style={style} color={color} size={size}>{text}{children}</ComponentWrapper>
+        <ComponentWrapper id="descib" style={style} color={color} size={size}>{text}{children}</ComponentWrapper>
     )
 }
 

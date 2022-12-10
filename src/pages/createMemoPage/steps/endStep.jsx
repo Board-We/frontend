@@ -1,4 +1,6 @@
 import React from "react"
+import { useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilValue } from "recoil"
 import styled from "styled-components"
@@ -8,6 +10,7 @@ import SmallTitle from "../../../components/label/smallTitle"
 import Tag from "../../../components/label/tag"
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader"
 import { boardState, memoStyleState } from "../../../store"
+import { setDefaultOpenDay } from "../../../utils/setDefaultDay"
 import MemoTextArea from "../components/memoTextArea"
 
 const EndStep = () => {
@@ -15,6 +18,15 @@ const EndStep = () => {
     const board = useRecoilValue(boardState)
     const memo = useRecoilValue(memoStyleState)
     const navigate = useNavigate()
+    const [timer, setTimer] = useState(3)
+
+    useEffect(()=>{
+        setTimerForFlip()
+    }, [])
+
+    const setTimerForFlip = () => {
+        
+    }
 
     const onClickMoreMemo = () => {
         navigate("/board/onWrite")
@@ -42,7 +54,7 @@ const EndStep = () => {
                 </MemoTextContainer>
             </BoardArea>
             <SmallTitle>롤링페이퍼가 작성되었어요!</SmallTitle>
-            <Description size={"medium"}>이 롤링페이퍼는 {board.attachableTerm[0]}에 공개됩니다.</Description>
+            <Description size={"medium"}>이 롤링페이퍼는 {setDefaultOpenDay(board.openStartTime)}에 공개됩니다.</Description>
             <Alertcontainer>
                 {/* <ChipButton flat fit color={"black"} background={"#E8E8E8"} text={"인기보드 보기"} onClick={onClickTopBoard}></ChipButton> */}
                 {/* <ChipButton flat fit text={"롤링페이퍼 더 붙이기"} onClick={onClickMoreMemo} /> */}
@@ -97,9 +109,8 @@ const MemoTextContainer = styled.div`
     height: 80vw;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     color: ${props => props.color};
-    padding: 1rem; // padding value of text area
+    padding: 1.25rem; // padding value of text area
     border-radius: 0.5rem;
-    margin: 1rem;
 `
 
 const TagWrapper = styled.div`

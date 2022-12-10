@@ -12,24 +12,12 @@ const BoardOnWaitOpen = () => {
 
     const [board, setBoard] = useRecoilState(boardState)
 
-    useEffect(() => {
-        makeTestData()
-    }, [])
-
-    //test code
-    const makeTestData = () => {
-        const randomDateTime = new Date(new Date().getTime() + 100000)
-        setBoard({
-            ...board,
-            attachableTerm: {
-                start: randomDateTime,
-                end: null
-            }
-        })
+    const onTimeOver = () => {
+        console.log("onTimeover")
     }
 
     const getTimer = () => {
-        return <Timer duedate={board.attachableTerm.start} text="후에 확인할 수 있습니다." />
+        return <Timer duedate={board.openStartTime} onTimeOver={onTimeOver} text="후에 확인할 수 있습니다." />
     }
 
     return (

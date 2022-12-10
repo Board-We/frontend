@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { boardState } from "../../../../../store";
 import SelectBackground from "./SelectBackground";
+import SelectFont from "./SelectFont";
 
 const SelectMenu = () => {
   const [imageFile, setImageFile] = useState(null);
@@ -42,7 +43,7 @@ const SelectMenu = () => {
       case "0":
         return <SelectBackground />;
       case "1":
-        return "@";
+        return <SelectFont />;
       default:
         break;
     }

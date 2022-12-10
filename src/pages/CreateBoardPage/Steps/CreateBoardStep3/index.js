@@ -55,7 +55,9 @@ function CreateBoardStep3() {
       <BoardArea>
         <p>2/4단계</p>
         <h1>보드를 마음껏 꾸며보세요!</h1>
-        <BoardPreview />
+        <BoardAreaBody>
+          <BoardPreview />
+        </BoardAreaBody>
       </BoardArea>
       <SelectButtonArea>
         {btnValue.map((value, idx) => {
@@ -96,6 +98,11 @@ const BoardArea = styled.div`
   }
 `;
 
+const BoardAreaBody = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const BoardCanvas = styled.div`
   width: 100%;
   height: 55vh;
@@ -107,7 +114,7 @@ const SelectButtonArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 1.2rem;
 `;
 
 const SelectButton = styled.button`
@@ -178,7 +185,7 @@ const BoardContainer = styled.div.attrs((props) => {
     },
   };
 })`
-  width: 100%;
+  width: 95%;
   height: 60vh;
   border-radius: 4px;
   background-position: center;
