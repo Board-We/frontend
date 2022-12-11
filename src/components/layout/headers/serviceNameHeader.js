@@ -8,7 +8,8 @@ import { ReactComponent as ChevronLeft } from "../../../assets/chevronLeft.svg";
 const ServiceNameHeader = ({
   isSearchMode,
   setIsSearchMode,
-  setKeyword,
+  setQuery,
+  onKeyDownSearchInput,
   canShare,
   canConfig,
   canSearch,
@@ -21,7 +22,7 @@ const ServiceNameHeader = ({
   };
 
   const handleChangeSearchInput = (e) => {
-    setKeyword(e.target.value);
+    setQuery(e.target.value);
   };
 
   return (
@@ -57,6 +58,7 @@ const ServiceNameHeader = ({
             onChange={handleChangeSearchInput}
             isSearchMode={isSearchMode}
             placeholder="보드를 검색하세요."
+            onKeyDown={onKeyDownSearchInput}
           />
         )}
       </ServiceNameHeaderContainer>

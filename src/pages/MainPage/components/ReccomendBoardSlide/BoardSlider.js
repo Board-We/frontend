@@ -56,9 +56,10 @@ const BoardSlider = ({ reccomendBoards }) => {
       <Slides>
         {reccomendBoards.map((board) => (
           <Slide
+            key={board.boardName}
             boardLink={board.boardLink}
             boardName={board.boardName}
-            boardViews={board.boardView}
+            boardViews={board.boardViews}
             boardBackground={board.boardBackground}
           />
         ))}

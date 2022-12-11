@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import {
+  getReccomendBoardsList,
+  getSearchBoardsResult,
+} from "../../api/boardsApi";
+import { reccomendBoardsData, searchResultsData } from "../../api/mockData";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
@@ -11,10 +16,12 @@ import ServiceFooter from "./components/ServiceFooter";
 
 const Main = () => {
   const navigate = useNavigate();
+  const [reccomendBoards, setReccomendBoards] = useState(reccomendBoardsData);
 
   const [isSearchMode, setIsSearchMode] = useState(false);
-  const [keyword, setKeyword] = useState("");
-  const [results, setResults] = useState([1]);
+  const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
+  const [keyword, setKeyword] = useState(""); // 결과창 키워드 표시를 위한 값
+  const [results, setResults] = useState(null);
 
   const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
 
@@ -37,7 +44,6 @@ const Main = () => {
   };
 
   const handleTouchMovePage = (e) => {
-    console.log("asdfadsf");
     const deltaY = mobileStartY - e.touches[0].pageY;
 
     if (deltaY > 0) setIsFooter(true);
@@ -51,6 +57,26 @@ const Main = () => {
     setIsOpenInvalidLinkModal(false);
   };
 
+  const handleKeyDownSearchInput = async (e) => {
+    if (e.code === "Enter" && !e.nativeEvent.isComposing) {
+      setKeyword(query);
+      const searchBoardsResult = await getSearchBoardsResult({
+        query,
+      });
+      if (searchBoardsResult) setResults(searchBoardsResult);
+      setResults(searchResultsData.content);
+    }
+  };
+
+  const getReccomendBoardsData = useCallback(async () => {
+    const data = await getReccomendBoardsList();
+    if (data) setReccomendBoards(data);
+  }, []);
+
+  useEffect(() => {
+    getReccomendBoardsData();
+  }, [getReccomendBoardsData]);
+
   return (
     <>
       <PageWrapper
@@ -62,7 +88,8 @@ const Main = () => {
           <ServiceNameHeader
             isSearchMode={isSearchMode}
             setIsSearchMode={setIsSearchMode}
-            setKeyword={setKeyword}
+            setQuery={setQuery}
+            onKeyDownSearchInput={handleKeyDownSearchInput}
             canShare={false}
             canConfig={false}
             canSearch={true}
@@ -82,12 +109,16 @@ const Main = () => {
               </ServiceMainImage>
               <MainPageBody>
                 <EnterLinkInput />
-                <ReccomendBoardSlide />
+                <ReccomendBoardSlide reccomendBoards={reccomendBoards} />
               </MainPageBody>
               {isFooter && <ServiceFooter />}
             </>
           ) : (
-            <SearchPage results={results} />
+            <SearchPage
+              reccomendBoards={reccomendBoards}
+              keyword={keyword}
+              results={results}
+            />
           )}
         </MainPageContainer>
       </PageWrapper>

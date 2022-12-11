@@ -3,38 +3,44 @@ import BoardSlider from "../ReccomendBoardSlide/BoardSlider";
 import Slide from "../ReccomendBoardSlide/Slide";
 import { ReactComponent as ChevronTop } from "../../../../assets/chevronTop.svg";
 
-const SearchPage = ({ results }) => {
+const SearchPage = ({ reccomendBoards, keyword, results }) => {
   const handleClickChevronTop = () => {
     window.scroll(0, 0);
   };
   return (
     <SearchPageBody>
-      {results.length === 0 && (
-        <NoResultsSection>
-          <p>'검색어'에 대한 검색결과가 없습니다.</p>
-          <p>대신 이런 인기보드는 어떠세요?</p>
-        </NoResultsSection>
-      )}
-      <ReccomendBoardSection>
-        <p>인기 보드 추천</p>
-        <BoardSlider />
-      </ReccomendBoardSection>
-      {results.length > 0 && (
-        <>
-          <SearchResultSection>
-            <p>'검색어'에 대한 검색결과 입니다</p>
-            <SearchResultList>
-              <Slide />
-              <Slide />
-              <Slide />
-              <Slide />
-              <Slide />
-            </SearchResultList>
-          </SearchResultSection>
-          <ChevronTopButton onClick={handleClickChevronTop}>
-            <ChevronTop />
-          </ChevronTopButton>
-        </>
+      {results ? (
+        results.length > 0 ? (
+          <>
+            <SearchResultSection>
+              <p>{`${keyword}에 대한 검색결과 입니다.`}</p>
+              <SearchResultList>
+                {results.map((result) => (
+                  <Slide
+                    key={result.boardName}
+                    boardLink={result.boardLink}
+                    boardName={result.boardName}
+                    boardViews={result.boardViews}
+                    boardBackground={result.boardBackground}
+                  />
+                ))}
+              </SearchResultList>
+            </SearchResultSection>
+            <ChevronTopButton onClick={handleClickChevronTop}>
+              <ChevronTop />
+            </ChevronTopButton>
+          </>
+        ) : (
+          <NoResultsSection>
+            <p>{`${keyword}에 대한 검색결과가 없습니다.`}</p>
+            <p>대신 이런 인기보드는 어떠세요?</p>
+          </NoResultsSection>
+        )
+      ) : (
+        <ReccomendBoardSection>
+          <p>인기 보드 추천</p>
+          <BoardSlider reccomendBoards={reccomendBoards} />
+        </ReccomendBoardSection>
       )}
     </SearchPageBody>
   );
