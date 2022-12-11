@@ -1,6 +1,6 @@
 import React from "react"
-import { useEffect } from "react"
-import { useRecoilState } from "recoil"
+import { useNavigate } from "react-router-dom"
+import { useRecoilValue } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../../components/buttons/chipButton"
 import { boardState } from "../../../store"
@@ -10,14 +10,19 @@ import Timer from "../components/timer"
 
 const BoardOnWaitWrite = () => {
 
-    const [board, setBoard] = useRecoilState(boardState)
+    const board = useRecoilValue(boardState)
+    const navigate = useNavigate()
 
     const onTimeOver = () => {
-        console.log("onTimeover")
+        navigate("/board/onwrite")
     }
 
     const getTimer = () => {
         return <Timer duedate={board.writingStartTime} onTimeOver={onTimeOver} text="후에 작성할 수 있습니다." />
+    }
+
+    const onClickMakeBoard = () => {
+        navigate("/board/new")
     }
 
     return (
@@ -25,7 +30,7 @@ const BoardOnWaitWrite = () => {
             <BoardBackground boardInfo={board} centerContent={getTimer()}>
             </BoardBackground>
             <Buttons>
-                <ChipButton background="#5B5B5B" flat>나도 롤링페이퍼 만들래</ChipButton>
+                <ChipButton onClick={onClickMakeBoard} background="#5B5B5B" flat>나도 롤링페이퍼 만들래</ChipButton>
             </Buttons>
         </PageWrapper>
     )
