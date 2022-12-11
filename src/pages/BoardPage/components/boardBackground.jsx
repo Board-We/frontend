@@ -5,14 +5,10 @@ import Description from '../../../components/label/description'
 import SmallTitle from '../../../components/label/smallTitle'
 import Tag from '../../../components/label/tag'
 
-const BoardBackground = ({ boardInfo, centerContent, backgroundRepeat }) => {
-
-    useEffect(()=>{
-        console.log(backgroundRepeat)
-    }, [])
+const BoardBackground = ({ boardInfo, centerContent }) => {
 
     return (
-        <ComponentWrapper background={boardInfo.background} backgroundRepeat={backgroundRepeat}>
+        <ComponentWrapper background={boardInfo.background} >
             <Blind />
             <CenterContentContainer>
                 {centerContent}
@@ -42,7 +38,7 @@ const ComponentWrapper = styled.div`
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     background-position: center;
     background-size: cover;
-    background-repeat: ${props => props.backgroundRepeat ? `repeat` : `no-repeat`};
+    background-repeat: no-repeat;
     width: 100%;
     height: 100%;
     line-height: 2rem;
@@ -63,9 +59,8 @@ const CenterContentContainer = styled.div`
     position: absolute;
     display: flex;
     left:0;
-    top:0;
+    bottom:0;
     width: inherit;
-    height: inherit;
     align-items: center;
     justify-content: center;
     z-index: 2;

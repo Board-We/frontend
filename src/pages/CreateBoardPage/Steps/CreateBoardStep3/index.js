@@ -3,19 +3,21 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { boardState } from "../../../../store";
 import SelectModal from "./components/SelectModal";
-import SelectMenu from "./SelectMenu";
-import SelectBackground from "./SelectMenu/SelectBackground";
-import SelectMemo from "./SelectMenu/SelectMemo";
-import SelectTheme from "./SelectMenu/SelectTheme";
+import SelectBackground from "./SelectBackground";
+import SelectMemo from "./SelectMemo";
 
 function CreateBoardStep3() {
   const [selectState, setSelectState] = useState("");
   const btnValue = ["배경", "메모지"];
-  const [boardURL, setBoardURL] = useState("");
-  const [board, setBoard] = useRecoilState(boardState);
   const [modalOpen, setModalOpen] = useState(true);
+
   const selectCtrl = (e) => {
     setSelectState(e.target.value);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+    setSelectState("");
   };
 
   const renderingPicker = () => {
@@ -25,11 +27,22 @@ function CreateBoardStep3() {
           <SelectModal
             height={"38vh"}
             open={modalOpen}
-            children={<SelectMenu />}
+            onClose={handleClose}
+            isBackground={true}
+            children={<SelectBackground />}
           />
         );
       case "1":
-        return <SelectModal height={"70vh"} />;
+        return (
+          <SelectModal
+            height={"50vh"}
+            open={modalOpen}
+            onClose={handleClose}
+            isBackground={false}
+            children={<SelectMemo />}
+          />
+        );
+
       default:
         break;
     }
@@ -122,9 +135,9 @@ const SelectButton = styled.button`
 
 const BoardPreview = () => {
   const [board, setBoard] = useRecoilState(boardState);
-  console.log(board.background);
+
   return (
-    <BoardContainer url={board.background} color={board.background}>
+    <BoardContainer background={board.background}>
       <DescriptionContainer>
         <p>{board.name}</p>
         <TagContainer>
@@ -138,41 +151,57 @@ const BoardPreview = () => {
         </TagContainer>
       </DescriptionContainer>
       <MemoContainer>
-        <Memo>
+        <Memo1
+          memoBackground={board.memoTypes[0] ? board.memoTypes[0] : "white"}
+          fontColor={board.memoColors[0]}
+        >
           <span>우리 내년에도 친하게 지내자</span>
-        </Memo>
-        <Memo>
+        </Memo1>
+        <Memo2
+          memoBackground={board.memoTypes[1] ? board.memoTypes[1] : "white"}
+          fontColor={board.memoColors[2]}
+        >
           <span>마라탕 모임 언제 가나요^^</span>
-        </Memo>
-        <Memo>
+        </Memo2>
+        <Memo3
+          memoBackground={board.memoTypes[2] ? board.memoTypes[2] : "white"}
+          fontColor={board.memoColors[3]}
+        >
           <span>크리스마스 파티해서 맛있는거 먹자~~! 파티룸 찾아둘께</span>
-        </Memo>
-        <Memo>
+        </Memo3>
+        <Memo4
+          memoBackground={board.memoTypes[3] ? board.memoTypes[3] : "white"}
+          fontColor={board.memoColors[4]}
+        >
           <span>선물 뭐 갖고싶어? 다 말해 사줄께ㅎㅎ -민지-</span>
-        </Memo>
-        <Memo>
+        </Memo4>
+        <Memo5
+          memoBackground={board.memoTypes[4] ? board.memoTypes[4] : "white"}
+          fontColor={board.memoColors[4]}
+        >
           <span>크리스마스 파티해서 맛있는거 먹자~~! 파티룸 찾아둘께</span>
-        </Memo>
-        <Memo>
+        </Memo5>
+        <Memo6
+          memoBackground={board.memoTypes[5] ? board.memoTypes[5] : "white"}
+          fontColor={board.memoColors[5]}
+        >
           <span>선물 뭐 갖고싶어? 다 말해 사줄께ㅎㅎ -민지-</span>
-        </Memo>
+        </Memo6>
       </MemoContainer>
     </BoardContainer>
   );
 };
 
-const BoardContainer = styled.div.attrs((props) => {
-  return {
-    style: {
-      background: props.color ? props.color : `url(${props.url})`,
-    },
-  };
-})`
+const BoardContainer = styled.div`
   width: 95%;
   height: 60vh;
   border-radius: 4px;
+  background: ${(props) =>
+    props.background.includes("http")
+      ? `url(${props.background})`
+      : props.background};
   background-position: center;
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   padding: 1rem;
 `;
@@ -201,7 +230,7 @@ const MemoContainer = styled.div`
   margin-top: 1.5rem;
 `;
 
-const Memo = styled.div`
+const Memo1 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -210,8 +239,26 @@ const Memo = styled.div`
   background-color: white;
   margin-bottom: 1.5rem;
   border-radius: 4px;
+  background: ${(props) =>
+    props.memoBackground.includes("http")
+      ? `url(${props.memoBackground})`
+      : props.memoBackground};
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  color: ${(props) => (props.fontColor ? props.fontColor : "black")};
 
   span {
     padding: 0.5rem;
   }
 `;
+
+const Memo2 = styled(Memo1)``;
+
+const Memo3 = styled(Memo1)``;
+
+const Memo4 = styled(Memo1)``;
+
+const Memo5 = styled(Memo1)``;
+
+const Memo6 = styled(Memo1)``;

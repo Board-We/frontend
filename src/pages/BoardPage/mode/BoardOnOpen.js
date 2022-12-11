@@ -11,7 +11,7 @@ const BoardOnOpen = () => {
   return (
     <PageWrapper>
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
-      <MemoContainer offsetTop={offsetTopOfMemoContainer}>
+      <MemoContainer>
         {
           board.memos.map((el, i) => {
             return <MemoPaper key={`${el}${i}`} text={el.memoContent} />
@@ -36,7 +36,7 @@ const PageWrapper = styled.div`
 const MemoContainer = styled.div`
   position: absolute;
   bottom: 0;
-  padding-top: ${props => `${props.offsetTop}px`};
+  padding-top: 100%;
   padding-bottom: 3rem;
   width: 100%;
   display: grid;

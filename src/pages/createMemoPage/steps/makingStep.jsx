@@ -150,8 +150,8 @@ const MemoTextContainer = styled.div`
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     color: ${props => props.color};
     border-radius: 0.5rem;
-    padding: 0 1.25rem;
-    font-size: 1rem;
+    padding: 1.25rem;
+    font-size: 1.25rem;
     font-weight: 400;
 `
 
@@ -172,6 +172,7 @@ const MemoTextIndicator = styled.pre`
     right: 2.5rem;
     bottom: 0.75rem;
     color: black;
+    font-size: 0.875rem;
     font-weight: 500;
     border-radius: 0.5rem;
     margin: 0;

@@ -1,4 +1,6 @@
 import React from "react"
+import { useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRecoilValue } from "recoil"
 import styled from "styled-components"
@@ -16,6 +18,15 @@ const EndStep = () => {
     const board = useRecoilValue(boardState)
     const memo = useRecoilValue(memoStyleState)
     const navigate = useNavigate()
+    const [timer, setTimer] = useState(3)
+
+    useEffect(()=>{
+        setTimerForFlip()
+    }, [])
+
+    const setTimerForFlip = () => {
+        
+    }
 
     const onClickMoreMemo = () => {
         navigate("/board/onWrite")
@@ -98,9 +109,8 @@ const MemoTextContainer = styled.div`
     height: 80vw;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
     color: ${props => props.color};
-    padding: 1rem; // padding value of text area
+    padding: 1.25rem; // padding value of text area
     border-radius: 0.5rem;
-    margin: 1rem;
 `
 
 const TagWrapper = styled.div`
