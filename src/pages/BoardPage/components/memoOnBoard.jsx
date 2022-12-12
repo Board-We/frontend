@@ -18,8 +18,9 @@ const ComponentWrapper = styled.div`
     height: 10.5rem;
     border-radius: 0.25rem;
     padding: 0.875rem;
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.625rem;
+    font-weight: 300;
+    line-height: 0.9325rem;
     margin-left: ${props => props.marginOption ? 'auto' : null};
     margin-right: ${props => !props.marginOption ? 'auto' : null};
 `

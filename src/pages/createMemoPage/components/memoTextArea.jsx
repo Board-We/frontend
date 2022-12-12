@@ -39,6 +39,8 @@ const MemoTextTA = styled.div`
     font-weight: 400;
     line-height: 1.875rem;
     text-align: center;
+    white-space: pre-wrap;
+    word-break: break-all;
     resize: none;
     border: 0;
     width: 100%;
