@@ -2,10 +2,11 @@ import styled from "styled-components";
 import BoardBackground from "../components/boardBackground";
 import { useRecoilValue } from "recoil";
 import { boardState, deviceScreenState } from "../../../store";
-import MemoPaper from "../../../components/memoPaper";
 import PasswordModal from "../BoardPageModal/PasswordModal"
 import { useEffect, useRef, useState } from "react";
 import Toast from "../components/toast";
+import MemoOnBoard from "../components/memoOnBoard";
+import Spinner from "../components/spinner";
 
 const BoardOnOpen = () => {
 
@@ -15,18 +16,45 @@ const BoardOnOpen = () => {
   const [openToast, setOpenToast] = useState(true)
   const deviceScreenSize = useRecoilValue(deviceScreenState)
   const [paddingTop, setPaddingTop] = useState(0)
-
+  const [memoThemes, setMemoThemes] = useState({})
+  const [visibleMemos, setVisibleMemos] = useState([])
+  const [isMemoLoading, setIsMemoLoading] = useState(true)
 
   useEffect(() => {
+    makeMemoThemes()
+    makeVisibleMemos()
     if (!board.memos) setOpenPasswordModal(true)
     else setOpenPasswordModal(false)
   }, [board])
 
   useEffect(() => {
-    // 13 = service header 3rem + top 9 rem + padding bottom 1rem
-    const newPaddingTop = deviceScreenSize.y - Number(deviceScreenSize.rem.replace('px', '')) * 13
+    // 14 = service header 3rem + top 9 rem + padding bottom 2rem
+    const newPaddingTop = deviceScreenSize.y - Number(deviceScreenSize.rem.replace('px', '')) * 14
     setPaddingTop(newPaddingTop)
   }, [deviceScreenSize])
+
+  const makeMemoThemes = () => {
+    const newMemoThemes = {}
+    board.memoThemes.forEach(el => {
+      newMemoThemes[el.memoThemeId] = el
+    })
+    setMemoThemes(newMemoThemes)
+  }
+
+  const makeVisibleMemos = () => {
+    setVisibleMemos(board.memos.slice(0, 10))
+    setIsMemoLoading(false)
+  }
+
+  const addVisibleMemos = () => {
+    if (visibleMemos.length === board.memos.length) return
+
+    setIsMemoLoading(true)
+    setTimeout(() => {
+      setVisibleMemos(board.memos.slice(0, visibleMemos.length + 10))
+      setIsMemoLoading(false)
+    }, 750)
+  }
 
   const onClosePasswordModal = () => {
     setOpenPasswordModal(false)
@@ -37,8 +65,11 @@ const BoardOnOpen = () => {
   }
 
   const onScrollMemoContainer = (e) => {
-    if (e.target.scrollTop > 0) setOpenToast(false)
-    else if (e.target.scrollTop === 0) setOpenToast(true)
+    const memoContainerObject = e.target
+    if (memoContainerObject.scrollTop > 0) setOpenToast(false)
+    else if (memoContainerObject.scrollTop === 0) setOpenToast(true)
+
+    if (memoContainerObject.scrollHeight == memoContainerObject.offsetHeight + memoContainerObject.scrollTop) addVisibleMemos()
   }
 
   return (
@@ -46,13 +77,20 @@ const BoardOnOpen = () => {
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
       <MemoContainer onScroll={onScrollMemoContainer} paddingTop={paddingTop}>
         {
-          board.memos && privateModeForTest ?
-            board.memos.map((el, i) => {
-              return <MemoPaper key={`${el}${i}`} text={el.memoContent} />
+          visibleMemos && privateModeForTest ?
+            visibleMemos.map((el, i) => {
+              // memoThemeId
+              const theme = memoThemes[el.memoThemeId]
+              return <MemoOnBoard key={`${el}${i}`} text={el.memoContent} background={theme?.memoBackground} color={theme?.memoTextColor} marginOption={i % 2 === 0} />
             })
             : <PasswordModal open={openPasswordModal} onClose={onClosePasswordModal} onSuccess={onSuccessPasswordModal} />
         }
       </MemoContainer>
+      {
+        isMemoLoading ?
+          <Spinner />
+          : null
+      }
       <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
     </PageWrapper>
   );
@@ -75,22 +113,18 @@ const MemoContainer = styled.div`
   top: 9rem;
   left: 0;
   padding-top: ${props => `${props.paddingTop}px`};
-  padding-bottom: 1.2rem;
+  padding-bottom: 2.5rem;
   width: 100%;
   height: 0;
   display: grid;
+  justify-items: center;
+  align-items: center;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
   overflow-y: scroll;
   overflow-x: hidden;
-  gap: 1rem;
+  grid-gap: 0.5rem;
   z-index: 3;
   &::-webkit-scrollbar{
     width: 0;
   }
-`
-
-const Dummy = styled.div`
-  display: inline-block;
-  height: 40vh;
 `
