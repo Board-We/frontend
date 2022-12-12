@@ -3,19 +3,38 @@ import BoardBackground from "../components/boardBackground";
 import { useRecoilValue } from "recoil";
 import { boardState } from "../../../store";
 import MemoPaper from "../../../components/memoPaper";
+import PasswordModal from "../BoardPageModal/PasswordModal"
+import { useEffect, useState } from "react";
 
 const BoardOnOpen = () => {
 
   const board = useRecoilValue(boardState)
+  const privateModeForTest = true
+  const [openPasswordModal, setOpenPasswordModal] = useState(false)
+
+  useEffect(()=>{
+    if(!board.memos) setOpenPasswordModal(true)
+    else setOpenPasswordModal(false)
+  }, [board])
+
+  const onClosePasswordModal = () => {
+    setOpenPasswordModal(false)
+  }
+
+  const onSuccessPasswordModal = () => {
+    console.log('get memo list of board')
+  }
 
   return (
     <PageWrapper>
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
       <MemoContainer>
         {
+          board.memos && privateModeForTest ? 
           board.memos.map((el, i) => {
             return <MemoPaper key={`${el}${i}`} text={el.memoContent} />
           })
+          : <PasswordModal open={openPasswordModal} onClose={onClosePasswordModal} onSuccess={onSuccessPasswordModal}/>
         }
       </MemoContainer>
     </PageWrapper>

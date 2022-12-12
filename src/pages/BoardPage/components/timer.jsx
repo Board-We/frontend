@@ -13,26 +13,28 @@ const Timer = ({ duedate, onTimeOver, text = "" }) => {
     const s = 60
     const m = 60
     const h = 24
-    const interval = useRef()
+    const interval = useRef(null)
 
     useEffect(() => {
         const newTimeRemain = duedate.getTime() - (new Date()).getTime()
         setTimeRemain(newTimeRemain)
-
-        if (interval.current) clearInterval(interval.current)
-
-        interval.current = setInterval(() => {
-            timeCount()
-        }, 1000)
     }, [duedate])
 
     useEffect(() => {
         refreshTimePannel(timeRemain)
         if (timeRemain < 1) {
-            clearInterval(interval.current)
             timeOver()
+        }  else {
+            if(interval.current === null) setTimer()
         }
     }, [timeRemain])
+
+    const setTimer = () => {
+        initTimer()
+        interval.current = setInterval(() => {
+            timeCount()
+        }, 1000)
+    }
 
     const refreshTimePannel = (newTime) => {
         const newDate = Math.floor(newTime / s / m / h)
@@ -50,7 +52,13 @@ const Timer = ({ duedate, onTimeOver, text = "" }) => {
     }
 
     const timeOver = () => {
+        clearInterval(interval.current)
+        interval.current = null
         if (onTimeOver) onTimeOver()
+    }
+
+    const initTimer = () => {
+        if(interval.current !== null ) clearInterval(interval.current)
     }
 
     const getNumberpad = (number, string) => {
