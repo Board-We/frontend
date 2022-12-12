@@ -4,16 +4,18 @@ import { useRecoilValue } from "recoil";
 import { boardState } from "../../../store";
 import MemoPaper from "../../../components/memoPaper";
 import PasswordModal from "../BoardPageModal/PasswordModal"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Toast from "../components/toast";
 
 const BoardOnOpen = () => {
 
   const board = useRecoilValue(boardState)
   const privateModeForTest = true
   const [openPasswordModal, setOpenPasswordModal] = useState(false)
+  const [openToast, setOpenToast] = useState(true)
 
-  useEffect(()=>{
-    if(!board.memos) setOpenPasswordModal(true)
+  useEffect(() => {
+    if (!board.memos) setOpenPasswordModal(true)
     else setOpenPasswordModal(false)
   }, [board])
 
@@ -25,18 +27,24 @@ const BoardOnOpen = () => {
     console.log('get memo list of board')
   }
 
+  const onScrollMemoContainer = (e) => {
+    if (e.target.scrollTop > 0) setOpenToast(false)
+    else if (e.target.scrollTop === 0) setOpenToast(true)
+  }
+
   return (
     <PageWrapper>
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
-      <MemoContainer>
+      <MemoContainer onScroll={onScrollMemoContainer}>
         {
-          board.memos && privateModeForTest ? 
-          board.memos.map((el, i) => {
-            return <MemoPaper key={`${el}${i}`} text={el.memoContent} />
-          })
-          : <PasswordModal open={openPasswordModal} onClose={onClosePasswordModal} onSuccess={onSuccessPasswordModal}/>
+          board.memos && privateModeForTest ?
+            board.memos.map((el, i) => {
+              return <MemoPaper key={`${el}${i}`} text={el.memoContent} />
+            })
+            : <PasswordModal open={openPasswordModal} onClose={onClosePasswordModal} onSuccess={onSuccessPasswordModal} />
         }
       </MemoContainer>
+      <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
     </PageWrapper>
   );
 };
@@ -55,14 +63,15 @@ const PageWrapper = styled.div`
 const MemoContainer = styled.div`
   position: absolute;
   bottom: 0;
-  padding-top: 100%;
-  padding-bottom: 3rem;
+  padding-top: 150%;
+  padding-bottom: 1rem;
   width: 100%;
   display: grid;
-  height: 1px;
+  height: 0;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   gap: 1rem;
   z-index: 3;
   &::-webkit-scrollbar{
