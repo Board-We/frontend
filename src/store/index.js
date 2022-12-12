@@ -58,6 +58,41 @@ export const boardState = atom({
             {
                 "memoThemeId": 13,
                 "memoContent": "반가워"
+            }, {
+                "memoThemeId": 13,
+                "memoContent": "안녕! 생일 축하해~~"
+            },
+            {
+                "memoThemeId": 12,
+                "memoContent": "행복해야해"
+            },
+            {
+                "memoThemeId": 13,
+                "memoContent": "반가워"
+            },
+            {
+                "memoThemeId": 13,
+                "memoContent": "안녕! 생일 축하해~~"
+            },
+            {
+                "memoThemeId": 12,
+                "memoContent": "행복해야해"
+            },
+            {
+                "memoThemeId": 13,
+                "memoContent": "반가워"
+            },
+            {
+                "memoThemeId": 13,
+                "memoContent": "안녕! 생일 축하해~~"
+            },
+            {
+                "memoThemeId": 12,
+                "memoContent": "행복해야해"
+            },
+            {
+                "memoThemeId": 13,
+                "memoContent": "반가워"
             },
         ]
     },
