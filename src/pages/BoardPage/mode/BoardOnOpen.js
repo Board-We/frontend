@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import BoardBackground from "../components/boardBackground";
 import { useRecoilValue } from "recoil";
-import { boardState } from "../../../store";
+import { boardState, deviceScreenState } from "../../../store";
 import MemoPaper from "../../../components/memoPaper";
 import PasswordModal from "../BoardPageModal/PasswordModal"
 import { useEffect, useRef, useState } from "react";
@@ -13,11 +13,20 @@ const BoardOnOpen = () => {
   const privateModeForTest = true
   const [openPasswordModal, setOpenPasswordModal] = useState(false)
   const [openToast, setOpenToast] = useState(true)
+  const deviceScreenSize = useRecoilValue(deviceScreenState)
+  const [paddingTop, setPaddingTop] = useState(0)
+
 
   useEffect(() => {
     if (!board.memos) setOpenPasswordModal(true)
     else setOpenPasswordModal(false)
   }, [board])
+
+  useEffect(() => {
+    // 13 = service header 3rem + top 9 rem + padding bottom 1rem
+    const newPaddingTop = deviceScreenSize.y - Number(deviceScreenSize.rem.replace('px', '')) * 13
+    setPaddingTop(newPaddingTop)
+  }, [deviceScreenSize])
 
   const onClosePasswordModal = () => {
     setOpenPasswordModal(false)
@@ -33,9 +42,9 @@ const BoardOnOpen = () => {
   }
 
   return (
-    <PageWrapper>
+    <PageWrapper >
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
-      <MemoContainer onScroll={onScrollMemoContainer}>
+      <MemoContainer onScroll={onScrollMemoContainer} paddingTop={paddingTop}>
         {
           board.memos && privateModeForTest ?
             board.memos.map((el, i) => {
@@ -58,16 +67,18 @@ const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  overflow: hidden;
 `
 
 const MemoContainer = styled.div`
   position: absolute;
-  bottom: 0;
-  padding-top: 150%;
-  padding-bottom: 1rem;
+  top: 9rem;
+  left: 0;
+  padding-top: ${props => `${props.paddingTop}px`};
+  padding-bottom: 1.2rem;
   width: 100%;
-  display: grid;
   height: 0;
+  display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   overflow-y: scroll;

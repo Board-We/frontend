@@ -118,3 +118,10 @@ export const setDateStepId = atom({
     key: "setDateStepId",
     default: 1,
 });
+
+export const deviceScreenState = atom({
+    key: "deviceScreenState",
+    default: {
+        x: 0, y: 0, rem: `16px`
+    }
+})
