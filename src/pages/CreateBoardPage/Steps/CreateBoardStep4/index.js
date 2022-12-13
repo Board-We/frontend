@@ -5,8 +5,9 @@ import { useRecoilState } from "recoil";
 import { boardState, setDateStepId } from "../../../../store/index.js";
 import SlideModal from "../../../../components/modals/slideModal";
 import ModalContents from "./ModalContents";
+import { formattingDateObject } from "../../../../utils/setDefaultDay";
 
-function CreateBoardStep4({}) {
+function CreateBoardStep4() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [board, setBoard] = useRecoilState(boardState);
@@ -21,6 +22,7 @@ function CreateBoardStep4({}) {
     setModalOpen(true);
     setStep(4);
   };
+
   return (
     <>
       <CreateBoardStepContainer>
@@ -32,8 +34,8 @@ function CreateBoardStep4({}) {
 
         <SetTimeWrapper onClick={handleAttachableTerm}>
           <SetTimeContainer>
-            <p>{String(board.writingStartTime)}부터</p>
-            <p>~ {String(board.writingEndTime)} 까지</p>
+            <p>{formattingDateObject(board.writingStartTime)}부터</p>
+            <p>~ {formattingDateObject(board.writingEndTime)} 까지</p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />
@@ -47,8 +49,8 @@ function CreateBoardStep4({}) {
 
         <SetTimeWrapper onClick={handleOpenTerm}>
           <SetTimeContainer>
-            <p>{String(board.openStartTime)}부터</p>
-            <p>~ {String(board.openEndTime)} 까지</p>
+            <p>{formattingDateObject(board.openStartTime)}부터</p>
+            <p>~ {formattingDateObject(board.openEndTime)} 까지</p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />

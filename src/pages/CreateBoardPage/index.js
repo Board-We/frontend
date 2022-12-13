@@ -2,14 +2,14 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import CreateBoardStep1 from "./Steps/CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
+import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import { createBoardStepId } from "../../store";
 import FooterButton from "../../components/buttons/FooterButton";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3";
-
 import { useState } from "react";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep5 from "./Steps/CreateBoardStep5";
-import CompleteCreate from "./Steps/CompleteCreate";
+import CompleteCreate from "./Steps/ComleteCreate";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 
 const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
@@ -65,11 +65,15 @@ const CreateBoardPage = () => {
   return (
     <PageWrapper>
       <CreateBoardContainer>
-        <StepHeader
-          title="새 보드 만들기"
-          onClick={handleClickBefore}
-          isFinalStep={currentStepId === finalStepId}
-        />
+        {currentStepId !== finalStepId ? (
+          <StepHeader
+            title="새 보드 만들기"
+            onClick={handleClickBefore}
+            isFinalStep={currentStepId === finalStepId}
+          />
+        ) : (
+          <ServiceNameHeader />
+        )}
         {currentStepId < 6 && (
           <ProgressBarContainer>
             <ProgressBar width={currentStepId} />
