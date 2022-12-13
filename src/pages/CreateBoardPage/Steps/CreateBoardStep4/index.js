@@ -26,12 +26,6 @@ function CreateBoardStep4() {
   return (
     <>
       <CreateBoardStepContainer>
-        <CreateBoardStepCounter>3/4단계</CreateBoardStepCounter>
-        <CreateBoardDescriptionText>
-          <p>롤링페이퍼 받는 기간</p>
-          <span>친구들이 롤링페이퍼를 작성할 수 있어요.</span>
-        </CreateBoardDescriptionText>
-
         <SetTimeWrapper onClick={handleAttachableTerm}>
           <SetTimeContainer>
             <p>{formattingDateObject(board.writingStartTime)}부터</p>
@@ -76,12 +70,6 @@ const CreateBoardStepContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
-`;
-
-const CreateBoardStepCounter = styled.div`
-  color: #bcbcbc;
-  margin-bottom: 0.8rem;
-  font-size: 1.2rem;
 `;
 
 const CreateBoardDescriptionText = styled.div`

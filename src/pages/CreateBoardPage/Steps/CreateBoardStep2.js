@@ -30,10 +30,6 @@ const CreateBoardStep2 = ({ stepId, setDisabledFooterButton }) => {
 
   return (
     <CreateBoardStepContainer>
-      <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
-      <CreateBoardDescriptionText>
-        <p>간단한 설명을 적어주세요</p>
-      </CreateBoardDescriptionText>
       <TextInput
         value={boardDescription}
         commonSize={true}

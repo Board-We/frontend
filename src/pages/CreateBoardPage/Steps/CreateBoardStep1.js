@@ -36,10 +36,6 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
 
   return (
     <CreateBoardStepContainer>
-      <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
-      <CreateBoardDescriptionText>
-        <p>보드의 제목은 무엇인가요?</p>
-      </CreateBoardDescriptionText>
       <TextInput
         value={boardName}
         commonSize={true}

@@ -46,10 +46,6 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
 
   return (
     <CreateBoardStepContainer>
-      <CreateBoardStepCounter>4/4단계</CreateBoardStepCounter>
-      <CreateBoardDescriptionText>
-        <p>비밀번호를 설정할 수 있어요.</p>
-      </CreateBoardDescriptionText>
       <PasswordInputContainer>
         <p>비밀번호</p> <span>보드와 롤링페이퍼 삭제 가능</span>
       </PasswordInputContainer>

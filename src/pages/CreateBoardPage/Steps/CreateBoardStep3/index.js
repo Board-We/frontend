@@ -106,13 +106,14 @@ const SelectButtonArea = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 1.2rem;
+  gap: 1rem;
 `;
 
 const SelectButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 9.5rem;
+  width: 50%;
   height: 5vh;
   border: none;
   font-size: 0.9rem;
