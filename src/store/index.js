@@ -20,7 +20,7 @@ export const boardState = atom({
         background:
             "https://dimg.donga.com/wps/NEWS/IMAGE/2022/12/03/116825963.2.jpg",
         font: "san-serif",
-        memoTypes: [],
+        memoBackground: [],
         memoColors: ["white", "grey", "red", "blue", "yellow"],
         memos: [
             {

@@ -25,6 +25,7 @@ export default StepHeader;
 const StepHeaderContainer = styled.div`
   width: 100%;
   height: 3rem;
+  min-height: 3rem;
   position: relative;
   display: flex;
   justify-content: center;

@@ -106,12 +106,12 @@ const Picker = ({ memoIndex }) => {
         thumbnail: url,
       });
 
-      let memoImage = [...board.memoTypes];
+      let memoImage = [...board.memoBackground];
       memoImage[memoIndex] = url;
       setBoard((prev) => {
         return {
           ...prev,
-          memoTypes: memoImage,
+          memoBackground: memoImage,
         };
       });
     }

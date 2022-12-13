@@ -101,25 +101,19 @@ const BoardAreaBody = styled.div`
   justify-content: center;
 `;
 
-const BoardCanvas = styled.div`
-  width: 100%;
-  height: 55vh;
-  background-color: #d9d9d9;
-  border-radius: 4px;
-`;
-
 const SelectButtonArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 1.2rem;
+  gap: 1rem;
 `;
 
 const SelectButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 9.5rem;
+  width: 50%;
   height: 5vh;
   border: none;
   font-size: 0.9rem;
@@ -152,37 +146,37 @@ const BoardPreview = () => {
       </DescriptionContainer>
       <MemoContainer>
         <Memo1
-          memoBackground={board.memoTypes[0] ? board.memoTypes[0] : "white"}
+          memoBackground={board.memoBackground[0] ? board.memoBackground[0] : "white"}
           fontColor={board.memoColors[0]}
         >
           <span>우리 내년에도 친하게 지내자</span>
         </Memo1>
         <Memo2
-          memoBackground={board.memoTypes[1] ? board.memoTypes[1] : "white"}
+          memoBackground={board.memoBackground[1] ? board.memoBackground[1] : "white"}
           fontColor={board.memoColors[2]}
         >
           <span>마라탕 모임 언제 가나요^^</span>
         </Memo2>
         <Memo3
-          memoBackground={board.memoTypes[2] ? board.memoTypes[2] : "white"}
+          memoBackground={board.memoBackground[2] ? board.memoBackground[2] : "white"}
           fontColor={board.memoColors[3]}
         >
           <span>크리스마스 파티해서 맛있는거 먹자~~! 파티룸 찾아둘께</span>
         </Memo3>
         <Memo4
-          memoBackground={board.memoTypes[3] ? board.memoTypes[3] : "white"}
+          memoBackground={board.memoBackground[3] ? board.memoBackground[3] : "white"}
           fontColor={board.memoColors[4]}
         >
           <span>선물 뭐 갖고싶어? 다 말해 사줄께ㅎㅎ -민지-</span>
         </Memo4>
         <Memo5
-          memoBackground={board.memoTypes[4] ? board.memoTypes[4] : "white"}
+          memoBackground={board.memoBackground[4] ? board.memoBackground[4] : "white"}
           fontColor={board.memoColors[4]}
         >
           <span>크리스마스 파티해서 맛있는거 먹자~~! 파티룸 찾아둘께</span>
         </Memo5>
         <Memo6
-          memoBackground={board.memoTypes[5] ? board.memoTypes[5] : "white"}
+          memoBackground={board.memoBackground[5] ? board.memoBackground[5] : "white"}
           fontColor={board.memoColors[5]}
         >
           <span>선물 뭐 갖고싶어? 다 말해 사줄께ㅎㅎ -민지-</span>
