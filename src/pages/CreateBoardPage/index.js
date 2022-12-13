@@ -106,7 +106,7 @@ const CreateBoardPage = () => {
           </ProgressBarContainer>
         )}
         <CreateBoardBody>
-          <p>{currentStepId}/5단계</p>
+          {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
           <h1 ref={$stepDescription}>{stepDescription[currentStepId - 1]}</h1>
           <BoardInfoConatiner maxHeight={maxHeightOfContentsArea}>
             {controlCreatBoardStep(currentStepId, setDisabledFooterButton)}
