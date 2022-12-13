@@ -3,40 +3,68 @@ import BoardBackground from "../components/boardBackground";
 import { useRecoilValue } from "recoil";
 import { boardState } from "../../../store";
 import MemoPaper from "../../../components/memoPaper";
-import PasswordModal from "../BoardPageModal/PasswordModal"
-import { useEffect, useState } from "react";
+import PasswordModal from "../BoardPageModal/PasswordModal";
+import { useState } from "react";
+import AlertModal from "../../../components/modals/alertModal";
+import { deleteBoard } from "../../../api/boardsApi";
 
-const BoardOnOpen = () => {
+const BoardOnOpen = ({
+  passwordModalState,
+  setPasswordModalState,
+  isDeleteMode,
+  setIsDeleteMemoMode,
+}) => {
+  const board = useRecoilValue(boardState);
+  const privateModeForTest = true;
+  const [isOpenConfirmDeleteBoardModal, setIsOpenConfirmDeleteBoardModal] =
+    useState(false);
+  console.log(isOpenConfirmDeleteBoardModal);
 
-  const board = useRecoilValue(boardState)
-  const privateModeForTest = true
-  const [openPasswordModal, setOpenPasswordModal] = useState(false)
+  const handleClosePasswordModal = () => {
+    setPasswordModalState({ ...passwordModalState, open: false });
+  };
 
-  useEffect(()=>{
-    if(!board.memos) setOpenPasswordModal(true)
-    else setOpenPasswordModal(false)
-  }, [board])
+  const handleValidPasswordModal = () => {
+    if (passwordModalState.type === "deleteBoard")
+      setIsOpenConfirmDeleteBoardModal(true);
+    else if (passwordModalState.type === "deleteMemo")
+      setIsDeleteMemoMode(true);
+  };
 
-  const onClosePasswordModal = () => {
-    setOpenPasswordModal(false)
-  }
+  const handleCloseConfirmDeleteBoardModal = () => {
+    setIsOpenConfirmDeleteBoardModal(false);
+  };
 
-  const onSuccessPasswordModal = () => {
-    console.log('get memo list of board')
-  }
+  const handleConfirmDeleteBoard = async () => {
+    const deleted = await deleteBoard(); // param : {boardCode, password}
+    if (deleted) setIsOpenConfirmDeleteBoardModal(false);
+  };
 
   return (
     <PageWrapper>
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
       <MemoContainer>
-        {
-          board.memos && privateModeForTest ? 
+        {board.memos &&
+          privateModeForTest &&
           board.memos.map((el, i) => {
-            return <MemoPaper key={`${el}${i}`} text={el.memoContent} />
-          })
-          : <PasswordModal open={openPasswordModal} onClose={onClosePasswordModal} onSuccess={onSuccessPasswordModal}/>
-        }
+            return <MemoPaper key={`${el}${i}`} text={el.memoContent} />;
+          })}
       </MemoContainer>
+      <PasswordModal
+        open={passwordModalState.open}
+        onClose={handleClosePasswordModal}
+        onValid={handleValidPasswordModal}
+      />
+      <AlertModal
+        open={isOpenConfirmDeleteBoardModal}
+        onClickArray={[
+          handleCloseConfirmDeleteBoardModal,
+          handleConfirmDeleteBoard,
+        ]}
+        buttonTextArray={["취소", "삭제하기"]}
+        text="보드를 삭제하면 되돌릴 수 없습니다."
+        onClose={handleCloseConfirmDeleteBoardModal}
+      />
     </PageWrapper>
   );
 };
@@ -50,7 +78,7 @@ const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-`
+`;
 
 const MemoContainer = styled.div`
   position: absolute;
@@ -65,12 +93,12 @@ const MemoContainer = styled.div`
   overflow: scroll;
   gap: 1rem;
   z-index: 3;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 0;
   }
-`
+`;
 
 const Dummy = styled.div`
   display: inline-block;
   height: 40vh;
-`
+`;

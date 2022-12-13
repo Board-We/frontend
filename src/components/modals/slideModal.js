@@ -9,8 +9,10 @@ const SlideModal = ({ children, open, onClose, height }) => {
   });
   return (
     <>
-      <ModalContainer height={height}>{children}</ModalContainer>
-      <Backdrop onClick={onClose}></Backdrop>
+      <ModalContainer open={open} height={height}>
+        {children}
+      </ModalContainer>
+      <Backdrop open={open} onClick={onClose} />
     </>
   );
 };
@@ -20,14 +22,14 @@ export default SlideModal;
 const ModalContainer = styled.div`
   position: fixed;
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   height: ${(props) => `${props.height}`};
   bottom: 0;
   right: 0;
   left: 0;
   margin: 0 auto;
   background-color: white;
-  display: flex;
+  display: ${(props) => (props.open ? "flex" : "none")};
   flex-direction: column;
   justify-content: center;
   align-items: center;

@@ -1,20 +1,20 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
 
-const PasswordModal = ({ open, onClose, onSuccess }) => {
+const PasswordModal = ({ open, onClose, onValid }) => {
   const handleClickConfrimPassword = () => {
     // To do: 패스워드 확인 인증 로직
 
     // 올바른 패스워드 입력시
-    onSuccess();
+    onValid();
     onClose();
   };
 
   return (
     <SlideModal open={open} onClose={onClose} height="50vh">
       <PasswordModalDescription>
-        메모 삭제를 위해 <br /> 비밀번호를 입력해주세요
+        비밀번호를 입력해주세요
       </PasswordModalDescription>
       <PasswordInputBox>
         <PasswordInput

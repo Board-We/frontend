@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { ReactComponent as Share } from "../../../assets/share.svg";
 import { ReactComponent as Config } from "../../../assets/config.svg";
 import { ReactComponent as Search } from "../../../assets/search.svg";
 import { ReactComponent as ChevronLeft } from "../../../assets/chevronLeft.svg";
+import DropDownMenu from "./dropDownMenu";
 
 const ServiceNameHeader = ({
   isSearchMode,
@@ -12,17 +13,24 @@ const ServiceNameHeader = ({
   onKeyDownSearchInput,
   canShare,
   canConfig,
+  configMenuArray,
+  configMenuHandlerArray,
   canSearch,
   onClickSearch,
   onClickShare,
-  onClickConfig,
 }) => {
+  const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
+
   const handleClickChevronLeft = () => {
     setIsSearchMode(false);
   };
 
   const handleChangeSearchInput = (e) => {
     setQuery(e.target.value);
+  };
+
+  const handleClickConfig = () => {
+    setIsOpenConfigMenu((prev) => !prev);
   };
 
   return (
@@ -36,20 +44,26 @@ const ServiceNameHeader = ({
             <ChevronLeft onClick={handleClickChevronLeft} />
           </ChevronLeftButton>
         )}
+        {canSearch && (
+          <SearchButton onClick={onClickSearch} isSearchMode={isSearchMode}>
+            <Search />
+          </SearchButton>
+        )}
         <ServiceNameHeaderButtonGroup>
-          {canSearch && (
-            <SearchButton onClick={onClickSearch} isSearchMode={isSearchMode}>
-              <Search />
-            </SearchButton>
-          )}
           {canShare && (
             <ShareButton onClick={onClickShare}>
               <Share />
             </ShareButton>
           )}
           {canConfig && (
-            <ConfigButton onClick={onClickConfig}>
+            <ConfigButton onClick={handleClickConfig}>
               <Config />
+              {isOpenConfigMenu && (
+                <DropDownMenu
+                  menuArray={configMenuArray}
+                  menuHandlerArray={configMenuHandlerArray}
+                />
+              )}
             </ConfigButton>
           )}
         </ServiceNameHeaderButtonGroup>
@@ -95,12 +109,15 @@ const ServiceNameHeaderTitle = styled.div`
 const ServiceNameHeaderButtonGroup = styled.div`
   display: flex;
   align-items: center;
+  position: absolute;
+  right: 0;
 `;
 
 const ChevronLeftButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  position: relative;
 `;
 
 const moveSearchButton = keyframes`
@@ -142,6 +159,26 @@ const ConfigButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  position: relative;
+  direction: rtl;
+`;
+
+const ConfigMenuList = styled.div`
+  background-color: white;
+  width: 500%;
+  position: absolute;
+  z-index: 9999;
+  box-shadow: 0px 2px 12px rgba(73, 72, 72, 0.25);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+`;
+
+const ConfigMenu = styled.div`
+  text-align: end;
+  padding: 0.5rem;
+  &:hover {
+    background-color: #d2d2d2;
+  }
 `;
 
 const expandSearchInput = keyframes`
