@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import Backdrop from "./backdrop";
 
-const SlideModal = ({ children, open, onClose, height }) => {
+const SlideModal = ({ children, open, onClose, height, isBackdrop }) => {
   useEffect(() => {
     const body = document.querySelector("body");
     body.style.overflow = open ? "hidden" : "auto";
@@ -10,7 +10,7 @@ const SlideModal = ({ children, open, onClose, height }) => {
   return (
     <>
       <ModalContainer height={height}>{children}</ModalContainer>
-      <Backdrop onClick={onClose}></Backdrop>
+      {isBackdrop ? <Backdrop onClick={onClose}></Backdrop> : null}
     </>
   );
 };
