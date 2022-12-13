@@ -1,8 +1,4 @@
 import { atom } from "recoil";
-import {
-  setDefaultAttachableDay,
-  setDefaultOpenDay,
-} from "../utils/setDefaultDay";
 
 export const boardState = atom({
   key: "boardState",
@@ -33,7 +29,7 @@ export const boardState = atom({
       memoImageTextColorSets: [],
       memoBackgroundTextColorSets: [],
     },
-    memoTypes: [],
+    memoBackground: [],
     memoColors: ["white", "grey", "red", "blue", "yellow"],
     memos: [
       {
