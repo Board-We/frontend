@@ -17,8 +17,11 @@ export const boardState = atom({
     openEndTime: new Date(new Date().setDate(new Date().getDate() + 14)),
     password: undefined,
     openType: "", // PUBLIC OR PRIVATE
+    background:
+      "https://dimg.donga.com/wps/NEWS/IMAGE/2022/12/03/116825963.2.jpg",
 
     boardThemeId: "",
+
     theme: {
       boardBackgroundImage:
         "https://dimg.donga.com/wps/NEWS/IMAGE/2022/12/03/116825963.2.jpg",
@@ -30,8 +33,6 @@ export const boardState = atom({
       memoImageTextColorSets: [],
       memoBackgroundTextColorSets: [],
     },
-
-    font: "san-serif",
     memoTypes: [],
     memoColors: ["white", "grey", "red", "blue", "yellow"],
     memos: [
