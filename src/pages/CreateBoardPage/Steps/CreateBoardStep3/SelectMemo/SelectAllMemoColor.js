@@ -19,7 +19,7 @@ const SelectAllMemoColor = ({ memoIndex, isBackground }) => {
       });
     } else {
       // 메모지 폰트색
-      let fontColor = [...board.memoTypes];
+      let fontColor = [...board.memoColors];
       fontColor[memoIndex] = e.target.value;
       setBoard((prev) => {
         return {

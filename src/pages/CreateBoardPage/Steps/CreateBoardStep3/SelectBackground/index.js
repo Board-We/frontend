@@ -29,8 +29,17 @@ const SelectBackground = () => {
         thumbnail: url,
       });
 
-      const boardState = { ...board, background: url };
-      setBoard(boardState);
+      let boardState = {
+        ...board.theme,
+        boardBackgroundImage: url,
+        boardBackgroundColor: "",
+      };
+      setBoard((prev) => {
+        return {
+          ...prev,
+          theme: boardState,
+        };
+      });
     }
   };
 
