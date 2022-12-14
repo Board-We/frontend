@@ -36,11 +36,11 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
 
   useEffect(() => {
     if (active === "0") {
-      let setPrivateFalse = { ...board, privateMode: false };
-      setBoard(setPrivateFalse);
+      let setPublicMode = { ...board, openType: "PUBLIC" };
+      setBoard(setPublicMode);
     } else {
-      let setPrivateTrue = { ...board, privateMode: true };
-      setBoard(setPrivateTrue);
+      let setPrivateMode = { ...board, openType: "PRIVATE" };
+      setBoard(setPrivateMode);
     }
   }, [active, setBoard]);
 

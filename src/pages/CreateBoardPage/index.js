@@ -3,12 +3,13 @@ import styled from "styled-components";
 import CreateBoardStep1 from "./Steps/CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
 import { createBoardStepId, deviceScreenState } from "../../store";
+import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import FooterButton from "../../components/buttons/FooterButton";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3New";
 import { useState } from "react";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep5 from "./Steps/CreateBoardStep5";
-import CompleteCreate from "./Steps/CompleteCreate";
+import CompleteCreate from "./Steps/ComleteCreate";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useRef } from "react";
 import { useEffect } from "react";
@@ -22,20 +23,22 @@ const CreateBoardPage = () => {
     "간단한 설명을 적어주세요.",
     "보드를 마음껏 꾸며보세요!",
     "기간을 설정해 주세요.",
-    "비밀번호를 설정할 수 있어요."
-  ]
-  const $stepDescription = useRef()
-  const $footer = useRef()
-  const [maxHeightOfContentsArea, setMaxHeightOfContentsArea] = useState(0)
-  const deviceScreenSize = useRecoilValue(deviceScreenState)
+    "비밀번호를 설정할 수 있어요.",
+  ];
+  const $stepDescription = useRef();
+  const $footer = useRef();
+  const [maxHeightOfContentsArea, setMaxHeightOfContentsArea] = useState(0);
+  const deviceScreenSize = useRecoilValue(deviceScreenState);
 
   useEffect(() => {
     const deviceHeight = document.body.offsetHeight
     const bottomOfDescription = $stepDescription.current.offsetHeight + $stepDescription.current.offsetTop + Number(deviceScreenSize.rem.replace('px', '')) * 2
     const heightOfFooter = $footer.current.offsetHeight
 
-    setMaxHeightOfContentsArea(deviceHeight - bottomOfDescription - heightOfFooter)
-  })
+    setMaxHeightOfContentsArea(
+      deviceHeight - bottomOfDescription - heightOfFooter
+    );
+  });
 
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
@@ -85,18 +88,22 @@ const CreateBoardPage = () => {
   return (
     <PageWrapper>
       <CreateBoardContainer>
-        <StepHeader
-          title="새 보드 만들기"
-          onClick={handleClickBefore}
-          isFinalStep={currentStepId === finalStepId}
-        />
+        {currentStepId !== finalStepId ? (
+          <StepHeader
+            title="새 보드 만들기"
+            onClick={handleClickBefore}
+            isFinalStep={currentStepId === finalStepId}
+          />
+        ) : (
+          <ServiceNameHeader />
+        )}
         {currentStepId < 6 && (
           <ProgressBarContainer>
             <ProgressBar width={currentStepId} />
           </ProgressBarContainer>
         )}
         <CreateBoardBody>
-          <p>{currentStepId}/5단계</p>
+          {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
           <h1 ref={$stepDescription}>{stepDescription[currentStepId - 1]}</h1>
           <BoardInfoConatiner maxHeight={maxHeightOfContentsArea}>
             {controlCreatBoardStep(currentStepId, setDisabledFooterButton)}
@@ -181,7 +188,7 @@ const BoardInfoConatiner = styled.div`
   &::-webkit-scrollbar{
     display: none;
   }
-`
+`;
 
 const PageFooter = styled.div`
   flex-grow: 1;
