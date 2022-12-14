@@ -14,7 +14,7 @@ const FooterButton = React.forwardRef(({ color, fontColor, text, onClick, disabl
       {text}
     </Button>
   </ButtonWrapper>
-));
+))
 
 const ButtonWrapper = styled.div`
   position: relative;
@@ -30,7 +30,7 @@ const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.2rem;
+  padding: 1rem;
   width: 100vw;
   max-width: 700px;
   border-radius: ${props => props.flat ? null : '0.5rem'};

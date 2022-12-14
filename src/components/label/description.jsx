@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Description = ({ text, color = "black", size = "medium", children, style }) => {
-    return (
-        <ComponentWrapper id="descib" style={style} color={color} size={size}>{text}{children}</ComponentWrapper>
-    )
-}
+const Description = React.forwardRef(({ text, color = "black", size = "medium", children, style }, ref) => (
+    <ComponentWrapper ref={ref} id="descib" style={style} color={color} size={size}>{text}{children}</ComponentWrapper>
+))
 
 const ComponentWrapper = styled.span`
     font-size: ${props => props.size === "large" ? `1.25rem` : props.size === "medium" ? `1.0rem` : `0.875rem`};

@@ -31,7 +31,7 @@ const CreateBoardPage = () => {
 
   useEffect(() => {
     const deviceHeight = document.body.offsetHeight
-    const bottomOfDescription = $stepDescription.current.offsetHeight + $stepDescription.current.offsetTop + Number(deviceScreenSize.rem.replace('px', '')) * 3.5
+    const bottomOfDescription = $stepDescription.current.offsetHeight + $stepDescription.current.offsetTop + Number(deviceScreenSize.rem.replace('px', '')) * 2
     const heightOfFooter = $footer.current.offsetHeight
 
     setMaxHeightOfContentsArea(deviceHeight - bottomOfDescription - heightOfFooter)
@@ -171,16 +171,15 @@ const CreateBoardBody = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1rem;
-  padding: 2rem 1.5rem;
+  padding: 1rem 1.5rem;
 `;
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
   height: ${props => props.maxHeight}px;
-  overflow-y: scroll;
   padding: 0.25rem;
   &::-webkit-scrollbar{
-    visibility: hidden;
+    display: none;
   }
 `
 
