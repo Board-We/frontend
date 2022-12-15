@@ -5,8 +5,9 @@ import { useRecoilState } from "recoil";
 import { boardState, setDateStepId } from "../../../../store/index.js";
 import SlideModal from "../../../../components/modals/slideModal";
 import ModalContents from "./ModalContents";
+import { formattingDateObject } from "../../../../utils/setDefaultDay";
 
-function CreateBoardStep4({}) {
+function CreateBoardStep4() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [board, setBoard] = useRecoilState(boardState);
@@ -21,19 +22,14 @@ function CreateBoardStep4({}) {
     setModalOpen(true);
     setStep(4);
   };
+
   return (
     <>
       <CreateBoardStepContainer>
-        <CreateBoardStepCounter>3/4단계</CreateBoardStepCounter>
-        <CreateBoardDescriptionText>
-          <p>롤링페이퍼 받는 기간</p>
-          <span>친구들이 롤링페이퍼를 작성할 수 있어요.</span>
-        </CreateBoardDescriptionText>
-
         <SetTimeWrapper onClick={handleAttachableTerm}>
           <SetTimeContainer>
-            <p>{String(board.writingStartTime)}부터</p>
-            <p>~ {String(board.writingEndTime)} 까지</p>
+            <p>{formattingDateObject(board.writingStartTime)}부터</p>
+            <p>~ {formattingDateObject(board.writingEndTime)} 까지</p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />
@@ -47,8 +43,8 @@ function CreateBoardStep4({}) {
 
         <SetTimeWrapper onClick={handleOpenTerm}>
           <SetTimeContainer>
-            <p>{String(board.openStartTime)}부터</p>
-            <p>~ {String(board.openEndTime)} 까지</p>
+            <p>{formattingDateObject(board.openStartTime)}부터</p>
+            <p>~ {formattingDateObject(board.openEndTime)} 까지</p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />
@@ -74,12 +70,6 @@ const CreateBoardStepContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
-`;
-
-const CreateBoardStepCounter = styled.div`
-  color: #bcbcbc;
-  margin-bottom: 0.8rem;
-  font-size: 1.2rem;
 `;
 
 const CreateBoardDescriptionText = styled.div`

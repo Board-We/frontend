@@ -3,12 +3,21 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { boardState } from "../../../../../store";
 
-const SelectColor = ({ setBoardURL }) => {
+const SelectColor = () => {
   const [board, setBoard] = useRecoilState(boardState);
 
   const handleBoardColor = (e) => {
-    let setBgColor = { ...board, background: e.target.value };
-    setBoard(setBgColor);
+    let boardState = {
+      ...board.theme,
+      boardBackgroundImage: "",
+      boardBackgroundColor: e.target.value,
+    };
+    setBoard((prev) => {
+      return {
+        ...prev,
+        theme: boardState,
+      };
+    });
   };
 
   return (
@@ -18,7 +27,7 @@ const SelectColor = ({ setBoardURL }) => {
           {/*color picker 추후 교체 필요*/}
           <ColorPickerInput
             type="color"
-            value={board.background}
+            value={board.theme.boardBackgroundColor}
             onChange={handleBoardColor}
           />
         </div>

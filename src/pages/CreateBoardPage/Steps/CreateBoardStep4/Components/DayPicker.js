@@ -15,60 +15,78 @@ const DayPicker = ({
   const [board, setBoard] = useRecoilState(boardState);
 
   const handleDate = (e) => {
-    setDate(e.target.value);
+    const date = e.target.value.split("-");
+    setDate(date);
   };
 
   const handleTime = (e) => {
-    setTime(e.target.value);
+    const time = e.target.value.split(":");
+    setTime(time);
   };
 
   useEffect(() => {
-    if (step === 1) {
-      const boardState = {
-        ...board.attachableTerm,
-        start: `${date + " " + time}`,
-      };
-      setBoard((prev) => {
-        return {
-          ...prev,
-          attachableTerm: boardState,
+    if (time.length & date.length) {
+      if (step === 1) {
+        const boardState = {
+          ...board,
+          writingStartTime: new Date(
+            Number(date[0]),
+            Number(date[1]) - 1,
+            Number(date[2]),
+            Number(time[0]),
+            0,
+            0,
+            0
+          ),
         };
-      });
-    } else if (step === 2) {
-      const boardState = {
-        ...board.attachableTerm,
-        end: `${date + " " + time}`,
-      };
-      setBoard((prev) => {
-        return {
-          ...prev,
-          attachableTerm: boardState,
+        setBoard(boardState);
+      } else if (step === 2) {
+        const boardState = {
+          ...board,
+          writingEndTime: new Date(
+            Number(date[0]),
+            Number(date[1]) - 1,
+            Number(date[2]),
+            Number(time[0]),
+            0,
+            0,
+            0
+          ),
         };
-      });
-    } else if (step === 3) {
-      const boardState = {
-        ...board.openTerm,
-        start: `${date + " " + time}`,
-      };
-      setBoard((prev) => {
-        return {
-          ...prev,
-          openTerm: boardState,
+        setBoard(boardState);
+      } else if (step === 3) {
+        const boardState = {
+          ...board,
+          openStartTime: new Date(
+            Number(date[0]),
+            Number(date[1]) - 1,
+            Number(date[2]),
+            Number(time[0]),
+            0,
+            0,
+            0
+          ),
         };
-      });
-    } else if (step === 4) {
-      const boardState = {
-        ...board.openTerm,
-        end: `${date + " " + time}`,
-      };
-      setBoard((prev) => {
-        return {
-          ...prev,
-          openTerm: boardState,
+        setBoard(boardState);
+      } else if (step === 4) {
+        const boardState = {
+          ...board,
+          openEndTime: new Date(
+            Number(date[0]),
+            Number(date[1]) - 1,
+            Number(date[2]),
+            Number(time[0]),
+            0,
+            0,
+            0
+          ),
         };
-      });
+        setBoard(boardState);
+      }
     }
-  }, [date, time, step]);
+  }, [time, date, step]);
+
+  console.log(board);
 
   return (
     <Container>

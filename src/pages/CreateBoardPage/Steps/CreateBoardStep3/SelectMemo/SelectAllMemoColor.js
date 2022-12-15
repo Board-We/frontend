@@ -9,12 +9,12 @@ const SelectAllMemoColor = ({ memoIndex, isBackground }) => {
   const handleBoardColor = (e) => {
     if (isBackground === "0") {
       // 메모지 배경색
-      let memoColor = [...board.memoTypes];
+      let memoColor = [...board.memoBackground];
       memoColor[memoIndex] = e.target.value;
       setBoard((prev) => {
         return {
           ...prev,
-          memoTypes: memoColor,
+          memoBackground: memoColor,
         };
       });
     } else {
@@ -37,7 +37,7 @@ const SelectAllMemoColor = ({ memoIndex, isBackground }) => {
         type="color"
         value={
           isBackground === "0"
-            ? board.memoTypes[memoIndex]
+            ? board.memoBackground[memoIndex]
             : board.memoColors[memoIndex]
         }
         onChange={handleBoardColor}
