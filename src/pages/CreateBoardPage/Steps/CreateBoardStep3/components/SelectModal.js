@@ -10,20 +10,18 @@ const SelectModal = ({ children, open, onClose, isBackground, height }) => {
   });
 
   return (
-    <>
-      <ModalContainer height={height} isBackground={isBackground}>
-        {children}
-        <FooterContainer>
-          <Button onClick={onClose}>
-            <Close />
-          </Button>
-          {isBackground ? "배경" : "메모지"}
-          <Button onClick={onClose}>
-            <Check />
-          </Button>
-        </FooterContainer>
-      </ModalContainer>
-    </>
+    <ModalContainer height={height} isBackground={isBackground}>
+      {children}
+      <FooterContainer>
+        <Button onClick={onClose}>
+          <Close />
+        </Button>
+        {isBackground ? "배경" : "메모지"}
+        <Button onClick={onClose}>
+          <Check />
+        </Button>
+      </FooterContainer>
+    </ModalContainer>
   );
 };
 

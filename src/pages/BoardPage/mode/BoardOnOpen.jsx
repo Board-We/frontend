@@ -19,10 +19,12 @@ const BoardOnOpen = () => {
   const [memoThemes, setMemoThemes] = useState({})
   const [visibleMemos, setVisibleMemos] = useState([])
   const [isMemoLoading, setIsMemoLoading] = useState(true)
+  const $memoContainer = useRef()
 
   useEffect(() => {
     makeMemoThemes()
     makeVisibleMemos()
+
     if (!board.memos) setOpenPasswordModal(true)
     else setOpenPasswordModal(false)
   }, [board])
@@ -75,17 +77,16 @@ const BoardOnOpen = () => {
   return (
     <PageWrapper >
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
-      <MemoContainer onScroll={onScrollMemoContainer} paddingTop={paddingTop}>
+      <MemoContainer ref={$memoContainer} onScroll={onScrollMemoContainer} paddingTop={paddingTop}>
         {
           visibleMemos && privateModeForTest ?
             visibleMemos.map((el, i) => {
               // memoThemeId
               const theme = memoThemes[el.memoThemeId]
-              return <MemoOnBoard key={`${el}${i}`} text={el.memoContent} background={theme?.memoBackground} color={theme?.memoTextColor} marginOption={i % 2 === 0} />
+              return <MemoOnBoard size={$memoContainer.current.clientWidth * 0.4} key={`${el}${i}`} text={el.memoContent} background={theme?.memoBackground} color={theme?.memoTextColor} marginOption={i % 2 === 0} />
             })
             : <PasswordModal open={openPasswordModal} onClose={onClosePasswordModal} onSuccess={onSuccessPasswordModal} />
-        }
-      </MemoContainer>
+        }      </MemoContainer>
       {
         isMemoLoading ?
           <Spinner />

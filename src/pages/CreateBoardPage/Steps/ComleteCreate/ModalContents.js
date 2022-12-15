@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { boardState } from "../../../../store";
 import { formattingDateObject } from "../../../../utils/setDefaultDay";
 
-const ModalContents = () => {
+const ModalContents = ({ boardURL }) => {
   const board = useRecoilValue(boardState);
   const nagivate = useNavigate();
 
@@ -21,7 +21,7 @@ const ModalContents = () => {
       </p>
       <BoardLinkBox>
         <BoardLinkUrlText>
-          <p>www.어쩌구저쩌구</p>
+          <p>{boardURL && boardURL}</p>
         </BoardLinkUrlText>
         <BoardLinkCopyButton>공유</BoardLinkCopyButton>
       </BoardLinkBox>
