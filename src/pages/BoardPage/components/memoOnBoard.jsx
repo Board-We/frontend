@@ -1,8 +1,8 @@
 import styled from "styled-components"
 
-const MemoOnBoard = ({ text = "", background = "white", color = "black", children, marginOption }) => {
+const MemoOnBoard = ({ size, text = "", background = "white", color = "black", children, marginOption }) => {
     return (
-        <ComponentWrapper background={background} color={color} marginOption={marginOption}>
+        <ComponentWrapper size={size} background={background} color={color} marginOption={marginOption}>
             <MemoText>{text}{children}</MemoText>
         </ComponentWrapper>
     )
@@ -14,13 +14,13 @@ const ComponentWrapper = styled.div`
     justify-content: center;
     background: ${props => props.background.includes("http") ? `url(${props.background})` : props.background};
     color: ${props => props.color};
-    width: 10.5rem;
-    height: 10.5rem;
-    border-radius: 0.25rem;
-    padding: 0.875rem;
-    font-size: 0.625rem;
+    width: ${props => props.size ? `${props.size}px` : `10.5rem`};
+    height: ${props => props.size ? `${props.size}px` : `10.5rem`};
+    border-radius: ${props => props.size ? `${props.size * 0.05}px` : `0.25rem`};
+    padding: ${props => props.size ? `${props.size * 0.1}px` : `0.875rem`};
+    font-size: ${props => props.size ? `${props.size * 0.07}px` : `0.625rem`};
     font-weight: 300;
-    line-height: 0.9325rem;
+    line-height: ${props => props.size ? `${props.size * 0.1}px` : `0.9325rem`};
     margin-left: ${props => props.marginOption ? 'auto' : null};
     margin-right: ${props => !props.marginOption ? 'auto' : null};
 `
