@@ -128,8 +128,6 @@ export const boardState = atom({
       },
     ],
   },
-  memoBackground: [],
-  memoColors: ["white", "grey", "red", "blue", "yellow"],
 });
 
 export const memoStyleState = atom({

@@ -10,7 +10,7 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
   const inputRef = useRef();
 
   const [board, setBoard] = useRecoilState(boardState);
-  const [boardName, setBoardName] = useState("");
+  const [boardName, setBoardName] = useState(board.name);
   const [isValidLength, setIsValidLength] = useState(true);
 
   const handleChangeBoardName = (e) => {
@@ -37,7 +37,7 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
   return (
     <CreateBoardStepContainer>
       <TextInput
-        value={boardName}
+        value={board.name}
         commonSize={true}
         placeholder="ex. 김땡땡 생일 축하해~!"
         type="text"
@@ -50,7 +50,7 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
-          text={boardName}
+          text={board.name}
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>
