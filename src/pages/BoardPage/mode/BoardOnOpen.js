@@ -6,40 +6,25 @@ import MemoPaper from "../../../components/memoPaper";
 import PasswordModal from "../BoardPageModal/PasswordModal";
 import { useState } from "react";
 import AlertModal from "../../../components/modals/alertModal";
-import { deleteBoard } from "../../../api/boardsApi";
 
 const BoardOnOpen = ({
-  passwordModalState,
-  setPasswordModalState,
-  isDeleteMode,
-  setIsDeleteMemoMode,
+  handleValidPassword,
+  setHandleValidPassword,
+  isOpenConfirmDeleteBoardModal,
+  isDeleteMemoMode,
 }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
-  const [isOpenConfirmDeleteBoardModal, setIsOpenConfirmDeleteBoardModal] =
-    useState(false);
-  console.log(isOpenConfirmDeleteBoardModal);
 
   const handleClosePasswordModal = () => {
-    setPasswordModalState({ ...passwordModalState, open: false });
-  };
-
-  const handleValidPasswordModal = () => {
-    if (passwordModalState.type === "deleteBoard")
-      setIsOpenConfirmDeleteBoardModal(true);
-    else if (passwordModalState.type === "deleteMemo")
-      setIsDeleteMemoMode(true);
+    setHandleValidPassword(null);
   };
 
   const handleCloseConfirmDeleteBoardModal = () => {
-    setIsOpenConfirmDeleteBoardModal(false);
+    setHandleValidPassword(null);
   };
 
-  const handleConfirmDeleteBoard = async () => {
-    const deleted = await deleteBoard(); // param : {boardCode, password}
-    if (deleted) setIsOpenConfirmDeleteBoardModal(false);
-  };
-
+  console.log(handleValidPassword);
   return (
     <PageWrapper>
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
@@ -51,16 +36,13 @@ const BoardOnOpen = ({
           })}
       </MemoContainer>
       <PasswordModal
-        open={passwordModalState.open}
+        open={true}
         onClose={handleClosePasswordModal}
-        onValid={handleValidPasswordModal}
+        onValid={handleValidPassword}
       />
       <AlertModal
         open={isOpenConfirmDeleteBoardModal}
-        onClickArray={[
-          handleCloseConfirmDeleteBoardModal,
-          handleConfirmDeleteBoard,
-        ]}
+        onClickArray={[handleCloseConfirmDeleteBoardModal, handleValidPassword]}
         buttonTextArray={["취소", "삭제하기"]}
         text="보드를 삭제하면 되돌릴 수 없습니다."
         onClose={handleCloseConfirmDeleteBoardModal}

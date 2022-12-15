@@ -3,6 +3,7 @@ import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
 
 const PasswordModal = ({ open, onClose, onValid }) => {
+  console.log("open", open);
   const handleClickConfrimPassword = () => {
     // To do: 패스워드 확인 인증 로직
 

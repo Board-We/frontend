@@ -11,13 +11,9 @@ const ServiceNameHeader = ({
   setIsSearchMode,
   setQuery,
   onKeyDownSearchInput,
-  canShare,
-  canConfig,
-  configMenuArray,
-  configMenuHandlerArray,
-  canSearch,
-  onClickSearch,
-  onClickShare,
+  onShare,
+  onConfig,
+  onSearch,
 }) => {
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
 
@@ -44,37 +40,35 @@ const ServiceNameHeader = ({
             <ChevronLeft onClick={handleClickChevronLeft} />
           </ChevronLeftButton>
         )}
-        {canSearch && (
-          <SearchButton onClick={onClickSearch} isSearchMode={isSearchMode}>
-            <Search />
-          </SearchButton>
-        )}
         <ServiceNameHeaderButtonGroup>
-          {canShare && (
-            <ShareButton onClick={onClickShare}>
+          {onSearch ? (
+            <SearchButton onClick={onSearch} isSearchMode={isSearchMode}>
+              <Search />
+            </SearchButton>
+          ) : null}
+          {onShare && !isSearchMode ? (
+            <ShareButton onClick={onShare}>
               <Share />
             </ShareButton>
-          )}
-          {canConfig && (
+          ) : null}
+          {onConfig && !isSearchMode ? (
             <ConfigButton onClick={handleClickConfig}>
               <Config />
               {isOpenConfigMenu && (
                 <DropDownMenu
-                  menuArray={configMenuArray}
-                  menuHandlerArray={configMenuHandlerArray}
+                  menuArray={onConfig.configMenu}
+                  menuHandlerArray={onConfig.configMenuHandler}
                 />
               )}
             </ConfigButton>
-          )}
+          ) : null}
         </ServiceNameHeaderButtonGroup>
-        {isSearchMode && (
-          <SearchInput
-            onChange={handleChangeSearchInput}
-            isSearchMode={isSearchMode}
-            placeholder="보드를 검색하세요."
-            onKeyDown={onKeyDownSearchInput}
-          />
-        )}
+        <SearchInput
+          onChange={handleChangeSearchInput}
+          isSearchMode={isSearchMode}
+          placeholder="보드를 검색하세요."
+          onKeyDown={onKeyDownSearchInput}
+        />
       </ServiceNameHeaderContainer>
     </ComponentWrapper>
   );
@@ -93,9 +87,10 @@ const ComponentWrapper = styled.div`
 
 const ServiceNameHeaderContainer = styled.div`
   width: 100%;
-  position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 const ServiceNameHeaderTitle = styled.div`
@@ -108,9 +103,8 @@ const ServiceNameHeaderTitle = styled.div`
 
 const ServiceNameHeaderButtonGroup = styled.div`
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  position: absolute;
-  right: 0;
 `;
 
 const ChevronLeftButton = styled.button`
@@ -122,15 +116,15 @@ const ChevronLeftButton = styled.button`
 
 const moveSearchButton = keyframes`
 0% {
+  position: absolute;
  right:0;
 }
 
 
 100% {
+  position: absolute;
   right: 87%;
 }
-
-
 `;
 
 const SearchButton = styled.button`
@@ -138,7 +132,6 @@ const SearchButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   right: 0;
-  position: absolute;
   animation: ${(props) =>
     props.isSearchMode
       ? css`
@@ -151,7 +144,6 @@ const SearchButton = styled.button`
 const ShareButton = styled.button`
   border: none;
   background-color: transparent;
-  margin-right: 1rem;
   cursor: pointer;
 `;
 

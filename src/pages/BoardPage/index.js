@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { deleteBoard } from "../../api/boardsApi";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import Board404 from "./mode/Board404";
 import BoardOnEnd from "./mode/BoardOnEnd";
@@ -11,41 +12,41 @@ import BoardOnWrite from "./mode/BoardOnWrite";
 
 const BoardPage = () => {
   const navigate = useNavigate();
-  const [passwordModalState, setPasswordModalState] = useState({
-    type: "",
-    open: false,
-  });
+  const [handleValidPassword, setHandleValidPassword] = useState(null);
+  const [isOpenConfirmDeleteBoardModal, setIsOpenConfirmDeleteBoardModal] =
+    useState(false);
   const [isDeleteMemoMode, setIsDeleteMemoMode] = useState(false);
 
+  const handleConfirmDeleteBoard = async () => {
+    console.log("delete");
+    const deleted = await deleteBoard(); // param : {boardCode, password}
+    if (deleted) handleValidPassword(null);
+  };
+
   const handleClickDeleteBoard = () => {
-    setPasswordModalState({
-      ...passwordModalState,
-      type: "deleteBoard",
-      open: true,
-    });
+    setHandleValidPassword(() => handleConfirmDeleteBoard);
+  };
+
+  const toggleDeleteMemoMode = () => {
+    setIsDeleteMemoMode((prev) => !prev);
   };
 
   const handleClickDeleteMemo = () => {
-    setPasswordModalState({
-      ...passwordModalState,
-      type: "deleteMemo",
-      open: true,
-    });
+    setHandleValidPassword(() => toggleDeleteMemoMode);
   };
 
-  const configMenuArray = ["보드 삭제", "메모 삭제"];
-  const configMenuHandlerArray = [
-    handleClickDeleteBoard,
-    handleClickDeleteMemo,
-  ];
+  const configMenuSetting = {
+    configMenu: ["보드 삭제", "메모 삭제"],
+    configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
+  };
 
   return (
     <PageWrapper>
       <ServiceNameHeader
-        canConfig={true}
-        canShare={true}
-        configMenuArray={configMenuArray}
-        configMenuHandlerArray={configMenuHandlerArray}
+        isSearchMode={false}
+        onSearch={() => {}}
+        onShare={() => {}}
+        onConfig={configMenuSetting}
       />
       <SlidesContainer>
         <Routes>
@@ -56,10 +57,10 @@ const BoardPage = () => {
             path="/onOpen"
             element={
               <BoardOnOpen
-                passwordModalState={passwordModalState}
-                setPasswordModalState={setPasswordModalState}
+                handleValidPassword={handleValidPassword}
+                setHandleValidPassowrd={setHandleValidPassword}
+                isOpenConfirmDeleteBoardModal={isOpenConfirmDeleteBoardModal}
                 isDeleteMemoMode={isDeleteMemoMode}
-                setIsDeleteMemoMode={setIsDeleteMemoMode}
               />
             }
           />
