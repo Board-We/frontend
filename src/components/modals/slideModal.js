@@ -9,7 +9,9 @@ const SlideModal = ({ children, open, onClose, height, isBackdrop }) => {
   });
   return (
     <>
-      <ModalContainer height={height}>{children}</ModalContainer>
+      <ModalContainer open={open} height={height}>
+        {children}
+      </ModalContainer>
       {isBackdrop ? <Backdrop onClick={onClose}></Backdrop> : null}
     </>
   );

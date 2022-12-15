@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
 
 const PasswordModal = ({ open, onClose, onValid }) => {
-  console.log("open", open);
+  const [password, setPassword] = useState("");
+
+  const handleOnChangePasswordInput = (e) => {
+    setPassword(e.target.value);
+  };
   const handleClickConfrimPassword = () => {
     // To do: 패스워드 확인 인증 로직
 
     // 올바른 패스워드 입력시
     onValid();
+    setPassword("");
     onClose();
   };
 
@@ -19,6 +24,8 @@ const PasswordModal = ({ open, onClose, onValid }) => {
       </PasswordModalDescription>
       <PasswordInputBox>
         <PasswordInput
+          value={password}
+          onChange={handleOnChangePasswordInput}
           type="text"
           pattern="[0-9]*"
           placeholder="비밀번호를 입력해주세요."

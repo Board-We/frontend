@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { deleteBoard } from "../../api/boardsApi";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import Board404 from "./mode/Board404";
 import BoardOnEnd from "./mode/BoardOnEnd";
@@ -17,14 +16,13 @@ const BoardPage = () => {
     useState(false);
   const [isDeleteMemoMode, setIsDeleteMemoMode] = useState(false);
 
-  const handleConfirmDeleteBoard = async () => {
-    console.log("delete");
-    const deleted = await deleteBoard(); // param : {boardCode, password}
-    if (deleted) handleValidPassword(null);
+  const handleOpenConfirmDeleteBoardModal = () => {
+    setIsOpenConfirmDeleteBoardModal(true);
+    setHandleValidPassword(null);
   };
 
   const handleClickDeleteBoard = () => {
-    setHandleValidPassword(() => handleConfirmDeleteBoard);
+    setHandleValidPassword(() => handleOpenConfirmDeleteBoardModal);
   };
 
   const toggleDeleteMemoMode = () => {
@@ -60,6 +58,9 @@ const BoardPage = () => {
                 handleValidPassword={handleValidPassword}
                 setHandleValidPassowrd={setHandleValidPassword}
                 isOpenConfirmDeleteBoardModal={isOpenConfirmDeleteBoardModal}
+                setIsOpenConfirmDeleteBoardModal={
+                  setIsOpenConfirmDeleteBoardModal
+                }
                 isDeleteMemoMode={isDeleteMemoMode}
               />
             }

@@ -4,13 +4,14 @@ import { useRecoilValue } from "recoil";
 import { boardState } from "../../../store";
 import MemoPaper from "../../../components/memoPaper";
 import PasswordModal from "../BoardPageModal/PasswordModal";
-import { useState } from "react";
 import AlertModal from "../../../components/modals/alertModal";
+import { deleteBoard } from "../../../api/boardsApi";
 
 const BoardOnOpen = ({
   handleValidPassword,
   setHandleValidPassword,
   isOpenConfirmDeleteBoardModal,
+  setIsOpenConfirmDeleteBoardModal,
   isDeleteMemoMode,
 }) => {
   const board = useRecoilValue(boardState);
@@ -21,10 +22,14 @@ const BoardOnOpen = ({
   };
 
   const handleCloseConfirmDeleteBoardModal = () => {
-    setHandleValidPassword(null);
+    setIsOpenConfirmDeleteBoardModal(false);
   };
 
-  console.log(handleValidPassword);
+  const handleConfirmDeleteBoard = async ({ boardCode, password }) => {
+    const deleted = await deleteBoard({ boardCode, password });
+    setIsOpenConfirmDeleteBoardModal(false);
+  };
+
   return (
     <PageWrapper>
       <BoardBackground boardInfo={board} backgroundRepeat={true} />
@@ -36,13 +41,16 @@ const BoardOnOpen = ({
           })}
       </MemoContainer>
       <PasswordModal
-        open={true}
+        open={handleValidPassword}
         onClose={handleClosePasswordModal}
         onValid={handleValidPassword}
       />
       <AlertModal
         open={isOpenConfirmDeleteBoardModal}
-        onClickArray={[handleCloseConfirmDeleteBoardModal, handleValidPassword]}
+        onClickArray={[
+          handleCloseConfirmDeleteBoardModal,
+          handleConfirmDeleteBoard,
+        ]}
         buttonTextArray={["취소", "삭제하기"]}
         text="보드를 삭제하면 되돌릴 수 없습니다."
         onClose={handleCloseConfirmDeleteBoardModal}
@@ -78,9 +86,4 @@ const MemoContainer = styled.div`
   &::-webkit-scrollbar {
     width: 0;
   }
-`;
-
-const Dummy = styled.div`
-  display: inline-block;
-  height: 40vh;
 `;

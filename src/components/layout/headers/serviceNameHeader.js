@@ -119,8 +119,6 @@ const moveSearchButton = keyframes`
   position: absolute;
  right:0;
 }
-
-
 100% {
   position: absolute;
   right: 87%;
@@ -177,13 +175,10 @@ const expandSearchInput = keyframes`
 0% {
  display: block;
 }
-
 100% {
   display: block;
   width: 92%;
 }
-
-
 `;
 
 const SearchInput = styled.input`
