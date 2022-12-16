@@ -8,6 +8,7 @@ import DropDownMenu from "./dropDownMenu";
 
 const ServiceNameHeader = ({
   isSearchMode,
+  isDeleteMemoMode,
   setIsSearchMode,
   setQuery,
   onKeyDownSearchInput,
@@ -21,7 +22,7 @@ const ServiceNameHeader = ({
     setIsSearchMode(false);
   };
 
-  const handleChangeSearchInput = (e) => {
+  const handleChangeHeaderInput = (e) => {
     setQuery(e.target.value);
   };
 
@@ -32,26 +33,30 @@ const ServiceNameHeader = ({
   return (
     <ComponentWrapper>
       <ServiceNameHeaderContainer>
-        {!isSearchMode && (
+        {!(isSearchMode || isDeleteMemoMode) && (
           <ServiceNameHeaderTitle>Side project</ServiceNameHeaderTitle>
         )}
-        {isSearchMode && (
+        {(isSearchMode || isDeleteMemoMode) && (
           <ChevronLeftButton>
             <ChevronLeft onClick={handleClickChevronLeft} />
           </ChevronLeftButton>
         )}
         <ServiceNameHeaderButtonGroup>
           {onSearch ? (
-            <SearchButton onClick={onSearch} isSearchMode={isSearchMode}>
+            <SearchButton
+              onClick={onSearch}
+              isSearchMode={isSearchMode}
+              isDeleteMemoMode={isDeleteMemoMode}
+            >
               <Search />
             </SearchButton>
           ) : null}
-          {onShare && !isSearchMode ? (
+          {onShare && !(isSearchMode || isDeleteMemoMode) ? (
             <ShareButton onClick={onShare}>
               <Share />
             </ShareButton>
           ) : null}
-          {onConfig && !isSearchMode ? (
+          {onConfig && !(isSearchMode || isDeleteMemoMode) ? (
             <ConfigButton onClick={handleClickConfig}>
               <Config />
               {isOpenConfigMenu && (
@@ -63,12 +68,18 @@ const ServiceNameHeader = ({
             </ConfigButton>
           ) : null}
         </ServiceNameHeaderButtonGroup>
-        <SearchInput
-          onChange={handleChangeSearchInput}
+        <HeaderInput
+          onChange={handleChangeHeaderInput}
           isSearchMode={isSearchMode}
-          placeholder="보드를 검색하세요."
+          isDeleteMemoMode={isDeleteMemoMode}
+          placeholder={
+            isSearchMode ? "보드를 검색하세요." : "내용을 검색하세요"
+          }
           onKeyDown={onKeyDownSearchInput}
         />
+        {isDeleteMemoMode ? (
+          <UnselectButton isActive={true}>선택 해제</UnselectButton>
+        ) : null}
       </ServiceNameHeaderContainer>
     </ComponentWrapper>
   );
@@ -131,7 +142,7 @@ const SearchButton = styled.button`
   cursor: pointer;
   right: 0;
   animation: ${(props) =>
-    props.isSearchMode
+    props.isSearchMode || props.isDeleteMemoMode
       ? css`
           ${moveSearchButton} 0.3s linear
         `
@@ -153,24 +164,6 @@ const ConfigButton = styled.button`
   direction: rtl;
 `;
 
-const ConfigMenuList = styled.div`
-  background-color: white;
-  width: 500%;
-  position: absolute;
-  z-index: 9999;
-  box-shadow: 0px 2px 12px rgba(73, 72, 72, 0.25);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-`;
-
-const ConfigMenu = styled.div`
-  text-align: end;
-  padding: 0.5rem;
-  &:hover {
-    background-color: #d2d2d2;
-  }
-`;
-
 const expandSearchInput = keyframes`
 0% {
  display: block;
@@ -181,7 +174,18 @@ const expandSearchInput = keyframes`
 }
 `;
 
-const SearchInput = styled.input`
+const expandDeleteMemoInput = keyframes`
+0% {
+ display: block;
+}
+100% {
+  display: block;
+  width: 78%;
+  right: 14%;
+}
+`;
+
+const HeaderInput = styled.input`
   position: absolute;
   right: 0;
   width: 0;
@@ -191,14 +195,25 @@ const SearchInput = styled.input`
   background-color: rgba(118, 118, 128, 0.12);
   border: none;
   border-radius: 0.5rem;
-  display: ${(props) => (props.isSearchMode ? "block" : "none")};
+  display: ${(props) =>
+    props.isSearchMode || props.isDeleteMemoMode ? "block" : "none"};
   animation: ${(props) =>
     props.isSearchMode
       ? css`
           ${expandSearchInput} 0.3s linear
         `
+      : props.isDeleteMemoMode
+      ? css`
+          ${expandDeleteMemoInput} 0.3s linear
+        `
       : ""};
   animation-fill-mode: forwards;
+`;
+
+const UnselectButton = styled.button`
+  color: ${(props) => (props.isActive ? "#757879" : "#757879")};
+  background-color: transparent;
+  border: none;
 `;
 
 export default ServiceNameHeader;

@@ -42,6 +42,7 @@ const BoardPage = () => {
     <PageWrapper>
       <ServiceNameHeader
         isSearchMode={false}
+        isDeleteMemoMode={isDeleteMemoMode}
         onSearch={() => {}}
         onShare={() => {}}
         onConfig={configMenuSetting}

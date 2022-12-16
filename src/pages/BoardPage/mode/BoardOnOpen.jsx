@@ -8,18 +8,21 @@ import Toast from "../components/toast";
 import MemoOnBoard from "../components/memoOnBoard";
 import Spinner from "../components/spinner";
 import { deleteBoard } from "../../../api/boardsApi";
+import { deleteMemo } from "../../../api/memoApi";
 import AlertModal from "../../../components/modals/alertModal";
+import CheckableMemo from "../components/CheckableMemo";
 
 const BoardOnOpen = ({
   passwordModalState,
   setPasswordModalState,
-  isDeleteMode,
+  isDeleteMemoMode,
   setIsDeleteMemoMode,
 }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
+  const [checkedMemoList, setCheckedMemoList] = useState([]);
   const [openToast, setOpenToast] = useState(true);
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
@@ -48,6 +51,19 @@ const BoardOnOpen = ({
   const handleConfirmDeleteBoard = async ({ boardCode, password }) => {
     const deleted = await deleteBoard({ boardCode, password }); // param : {boardCode, password}
     setIsOpenConfirmDeleteModal(false);
+  };
+
+  const handleChangeCheckableMemo = (e) => {
+    console.log(e.target.checked, e.target.value);
+    if (e.target.checked) {
+      setCheckedMemoList([...checkedMemoList, e.target.value]);
+    } else
+      setCheckedMemoList(checkedMemoList.filter((id) => id !== e.target.value));
+  };
+
+  const handleClickDeleteMemo = async (boardCode) => {
+    const deleted = await deleteMemo({ boardCode, checkedMemoList });
+    setIsDeleteMemoMode(false);
   };
 
   useEffect(() => {
@@ -105,7 +121,7 @@ const BoardOnOpen = ({
         onScroll={onScrollMemoContainer}
         paddingTop={paddingTop}
       >
-        {visibleMemos && privateModeForTest
+        {visibleMemos && privateModeForTest && !isDeleteMemoMode
           ? visibleMemos.map((el, i) => {
               // memoThemeId
               const theme = memoThemes[el.memoThemeId];
@@ -121,6 +137,15 @@ const BoardOnOpen = ({
               );
             })
           : null}{" "}
+        {isDeleteMemoMode &&
+          visibleMemos.map((el, i) => (
+            <CheckableMemo
+              key={`${el}${i}`}
+              id={`${el}${i}`}
+              text={el.memoContent}
+              onChange={handleChangeCheckableMemo}
+            />
+          ))}
         <PasswordModal
           open={passwordModalState.open}
           onClose={handleClosePasswordModal}
@@ -136,6 +161,17 @@ const BoardOnOpen = ({
           text="보드를 삭제하면 되돌릴 수 없습니다."
           onClose={handleCloseConfirmDeleteModal}
         />
+        {isDeleteMemoMode && (
+          <DeleteMemoButton
+            isExistCheckedmemo={checkedMemoList.length !== 0}
+            onClick={handleClickDeleteMemo}
+          >
+            삭제하기{" "}
+            {checkedMemoList.length !== 0 && (
+              <span>{checkedMemoList.length}</span>
+            )}
+          </DeleteMemoButton>
+        )}
       </MemoContainer>
       {isMemoLoading ? <Spinner /> : null}
       <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
@@ -173,5 +209,23 @@ const MemoContainer = styled.div`
   z-index: 3;
   &::-webkit-scrollbar {
     width: 0;
+  }
+`;
+
+const DeleteMemoButton = styled.button`
+  position: fixed;
+  bottom: 0;
+  border: 0;
+  color: ${(props) => (props.isExistCheckedmemo ? "black" : "#757879")};
+  background-color: ${(props) =>
+    props.isExistCheckedmemo ? "#FDC62E" : "#E1E5E6"};
+  width: 90vw;
+  max-width: 550px;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1.2rem;
+
+  span {
+    color: #cf281f;
   }
 `;
