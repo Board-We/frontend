@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -12,6 +12,32 @@ import BoardOnWrite from "./mode/BoardOnWrite";
 
 const BoardPage = () => {
   const navigate = useNavigate();
+  const [passwordModalState, setPasswordModalState] = useState({
+    type: "",
+    open: false,
+  });
+  const [isDeleteMemoMode, setIsDeleteMemoMode] = useState(false);
+
+  const handleClickDeleteBoard = () => {
+    setPasswordModalState({
+      ...passwordModalState,
+      type: "deleteBoard",
+      open: true,
+    });
+  };
+
+  const handleClickDeleteMemo = () => {
+    setPasswordModalState({
+      ...passwordModalState,
+      type: "deleteMemo",
+      open: true,
+    });
+  };
+
+  const configMenuSetting = {
+    configMenu: ["보드 삭제", "메모 삭제"],
+    configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
+  };
 
   useEffect(() => {
     // navigate("/board/onWaitWrite")
@@ -19,12 +45,27 @@ const BoardPage = () => {
 
   return (
     <PageWrapper>
-      <ServiceNameHeader />
+      <ServiceNameHeader
+        isSearchMode={false}
+        onSearch={() => {}}
+        onShare={() => {}}
+        onConfig={configMenuSetting}
+      />
       <Routes>
         <Route path="/onWaitWrite" element={<BoardOnWaitWrite />} />
         <Route path="/onWrite" element={<BoardOnWrite />} />
         <Route path="/onWaitOpen" element={<BoardOnWaitOpen />} />
-        <Route path="/onOpen" element={<BoardOnOpen />} />
+        <Route
+          path="/onOpen"
+          element={
+            <BoardOnOpen
+              passwordModalState={passwordModalState}
+              setPasswordModalState={setPasswordModalState}
+              isDeleteMemoMode={isDeleteMemoMode}
+              setIsDeleteMemoMode={setIsDeleteMemoMode}
+            />
+          }
+        />
         <Route path="/onEnd" element={<BoardOnEnd />} />
         <Route path="/404" element={<Board404 />} />
       </Routes>

@@ -9,7 +9,7 @@ import BoardOnWaitOpen from "./mode/BoardOnWaitOpen";
 import BoardOnWaitWrite from "./mode/BoardOnWaitWrite";
 import BoardOnWrite from "./mode/BoardOnWrite";
 
-const BoardPage = () => {
+const BoardPage_ = () => {
   const navigate = useNavigate();
   const [passwordModalState, setPasswordModalState] = useState({
     type: "",
@@ -81,4 +81,4 @@ const SlidesContainer = styled.div`
   height: 100%;
 `;
 
-export default BoardPage;
+export default BoardPage_;

@@ -18,7 +18,6 @@ const BoardOnOpen = ({
   const privateModeForTest = true;
   const [isOpenConfirmDeleteBoardModal, setIsOpenConfirmDeleteBoardModal] =
     useState(false);
-  console.log(isOpenConfirmDeleteBoardModal);
 
   const handleClosePasswordModal = () => {
     setPasswordModalState({ ...passwordModalState, open: false });
