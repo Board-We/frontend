@@ -90,12 +90,7 @@ const Main = () => {
             setIsSearchMode={setIsSearchMode}
             setQuery={setQuery}
             onKeyDownSearchInput={handleKeyDownSearchInput}
-            canShare={false}
-            canConfig={false}
-            canSearch={true}
-            onClickSearch={handleClickSearch}
-            onClickConfig={false}
-            onClickShare={false}
+            onSearch={handleClickSearch}
           />
           {!isSearchMode ? (
             <>
@@ -122,6 +117,7 @@ const Main = () => {
           )}
         </MainPageContainer>
       </PageWrapper>
+
       {isOpenInvalidLinkModal && (
         <AlertModal
           open={isOpenInvalidLinkModal}

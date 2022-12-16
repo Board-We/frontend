@@ -1,28 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { ReactComponent as Share } from "../../../assets/share.svg";
 import { ReactComponent as Config } from "../../../assets/config.svg";
 import { ReactComponent as Search } from "../../../assets/search.svg";
 import { ReactComponent as ChevronLeft } from "../../../assets/chevronLeft.svg";
+import DropDownMenu from "./dropDownMenu";
 
 const ServiceNameHeader = ({
   isSearchMode,
   setIsSearchMode,
   setQuery,
   onKeyDownSearchInput,
-  canShare,
-  canConfig,
-  canSearch,
-  onClickSearch,
-  onClickShare,
-  onClickConfig,
+  onShare,
+  onConfig,
+  onSearch,
 }) => {
+  const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
+
   const handleClickChevronLeft = () => {
     setIsSearchMode(false);
   };
 
   const handleChangeSearchInput = (e) => {
     setQuery(e.target.value);
+  };
+
+  const handleClickConfig = () => {
+    setIsOpenConfigMenu((prev) => !prev);
   };
 
   return (
@@ -37,30 +41,34 @@ const ServiceNameHeader = ({
           </ChevronLeftButton>
         )}
         <ServiceNameHeaderButtonGroup>
-          {canSearch && (
-            <SearchButton onClick={onClickSearch} isSearchMode={isSearchMode}>
+          {onSearch ? (
+            <SearchButton onClick={onSearch} isSearchMode={isSearchMode}>
               <Search />
             </SearchButton>
-          )}
-          {canShare && (
-            <ShareButton onClick={onClickShare}>
+          ) : null}
+          {onShare && !isSearchMode ? (
+            <ShareButton onClick={onShare}>
               <Share />
             </ShareButton>
-          )}
-          {canConfig && (
-            <ConfigButton onClick={onClickConfig}>
+          ) : null}
+          {onConfig && !isSearchMode ? (
+            <ConfigButton onClick={handleClickConfig}>
               <Config />
+              {isOpenConfigMenu && (
+                <DropDownMenu
+                  menuArray={onConfig.configMenu}
+                  menuHandlerArray={onConfig.configMenuHandler}
+                />
+              )}
             </ConfigButton>
-          )}
+          ) : null}
         </ServiceNameHeaderButtonGroup>
-        {isSearchMode && (
-          <SearchInput
-            onChange={handleChangeSearchInput}
-            isSearchMode={isSearchMode}
-            placeholder="보드를 검색하세요."
-            onKeyDown={onKeyDownSearchInput}
-          />
-        )}
+        <SearchInput
+          onChange={handleChangeSearchInput}
+          isSearchMode={isSearchMode}
+          placeholder="보드를 검색하세요."
+          onKeyDown={onKeyDownSearchInput}
+        />
       </ServiceNameHeaderContainer>
     </ComponentWrapper>
   );
@@ -79,9 +87,10 @@ const ComponentWrapper = styled.div`
 
 const ServiceNameHeaderContainer = styled.div`
   width: 100%;
-  position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 const ServiceNameHeaderTitle = styled.div`
@@ -94,6 +103,7 @@ const ServiceNameHeaderTitle = styled.div`
 
 const ServiceNameHeaderButtonGroup = styled.div`
   display: flex;
+  justify-content: flex-end;
   align-items: center;
 `;
 
@@ -101,19 +111,18 @@ const ChevronLeftButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  position: relative;
 `;
 
 const moveSearchButton = keyframes`
 0% {
+  position: absolute;
  right:0;
 }
-
-
 100% {
+  position: absolute;
   right: 87%;
 }
-
-
 `;
 
 const SearchButton = styled.button`
@@ -121,7 +130,6 @@ const SearchButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   right: 0;
-  position: absolute;
   animation: ${(props) =>
     props.isSearchMode
       ? css`
@@ -134,7 +142,6 @@ const SearchButton = styled.button`
 const ShareButton = styled.button`
   border: none;
   background-color: transparent;
-  margin-right: 1rem;
   cursor: pointer;
 `;
 
@@ -142,19 +149,36 @@ const ConfigButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  position: relative;
+  direction: rtl;
+`;
+
+const ConfigMenuList = styled.div`
+  background-color: white;
+  width: 500%;
+  position: absolute;
+  z-index: 9999;
+  box-shadow: 0px 2px 12px rgba(73, 72, 72, 0.25);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+`;
+
+const ConfigMenu = styled.div`
+  text-align: end;
+  padding: 0.5rem;
+  &:hover {
+    background-color: #d2d2d2;
+  }
 `;
 
 const expandSearchInput = keyframes`
 0% {
  display: block;
 }
-
 100% {
   display: block;
   width: 92%;
 }
-
-
 `;
 
 const SearchInput = styled.input`
