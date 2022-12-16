@@ -6,28 +6,38 @@ import MemoPaper from "../../../components/memoPaper";
 import PasswordModal from "../BoardPageModal/PasswordModal";
 import AlertModal from "../../../components/modals/alertModal";
 import { deleteBoard } from "../../../api/boardsApi";
+import { useState } from "react";
 
 const BoardOnOpen = ({
-  handleValidPassword,
-  setHandleValidPassword,
-  isOpenConfirmDeleteBoardModal,
-  setIsOpenConfirmDeleteBoardModal,
-  isDeleteMemoMode,
+  passwordModalState,
+  setPasswordModalState,
+  isDeleteMode,
+  setIsDeleteMemoMode,
 }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
+  const [isOpenConfirmDeleteBoardModal, setIsOpenConfirmDeleteBoardModal] =
+    useState(false);
+  console.log(isOpenConfirmDeleteBoardModal);
 
   const handleClosePasswordModal = () => {
-    setHandleValidPassword(null);
+    setPasswordModalState({ ...passwordModalState, open: false });
+  };
+
+  const handleValidPasswordModal = () => {
+    if (passwordModalState.type === "deleteBoard")
+      setIsOpenConfirmDeleteBoardModal(true);
+    else if (passwordModalState.type === "deleteMemo")
+      setIsDeleteMemoMode(true);
   };
 
   const handleCloseConfirmDeleteBoardModal = () => {
     setIsOpenConfirmDeleteBoardModal(false);
   };
 
-  const handleConfirmDeleteBoard = async ({ boardCode, password }) => {
-    const deleted = await deleteBoard({ boardCode, password });
-    setIsOpenConfirmDeleteBoardModal(false);
+  const handleConfirmDeleteBoard = async () => {
+    const deleted = await deleteBoard(); // param : {boardCode, password}
+    if (deleted) setIsOpenConfirmDeleteBoardModal(false);
   };
 
   return (
@@ -41,9 +51,9 @@ const BoardOnOpen = ({
           })}
       </MemoContainer>
       <PasswordModal
-        open={handleValidPassword}
+        open={passwordModalState.open}
         onClose={handleClosePasswordModal}
-        onValid={handleValidPassword}
+        onValid={handleValidPasswordModal}
       />
       <AlertModal
         open={isOpenConfirmDeleteBoardModal}

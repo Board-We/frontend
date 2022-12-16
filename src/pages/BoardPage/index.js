@@ -11,26 +11,26 @@ import BoardOnWrite from "./mode/BoardOnWrite";
 
 const BoardPage = () => {
   const navigate = useNavigate();
-  const [handleValidPassword, setHandleValidPassword] = useState(null);
-  const [isOpenConfirmDeleteBoardModal, setIsOpenConfirmDeleteBoardModal] =
-    useState(false);
+  const [passwordModalState, setPasswordModalState] = useState({
+    type: "",
+    open: false,
+  });
   const [isDeleteMemoMode, setIsDeleteMemoMode] = useState(false);
 
-  const handleOpenConfirmDeleteBoardModal = () => {
-    setIsOpenConfirmDeleteBoardModal(true);
-    setHandleValidPassword(null);
-  };
-
   const handleClickDeleteBoard = () => {
-    setHandleValidPassword(() => handleOpenConfirmDeleteBoardModal);
-  };
-
-  const toggleDeleteMemoMode = () => {
-    setIsDeleteMemoMode((prev) => !prev);
+    setPasswordModalState({
+      ...passwordModalState,
+      type: "deleteBoard",
+      open: true,
+    });
   };
 
   const handleClickDeleteMemo = () => {
-    setHandleValidPassword(() => toggleDeleteMemoMode);
+    setPasswordModalState({
+      ...passwordModalState,
+      type: "deleteMemo",
+      open: true,
+    });
   };
 
   const configMenuSetting = {
@@ -55,13 +55,10 @@ const BoardPage = () => {
             path="/onOpen"
             element={
               <BoardOnOpen
-                handleValidPassword={handleValidPassword}
-                setHandleValidPassowrd={setHandleValidPassword}
-                isOpenConfirmDeleteBoardModal={isOpenConfirmDeleteBoardModal}
-                setIsOpenConfirmDeleteBoardModal={
-                  setIsOpenConfirmDeleteBoardModal
-                }
+                passwordModalState={passwordModalState}
+                setPasswordModalState={setPasswordModalState}
                 isDeleteMemoMode={isDeleteMemoMode}
+                setIsDeleteMemoMode={setIsDeleteMemoMode}
               />
             }
           />
