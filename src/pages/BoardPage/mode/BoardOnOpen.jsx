@@ -18,7 +18,6 @@ const BoardOnOpen = ({
 }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
-  // const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
   const [openToast, setOpenToast] = useState(true);
@@ -46,9 +45,9 @@ const BoardOnOpen = ({
     setIsOpenConfirmDeleteModal(false);
   };
 
-  const handleConfirmDeleteBoard = async () => {
-    const deleted = await deleteBoard(); // param : {boardCode, password}
-    if (deleted) setIsOpenConfirmDeleteModal(false);
+  const handleConfirmDeleteBoard = async ({ boardCode, password }) => {
+    const deleted = await deleteBoard({ boardCode, password }); // param : {boardCode, password}
+    setIsOpenConfirmDeleteModal(false);
   };
 
   useEffect(() => {

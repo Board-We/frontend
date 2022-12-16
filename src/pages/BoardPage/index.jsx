@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
@@ -39,10 +38,6 @@ const BoardPage = () => {
     configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
   };
 
-  useEffect(() => {
-    // navigate("/board/onWaitWrite")
-  }, []);
-
   return (
     <PageWrapper>
       <ServiceNameHeader
@@ -51,31 +46,39 @@ const BoardPage = () => {
         onShare={() => {}}
         onConfig={configMenuSetting}
       />
-      <Routes>
-        <Route path="/onWaitWrite" element={<BoardOnWaitWrite />} />
-        <Route path="/onWrite" element={<BoardOnWrite />} />
-        <Route path="/onWaitOpen" element={<BoardOnWaitOpen />} />
-        <Route
-          path="/onOpen"
-          element={
-            <BoardOnOpen
-              passwordModalState={passwordModalState}
-              setPasswordModalState={setPasswordModalState}
-              isDeleteMemoMode={isDeleteMemoMode}
-              setIsDeleteMemoMode={setIsDeleteMemoMode}
-            />
-          }
-        />
-        <Route path="/onEnd" element={<BoardOnEnd />} />
-        <Route path="/404" element={<Board404 />} />
-      </Routes>
+      <BodyContainer>
+        <Routes>
+          <Route path="/onWaitWrite" element={<BoardOnWaitWrite />} />
+          <Route path="/onWrite" element={<BoardOnWrite />} />
+          <Route path="/onWaitOpen" element={<BoardOnWaitOpen />} />
+          <Route
+            path="/onOpen"
+            element={
+              <BoardOnOpen
+                passwordModalState={passwordModalState}
+                setPasswordModalState={setPasswordModalState}
+                isDeleteMemoMode={isDeleteMemoMode}
+                setIsDeleteMemoMode={setIsDeleteMemoMode}
+              />
+            }
+          />
+          <Route path="/onEnd" element={<BoardOnEnd />} />
+          <Route path="/404" element={<Board404 />} />
+        </Routes>
+      </BodyContainer>
     </PageWrapper>
   );
 };
 
 const PageWrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+const BodyContainer = styled.div`
+  height: 100%;
 `;
 
 export default BoardPage;
