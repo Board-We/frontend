@@ -1,22 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-const FooterButton = ({ color, fontColor, text, onClick, disabled, flat }) => {
-  return (
-    <ButtonWrapper flat={flat}>
-      <Button
-        color={color}
-        fontColor={fontColor}
-        text={text}
-        onClick={disabled ? null : onClick}
-        disabled={disabled}
-        flat={flat}
-      >
-        {text}
-      </Button>
-    </ButtonWrapper>
-  );
-};
+const FooterButton = React.forwardRef(({ color, fontColor, text, onClick, disabled, flat }, ref) => (
+  <ButtonWrapper ref={ref} flat={flat}>
+    <Button
+      color={color}
+      fontColor={fontColor}
+      text={text}
+      onClick={disabled ? null : onClick}
+      disabled={disabled}
+      flat={flat}
+    >
+      {text}
+    </Button>
+  </ButtonWrapper>
+))
+
 const ButtonWrapper = styled.div`
   position: relative;
   display: flex;
@@ -31,10 +30,10 @@ const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.2rem;
+  padding: 1rem;
   width: 100vw;
   max-width: 700px;
-  border-radius: ${props => props.flat ? null : '0.5rem'}
+  border-radius: ${props => props.flat ? null : '0.5rem'};
   font-size: 1.3rem;
   color: ${(props) => (props.fontColor ? props.fontColor : "white")};
   background-color: ${(props) => (props.disabled ? "#D6D6D6" : "black")};

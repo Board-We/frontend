@@ -36,20 +36,16 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
 
   useEffect(() => {
     if (active === "0") {
-      let setPrivateFalse = { ...board, privateMode: false };
-      setBoard(setPrivateFalse);
+      let setPublicMode = { ...board, openType: "PUBLIC" };
+      setBoard(setPublicMode);
     } else {
-      let setPrivateTrue = { ...board, privateMode: true };
-      setBoard(setPrivateTrue);
+      let setPrivateMode = { ...board, openType: "PRIVATE" };
+      setBoard(setPrivateMode);
     }
   }, [active, setBoard]);
 
   return (
     <CreateBoardStepContainer>
-      <CreateBoardStepCounter>4/4단계</CreateBoardStepCounter>
-      <CreateBoardDescriptionText>
-        <p>비밀번호를 설정할 수 있어요.</p>
-      </CreateBoardDescriptionText>
       <PasswordInputContainer>
         <p>비밀번호</p> <span>보드와 롤링페이퍼 삭제 가능</span>
       </PasswordInputContainer>

@@ -1,13 +1,27 @@
 import { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { boardState } from "../../../../../store";
 
 const fonts = ["기본 서체", "배달의민족 서체", "노트 산스", "스포카 한산스"];
 
 const SelectFont = () => {
   const [selectedFont, setSelectedFont] = useState("기본 서체");
+  const [board, setBoard] = useRecoilState(boardState);
 
   const handleClickFontBox = (e) => {
     setSelectedFont(e.target.innerText);
+    let boardState = {
+      ...board.theme,
+      boardFont: e.target.innerText,
+    };
+
+    setBoard((prev) => {
+      return {
+        ...prev,
+        theme: boardState,
+      };
+    });
   };
 
   return (

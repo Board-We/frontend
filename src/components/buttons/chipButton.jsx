@@ -45,4 +45,4 @@ const ComponentWrapper = styled.div`
   cursor: pointer;
 `;
 
-export default ChipButton;
+export default ChipButton

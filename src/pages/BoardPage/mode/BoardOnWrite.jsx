@@ -24,7 +24,7 @@ const BoardOnWrite = () => {
     const getMemoInfo = (boardId) => {
         const newBoard = {
             ...board,
-            memoTypes: [
+            memoBackground: [
                 "https://cdn1.vectorstock.com/i/1000x1000/56/85/yellow-memo-stick-concept-background-realistic-vector-17735685.jpg",
                 "https://www.nicepng.com/png/detail/936-9366484_klik-op-bestand-voor-vergroting-memoblaadje-png.png",
                 "https://thebusinesscommunication.com/wp-content/uploads/2019/11/Advantages-and-Disadvantages-of-Memo-in-Business.jpg"

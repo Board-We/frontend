@@ -1,6 +1,8 @@
 .App {
   text-align: center;
   width: 100vw;
+  /* galaxy fold half screen size: 280px */
+  min-width: 280px;
   max-width: 600px;
   min-height: 100vh;
   margin: 0;

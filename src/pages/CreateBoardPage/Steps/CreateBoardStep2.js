@@ -18,24 +18,20 @@ const CreateBoardStep2 = ({ stepId, setDisabledFooterButton }) => {
   };
 
   useEffect(() => {
-    boardDescription.length >= 1 && boardDescription.length < maxLength + 1
+    board.description.length >= 1 && board.description.length < maxLength + 1
       ? setDisabledFooterButton(false)
       : setDisabledFooterButton(true);
   }, [boardDescription, setDisabledFooterButton]);
 
   useEffect(() => {
-    if (boardDescription.length > maxLength) setIsValidLength(false);
+    if (board.description.length > maxLength) setIsValidLength(false);
     else setIsValidLength(true);
-  }, [boardDescription, maxLength, setIsValidLength]);
+  }, [board.description, maxLength, setIsValidLength]);
 
   return (
     <CreateBoardStepContainer>
-      <CreateBoardStepCounter>{stepId}/4단계</CreateBoardStepCounter>
-      <CreateBoardDescriptionText>
-        <p>간단한 설명을 적어주세요</p>
-      </CreateBoardDescriptionText>
       <TextInput
-        value={boardDescription}
+        value={board.description}
         commonSize={true}
         placeholder="ex. 이 보드에 3일동안 롤링페이퍼를 남겨줘!"
         type="text"
@@ -47,7 +43,7 @@ const CreateBoardStep2 = ({ stepId, setDisabledFooterButton }) => {
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
-          text={boardDescription}
+          text={board.description}
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>

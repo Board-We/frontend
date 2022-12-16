@@ -1,85 +1,161 @@
 import { atom } from "recoil";
-import {
-    setDefaultAttachableDay,
-    setDefaultOpenDay,
-} from "../utils/setDefaultDay";
 
 export const boardState = atom({
-    key: "boardState",
-    default: {
-        id: "1",
-        name: "boardName",
-        description: "boardDescription",
-        tags: ["tag1", "tag2", "tag3"],
-        writingStartTime: new Date(new Date().getTime() + 100),
-        writingEndTime: new Date(new Date().getTime() + 10000),
-        openStartTime: new Date(new Date().getTime() + 100),
-        openEndTime: new Date(new Date().getTime() + 10000),
-        password: undefined,
-        privateMode: false,
-        background:
-            "https://w.namu.la/s/0d9ec42cc9c1007454e7c91cebf3d5126b3b5486efa6085223c744dfc053cef11a715a85ccfc19e8c008f9d2949b5304fc90704d8d94e319beb39471561ec89f37ff80705192dd92dc4dbf8997b754df08e61688928fc1243527ca8822a6a564",
-        font: "san-serif",
-        memoTypes: [],
-        memoColors: ["white", "grey", "red", "blue", "yellow"],
-        memos: [
-            {
-                "memoThemeId": 13,
-                "memoContent": "안녕! 생일 축하해~~"
-            },
-            {
-                "memoThemeId": 12,
-                "memoContent": "행복해야해"
-            },
-            {
-                "memoThemeId": 13,
-                "memoContent": "반가워"
-            },
-            {
-                "memoThemeId": 13,
-                "memoContent": "안녕! 생일 축하해~~"
-            },
-            {
-                "memoThemeId": 12,
-                "memoContent": "행복해야해"
-            },
-            {
-                "memoThemeId": 13,
-                "memoContent": "반가워"
-            },
-            {
-                "memoThemeId": 13,
-                "memoContent": "안녕! 생일 축하해~~"
-            },
-            {
-                "memoThemeId": 12,
-                "memoContent": "행복해야해"
-            },
-            {
-                "memoThemeId": 13,
-                "memoContent": "반가워"
-            },
-        ]
-    },
+  key: "boardState",
+  default: {
+    id: "1",
+    name: "boardName",
+    description: "boardDescription",
+    tags: ["tag1", "tag2", "tag3"],
+    writingStartTime: new Date(new Date().getTime() + 100),
+    writingEndTime: new Date(new Date().getTime() + 10000),
+    openStartTime: new Date(new Date().getTime() + 100),
+    openEndTime: new Date(new Date().getTime() + 10000),
+    password: undefined,
+    privateMode: false,
+    background:
+      "https://dimg.donga.com/wps/NEWS/IMAGE/2022/12/03/116825963.2.jpg",
+    font: "san-serif",
+    memoBackground: ["white"],
+    memoColors: ["black"],
+    memos: [
+      {
+        memoThemeId: 13,
+        memoContent:
+          "재벌집 막내아들 엄마는 베리베리스트로베리\n오징어게임 상금은 로또1등상금하고 똑같다\n엔터 테스트 엔터 테스트트트트ㅡㅌ트트트트ㅡㅌ트ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ",
+      },
+      {
+        memoThemeId: 12,
+        memoContent: "행복해야해",
+      },
+      {
+        memoThemeId: 14,
+        memoContent: "반가워",
+      },
+      {
+        memoThemeId: 13,
+        memoContent: "안녕! 생일 축하해~~",
+      },
+      {
+        memoThemeId: 12,
+        memoContent: "행복해야해",
+      },
+      {
+        memoThemeId: 14,
+        memoContent: "반가워",
+      },
+      {
+        memoThemeId: 13,
+        memoContent: "안녕! 생일 축하해~~",
+      },
+      {
+        memoThemeId: 12,
+        memoContent: "행복해야해",
+      },
+      {
+        memoThemeId: 14,
+        memoContent: "반가워",
+      },
+      {
+        memoThemeId: 13,
+        memoContent: "안녕! 생일 축하해~~",
+      },
+      {
+        memoThemeId: 12,
+        memoContent: "행복해야해",
+      },
+      {
+        memoThemeId: 14,
+        memoContent: "반가워",
+      },
+      {
+        memoThemeId: 13,
+        memoContent: "안녕! 생일 축하해~~",
+      },
+      {
+        memoThemeId: 12,
+        memoContent: "행복해야해",
+      },
+      {
+        memoThemeId: 14,
+        memoContent: "반가워",
+      },
+      {
+        memoThemeId: 13,
+        memoContent: "안녕! 생일 축하해~~",
+      },
+      {
+        memoThemeId: 12,
+        memoContent: "행복해야해",
+      },
+      {
+        memoThemeId: 14,
+        memoContent: "반가워",
+      },
+      {
+        memoThemeId: 13,
+        memoContent: "안녕! 생일 축하해~~",
+      },
+      {
+        memoThemeId: 12,
+        memoContent: "행복해야해",
+      },
+      {
+        memoThemeId: 14,
+        memoContent: "반가워",
+      },
+    ],
+    memoThemes: [
+      {
+        memoThemeId: 12,
+        memoBackgroundType: "IMAGE",
+        memoBackground:
+          "https://static5.depositphotos.com/1013245/484/i/950/depositphotos_4841490-stock-photo-yellow-memo-stick-paper-note.jpg",
+        memoTextColor: "#000000",
+      },
+      {
+        memoThemeId: 13,
+        memoBackgroundType: "IMAGE",
+        memoBackground:
+          "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80",
+        memoTextColor: "#FFFFFF",
+      },
+      {
+        memoThemeId: 14,
+        memoBackgroundType: "COLOR",
+        memoBackground: "#FF12F4",
+        memoTextColor: "#000000",
+      },
+    ],
+  },
 });
 
 export const memoStyleState = atom({
-    key: "memoStyleState",
-    default: {
-        text: "",
-        style: {
-            textColor: "black",
-            background: "white",
-        },
+  key: "memoStyleState",
+  default: {
+    text: "",
+    style: {
+      textColor: "black",
+      background: "white",
     },
+  },
 });
 
 export const createBoardStepId = atom({
-    key: "createBoardStepId",
-    default: 1,
+  key: "createBoardStepId",
+  default: 1,
 });
 
 export const setDateStepId = atom({
-    key: "setDateStepId",
-    default: 1,
+  key: "setDateStepId",
+  default: 1,
+});
+
+export const deviceScreenState = atom({
+  key: "deviceScreenState",
+  default: {
+    x: 0,
+    y: 0,
+    rem: `16px`,
+  },
 });
