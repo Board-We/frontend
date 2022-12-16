@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { postUserBoardState } from "../../../../api/boardsApi";
 import SlideModal from "../../../../components/modals/slideModal";
 import { boardState } from "../../../../store";
 import ModalContents from "./ModalContents";
@@ -8,6 +10,17 @@ import ModalContents from "./ModalContents";
 const CompleteCreate = () => {
   const board = useRecoilValue(boardState);
   const [modalOpen, setModalOpen] = useState(true);
+  const [boardURL, setBoardURL] = useState("");
+
+  const mockURL = "/board/bc57b0d3-259f-4f4e-b54f-c73d87cb4da4/welcome";
+
+  useEffect(() => {
+    const res = postUserBoardState({});
+    if (res) {
+      setBoardURL(res);
+    }
+    setBoardURL(mockURL);
+  }, []);
 
   return (
     <>
@@ -68,7 +81,7 @@ const CompleteCreate = () => {
           open={modalOpen}
           isBackdrop={false}
           height={"40vh"}
-          children={<ModalContents />}
+          children={<ModalContents boardURL={boardURL} />}
         />
       )}
     </>
