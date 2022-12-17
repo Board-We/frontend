@@ -13,6 +13,7 @@ import CompleteCreate from "./Steps/ComleteCreate";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useRef } from "react";
 import { useEffect } from "react";
+import PasswordModal from "../BoardPage/BoardPageModal/PasswordModal";
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
@@ -31,9 +32,12 @@ const CreateBoardPage = () => {
   const deviceScreenSize = useRecoilValue(deviceScreenState);
 
   useEffect(() => {
-    const deviceHeight = document.body.offsetHeight
-    const bottomOfDescription = $stepDescription.current.offsetHeight + $stepDescription.current.offsetTop + Number(deviceScreenSize.rem.replace('px', '')) * 2
-    const heightOfFooter = $footer.current.offsetHeight
+    const deviceHeight = document.body.offsetHeight;
+    const bottomOfDescription =
+      $stepDescription.current.offsetHeight +
+      $stepDescription.current.offsetTop +
+      Number(deviceScreenSize.rem.replace("px", "")) * 2;
+    const heightOfFooter = $footer.current.offsetHeight;
 
     setMaxHeightOfContentsArea(
       deviceHeight - bottomOfDescription - heightOfFooter
@@ -123,6 +127,7 @@ const CreateBoardPage = () => {
             }
           />
         </PageFooter>
+        <PasswordModal open={true} />
       </CreateBoardContainer>
     </PageWrapper>
   );
@@ -183,9 +188,9 @@ const CreateBoardBody = styled.div`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
-  height: ${props => props.maxHeight}px;
+  height: ${(props) => props.maxHeight}px;
   padding: 0.25rem;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
   }
 `;

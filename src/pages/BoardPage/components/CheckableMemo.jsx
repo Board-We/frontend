@@ -1,17 +1,15 @@
 import styled from "styled-components";
 
-const Memo = ({ id, text, isRemoveMode, onChange }) => {
+const CheckableMemo = ({ id, text, onChange }) => {
   return (
     <MemoWrapper>
-      {isRemoveMode && (
-        <Checkbox type="checkbox" onChange={onChange} value={id} />
-      )}
+      <Checkbox type="checkbox" onChange={onChange} value={id} />
       {text}
     </MemoWrapper>
   );
 };
 
-export default Memo;
+export default CheckableMemo;
 
 const MemoWrapper = styled.div`
   position: relative;

@@ -9,15 +9,17 @@ const AlertModal = ({ open, onClickArray, buttonTextArray, text, onClose }) => {
   });
   return (
     <>
-      <ModalContainer>
+      <ModalContainer open={open}>
         <ModalDescription>{text}</ModalDescription>
-        {
-          buttonTextArray.map((el, i) => {
-            return <ButtonStyle onClick={onClickArray[i]} key={el}>{el}</ButtonStyle>
-          })
-        }
+        {buttonTextArray.map((el, i) => {
+          return (
+            <ButtonStyle onClick={onClickArray[i]} key={el}>
+              {el}
+            </ButtonStyle>
+          );
+        })}
       </ModalContainer>
-      <Backdrop onClick={onClose}></Backdrop>
+      <Backdrop open={open} onClick={onClose}></Backdrop>
     </>
   );
 };
@@ -36,7 +38,7 @@ const ModalContainer = styled.div`
   left: 0;
   margin: auto auto;
   z-index: 9999999;
-  display: flex;
+  display: ${(props) => (props.open ? "flex" : "none")};
   flex-direction: column;
   justify-content: space-between;
   align-items: center;

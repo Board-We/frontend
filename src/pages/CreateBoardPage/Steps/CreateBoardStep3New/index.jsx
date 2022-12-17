@@ -6,6 +6,7 @@ import ChipButton from "../../../../components/buttons/chipButton"
 import Description from "../../../../components/label/description"
 import SmallTitle from "../../../../components/label/smallTitle"
 import { boardState } from "../../../../store"
+import SelectModal from "./comopnents/selectModal"
 
 const CreateBoardStep3 = () => {
     const board = useRecoilValue(boardState)
@@ -15,6 +16,8 @@ const CreateBoardStep3 = () => {
     const $boardDescription = useRef()
     const [heightOfBoard, setHeightOfBoard] = useState(0)
     const [heightOfMemoArea, setHeightOfMemoArea] = useState(0)
+    const [memos, setMemos] = useState([])
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     useEffect(() => {
         const componentHeight = $component.current.offsetHeight
@@ -28,28 +31,41 @@ const CreateBoardStep3 = () => {
         const boardAreaHeight = $boardArea.current.clientHeight
 
         setHeightOfMemoArea(boardAreaHeight - bottomOfBoardDescription)
+        setMemos(getMemos())
     }, [heightOfBoard])
 
     const getMemos = () => {
         const result = []
+        const sampleText = [
+            "우리 내년에도 친하게 지내자",
+            "마라탕 모임 언제 가나요^^",
+            "크리스마스 파티해서 맛있는거 먹자~~! 파티룸 찾아둘께",
+            "선물 뭐 갖고싶어? 다 말해 사줄께ㅎㅎ -민지-",
+            "테스트 메모",
+            ""
+        ]
 
         board.memoBackground.forEach((el, i) => {
-            result.push(<SampleMemo background={el} color={board.memoColors[i]} key={el + i}>aaa</SampleMemo>)
+            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={el} color={board.memoColors[i]} key={el + i}>{sampleText[i]}</SampleMemo>)
         })
 
         for (let i = 0; i < 6 - board.memoBackground.length; i++) {
-            result.push(<SampleMemo background={board.memoBackground[0]} color={board.memoColors[0]} key={`sampleMemo${i}`}>aaa</SampleMemo>)
+            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={board.memoBackground[0]} color={board.memoColors[0]} key={`sampleMemo${i}`}>{sampleText[i + board.memoBackground.length]}</SampleMemo>)
         }
 
         return result
     }
 
     const onClickSetBackground = () => {
-
+        setIsModalOpen(true)
     }
 
     const onClickSetMemoTheme = () => {
+        setIsModalOpen(true)
+    }
 
+    const onCloseModal = () => {
+        setIsModalOpen(false)
     }
 
     return (
@@ -59,7 +75,7 @@ const CreateBoardStep3 = () => {
                 <Description ref={$boardDescription}>{board.description}</Description>
                 <MemoArea>
                     <MemoGrid height={heightOfMemoArea}>
-                        {getMemos()}
+                        {memos}
                     </MemoGrid>
                 </MemoArea>
             </SampleBoard>
@@ -67,6 +83,7 @@ const CreateBoardStep3 = () => {
                 <ChipButton flat text="배경" onClick={onClickSetBackground} />
                 <ChipButton flat text="메모지" onClick={onClickSetMemoTheme} />
             </ButtonArea>
+            <SelectModal open={isModalOpen} onClose={onCloseModal} />
         </ComponentWrapper>
     )
 }
@@ -86,6 +103,9 @@ const SampleBoard = styled.div`
     height: ${props => props.height}px;
     border-radius: 0.5rem;
     background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -104,6 +124,7 @@ const MemoArea = styled.div`
 
 const MemoGrid = styled.div`
     max-height: ${props => props.height}px;
+    width: 100%;
     overflow-y: scroll;
     display: grid;
     justify-items: center;
@@ -116,10 +137,8 @@ const MemoGrid = styled.div`
 `
 
 const SampleMemo = styled.div`
-    width: 30vw;
-    height: 30vw;
-    max-width: 8rem;
-    max-height: 8rem;
+    width: ${props => props.size * 0.4}px;
+    height: ${props => props.size * 0.4}px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -127,7 +146,7 @@ const SampleMemo = styled.div`
     justify-self: center;
     background: ${props => props.background};
     border-radius: 0.5rem;
-    font-size: 3.5vw;
+    font-size: ${props => props.size * 0.04}px;
 `
 
 const ButtonArea = styled.div`
