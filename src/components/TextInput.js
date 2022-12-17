@@ -32,11 +32,11 @@ const TextInput = forwardRef(
           onChange={onChange}
           disabled={disabled}
           maxLength={inputMaxLength}
-          ref={function (ref) {
+          /*  ref={function (ref) {
             if (ref !== null) {
               ref.focus();
             }
-          }}
+          }} */
         />
         {isValidLength ? (
           <DeleteButton onClick={handleClickDeleteText}>
