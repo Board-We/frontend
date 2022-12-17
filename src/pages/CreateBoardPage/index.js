@@ -11,9 +11,9 @@ import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep5 from "./Steps/CreateBoardStep5";
 import CompleteCreate from "./Steps/ComleteCreate";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
+import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-import PasswordModal from "../BoardPage/BoardPageModal/PasswordModal";
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
@@ -30,6 +30,7 @@ const CreateBoardPage = () => {
   const $footer = useRef();
   const [maxHeightOfContentsArea, setMaxHeightOfContentsArea] = useState(0);
   const deviceScreenSize = useRecoilValue(deviceScreenState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const deviceHeight = document.body.offsetHeight;
@@ -49,6 +50,10 @@ const CreateBoardPage = () => {
   };
 
   const handleClickBefore = () => {
+    if (currentStepId === 1) {
+      navigate(-1);
+      return;
+    }
     setCurrentStepId((prev) => prev - 1);
   };
 
@@ -127,7 +132,6 @@ const CreateBoardPage = () => {
             }
           />
         </PageFooter>
-        <PasswordModal open={true} />
       </CreateBoardContainer>
     </PageWrapper>
   );
