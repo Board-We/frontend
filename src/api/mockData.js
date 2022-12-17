@@ -1,5 +1,5 @@
 // api 연결 작업용 임시 데이터
-export const searchResultsData = {
+export const searchBoardsResults = {
   content: [
     {
       boardLink: "/board/bc57b0d3-259f-4f4e-b54f-c73d87cb4da4/welcome",
@@ -143,3 +143,41 @@ export const reccomendBoardsData = [
     },
   },
 ];
+
+export const searchMemoResults = {
+  theme: {
+    boardBackgroundType: "IMAGE", // or "COLOR"
+    boardBackground: "/file-server/sadkfajlswc11231", // or "#FFFFFF"
+    boardFont: "Batang",
+    memoThemesWithId: [
+      {
+        memoThemeId: 12,
+        memoBackgroundType: "IMAGE",
+        memoBackground: "/file-server/sadkfajlswc11231",
+        memoTextColor: "#000000",
+      },
+      {
+        memoThemeId: 13,
+        memoBackgroundType: "IMAGE",
+        memoBackground: "/file-server/sadkfajlswc11231",
+        memoTextColor: "#000000",
+      },
+      {
+        memoThemeId: 14,
+        memoBackgroundType: "COLOR",
+        memoBackground: "#FF12F4",
+        memoTextColor: "#000000",
+      },
+    ],
+  },
+  memos: [
+    {
+      memoThemeId: 13,
+      memoContent: "안녕! 생일 축하해~~",
+    },
+    {
+      memoThemeId: 12,
+      memoContent: "추카축하해",
+    },
+  ],
+};

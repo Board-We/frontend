@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { searchMemo } from "../../api/memoApi";
+import { searchMemoResults } from "../../api/mockData";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import Board404 from "./mode/Board404";
 import BoardOnEnd from "./mode/BoardOnEnd";
@@ -11,11 +13,27 @@ import BoardOnWrite from "./mode/BoardOnWrite";
 
 const BoardPage = () => {
   const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
   const [passwordModalState, setPasswordModalState] = useState({
     type: "",
     open: false,
   });
   const [isDeleteMemoMode, setIsDeleteMemoMode] = useState(false);
+  const [searchModeType, setSearchModeType] = useState("");
+
+  const handleClickSearch = () => {
+    setSearchModeType("memo");
+  };
+
+  const handleKeyDownSearchIput = async (e) => {
+    console.log(query);
+    if (e.code === "Enter" && !e.nativeEvent.isComposing) {
+      const searchMemoResult = await searchMemo({});
+      if (searchMemoResult) setSearchResults(searchMemoResult);
+      setSearchResults(searchMemoResults.memos); // set mock data
+    }
+  };
 
   const handleClickDeleteBoard = () => {
     setPasswordModalState({
@@ -41,9 +59,12 @@ const BoardPage = () => {
   return (
     <PageWrapper>
       <ServiceNameHeader
-        isSearchMode={false}
+        searchModeType={searchModeType}
+        setSearchModeType={setSearchModeType}
+        setQuery={setQuery}
+        onKeyDownSearchInput={handleKeyDownSearchIput}
         isDeleteMemoMode={isDeleteMemoMode}
-        onSearch={() => {}}
+        onSearch={handleClickSearch}
         onShare={() => {}}
         onConfig={configMenuSetting}
       />
@@ -60,6 +81,8 @@ const BoardPage = () => {
                 setPasswordModalState={setPasswordModalState}
                 isDeleteMemoMode={isDeleteMemoMode}
                 setIsDeleteMemoMode={setIsDeleteMemoMode}
+                searchModeType={searchModeType}
+                searchResults={searchResults}
               />
             }
           />

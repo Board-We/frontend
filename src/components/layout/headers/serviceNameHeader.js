@@ -7,11 +7,11 @@ import { ReactComponent as ChevronLeft } from "../../../assets/chevronLeft.svg";
 import DropDownMenu from "./dropDownMenu";
 
 const ServiceNameHeader = ({
-  isSearchMode,
-  isDeleteMemoMode,
-  setIsSearchMode,
+  searchModeType,
+  setSearchModeType,
   setQuery,
   onKeyDownSearchInput,
+  isDeleteMemoMode,
   onShare,
   onConfig,
   onSearch,
@@ -19,7 +19,7 @@ const ServiceNameHeader = ({
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
 
   const handleClickChevronLeft = () => {
-    setIsSearchMode(false);
+    setSearchModeType("");
   };
 
   const handleChangeHeaderInput = (e) => {
@@ -33,10 +33,10 @@ const ServiceNameHeader = ({
   return (
     <ComponentWrapper>
       <ServiceNameHeaderContainer>
-        {!(isSearchMode || isDeleteMemoMode) && (
+        {!(searchModeType || isDeleteMemoMode) && (
           <ServiceNameHeaderTitle>Side project</ServiceNameHeaderTitle>
         )}
-        {(isSearchMode || isDeleteMemoMode) && (
+        {(searchModeType || isDeleteMemoMode) && (
           <ChevronLeftButton>
             <ChevronLeft onClick={handleClickChevronLeft} />
           </ChevronLeftButton>
@@ -45,18 +45,18 @@ const ServiceNameHeader = ({
           {onSearch ? (
             <SearchButton
               onClick={onSearch}
-              isSearchMode={isSearchMode}
+              searchModeType={searchModeType}
               isDeleteMemoMode={isDeleteMemoMode}
             >
               <Search />
             </SearchButton>
           ) : null}
-          {onShare && !(isSearchMode || isDeleteMemoMode) ? (
+          {onShare && !(searchModeType || isDeleteMemoMode) ? (
             <ShareButton onClick={onShare}>
               <Share />
             </ShareButton>
           ) : null}
-          {onConfig && !(isSearchMode || isDeleteMemoMode) ? (
+          {onConfig && !(searchModeType || isDeleteMemoMode) ? (
             <ConfigButton onClick={handleClickConfig}>
               <Config />
               {isOpenConfigMenu && (
@@ -70,10 +70,14 @@ const ServiceNameHeader = ({
         </ServiceNameHeaderButtonGroup>
         <HeaderInput
           onChange={handleChangeHeaderInput}
-          isSearchMode={isSearchMode}
+          searchModeType={searchModeType}
           isDeleteMemoMode={isDeleteMemoMode}
           placeholder={
-            isSearchMode ? "보드를 검색하세요." : "내용을 검색하세요"
+            searchModeType === "board"
+              ? "보드를 검색하세요."
+              : searchModeType === "memo"
+              ? "메모 내용을 검색하세요"
+              : "내용을 검색하세요"
           }
           onKeyDown={onKeyDownSearchInput}
         />
@@ -142,7 +146,7 @@ const SearchButton = styled.button`
   cursor: pointer;
   right: 0;
   animation: ${(props) =>
-    props.isSearchMode || props.isDeleteMemoMode
+    props.searchModeType || props.isDeleteMemoMode
       ? css`
           ${moveSearchButton} 0.3s linear
         `
@@ -196,9 +200,9 @@ const HeaderInput = styled.input`
   border: none;
   border-radius: 0.5rem;
   display: ${(props) =>
-    props.isSearchMode || props.isDeleteMemoMode ? "block" : "none"};
+    props.searchModeType || props.isDeleteMemoMode ? "block" : "none"};
   animation: ${(props) =>
-    props.isSearchMode
+    props.searchModeType
       ? css`
           ${expandSearchInput} 0.3s linear
         `

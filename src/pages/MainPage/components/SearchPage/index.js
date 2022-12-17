@@ -3,19 +3,19 @@ import BoardSlider from "../ReccomendBoardSlide/BoardSlider";
 import Slide from "../ReccomendBoardSlide/Slide";
 import { ReactComponent as ChevronTop } from "../../../../assets/chevronTop.svg";
 
-const SearchPage = ({ reccomendBoards, keyword, results }) => {
+const SearchPage = ({ reccomendBoards, keyword, searchResults }) => {
   const handleClickChevronTop = () => {
     window.scroll(0, 0);
   };
   return (
     <SearchPageBody>
-      {results ? (
-        results.length > 0 ? (
+      {searchResults ? (
+        searchResults.length > 0 ? (
           <>
             <SearchResultSection>
               <p>{`${keyword}에 대한 검색결과 입니다.`}</p>
               <SearchResultList>
-                {results.map((result) => (
+                {searchResults.map((result) => (
                   <Slide
                     key={result.boardName}
                     boardLink={result.boardLink}

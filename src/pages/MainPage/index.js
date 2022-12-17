@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  getReccomendBoardsList,
-  getSearchBoardsResult,
-} from "../../api/boardsApi";
-import { reccomendBoardsData, searchResultsData } from "../../api/mockData";
+import { getReccomendBoardsList, searchBoards } from "../../api/boardsApi";
+import { reccomendBoardsData, searchBoardsResults } from "../../api/mockData";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
@@ -18,10 +15,10 @@ const Main = () => {
   const navigate = useNavigate();
   const [reccomendBoards, setReccomendBoards] = useState(reccomendBoardsData);
 
-  const [isSearchMode, setIsSearchMode] = useState(false);
+  const [searchModeType, setSearchModeType] = useState("");
   const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
   const [keyword, setKeyword] = useState(""); // 결과창 키워드 표시를 위한 값
-  const [results, setResults] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
 
   const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
 
@@ -50,7 +47,7 @@ const Main = () => {
   };
 
   const handleClickSearch = () => {
-    setIsSearchMode(true);
+    setSearchModeType("board");
   };
 
   const handleCloseInvalidLinkModal = () => {
@@ -60,11 +57,11 @@ const Main = () => {
   const handleKeyDownSearchInput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
       setKeyword(query);
-      const searchBoardsResult = await getSearchBoardsResult({
+      const searchBoardsResult = await searchBoards({
         query,
       });
-      if (searchBoardsResult) setResults(searchBoardsResult);
-      setResults(searchResultsData.content);
+      if (searchBoardsResult) setSearchResults(searchBoardsResult);
+      setSearchResults(searchBoardsResults.content); // set mock data
     }
   };
 
@@ -86,13 +83,13 @@ const Main = () => {
       >
         <MainPageContainer>
           <ServiceNameHeader
-            isSearchMode={isSearchMode}
-            setIsSearchMode={setIsSearchMode}
+            searchModeType={searchModeType}
+            setSearchModeType={setSearchModeType}
             setQuery={setQuery}
             onKeyDownSearchInput={handleKeyDownSearchInput}
             onSearch={handleClickSearch}
           />
-          {!isSearchMode ? (
+          {!searchModeType ? (
             <>
               <ServiceMainImage>
                 <ChipButton
@@ -112,7 +109,7 @@ const Main = () => {
             <SearchPage
               reccomendBoards={reccomendBoards}
               keyword={keyword}
-              results={results}
+              searchResults={searchResults}
             />
           )}
         </MainPageContainer>

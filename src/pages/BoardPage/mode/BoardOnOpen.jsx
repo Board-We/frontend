@@ -17,9 +17,12 @@ const BoardOnOpen = ({
   setPasswordModalState,
   isDeleteMemoMode,
   setIsDeleteMemoMode,
+  searchModeType,
+  searchResults,
 }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
+
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
   const [checkedMemoList, setCheckedMemoList] = useState([]);
@@ -121,7 +124,10 @@ const BoardOnOpen = ({
         onScroll={onScrollMemoContainer}
         paddingTop={paddingTop}
       >
-        {visibleMemos && privateModeForTest && !isDeleteMemoMode
+        {visibleMemos &&
+        privateModeForTest &&
+        !isDeleteMemoMode &&
+        !searchModeType
           ? visibleMemos.map((el, i) => {
               // memoThemeId
               const theme = memoThemes[el.memoThemeId];
@@ -137,6 +143,21 @@ const BoardOnOpen = ({
               );
             })
           : null}{" "}
+        {searchModeType &&
+          searchResults &&
+          searchResults.map((el, i) => {
+            const theme = memoThemes[el.memoThemeId];
+            return (
+              <MemoOnBoard
+                size={$memoContainer.current.clientWidth * 0.4}
+                key={`${el}${i}`}
+                text={el.memoContent}
+                background={theme?.memoBackground}
+                color={theme?.memoTextColor}
+                marginOption={i % 2 === 0}
+              />
+            );
+          })}
         {isDeleteMemoMode &&
           visibleMemos.map((el, i) => (
             <CheckableMemo
@@ -224,6 +245,7 @@ const DeleteMemoButton = styled.button`
   margin: 1rem;
   padding: 1rem;
   border-radius: 1.2rem;
+  cursor: pointer;
 
   span {
     color: #cf281f;

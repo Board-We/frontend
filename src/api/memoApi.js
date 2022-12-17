@@ -19,3 +19,11 @@ export const deleteMemo = async ({ boardCode, memoIds }) => {
   if (res.status === 200) return true;
   return false;
 };
+
+export const searchMemo = async ({ boardCode, query }) => {
+  const res = await request({
+    method: "GET",
+    url: `/board/${boardCode}/memo/search?query=${query}}`,
+  });
+  return res.data;
+};
