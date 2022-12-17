@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import TextInput from "../../../components/TextInput";
 import TextLengthValidator from "../../../components/textLengthValidator";
+import { ReactComponent as Close } from "../../../assets/close.svg";
 import { boardState } from "../../../store";
 
 const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
@@ -12,11 +13,43 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const [boardName, setBoardName] = useState("");
   const [isValidLength, setIsValidLength] = useState(true);
+  const [toggleTagInput, setToggleTagInput] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const handleChangeBoardName = (e) => {
     setBoardName(e.target.value);
     const currentBoardState = { ...board, name: e.target.value };
     setBoard(currentBoardState);
+  };
+
+  const toggleAddTagInput = () => {
+    setToggleTagInput((prev) => !prev);
+  };
+
+  const handleTagInput = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleonKeyDownEnter = (e) => {
+    if (e.key === "Enter") {
+      setInputValue("");
+
+      let copyTag = [...board.tags];
+      copyTag.push(inputValue);
+
+      let boardState = { ...board, tags: copyTag };
+      setBoard(boardState);
+    }
+  };
+
+  const handleDeleteTag = (index) => {
+    let copyTag = [...board.tags];
+    const newTagArray = copyTag.filter((_, idx) => {
+      return idx !== index;
+    });
+
+    let boardState = { ...board, tags: newTagArray };
+    setBoard(boardState);
   };
 
   useEffect(() => {
@@ -54,6 +87,28 @@ const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>
+      <TagArea>
+        <AddTagButton onClick={toggleAddTagInput}>+ 태그 추가</AddTagButton>
+        {toggleTagInput && (
+          <AddTagInput
+            onChange={handleTagInput}
+            onKeyDown={handleonKeyDownEnter}
+            value={inputValue}
+          />
+        )}
+        {board.tags?.map((val, idx) => {
+          return (
+            <React.Fragment key={`${val}${idx}`}>
+              <Tag>
+                {val}
+                <CloseButton onClick={() => handleDeleteTag(idx)} value={idx}>
+                  <Close />{" "}
+                </CloseButton>
+              </Tag>
+            </React.Fragment>
+          );
+        })}
+      </TagArea>
     </CreateBoardStepContainer>
   );
 };
@@ -92,4 +147,55 @@ const CreateBoardGuide = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-top: 0.5rem;
+`;
+
+const TagArea = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 2rem;
+`;
+
+const AddTagButton = styled.button`
+  width: 6rem;
+  height: 2.5rem;
+  border: none;
+  background-color: transparent;
+  border: 1px solid #d5d9da;
+  border-radius: 20px;
+  color: #d5d9da;
+  margin-right: 0.75rem;
+  margin-bottom: 0.75em;
+`;
+
+const AddTagInput = styled.input`
+  padding: 1rem;
+  width: 6rem;
+  height: 2.5rem;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: #eff3f4;
+  margin-right: 0.75rem;
+`;
+
+const Tag = styled.div`
+  display: flex;
+  align-items: center;
+  width: auto;
+  height: 2.5rem;
+  padding: 1rem;
+  border-radius: 20px;
+  border: none;
+  background-color: #eff3f4;
+  margin-right: 0.75rem;
+  margin-bottom: 0.75em;
+`;
+
+const CloseButton = styled.button`
+  display: flex;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  padding: 0;
 `;
