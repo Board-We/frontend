@@ -29,6 +29,7 @@ const EnterLinkInputContainer = styled.div`
     margin: 0;
     font-weight: 600;
     font-size: 1.1rem;
+    color: ${(props) => props.theme.colors.grey_10};
   }
 `;
 
@@ -43,19 +44,19 @@ const EnterLinkInputBody = styled.div`
 const LinkTextInput = styled.input`
   width: 100%;
   border: none;
-  border-radius: 1.2rem;
+  border-radius: 8px;
   padding: 1rem;
   margin-right: 1rem;
-  background-color: #efeff0;
+  background-color: ${(props) => props.theme.colors.grey_50};
   font-size: 1rem;
 `;
 
 const SubmitButton = styled.button`
   width: 20%;
   height: 100%;
-  background-color: #8d8d8d;
+  background-color: ${(props) => props.theme.colors.grey_40};
   border: none;
-  border-radius: 1.2rem;
-  color: white;
+  border-radius: 8px;
+  color: ${(props) => props.theme.colors.grey_20};
   padding: 1rem;
 `;

@@ -60,6 +60,7 @@ const Main = () => {
       const searchBoardsResult = await searchBoards({
         query,
       });
+
       if (searchBoardsResult) setSearchResults(searchBoardsResult);
       setSearchResults(searchBoardsResults.content); // set mock data
     }
@@ -67,6 +68,7 @@ const Main = () => {
 
   const getReccomendBoardsData = useCallback(async () => {
     const data = await getReccomendBoardsList();
+    console.log(data);
     if (data) setReccomendBoards(data);
   }, []);
 
@@ -151,7 +153,7 @@ const MainPageBody = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 32px 16px;
 `;
 
 const ServiceMainImage = styled.div`

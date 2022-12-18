@@ -114,6 +114,7 @@ const ServiceNameHeaderTitle = styled.div`
   display: flex;
   align-items: center;
   left: 0;
+  color: ${(props) => props.theme.colors.black};
 `;
 
 const ServiceNameHeaderButtonGroup = styled.div`
