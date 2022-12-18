@@ -3,14 +3,17 @@ import styled from 'styled-components';
 import Thumb from './thumb';
 
 const ColorSelectBar = ({ color, setColor }) => {
-    const $canvas = useRef();
+    const $canvas = useRef(null);
     const [sliderWidth, setSliderWidth] = useState()
     const [sliderThumb, setSliderThumb] = useState({ left: 0 })
 
     useEffect(() => {
         setSliderWidth($canvas.current.clientWidth)
-        makeBar()
     }, [$canvas.current]);
+
+    useEffect(()=>{
+        makeBar()
+    }, [sliderWidth])
 
     const makeBar = () => {
         const canvas = $canvas.current;

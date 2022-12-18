@@ -2,16 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Thumb from './thumb';
 
-const ColorPalette = ({ color, setColor, baseColor }) => {
+const ColorPalette = ({ option, color, setColor, baseColor, board, setBoard }) => {
     const $canvas = useRef(null);
     const [sliderWidth, setSliderWidth] = useState()
-    const [sliderThumb, setSliderThumb] = useState({ left: 0, top: 0 })
+    const [sliderThumb, setSliderThumb] = useState({ left: 10, top: 10 })
 
 
     useEffect(() => {
         setSliderWidth($canvas.current.clientWidth)
-        makePalette()
     }, [$canvas.current]);
+
+    useEffect(()=>{
+        makePalette()
+    }, [sliderWidth])
 
     useEffect(() => {
         makePalette()
@@ -63,7 +66,24 @@ const ColorPalette = ({ color, setColor, baseColor }) => {
 
         setColor(`rgb(${r}, ${g}, ${b})`);
         setSliderThumb({ left: x, top: y })
+        changeBoardColorOption()
     };
+
+    const changeBoardColorOption = () => {
+        if (option[0] === "배경") {
+            if (option[1] === "bgColor") setBoard({ ...board, background: color })
+        }
+        else if (option[0] === "메모지") {
+            const newMemoThemes = [...board.memoThemes]
+            const newMemoTheme = { ...newMemoThemes[option[2]] }
+
+            if (option[1] === "bgColor") newMemoTheme.memoBackground = color
+            else if (option[1] === "fontColor") newMemoTheme.memoTextColor = color
+
+            newMemoThemes[option[2]] = newMemoTheme
+            setBoard({ ...board, memoThemes: newMemoThemes })
+        }
+    }
 
     return (
         <ComponentWrapper>
