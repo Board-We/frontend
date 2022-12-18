@@ -3,8 +3,6 @@ import styled from "styled-components";
 
 const ChipButton = ({
   width,
-  background = "grey",
-  color = "white",
   round,
   flat,
   fit = false,
@@ -15,8 +13,6 @@ const ChipButton = ({
   return (
     <ComponentWrapper
       width={width}
-      background={background}
-      color={color}
       round={round}
       flat={flat}
       fit={fit}
@@ -36,13 +32,13 @@ const ComponentWrapper = styled.div`
   width: ${(props) => (props.width ? props.width : "fit-content")};
   height: 3rem;
   font-size: 1rem;
-  color: ${(props) => props.color};
+  color: ${(props) => props.theme.colors.black};
   border-radius: ${(props) =>
     props.round || props.round === undefined ? `1.5rem` : "0"};
-  background-color: ${(props) => props.background};
+  background-color: ${(props) => props.theme.colors.primary};
   box-shadow: ${(props) => (props.flat ? "" : "2px 2px 8px black")};
   user-select: none;
   cursor: pointer;
 `;
 
-export default ChipButton
+export default ChipButton;
