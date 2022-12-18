@@ -23,5 +23,6 @@ export const theme = {
     shadow_1: "0px 2px 8px rgba(0, 0, 0, 0.15)",
     shadow_2: "0px 0px 16px rgba(0, 0, 0, 0.15)",
     shadow_3: "0px 0px 12px rgba(253, 198, 46, 0.6)",
+    shadow_4: "0px 2px 4px rgba(155, 170, 173, 0.15)",
   },
 };
