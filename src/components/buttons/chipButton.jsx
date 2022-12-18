@@ -1,23 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const ChipButton = ({
-  width,
-  round,
-  flat,
-  fit = false,
-  text,
-  onClick,
-  children,
-}) => {
+const ChipButton = ({ width, flat, fit = false, text, onClick, children }) => {
   return (
-    <ComponentWrapper
-      width={width}
-      round={round}
-      flat={flat}
-      fit={fit}
-      onClick={onClick}
-    >
+    <ComponentWrapper width={width} flat={flat} fit={fit} onClick={onClick}>
       {text}
       {children}
     </ComponentWrapper>
@@ -33,8 +19,7 @@ const ComponentWrapper = styled.div`
   height: 3rem;
   font-size: 1rem;
   color: ${(props) => props.theme.colors.black};
-  border-radius: ${(props) =>
-    props.round || props.round === undefined ? `1.5rem` : "0"};
+  border-radius: 12px;
   background-color: ${(props) => props.theme.colors.primary};
   box-shadow: ${(props) => (props.flat ? "" : "2px 2px 8px black")};
   user-select: none;
