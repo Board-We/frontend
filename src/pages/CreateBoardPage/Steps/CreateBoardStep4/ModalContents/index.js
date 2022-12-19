@@ -54,10 +54,10 @@ function ModalContents({ setModalOpen }) {
 const FooterButton = styled.button`
   width: 100%;
   height: 5vh;
-  border-radius: 14px;
+  border-radius: 12px;
   font-size: 1.5rem;
-  color: #ffffff;
-  background-color: #696969;
+  color: ${(props) => props.theme.colors.black};
+  background-color: ${(props) => props.theme.colors.primary};
   border: none;
   cursor: pointer;
 `;

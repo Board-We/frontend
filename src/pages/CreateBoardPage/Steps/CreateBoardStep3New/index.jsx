@@ -1,15 +1,16 @@
 import { useState } from "react"
 import { useEffect, useRef } from "react"
-import { useRecoilValue } from "recoil"
+import { useRecoilState } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../../../components/buttons/chipButton"
 import Description from "../../../../components/label/description"
 import SmallTitle from "../../../../components/label/smallTitle"
 import { boardState } from "../../../../store"
+import { theme } from "../../../../styles/theme"
 import SelectModal from "./comopnents/selectModal"
 
 const CreateBoardStep3 = () => {
-    const board = useRecoilValue(boardState)
+    const [board, setBoard] = useRecoilState(boardState)
     const $component = useRef()
     const $buttonArea = useRef()
     const $boardArea = useRef()
@@ -18,6 +19,7 @@ const CreateBoardStep3 = () => {
     const [heightOfMemoArea, setHeightOfMemoArea] = useState(0)
     const [memos, setMemos] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [modalTitle, setModalTitle] = useState()
 
     useEffect(() => {
         const componentHeight = $component.current.offsetHeight
@@ -45,22 +47,24 @@ const CreateBoardStep3 = () => {
             ""
         ]
 
-        board.memoBackground.forEach((el, i) => {
-            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={el} color={board.memoColors[i]} key={el + i}>{sampleText[i]}</SampleMemo>)
+        board.memoThemes.forEach((el, i) => {
+            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={el.memoBackground} color={el.memoTextColor} key={el + i}>{sampleText[i]}</SampleMemo>)
         })
 
-        for (let i = 0; i < 6 - board.memoBackground.length; i++) {
-            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={board.memoBackground[0]} color={board.memoColors[0]} key={`sampleMemo${i}`}>{sampleText[i + board.memoBackground.length]}</SampleMemo>)
+        for (let i = 0; i < 6 - board.memoThemes.length; i++) {
+            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={board.memoThemes[0].memoBackground} color={board.memoThemes[0].memoTextColor} key={`sampleMemo${i}`}>{sampleText[i + board.memoBackground.length]}</SampleMemo>)
         }
 
         return result
     }
 
     const onClickSetBackground = () => {
+        setModalTitle("배경")
         setIsModalOpen(true)
     }
 
     const onClickSetMemoTheme = () => {
+        setModalTitle("메모지")
         setIsModalOpen(true)
     }
 
@@ -75,7 +79,7 @@ const CreateBoardStep3 = () => {
                 <Description ref={$boardDescription}>{board.description}</Description>
                 <MemoArea>
                     <MemoGrid height={heightOfMemoArea}>
-                        {memos}
+                        {getMemos()}
                     </MemoGrid>
                 </MemoArea>
             </SampleBoard>
@@ -83,7 +87,10 @@ const CreateBoardStep3 = () => {
                 <ChipButton flat text="배경" onClick={onClickSetBackground} />
                 <ChipButton flat text="메모지" onClick={onClickSetMemoTheme} />
             </ButtonArea>
-            <SelectModal open={isModalOpen} onClose={onCloseModal} />
+            {
+                isModalOpen &&
+                <SelectModal open={isModalOpen} onClose={onCloseModal} title={modalTitle} option={modalTitle} board={board} setBoard={setBoard} />
+            }
         </ComponentWrapper>
     )
 }
@@ -112,6 +119,7 @@ const SampleBoard = styled.div`
     align-items: flex-start;
     padding: 1rem;
     margin: 1rem;
+    border: 0.5px solid ${theme.colors.grey_30};
 `
 
 const MemoArea = styled.div`
@@ -145,6 +153,7 @@ const SampleMemo = styled.div`
     align-self: center;
     justify-self: center;
     background: ${props => props.background};
+    color: ${props => props.color};
     border-radius: 0.5rem;
     font-size: ${props => props.size * 0.04}px;
 `

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import Backdrop from "./backdrop";
+import { ReactComponent as Alert } from "../../assets/alert.svg";
 
 const AlertModal = ({ open, onClickArray, buttonTextArray, text, onClose }) => {
   useEffect(() => {
@@ -10,14 +11,19 @@ const AlertModal = ({ open, onClickArray, buttonTextArray, text, onClose }) => {
   return (
     <>
       <ModalContainer open={open}>
+        <div>
+          <Alert />
+        </div>
         <ModalDescription>{text}</ModalDescription>
-        {buttonTextArray.map((el, i) => {
-          return (
-            <ButtonStyle onClick={onClickArray[i]} key={el}>
-              {el}
-            </ButtonStyle>
-          );
-        })}
+        <ButtonContainer>
+          {buttonTextArray.map((el, i) => {
+            return (
+              <ButtonStyle onClick={onClickArray[i]} key={el}>
+                {el}
+              </ButtonStyle>
+            );
+          })}
+        </ButtonContainer>
       </ModalContainer>
       <Backdrop open={open} onClick={onClose}></Backdrop>
     </>
@@ -51,7 +57,12 @@ const ModalDescription = styled.div``;
 const ButtonStyle = styled.div`
   background-color: #868686;
   padding: 0.5rem 3rem;
-  border-radius: 0.3rem;
+  border-radius: 12px;
   color: white;
   cursor: pointer;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
