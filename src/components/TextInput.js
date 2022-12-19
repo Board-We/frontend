@@ -60,7 +60,9 @@ const InputContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   border-bottom: ${(props) =>
-    props.isValidLength ? "0.1rem solid #b4b4b4" : "0.1rem solid #FF0000"};
+    props.isValidLength
+      ? `0.1rem solid ${props.theme.colors.primary}`
+      : `0.1rem solid ${props.theme.colors.error}`};
 
   position: relative;
 `;

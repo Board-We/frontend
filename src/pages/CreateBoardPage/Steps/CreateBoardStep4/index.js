@@ -26,6 +26,9 @@ function CreateBoardStep4() {
   return (
     <>
       <CreateBoardStepContainer>
+        <CreateBoardDescriptionText>
+          <p>롤링페이퍼 받는 기간</p>
+        </CreateBoardDescriptionText>
         <SetTimeWrapper onClick={handleAttachableTerm}>
           <SetTimeContainer>
             <p>{formattingDateObject(board.writingStartTime)}부터</p>
@@ -38,7 +41,6 @@ function CreateBoardStep4() {
 
         <CreateBoardDescriptionText>
           <p>롤링페이퍼 확인 기간</p>
-          <span>친구들이 롤링페이퍼를 확인할 수 있어요.</span>
         </CreateBoardDescriptionText>
 
         <SetTimeWrapper onClick={handleOpenTerm}>
