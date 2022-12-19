@@ -27,3 +27,8 @@ export const deleteBoard = async ({ boardCode, password }) => {
   if (res.status === 200) return true;
   return false;
 };
+
+export const getHotBoardsList = async () => {
+  const res = await request({ method: "GET", url: "/boards/hot" });
+  return res.data;
+};

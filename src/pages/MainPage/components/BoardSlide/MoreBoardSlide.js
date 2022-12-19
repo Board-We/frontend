@@ -23,6 +23,6 @@ const MoreBoardContainer = styled.div`
   aspect-ratio: 1 / 1.6;
 
   path {
-    fill: #4e4e4e;
+    fill: ${(props) => props.theme.colors.grey_30};
   }
 `;
