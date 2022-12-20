@@ -14,7 +14,7 @@ const SetOpenEndTerm = () => {
         setTime={setOpenEndTime}
         setDate={setOpenEndDate}
       />
-      <p>까지</p>
+      <p style={{ color: "black" }}>까지</p>
     </Container>
   );
 };

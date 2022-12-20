@@ -142,7 +142,6 @@ const MakingStep = () => {
           textColor={"#FFFFFF"}
           onClick={onClickMakeMemo}
           filled={true}
-          flat={true}
         />
       </FooterButtonArea>
     </PageWrapper>

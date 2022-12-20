@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { boardState } from "../../../../../store";
 import DayPicker from "../Components/DayPicker";
 
 const SetAttachableStartTerm = () => {
@@ -14,7 +16,7 @@ const SetAttachableStartTerm = () => {
         setTime={setAttachableStartTime}
         setDate={setAttachableStartDate}
       />
-      <p>부터</p>
+      <p style={{ color: "black" }}>부터</p>
     </Container>
   );
 };

@@ -2,14 +2,18 @@ import styled from "styled-components";
 import { ReactComponent as ChevronRight } from "../../../assets/chevronRight.svg";
 import { ReactComponent as Close } from "../../../assets/close.svg";
 
-const StepHeader = ({ title, onClick, isFinalStep }) => {
+const StepHeader = ({ title, onClick, isFinalStep, stepId }) => {
   return (
     <StepHeaderContainer>
-      {isFinalStep || (
+      {stepId === 1 ? (
+        <GoBackStepButton onClick={onClick}>
+          <Close />
+        </GoBackStepButton>
+      ) : !isFinalStep ? (
         <GoBackStepButton onClick={onClick}>
           <ChevronRight />
         </GoBackStepButton>
-      )}
+      ) : null}
       <StepHeaderTitle>{title}</StepHeaderTitle>
       {isFinalStep && (
         <CloseButton>
