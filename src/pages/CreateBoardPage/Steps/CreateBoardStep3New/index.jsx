@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { useEffect, useRef } from "react"
-import { useRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../../../components/buttons/chipButton"
 import Description from "../../../../components/label/description"
 import SmallTitle from "../../../../components/label/smallTitle"
-import { boardState } from "../../../../store"
+import { boardState, deviceScreenState } from "../../../../store"
 import { theme } from "../../../../styles/theme"
 import SelectModal from "./comopnents/selectModal"
 
@@ -20,6 +20,8 @@ const CreateBoardStep3 = () => {
     const [memos, setMemos] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalTitle, setModalTitle] = useState()
+    const deviceScreenSize = useRecoilValue(deviceScreenState);
+
 
     useEffect(() => {
         const componentHeight = $component.current.offsetHeight
@@ -29,12 +31,17 @@ const CreateBoardStep3 = () => {
     })
 
     useEffect(() => {
-        const bottomOfBoardDescription = $boardDescription.current.offsetTop - $component.current.offsetTop + $boardDescription.current.clientHeight
+        const bottomOfBoardDescription = $boardDescription.current.offsetTop + $boardDescription.current.clientHeight - $component.current.offsetTop +
+            Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
         const boardAreaHeight = $boardArea.current.clientHeight
 
         setHeightOfMemoArea(boardAreaHeight - bottomOfBoardDescription)
         setMemos(getMemos())
     }, [heightOfBoard])
+
+    useEffect(()=>{
+        setMemos(getMemos())
+    }, [board.memoThemes])
 
     const getMemos = () => {
         const result = []
@@ -52,7 +59,7 @@ const CreateBoardStep3 = () => {
         })
 
         for (let i = 0; i < 6 - board.memoThemes.length; i++) {
-            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={board.memoThemes[0].memoBackground} color={board.memoThemes[0].memoTextColor} key={`sampleMemo${i}`}>{sampleText[i + board.memoBackground.length]}</SampleMemo>)
+            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={board.memoThemes[0].memoBackground} color={board.memoThemes[0].memoTextColor} key={`sampleMemo${i}`}>{sampleText[i + board.memoThemes.length]}</SampleMemo>)
         }
 
         return result
@@ -79,7 +86,7 @@ const CreateBoardStep3 = () => {
                 <Description ref={$boardDescription}>{board.description}</Description>
                 <MemoArea>
                     <MemoGrid height={heightOfMemoArea}>
-                        {getMemos()}
+                        {memos}
                     </MemoGrid>
                 </MemoArea>
             </SampleBoard>

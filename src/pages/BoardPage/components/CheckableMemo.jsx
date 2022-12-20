@@ -1,9 +1,10 @@
 import styled from "styled-components";
-
+import CheckImage from "../../../assets/checkbox.png";
 const CheckableMemo = ({ id, text, onChange }) => {
   return (
     <MemoWrapper>
-      <Checkbox type="checkbox" onChange={onChange} value={id} />
+      <Checkbox type="checkbox" onChange={onChange} value={id} id="checker" />
+      <CheckLabel htmlFor="checker" />
       {text}
     </MemoWrapper>
   );
@@ -24,10 +25,23 @@ const MemoWrapper = styled.div`
 `;
 
 const Checkbox = styled.input`
+  appearance: none;
+  display: block;
   position: absolute;
   width: 1.2rem;
   height: 1.2rem;
-  top: 0;
-  left: 0;
   margin: 0.5rem;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  border: 1px solid ${(props) => props.theme.colors.grey_30};
+  border-radius: 0.2rem;
+
+  &:checked {
+    border: none;
+    background: url(${CheckImage}) no-repeat center center;
+    background-size: 1.2rem 1.2rem;
+  }
 `;
+
+const CheckLabel = styled.label``;
