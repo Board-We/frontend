@@ -153,6 +153,7 @@ const SearchButton = styled.button`
         `
       : ""};
   animation-fill-mode: forwards;
+  z-index: 1;
 `;
 
 const ShareButton = styled.button`
@@ -197,11 +198,18 @@ const HeaderInput = styled.input`
   margin: 0.5rem;
   padding: 0.5rem;
   padding-left: 2.5rem;
-  background-color: rgba(118, 118, 128, 0.12);
+  background-color: ${(props) => props.theme.colors.grey_50};
   border: none;
   border-radius: 0.5rem;
   display: ${(props) =>
     props.searchModeType || props.isDeleteMemoMode ? "block" : "none"};
+  z-index: 0;
+
+  &:focus {
+    outline: none;
+    border: 1px solid ${(props) => props.theme.colors.primary};
+  }
+
   animation: ${(props) =>
     props.searchModeType
       ? css`

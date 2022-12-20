@@ -5,7 +5,7 @@ import TextInput from "../../../components/TextInput";
 import TextLengthValidator from "../../../components/textLengthValidator";
 import { boardState } from "../../../store";
 
-const CreateBoardStep2 = ({ stepId, setDisabledFooterButton }) => {
+const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   const maxLength = 50;
   const [board, setBoard] = useRecoilState(boardState);
   const [boardDescription, setBoardDescription] = useState("");

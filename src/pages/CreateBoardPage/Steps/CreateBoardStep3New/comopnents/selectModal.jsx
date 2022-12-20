@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { ReactComponent as Camera } from "../../../../../assets/camera.svg"
+import { ReactComponent as Close } from "../../../../../assets/close.svg";
 import styled from "styled-components"
 import TapBar from "../../../../../components/buttons/tapBar"
 import TapButton from "../../../../../components/buttons/tapButton"
@@ -39,6 +40,21 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard, children }
         setSelectedMemoIndex(e)
     }
 
+    const onClickAddMemoTheme = () => {
+        const newMemoThemes = [...board.memoThemes]
+        newMemoThemes.push({ memoBackground: "#FFF", memoTextColor: "#000" })
+        setBoard({ ...board, memoThemes: newMemoThemes })
+        setSelectedMemoIndex(newMemoThemes.length - 1)
+    }
+
+    const onClickRemoveMemoTheme = (idx) => {
+        const newMemoThemes = [...board.memoThemes]
+        const nextIdx = idx > selectedMemoIndex ? selectedMemoIndex : selectedMemoIndex - 1
+        newMemoThemes.splice(idx, 1)
+        setSelectedMemoIndex(nextIdx)
+        setBoard({ ...board, memoThemes: newMemoThemes })
+    }
+
     return (
         <ComponentWrapper open={open}>
             {
@@ -50,8 +66,16 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard, children }
                                 isSelected={selectedMemoIndex == i}
                                 text={`메모지${i + 1}`}
                                 onClick={() => onClickTapBar(i)}
+                                icon={
+                                    board.memoThemes.length > 1 &&
+                                    <Close onClick={() => onClickRemoveMemoTheme(i)} />
+                                }
                             />
                         })
+                    }
+                    {
+                        board.memoThemes.length < 5 &&
+                        <TapBar onClick={onClickAddMemoTheme} text="+ 메모지 추가" />
                     }
                 </MemoOptionContainer>
             }
@@ -112,7 +136,7 @@ const ComponentWrapper = styled.div`
 `
 
 const MemoOptionContainer = styled.div`
-    display: flex;
+    display: -webkit-box;
     align-items: flex-end;
     justify-content: flex-start;
     gap: 0;
@@ -121,6 +145,10 @@ const MemoOptionContainer = styled.div`
     padding-top:0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    overflow-x: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
 `
 
 const MenuContainer = styled.div`

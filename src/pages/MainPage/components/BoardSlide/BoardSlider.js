@@ -5,7 +5,7 @@ import Slide from "./Slide";
 
 const slidingValue = 10;
 
-const BoardSlider = ({ reccomendBoards }) => {
+const BoardSlider = ({ boards }) => {
   const sliderContainerRef = useRef();
   const [mobileStartX, setMobileStartX] = useState(0);
 
@@ -54,7 +54,7 @@ const BoardSlider = ({ reccomendBoards }) => {
       onTouchMove={handleTouchMoveSlider}
     >
       <Slides>
-        {reccomendBoards.map((board) => (
+        {boards.map((board) => (
           <Slide
             key={board.boardName}
             boardLink={board.boardLink}
