@@ -15,6 +15,7 @@ const ComponentWrapper = styled.span`
   font-weight: 600;
   color: ${(props) => props.color};
   opacity: 1;
+  margin-bottom: 0.2rem;
 `;
 
 export default SmallTitle;

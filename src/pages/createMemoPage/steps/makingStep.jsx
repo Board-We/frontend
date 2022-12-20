@@ -23,7 +23,7 @@ const MakingStep = () => {
   const memoBackgroundOptions = {
     image: [],
     color: [
-      { background: "#FFFBF2", textColor: "black" },
+      { background: "white", textColor: "black" },
       { background: "red", textColor: "white" },
       { background: "green", textColor: "white" },
       { background: "blue", textColor: "white" },
@@ -74,8 +74,8 @@ const MakingStep = () => {
   };
 
   const alertOption = {
-    buttonTextArray: ["취소", "중단하기"],
-    onClickArray: [cancelBack, goBack],
+    buttonTextArray: ["중단하기", "편집으로 돌아가기"],
+    onClickArray: [goBack, cancelBack],
   };
 
   return (
@@ -107,7 +107,7 @@ const MakingStep = () => {
         <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
       </BoardArea>
       <OptionArea>
-        <SmallTitle text={"메모지를 선택해 롤링페이퍼를 남겨보세요."} />
+        <SmallTitle text={"메모지를 선택해주세요."} />
         <OptionContainer>
           {memoBackgroundOptions.image.map((el) => {
             return (
@@ -141,6 +141,7 @@ const MakingStep = () => {
           textColor={"#FFFFFF"}
           onClick={onClickMakeMemo}
           filled={true}
+          flat={true}
         />
       </FooterButtonArea>
     </PageWrapper>
@@ -200,20 +201,16 @@ const MemoPlaceHolder = styled.span`
 
 const MemoTextIndicator = styled.pre`
   position: absolute;
-  width: 10%;
   display: flex;
   align-items: center;
   justify-content: center;
-  right: 0;
-  left: 0;
-  bottom: 20px;
-  color: ${(props) => props.theme.colors.grey_20};
-  background: ${(props) => props.theme.dimmed.opacitiy_w};
+  right: 2.5rem;
+  bottom: 0.75rem;
+  color: black;
   font-size: 0.875rem;
   font-weight: 500;
   border-radius: 0.5rem;
-  margin: 0 auto;
-  padding: 0.2rem;
+  margin: 0;
 `;
 
 const OptionArea = styled.div`
