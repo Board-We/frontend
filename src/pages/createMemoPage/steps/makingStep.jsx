@@ -66,6 +66,7 @@ const MakingStep = () => {
       memoContent: memo.text,
       memoThemeId: 12,
     }); // boardCode와 memoThemeId는 임시로 넣어놓음
+    
     if (created) navigate("/memo/end");
   };
 
