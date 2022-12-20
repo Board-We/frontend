@@ -31,8 +31,12 @@ function CreateBoardStep4() {
         </CreateBoardDescriptionText>
         <SetTimeWrapper onClick={handleAttachableTerm}>
           <SetTimeContainer>
-            <p>{formattingDateObject(board.writingStartTime)}부터</p>
-            <p>~ {formattingDateObject(board.writingEndTime)} 까지</p>
+            <p style={{ color: "black" }}>
+              {formattingDateObject(board.writingStartTime)}부터
+            </p>
+            <p style={{ color: "black" }}>
+              ~ {formattingDateObject(board.writingEndTime)} 까지
+            </p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />
@@ -45,8 +49,12 @@ function CreateBoardStep4() {
 
         <SetTimeWrapper onClick={handleOpenTerm}>
           <SetTimeContainer>
-            <p>{formattingDateObject(board.openStartTime)}부터</p>
-            <p>~ {formattingDateObject(board.openEndTime)} 까지</p>
+            <p style={{ color: "black" }}>
+              {formattingDateObject(board.openStartTime)}부터
+            </p>
+            <p style={{ color: "black" }}>
+              ~ {formattingDateObject(board.openEndTime)} 까지
+            </p>
           </SetTimeContainer>
           <ArrowBtn>
             <Vector />

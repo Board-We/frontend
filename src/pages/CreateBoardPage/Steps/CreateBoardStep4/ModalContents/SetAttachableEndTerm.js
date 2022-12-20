@@ -14,7 +14,7 @@ function SetAttachableEndTerm() {
         setTime={setAttachableEndTime}
         setDate={setAttachableEndDate}
       />
-      <p>까지</p>
+      <p style={{ color: "black" }}>까지</p>
     </Container>
   );
 }

@@ -14,7 +14,7 @@ const SetOpenStartTerm = () => {
         setTime={setOpenStartTime}
         setDate={setOpenStartDate}
       />
-      <p>부터</p>
+      <p style={{ color: "black" }}>부터</p>
     </Container>
   );
 };
