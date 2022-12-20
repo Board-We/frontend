@@ -1,12 +1,34 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const EnterLinkInput = () => {
+  const navigate = useNavigate();
+  const [linkText, setLinkText] = useState("");
+  console.log(!Boolean(linkText));
+
+  const handleChnageLinkTextInput = (e) => {
+    setLinkText(e.target.value);
+  };
+
+  const handleClickEnterLinkButton = () => {
+    navigate(linkText);
+  };
+
   return (
     <EnterLinkInputContainer>
       <p>보드 링크로 입장하기</p>
       <EnterLinkInputBody>
-        <LinkTextInput placeholder="링크를 입력하세요" />
-        <SubmitButton>확인</SubmitButton>
+        <LinkTextInput
+          placeholder="링크를 입력하세요"
+          onChange={handleChnageLinkTextInput}
+        />
+        <SubmitButton
+          disabled={!Boolean(linkText)}
+          onClick={handleClickEnterLinkButton}
+        >
+          확인
+        </SubmitButton>
       </EnterLinkInputBody>
     </EnterLinkInputContainer>
   );
@@ -49,14 +71,21 @@ const LinkTextInput = styled.input`
   margin-right: 1rem;
   background-color: ${(props) => props.theme.colors.grey_50};
   font-size: 1rem;
+  &:focus {
+    outline: none;
+    border: 1px solid ${(props) => props.theme.colors.primary};
+  }
 `;
 
 const SubmitButton = styled.button`
   width: 20%;
   height: 100%;
-  background-color: ${(props) => props.theme.colors.grey_40};
+  background-color: ${(props) =>
+    props.disabled ? props.theme.colors.grey_40 : props.theme.colors.primary_2};
   border: none;
   border-radius: 8px;
-  color: ${(props) => props.theme.colors.grey_20};
+  color: ${(props) =>
+    props.disabled ? props.theme.colors.grey_20 : props.theme.colors.black};
   padding: 1rem;
+  cursor: pointer;
 `;
