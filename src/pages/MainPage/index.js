@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getReccomendBoardsList, searchBoards } from "../../api/boardsApi";
-import { reccomendBoardsData, searchBoardsResults } from "../../api/mockData";
+import { reccomendBoardsData } from "../../api/mockData";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
 import EnterLinkInput from "./components/EnterLinkInput";
-import ReccomendBoardSlide from "./components/ReccomendBoardSlide/index";
+import BoardSlide from "./components/BoardSlide/index";
 import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
 
@@ -18,7 +18,7 @@ const Main = () => {
   const [searchModeType, setSearchModeType] = useState("");
   const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
   const [keyword, setKeyword] = useState(""); // 결과창 키워드 표시를 위한 값
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
 
   const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
 
@@ -62,13 +62,11 @@ const Main = () => {
       });
 
       if (searchBoardsResult) setSearchResults(searchBoardsResult);
-      setSearchResults(searchBoardsResults.content); // set mock data
     }
   };
 
   const getReccomendBoardsData = useCallback(async () => {
     const data = await getReccomendBoardsList();
-    console.log(data);
     if (data) setReccomendBoards(data);
   }, []);
 
@@ -103,16 +101,17 @@ const Main = () => {
               </ServiceMainImage>
               <MainPageBody>
                 <EnterLinkInput />
-                <ReccomendBoardSlide reccomendBoards={reccomendBoards} />
+                <BoardSlide
+                  title="추천 보드"
+                  description="공개한 보드는 랜덤으로 추천됩니다!"
+                  boards={reccomendBoards}
+                  positionValue="70%"
+                />
               </MainPageBody>
               {isFooter && <ServiceFooter />}
             </>
           ) : (
-            <SearchPage
-              reccomendBoards={reccomendBoards}
-              keyword={keyword}
-              searchResults={searchResults}
-            />
+            <SearchPage keyword={keyword} searchResults={searchResults} />
           )}
         </MainPageContainer>
       </PageWrapper>
@@ -151,6 +150,7 @@ const MainPageContainer = styled.div`
 const MainPageBody = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 32px 16px;

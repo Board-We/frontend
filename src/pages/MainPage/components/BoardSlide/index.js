@@ -1,21 +1,21 @@
 import styled from "styled-components";
 import BoardSlider from "./BoardSlider";
 
-const ReccomendBoardSlide = ({ reccomendBoards }) => {
+const BoardSlide = ({ title, description, boards, positionValue }) => {
   return (
-    <ReccomendBoardSlideContainer>
+    <ReccomendBoardSlideContainer positionValue={positionValue}>
       <ReccomendBoardSlideHeader>
-        <p>추천 보드</p>
-        <p>공개한 보드는 랜덤으로 추천됩니다!</p>
+        <p>{title}</p>
+        <p>{description}</p>
       </ReccomendBoardSlideHeader>
       <ReccomendBoardSlideBody>
-        <BoardSlider reccomendBoards={reccomendBoards} />
+        <BoardSlider boards={boards} />
       </ReccomendBoardSlideBody>
     </ReccomendBoardSlideContainer>
   );
 };
 
-export default ReccomendBoardSlide;
+export default BoardSlide;
 
 const ReccomendBoardSlideContainer = styled.div`
   width: 100%;
@@ -24,7 +24,7 @@ const ReccomendBoardSlideContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 104px;
+  top: ${(props) => props.positionValue};
 `;
 
 const ReccomendBoardSlideHeader = styled.div`

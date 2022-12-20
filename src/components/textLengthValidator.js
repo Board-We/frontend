@@ -28,7 +28,8 @@ const InvalidMessageText = styled.div`
 const TextCounter = styled.div`
   position: absolute;
   right: 0;
-  color: ${(props) => (props.isOverLength ? "red" : "gray")};
+  color: ${(props) =>
+    props.isOverLength ? "red" : props.theme.colors.grey_20};
   p {
     font-size: 0.8rem;
   }

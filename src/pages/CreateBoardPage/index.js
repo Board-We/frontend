@@ -198,13 +198,13 @@ const CreateBoardContainer = styled.div`
 
 const ProgressBarContainer = styled.div`
   width: 100%;
-  background-color: #d9d9d9;
+  height: 0.2rem;
+  background-color: ${(props) => props.theme.colors.grey_40};
 `;
 
 const ProgressBar = styled.div`
-  margin-right: auto;
   width: ${(props) => props.width * 15}%;
-  background-color: black;
+  background: linear-gradient(90deg, #fdc62e 17.69%, #ff7e36 98.49%);
   height: inherit;
 `;
 
