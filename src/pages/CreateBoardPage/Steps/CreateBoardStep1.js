@@ -6,7 +6,7 @@ import TextLengthValidator from "../../../components/textLengthValidator";
 import { ReactComponent as Close } from "../../../assets/close.svg";
 import { boardState } from "../../../store";
 
-const CreateBoardStep1 = ({ stepId, setDisabledFooterButton }) => {
+const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   const maxLength = 20;
   const inputRef = useRef();
 
@@ -121,24 +121,6 @@ const CreateBoardStepContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
-`;
-
-const CreateBoardStepCounter = styled.div`
-  color: #bcbcbc;
-  margin-bottom: 0.8rem;
-  font-size: 1.2rem;
-`;
-
-const CreateBoardDescriptionText = styled.div`
-  width: 100%;
-  display: flex;
-  p {
-    text-align: left;
-    font-weight: 600;
-    font-size: 1.5rem;
-    margin: 0;
-    margin-bottom: 0.8rem;
-  }
 `;
 
 const CreateBoardGuide = styled.div`

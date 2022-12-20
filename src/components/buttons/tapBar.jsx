@@ -4,7 +4,7 @@ import { theme } from "../../styles/theme"
 const TapBar = ({ text, isSelected = false, icon, onClick, onRemove }) => {
     return (
         <ComponentWrapper isSelected={isSelected} onClick={onClick}>
-            {icon}{text}
+            {text}{icon}
             {onRemove && <div>x</div>}
         </ComponentWrapper>
     )

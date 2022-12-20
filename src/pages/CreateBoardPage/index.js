@@ -1,8 +1,8 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import CreateBoardStep1 from "./Steps/CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
-import { createBoardStepId, deviceScreenState } from "../../store";
+import { boardState, createBoardStepId, deviceScreenState } from "../../store";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import FooterButton from "../../components/buttons/FooterButton";
 import CreateBoardStep3 from "./Steps/CreateBoardStep3New";
@@ -14,9 +14,11 @@ import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { theme } from "../../styles/theme";
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
+  const setBoard = useSetRecoilState(boardState)
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);
   const stepDescription = [
@@ -43,7 +45,34 @@ const CreateBoardPage = () => {
     setMaxHeightOfContentsArea(
       deviceHeight - bottomOfDescription - heightOfFooter
     );
-  });
+    initBoard()
+  }, []);
+
+
+  const initBoard = () => {
+    const initialBoardForm = {
+      name: "",
+      description: "",
+      tags: [],
+      writingStartTime: new Date(),
+      writingEndTime: new Date(new Date().getTime() + 1209600),
+      openStartTime: new Date(new Date().getTime() + 1209600),
+      openEndTime: new Date(new Date().getTime() + 2419200),
+      password: undefined,
+      privateMode: false,
+      background: "#FFFFFF",
+      font: "san-serif",
+      memos: [],
+      memoThemes: [
+        {
+          memoBackground: theme.colors.grey_50,
+          memoTextColor: "#000000",
+        }
+      ],
+    }
+
+    setBoard(initialBoardForm)
+  }
 
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
@@ -66,7 +95,6 @@ const CreateBoardPage = () => {
       case 1: {
         return (
           <CreateBoardStep1
-            stepId={stepId}
             setDisabledFooterButton={setDisabledFooterButton}
           />
         );
@@ -74,7 +102,6 @@ const CreateBoardPage = () => {
       case 2:
         return (
           <CreateBoardStep2
-            stepId={stepId}
             setDisabledFooterButton={setDisabledFooterButton}
           />
         );
