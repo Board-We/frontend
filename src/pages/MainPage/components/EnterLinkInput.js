@@ -5,7 +5,6 @@ import styled from "styled-components";
 const EnterLinkInput = () => {
   const navigate = useNavigate();
   const [linkText, setLinkText] = useState("");
-  console.log(!Boolean(linkText));
 
   const handleChnageLinkTextInput = (e) => {
     setLinkText(e.target.value);
