@@ -76,11 +76,13 @@ const StepDiscription = ({ step, setStep, setModalOpen }) => {
   return (
     <Container>
       <DiscriptionContainer>
-        <p>롤링 페이퍼 {step <= 2 ? "받는" : "확인"} 기간</p>
+        <p style={{ color: "black" }}>
+          롤링 페이퍼 {step <= 2 ? "받는" : "공개"} 기간
+        </p>
         {step <= 2 ? (
           <span>친구들이 롤링 페이퍼를 작성할 수 있어요.</span>
         ) : (
-          <span>친구들이 작성한 롤링 페이퍼를 확인할 수 있어요.</span>
+          <span>작성된 롤링페이퍼를 확인할 수 있어요.</span>
         )}
       </DiscriptionContainer>
       <CloseButton
