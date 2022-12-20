@@ -34,7 +34,7 @@ export default AlertModal;
 
 const ModalContainer = styled.div`
   width: 90%;
-  max-width: 600px;
+  max-width: 500px;
   height: 20%;
   background-color: white;
   position: fixed;
@@ -52,17 +52,32 @@ const ModalContainer = styled.div`
   padding: 2rem;
 `;
 
-const ModalDescription = styled.div``;
+const ModalDescription = styled.div`
+  color: ${(props) => props.theme.colors.black};
+`;
 
 const ButtonStyle = styled.div`
   background-color: #868686;
-  padding: 0.5rem 3rem;
+  padding: 0.8rem;
   border-radius: 12px;
+  width: 160px;
+  margin: 0.5rem;
   color: white;
   cursor: pointer;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  width: 100%;
+
+  div:first-child {
+    background-color: ${(props) => props.theme.colors.grey_50};
+    color: ${(props) => props.theme.colors.black};
+  }
+
+  div:last-child {
+    background-color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.black};
+  }
 `;
