@@ -1,9 +1,11 @@
+import { useEffect } from "react"
 import styled from "styled-components"
 import { theme } from "../../styles/theme"
 
-const TapButton = ({ text, isSelected = false, icon, fill = true, onClick }) => {
+const TapButton = ({ text, isSelected = false, icon, isFill = true, onClick }) => {
+
     return (
-        <ComponentWrapper isSelected={isSelected} fill={fill} onClick={onClick}>
+        <ComponentWrapper isSelected={isSelected} isFill={isFill} onClick={onClick}>
             {icon}{text}
         </ComponentWrapper>
     )
