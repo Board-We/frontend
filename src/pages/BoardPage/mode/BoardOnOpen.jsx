@@ -203,7 +203,12 @@ const BoardOnOpen = ({
       </MemoContainer>
       {isMemoLoading ? <Spinner /> : null}
       <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
-      <CalendarButton open={openDueDate} />
+      <CalendarButton
+        open={openDueDate}
+        isHidden={
+          passwordModalState.open | isDeleteMemoMode | isOpenConfirmDeleteModal
+        }
+      />
     </PageWrapper>
   );
 };

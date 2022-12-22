@@ -5,11 +5,11 @@ import { ReactComponent as Calendar } from "../../assets/calendar.svg";
 import { boardState } from "../../store";
 import { formattingDateObject } from "../../utils/setDefaultDay";
 
-const CalendarButton = ({ open }) => {
+const CalendarButton = ({ open, isHidden }) => {
   const board = useRecoilValue(boardState);
   return (
     <ComponentWrapper>
-      <CalendarContainer open={open}>
+      <CalendarContainer open={open} isHidden={isHidden}>
         {open ? (
           `${formattingDateObject(board.openEndTime)}에 공개됩니다.`
         ) : (
@@ -55,7 +55,7 @@ const ComponentWrapper = styled.div`
 `;
 
 const CalendarContainer = styled.div`
-  display: flex;
+  display: ${(props) => (props.isHidden ? "none" : "flex")};
   justify-content: center;
   align-items: center;
   right: 0;
@@ -69,7 +69,8 @@ const CalendarContainer = styled.div`
       ? css`
           ${expandCalendarButton} 0.3s ease-in-out forwards
         `
-      : css`
+      : props.open &&
+        css`
           ${collapseCalendarButton} 0.3s ease-in-out forwards
         `};
 `;

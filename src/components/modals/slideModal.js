@@ -36,5 +36,5 @@ const ModalContainer = styled.div`
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   z-index: 1500;
-  padding: 2rem;
+  padding: 1.5rem;
 `;
