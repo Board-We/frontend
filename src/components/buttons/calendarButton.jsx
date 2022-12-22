@@ -1,12 +1,20 @@
 import { useEffect, useRef } from "react";
+import { useRecoilValue } from "recoil";
 import styled, { keyframes, css } from "styled-components";
 import { ReactComponent as Calendar } from "../../assets/calendar.svg";
+import { boardState } from "../../store";
+import { formattingDateObject } from "../../utils/setDefaultDay";
 
 const CalendarButton = ({ open }) => {
+  const board = useRecoilValue(boardState);
   return (
     <ComponentWrapper>
       <CalendarContainer open={open}>
-        <Calendar />
+        {open ? (
+          `${formattingDateObject(board.openEndTime)}에 공개됩니다.`
+        ) : (
+          <Calendar />
+        )}
       </CalendarContainer>
     </ComponentWrapper>
   );
