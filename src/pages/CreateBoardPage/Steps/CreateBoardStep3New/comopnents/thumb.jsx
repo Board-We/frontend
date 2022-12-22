@@ -16,8 +16,8 @@ const ComponentWrapper = styled.div`
     background: ${props => props.color};
     transform: translate(-50%, -50%);
     user-select: none;
-    left: ${props => props.left}px;
-    top: ${props => props.top}px;
+    left: ${props => props.left};
+    top: ${props => props.top};
     user-select: none;
 `
 

@@ -6,13 +6,11 @@ import styled from "styled-components"
 import TapBar from "../../../../../components/buttons/tapBar"
 import TapButton from "../../../../../components/buttons/tapButton"
 import { theme } from "../../../../../styles/theme"
-import ColorPalette from "./colorPalette"
-import ColorSelectBar from "./colorSelectBar"
+import ColorPicker from "./colorPicker";
 
 
-const SelectModal = ({ open, onClose, title, option, board, setBoard, children }) => {
-    const [color, setColor] = useState('#fff')
-    const [baseColor, setBaseColor] = useState('rgb(255, 0, 0)')
+const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
+    const [color, setColor] = useState('#FFFFFF')
     const [selectedMemoIndex, setSelectedMemoIndex] = useState(0)
     const [selectedMenu, setSelectedMenu] = useState("bgImage")
 
@@ -55,6 +53,23 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard, children }
         setBoard({ ...board, memoThemes: newMemoThemes })
     }
 
+    const onChangeColor = (e) => {
+        if (option === "배경") {
+            if (selectedMenu === "bgColor") setBoard({ ...board, background: color })
+        }
+        else if (option === "메모지") {
+            const newMemoThemes = [...board.memoThemes]
+            const newMemoTheme = { ...newMemoThemes[selectedMemoIndex] }
+
+            if (selectedMenu === "bgColor") newMemoTheme.memoBackground = color
+            else if (selectedMenu === "fontColor") newMemoTheme.memoTextColor = color
+
+            newMemoThemes[selectedMemoIndex] = newMemoTheme
+            setBoard({ ...board, memoThemes: newMemoThemes })
+        }
+        setColor(e)
+    }
+
     return (
         <ComponentWrapper open={open}>
             {
@@ -70,6 +85,7 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard, children }
                                     board.memoThemes.length > 1 &&
                                     <Close onClick={() => onClickRemoveMemoTheme(i)} />
                                 }
+                                key={`메모지${i + 1}`}
                             />
                         })
                     }
@@ -90,14 +106,7 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard, children }
             </MenuContainer>
             {
                 (selectedMenu === "bgColor" || selectedMenu === "fontColor") &&
-                <>
-                    <ColorPaletteContainer>
-                        <ColorPalette option={[option, selectedMenu, selectedMemoIndex]} color={color} setColor={setColor} baseColor={baseColor} board={board} setBoard={setBoard} />
-                    </ColorPaletteContainer>
-                    <ColorSelectBarContainer>
-                        <ColorSelectBar color={baseColor} setColor={setBaseColor} />
-                    </ColorSelectBarContainer>
-                </>
+                <ColorPicker color={color} onChange={onChangeColor} />
             }
             {
                 selectedMenu == "bgImage" &&
@@ -157,22 +166,6 @@ const MenuContainer = styled.div`
     justify-content: center;
     gap: 0.25rem;
     padding: 0.75rem;
-`
-
-const ColorPaletteContainer = styled.div`
-    width: 100%;
-    min-height: 7rem;
-    height: 100%;
-    padding: 0.75rem;
-`
-
-const ColorSelectBarContainer = styled.div`
-    width: 100%;
-    height: 2.5rem;
-    padding: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `
 
 const BackgroundImageContainer = styled.div`
