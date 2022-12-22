@@ -53,13 +53,13 @@ const CreateBoardPage = () => {
       openEndTime: new Date(new Date().getTime() + 2419200),
       password: undefined,
       privateMode: false,
-      background: "#FFFFFF",
+      background: theme.colors.defaultBoardBg,
       font: "san-serif",
       memos: [],
       memoThemes: [
         {
-          memoBackground: theme.colors.grey_50,
-          memoTextColor: "#000000",
+          memoBackground: theme.colors.defaultMemoBg,
+          memoTextColor: theme.colors.black,
         }
       ],
     }
