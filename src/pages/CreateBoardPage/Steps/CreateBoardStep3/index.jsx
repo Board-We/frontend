@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useEffect, useRef } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
-import ChipButton from "../../../../components/buttons/chipButton"
 import TapButton from "../../../../components/buttons/tapButton"
 import Description from "../../../../components/label/description"
 import SmallTitle from "../../../../components/label/smallTitle"
@@ -10,36 +9,32 @@ import { boardState, deviceScreenState } from "../../../../store"
 import { theme } from "../../../../styles/theme"
 import SelectModal from "./comopnents/selectModal"
 
-const CreateBoardStep3 = () => {
+const CreateBoardStep3 = ({ footerRef }) => {
     const [board, setBoard] = useRecoilState(boardState)
-    const $component = useRef()
-    const $buttonArea = useRef()
-    const $boardArea = useRef()
-    const $memoArea = useRef()
-    const $boardDescription = useRef()
-    const [heightOfBoard, setHeightOfBoard] = useState(0)
-    const [heightOfMemoArea, setHeightOfMemoArea] = useState(0)
     const [memos, setMemos] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalTitle, setModalTitle] = useState()
-    const deviceScreenSize = useRecoilValue(deviceScreenState);
-
-
-    useEffect(() => {
-        const componentHeight = $component.current.offsetHeight
-        const buttonHeight = $buttonArea.current.offsetHeight
-
-        setHeightOfBoard(componentHeight - buttonHeight)
-    })
+    const $desciprion = useRef()
+    const $memoArea = useRef()
+    const $buttonArea = useRef()
+    const $component = useRef()
+    const deviceScreenSize = useRecoilValue(deviceScreenState)
+    const [heightOfMemoGrid, setHeightOfMemoGrid] = useState(0)
 
     useEffect(() => {
-        const bottomOfBoardDescription = $boardDescription.current.offsetTop + $boardDescription.current.clientHeight - $component.current.offsetTop +
-            Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
-        const boardAreaHeight = $boardArea.current.clientHeight
+        // memoGrid의 높이를 정하는 방법
+        // 화면 height => 1번
+        // sample board 안에 존재하는 description의 bottom y pos => 2번
+        // parent에 존재하는 footer의 height => 3번
+        // button area의 height => 4번
+        // memoGrid의 top margin => 5번
+        // heightOfMemoGrid = 1번 - 2번 - 3번 - 4번 - 5번
+        const bottomOfDescription = $desciprion.current.offsetTop + $desciprion.current.clientHeight
+        const heightOfButtonArea = $buttonArea.current.clientHeight
+        const marginTop = Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
 
-        setHeightOfMemoArea(boardAreaHeight - bottomOfBoardDescription)
-        setMemos(getMemos())
-    }, [heightOfBoard])
+        setHeightOfMemoGrid(deviceScreenSize.y - bottomOfDescription - footerRef.current.clientHeight - heightOfButtonArea - marginTop + 2)
+    }, [deviceScreenSize, $component])
 
     useEffect(() => {
         setMemos(getMemos())
@@ -83,11 +78,11 @@ const CreateBoardStep3 = () => {
 
     return (
         <ComponentWrapper ref={$component} >
-            <SampleBoard ref={$boardArea} height={heightOfBoard}>
+            <SampleBoard>
                 <MemoArea ref={$memoArea} background={board.background}>
                     <SmallTitle>{board.name}</SmallTitle>
-                    <Description ref={$boardDescription}>{board.description}</Description>
-                    <MemoGrid height={heightOfMemoArea}>
+                    <Description ref={$desciprion} >{board.description}</Description>
+                    <MemoGrid height={heightOfMemoGrid}>
                         {memos}
                     </MemoGrid>
                 </MemoArea>
@@ -107,29 +102,25 @@ const CreateBoardStep3 = () => {
 const ComponentWrapper = styled.div`
     width: 100%;
     height: 100%;
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.25rem;
     background: ${theme.colors.grey_50};
+    margin-top: 0.5rem;
 `
 
 const SampleBoard = styled.div`
     width: 100%;
-    height: ${props => props.height}px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     padding: 0 1rem;
-    margin: 1rem;
     `
 
 const MemoArea = styled.div`
     width:100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -139,13 +130,13 @@ const MemoArea = styled.div`
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 0.5px solid ${theme.colors.grey_30};
+    padding: 1rem 1rem 0 1rem;
+    border: solid ${theme.colors.grey_30};
+    border-width: 0 0.1rem 0 0.1rem;
 `
 
 const MemoGrid = styled.div`
-    max-height: ${props => props.height}px;
+    height: ${props => props.height}px;
     width: 100%;
     overflow-y: scroll;
     display: grid;
@@ -153,6 +144,8 @@ const MemoGrid = styled.div`
     align-items: center;
     grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
     &::-webkit-scrollbar{
         display: none;
     }
@@ -185,7 +178,8 @@ const ButtonArea = styled.div`
     gap: 0.5rem;
     align-items: flex-start;
     justify-content: flex-start;
-    padding-top: 0.5rem;
+    background: white;
+    padding: 0.825rem 1.25rem 0.5rem;
 `
 
 export default CreateBoardStep3
