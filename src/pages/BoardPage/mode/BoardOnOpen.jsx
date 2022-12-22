@@ -20,13 +20,15 @@ const BoardOnOpen = ({
   setIsDeleteMemoMode,
   searchModeType,
   searchResults,
+  checkedMemoList,
+  setCheckedMemoList,
 }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
 
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
-  const [checkedMemoList, setCheckedMemoList] = useState([]);
+
   const [openToast, setOpenToast] = useState(true);
   const [openDueDate, setOpenDueDate] = useState(false);
   const deviceScreenSize = useRecoilValue(deviceScreenState);
@@ -59,7 +61,6 @@ const BoardOnOpen = ({
   };
 
   const handleChangeCheckableMemo = (e) => {
-    console.log(e.target.checked, e.target.value);
     if (e.target.checked) {
       setCheckedMemoList([...checkedMemoList, e.target.value]);
     } else
@@ -183,17 +184,6 @@ const BoardOnOpen = ({
               text="보드를 삭제하면 되돌릴 수 없습니다."
               onClose={handleCloseConfirmDeleteModal}
             />
-            {isDeleteMemoMode && (
-              <DeleteMemoButton
-                isExistCheckedmemo={checkedMemoList.length !== 0}
-                onClick={handleClickDeleteMemo}
-              >
-                삭제하기{" "}
-                {checkedMemoList.length !== 0 && (
-                  <span>{checkedMemoList.length}</span>
-                )}
-              </DeleteMemoButton>
-            )}
           </MemoContainer>
         </>
       )}
@@ -206,8 +196,18 @@ const BoardOnOpen = ({
               id={`${el}${i}`}
               text={el.memoContent}
               onChange={handleChangeCheckableMemo}
+              checkedMemoList={checkedMemoList}
             />
           ))}
+          <DeleteMemoButton
+            isExistCheckedmemo={checkedMemoList.length !== 0}
+            onClick={handleClickDeleteMemo}
+          >
+            삭제하기{" "}
+            {checkedMemoList.length !== 0 && (
+              <span>{checkedMemoList.length}</span>
+            )}
+          </DeleteMemoButton>
         </DeleteMemoContianer>
       )}
       {isMemoLoading ? <Spinner /> : null}
