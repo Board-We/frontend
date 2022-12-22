@@ -80,6 +80,7 @@ const CreateBoardStepContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
+  padding: 1.25rem;
 `;
 
 const CreateBoardDescriptionText = styled.div`

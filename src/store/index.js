@@ -7,10 +7,10 @@ export const boardState = atom({
     name: "boardName",
     description: "boardDescription",
     tags: ["tag1", "tag2", "tag3"],
-    writingStartTime: new Date(new Date().getTime() + 100),
-    writingEndTime: new Date(new Date().getTime() + 10000),
-    openStartTime: new Date(new Date().getTime() + 100),
-    openEndTime: new Date(new Date().getTime() + 10000),
+    writingStartTime: new Date(),
+    writingEndTime: new Date(new Date().getTime() + 1209600000),
+    openStartTime: new Date(new Date().getTime() + 1209600000),
+    openEndTime: new Date(new Date().getTime() + 2419200000),
     password: undefined,
     privateMode: false,
     background:
@@ -125,7 +125,7 @@ export const boardState = atom({
         memoTextColor: "#000000",
       },
     ],
-  }
+  },
 });
 
 export const memoStyleState = atom({

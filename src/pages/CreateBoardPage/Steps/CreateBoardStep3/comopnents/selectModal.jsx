@@ -38,6 +38,29 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
         setSelectedMemoIndex(e)
     }
 
+    const onChangeBackgroundImage = (e) => {
+        const inputImageFile = e.target.files[0]
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+            const base64Image = reader.result
+
+            if (option === "메모지") {
+                const newMemoThemes = [...board.memoThemes]
+                const newMemoTheme = { ...newMemoThemes[selectedMemoIndex] }
+
+                newMemoTheme.memoBackground = base64Image
+                newMemoThemes[selectedMemoIndex] = newMemoTheme
+
+                setBoard({ ...board, memoThemes: newMemoThemes })
+            } else if (option === "배경") {
+                setBoard({ ...board, background: base64Image })
+            }
+        }
+
+        reader.readAsDataURL(inputImageFile)
+    }
+
     const onClickAddMemoTheme = () => {
         const newMemoThemes = [...board.memoThemes]
         newMemoThemes.push({ memoBackground: "#FFF", memoTextColor: "#000" })
@@ -70,31 +93,56 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
         setColor(e)
     }
 
+    const getBackgroundImageContainer = () => {
+        return (
+            <BackgroundImageContainer>
+                {
+                    option === "배경" ?
+                        (board.background.includes('http') ?
+                            <BackgroundImage src={board.background} />
+                            : <>
+                                <Camera htmlFor="bgFileInput" />
+                                <ImageFileInput type="file" id="bgFileInput" onChange={onChangeBackgroundImage} />
+                            </>)
+                        : board.memoThemes[selectedMemoIndex].memoBackground.includes('http') ?
+                            <BackgroundImage src={board.memoThemes[selectedMemoIndex].memoBackground} />
+                            : <>
+                                <Camera htmlFor="bgFileInput" />
+                                <ImageFileInput type="file" id="bgFileInput" onChange={onChangeBackgroundImage} />
+                            </>
+                }
+            </BackgroundImageContainer>
+        )
+    }
+
+    const getMemoOption = () => {
+        return (
+            <MemoOptionContainer>
+                {
+                    board.memoThemes.map((el, i) => {
+                        return <TapBar
+                            isSelected={selectedMemoIndex == i}
+                            text={`메모지${i + 1}`}
+                            onClick={() => onClickTapBar(i)}
+                            icon={
+                                board.memoThemes.length > 1 &&
+                                <Close onClick={() => onClickRemoveMemoTheme(i)} />
+                            }
+                            key={`메모지${i + 1}`}
+                        />
+                    })
+                }
+                {
+                    board.memoThemes.length < 5 &&
+                    <TapBar onClick={onClickAddMemoTheme} text="+ 메모지 추가" />
+                }
+            </MemoOptionContainer>
+        )
+    }
+
     return (
         <ComponentWrapper open={open}>
-            {
-                option === "메모지" &&
-                <MemoOptionContainer>
-                    {
-                        board.memoThemes.map((el, i) => {
-                            return <TapBar
-                                isSelected={selectedMemoIndex == i}
-                                text={`메모지${i + 1}`}
-                                onClick={() => onClickTapBar(i)}
-                                icon={
-                                    board.memoThemes.length > 1 &&
-                                    <Close onClick={() => onClickRemoveMemoTheme(i)} />
-                                }
-                                key={`메모지${i + 1}`}
-                            />
-                        })
-                    }
-                    {
-                        board.memoThemes.length < 5 &&
-                        <TapBar onClick={onClickAddMemoTheme} text="+ 메모지 추가" />
-                    }
-                </MemoOptionContainer>
-            }
+            {option === "메모지" && getMemoOption()}
             <MenuContainer>
                 <TapButton text={`${option} 이미지`} isSelected={selectedMenu === "bgImage"} onClick={() => onClickTapMenu("bgImage")} />
                 <TapButton text="배경 색" isSelected={selectedMenu === "bgColor"} onClick={() => onClickTapMenu("bgColor")} />
@@ -108,18 +156,7 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
                 (selectedMenu === "bgColor" || selectedMenu === "fontColor") &&
                 <ColorPicker color={color} onChange={onChangeColor} />
             }
-            {
-                selectedMenu == "bgImage" &&
-                <BackgroundImageContainer>
-                    {
-                        option === "배경" ?
-                            (board.background.includes('http') ? <BackgroundImage src={board.background} /> : <Camera />)
-                            : board.memoThemes[selectedMemoIndex].memoBackground.includes('http') ?
-                                <BackgroundImage src={board.memoThemes[selectedMemoIndex].memoBackground} />
-                                : <Camera />
-                    }
-                </BackgroundImageContainer>
-            }
+            {selectedMenu == "bgImage" && getBackgroundImageContainer()}
             <Footer>
                 <div onClick={onClose}>x</div>
                 <div>{title}</div>
@@ -133,7 +170,6 @@ const ComponentWrapper = styled.div`
     position:absolute;
     left:0;
     bottom: 0;
-    min-height: 10vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -179,6 +215,9 @@ const BackgroundImageContainer = styled.div`
 
 const BackgroundImage = styled.img`
     max-height: 12rem;
+`
+
+const ImageFileInput = styled.input`
 `
 
 const Footer = styled.div`
