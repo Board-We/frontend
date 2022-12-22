@@ -90,6 +90,9 @@ const BoardPage = () => {
         onShare={() => {}}
         onConfig={configMenuSetting}
       />
+      {isDeleteMemoMode && (
+        <DeleteMemoSubHeader> 삭제할 메모를 선택하세요. </DeleteMemoSubHeader>
+      )}
       <BodyContainer>
         <Routes>
           <Route path="/onWaitWrite" element={<BoardOnWaitWrite />} />
@@ -125,6 +128,12 @@ const PageWrapper = styled.div`
 
 const BodyContainer = styled.div`
   height: 100%;
+`;
+
+const DeleteMemoSubHeader = styled.div`
+  border-top: ${(props) => `1px solid ${props.theme.colors.grey_40}`};
+  padding: 0.7rem;
+  color: ${(props) => props.theme.colors.grey_20};
 `;
 
 export default BoardPage;
