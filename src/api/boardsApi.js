@@ -32,3 +32,13 @@ export const getHotBoardsList = async () => {
   const res = await request({ method: "GET", url: "/boards/hot" });
   return res.data;
 };
+
+export const requestLoginBoard = async ({ password, boardCode }) => {
+  const res = await request({
+    method: "POST",
+    url: `/board/login`,
+    data: { password, boardCode },
+  });
+  if (res.status === 200) return true;
+  return res.data;
+};

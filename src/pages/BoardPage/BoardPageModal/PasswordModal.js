@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
 import { ReactComponent as Close } from "../../../assets/close.svg";
+import { requestLoginBoard } from "../../../api/boardsApi";
 
 const PasswordModal = ({ open, onClose, onValid }) => {
   const [password, setPassword] = useState("");
@@ -9,13 +10,15 @@ const PasswordModal = ({ open, onClose, onValid }) => {
   const handleOnChangePasswordInput = (e) => {
     setPassword(e.target.value);
   };
-  const handleClickConfrimPassword = () => {
-    // To do: 패스워드 확인 인증 로직
 
-    // 올바른 패스워드 입력시
-    onValid();
-    setPassword("");
-    onClose();
+  const handleClickConfrimPassword = async ({ boardCode }) => {
+    // boardCode는 임의로 처리
+    const isSuccess = await requestLoginBoard({ password, boardCode });
+    if (isSuccess) {
+      onValid();
+      setPassword("");
+      onClose();
+    }
   };
 
   return (
