@@ -134,6 +134,7 @@ const CreateBoardPage = () => {
         {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
         <Title ref={$stepDescription}>
           {stepDescription[currentStepId - 1]}
+          {currentStepId === 5 ? <span>(선택)</span> : null}
         </Title>
       </StepDescriptionContainer>
       <BoardInfoConatiner paddingBottom={paddingBottomOfContentArea}>
