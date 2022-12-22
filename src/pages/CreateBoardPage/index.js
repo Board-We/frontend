@@ -5,7 +5,7 @@ import StepHeader from "../../components/layout/headers/stepHeader";
 import { boardState, createBoardStepId, deviceScreenState } from "../../store";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import FooterButton from "../../components/buttons/FooterButton";
-import CreateBoardStep3 from "./Steps/CreateBoardStep3New";
+import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 import { useState } from "react";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep5 from "./Steps/CreateBoardStep5";
@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { theme } from "../../styles/theme";
+import Title from "../../components/label/title";
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
@@ -36,17 +37,19 @@ const CreateBoardPage = () => {
 
   useEffect(() => {
     const deviceHeight = document.body.offsetHeight;
+    // 0.8125rem = margin of upper element
     const bottomOfDescription =
-      $stepDescription.current.offsetHeight +
+      $stepDescription.current.clientHeight +
       $stepDescription.current.offsetTop +
-      Number(deviceScreenSize.rem.replace("px", "")) * 2;
+      Number(deviceScreenSize.rem.replace("px", "")) * 0.8125
     const heightOfFooter = $footer.current.offsetHeight;
 
     setMaxHeightOfContentsArea(
       deviceHeight - bottomOfDescription - heightOfFooter
     );
+
     initBoard()
-  }, []);
+  }, [$stepDescription, $footer, deviceScreenSize]);
 
 
   const initBoard = () => {
@@ -139,8 +142,10 @@ const CreateBoardPage = () => {
           </ProgressBarContainer>
         )}
         <CreateBoardBody>
-          {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
-          <h1 ref={$stepDescription}>{stepDescription[currentStepId - 1]}</h1>
+          <StepDescriptionContainer>
+            {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
+            <Title ref={$stepDescription}>{stepDescription[currentStepId - 1]}</Title>
+          </StepDescriptionContainer>
           <BoardInfoConatiner maxHeight={maxHeightOfContentsArea}>
             {controlCreatBoardStep(currentStepId, setDisabledFooterButton)}
           </BoardInfoConatiner>
@@ -169,7 +174,8 @@ export default CreateBoardPage;
 const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -179,6 +185,7 @@ const PageWrapper = styled.div`
 const CreateBoardContainer = styled.div`
   width: 100%;
   min-height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -213,22 +220,29 @@ const CreateBoardBody = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 1rem;
-  padding: 1rem 1.5rem;
 `;
+
+const StepDescriptionContainer = styled.div`
+  height: fit-content;
+  padding: 2rem 1.25rem 0.8125rem 1.25rem;
+  text-align: left;
+  display:flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
   height: ${(props) => props.maxHeight}px;
-  padding: 0.25rem;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
 const PageFooter = styled.div`
-  flex-grow: 1;
+  position: absolute;
   bottom: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: baseline;

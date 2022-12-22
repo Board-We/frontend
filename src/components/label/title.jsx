@@ -1,11 +1,10 @@
 import React from 'react'
+import { forwardRef } from 'react'
 import styled from 'styled-components'
 
-const Title = ({ text, color = "black", children }) => {
-    return (
-        <ComponentWrapper color={color}>{text}{children}</ComponentWrapper>
-    )
-}
+const Title = forwardRef(({ text, color = "black", children }, ref) => (
+    <ComponentWrapper ref={ref} color={color}>{text}{children}</ComponentWrapper>
+))
 
 const ComponentWrapper = styled.span`
     font-size: 1.75rem;

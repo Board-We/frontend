@@ -11,6 +11,7 @@ import { deleteBoard } from "../../../api/boardsApi";
 import { deleteMemo } from "../../../api/memoApi";
 import AlertModal from "../../../components/modals/alertModal";
 import CheckableMemo from "../components/CheckableMemo";
+import CalendarButton from "../../../components/buttons/calendarButton";
 
 const BoardOnOpen = ({
   passwordModalState,
@@ -27,6 +28,7 @@ const BoardOnOpen = ({
     useState(false);
   const [checkedMemoList, setCheckedMemoList] = useState([]);
   const [openToast, setOpenToast] = useState(true);
+  const [openDueDate, setOpenDueDate] = useState(false);
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
   const [memoThemes, setMemoThemes] = useState({});
@@ -106,8 +108,13 @@ const BoardOnOpen = ({
 
   const onScrollMemoContainer = (e) => {
     const memoContainerObject = e.target;
-    if (memoContainerObject.scrollTop > 0) setOpenToast(false);
-    else if (memoContainerObject.scrollTop === 0) setOpenToast(true);
+    if (memoContainerObject.scrollTop > 0) {
+      setOpenToast(false);
+      setOpenDueDate(true);
+    } else if (memoContainerObject.scrollTop === 0) {
+      setOpenToast(true);
+      setOpenDueDate(false);
+    }
 
     if (
       memoContainerObject.scrollHeight ==
@@ -196,6 +203,12 @@ const BoardOnOpen = ({
       </MemoContainer>
       {isMemoLoading ? <Spinner /> : null}
       <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
+      <CalendarButton
+        open={openDueDate}
+        isHidden={
+          passwordModalState.open | isDeleteMemoMode | isOpenConfirmDeleteModal
+        }
+      />
     </PageWrapper>
   );
 };

@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
 import ChipButton from "../../../../components/buttons/chipButton"
+import TapButton from "../../../../components/buttons/tapButton"
 import Description from "../../../../components/label/description"
 import SmallTitle from "../../../../components/label/smallTitle"
 import { boardState, deviceScreenState } from "../../../../store"
@@ -14,6 +15,7 @@ const CreateBoardStep3 = () => {
     const $component = useRef()
     const $buttonArea = useRef()
     const $boardArea = useRef()
+    const $memoArea = useRef()
     const $boardDescription = useRef()
     const [heightOfBoard, setHeightOfBoard] = useState(0)
     const [heightOfMemoArea, setHeightOfMemoArea] = useState(0)
@@ -39,7 +41,7 @@ const CreateBoardStep3 = () => {
         setMemos(getMemos())
     }, [heightOfBoard])
 
-    useEffect(()=>{
+    useEffect(() => {
         setMemos(getMemos())
     }, [board.memoThemes])
 
@@ -55,11 +57,11 @@ const CreateBoardStep3 = () => {
         ]
 
         board.memoThemes.forEach((el, i) => {
-            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={el.memoBackground} color={el.memoTextColor} key={el + i}>{sampleText[i]}</SampleMemo>)
+            result.push(<SampleMemo size={$memoArea.current.clientWidth} background={el.memoBackground} color={el.memoTextColor} key={el + i}>{sampleText[i]}</SampleMemo>)
         })
 
         for (let i = 0; i < 6 - board.memoThemes.length; i++) {
-            result.push(<SampleMemo size={$boardArea.current.clientWidth} background={board.memoThemes[0].memoBackground} color={board.memoThemes[0].memoTextColor} key={`sampleMemo${i}`}>{sampleText[i + board.memoThemes.length]}</SampleMemo>)
+            result.push(<SampleMemo size={$memoArea.current.clientWidth} background={board.memoThemes[0].memoBackground} color={board.memoThemes[0].memoTextColor} key={`sampleMemo${i}`}>{sampleText[i + board.memoThemes.length]}</SampleMemo>)
         }
 
         return result
@@ -81,18 +83,18 @@ const CreateBoardStep3 = () => {
 
     return (
         <ComponentWrapper ref={$component} >
-            <SampleBoard ref={$boardArea} background={board.background} height={heightOfBoard}>
-                <SmallTitle>{board.name}</SmallTitle>
-                <Description ref={$boardDescription}>{board.description}</Description>
-                <MemoArea>
+            <SampleBoard ref={$boardArea} height={heightOfBoard}>
+                <MemoArea ref={$memoArea} background={board.background}>
+                    <SmallTitle>{board.name}</SmallTitle>
+                    <Description ref={$boardDescription}>{board.description}</Description>
                     <MemoGrid height={heightOfMemoArea}>
                         {memos}
                     </MemoGrid>
                 </MemoArea>
             </SampleBoard>
             <ButtonArea ref={$buttonArea}>
-                <ChipButton flat text="배경" onClick={onClickSetBackground} />
-                <ChipButton flat text="메모지" onClick={onClickSetMemoTheme} />
+                <TapButton isSelected={true} text="배경" onClick={onClickSetBackground} />
+                <TapButton isSelected={true} text="메모지" onClick={onClickSetMemoTheme} />
             </ButtonArea>
             {
                 isModalOpen &&
@@ -103,38 +105,43 @@ const CreateBoardStep3 = () => {
 }
 
 const ComponentWrapper = styled.div`
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 1.25rem;
+    background: ${theme.colors.grey_50};
 `
 
 const SampleBoard = styled.div`
     width: 100%;
     height: ${props => props.height}px;
-    border-radius: 0.5rem;
-    background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 1rem;
+    padding: 0 1rem;
     margin: 1rem;
-    border: 0.5px solid ${theme.colors.grey_30};
-`
+    `
 
 const MemoArea = styled.div`
     width:100%;
+    height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
-    padding: 0.5rem;
+    background: ${props => props.background.includes('base64') ? undefined : props.background};
+    background-image: ${props => props.background.includes('base64') ? `url(${props.background})` : undefined};
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 0.5px solid ${theme.colors.grey_30};
 `
 
 const MemoGrid = styled.div`
@@ -159,19 +166,26 @@ const SampleMemo = styled.div`
     justify-content: center;
     align-self: center;
     justify-self: center;
-    background: ${props => props.background};
+    background: ${props => props.background.includes('base64') ? 'white' : props.background};
+    background-image: ${props => props.background.includes('base64') ? `url(${props.background})` : undefined};
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
     color: ${props => props.color};
+    border: 1px solid ${theme.colors.grey_40};
     border-radius: 0.5rem;
     font-size: ${props => props.size * 0.04}px;
 `
 
 const ButtonArea = styled.div`
     display: flex;
+    width: 100%;
     flex-direction: row;
     height: fit-content;
     gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 0.5rem;
 `
 
 export default CreateBoardStep3

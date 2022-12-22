@@ -6,13 +6,11 @@ import styled from "styled-components"
 import TapBar from "../../../../../components/buttons/tapBar"
 import TapButton from "../../../../../components/buttons/tapButton"
 import { theme } from "../../../../../styles/theme"
-import ColorPalette from "./colorPalette"
-import ColorSelectBar from "./colorSelectBar"
+import ColorPicker from "./colorPicker";
 
 
-const SelectModal = ({ open, onClose, title, option, board, setBoard, children }) => {
-    const [color, setColor] = useState('#fff')
-    const [baseColor, setBaseColor] = useState('rgb(255, 0, 0)')
+const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
+    const [color, setColor] = useState('#FFFFFF')
     const [selectedMemoIndex, setSelectedMemoIndex] = useState(0)
     const [selectedMenu, setSelectedMenu] = useState("bgImage")
 
@@ -40,6 +38,29 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard, children }
         setSelectedMemoIndex(e)
     }
 
+    const onChangeBackgroundImage = (e) => {
+        const inputImageFile = e.target.files[0]
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+            const base64Image = reader.result
+
+            if (option === "메모지") {
+                const newMemoThemes = [...board.memoThemes]
+                const newMemoTheme = { ...newMemoThemes[selectedMemoIndex] }
+
+                newMemoTheme.memoBackground = base64Image
+                newMemoThemes[selectedMemoIndex] = newMemoTheme
+                console.log(newMemoThemes)
+                setBoard({ ...board, memoThemes: newMemoThemes })
+            } else if (option === "배경") {
+                setBoard({ ...board, background: base64Image })
+            }
+        }
+
+        reader.readAsDataURL(inputImageFile)
+    }
+
     const onClickAddMemoTheme = () => {
         const newMemoThemes = [...board.memoThemes]
         newMemoThemes.push({ memoBackground: "#FFF", memoTextColor: "#000" })
@@ -55,30 +76,73 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard, children }
         setBoard({ ...board, memoThemes: newMemoThemes })
     }
 
+    const onChangeColor = (e) => {
+        if (option === "배경") {
+            if (selectedMenu === "bgColor") setBoard({ ...board, background: color })
+        }
+        else if (option === "메모지") {
+            const newMemoThemes = [...board.memoThemes]
+            const newMemoTheme = { ...newMemoThemes[selectedMemoIndex] }
+
+            if (selectedMenu === "bgColor") newMemoTheme.memoBackground = color
+            else if (selectedMenu === "fontColor") newMemoTheme.memoTextColor = color
+
+            newMemoThemes[selectedMemoIndex] = newMemoTheme
+            setBoard({ ...board, memoThemes: newMemoThemes })
+        }
+        setColor(e)
+    }
+
+    const getBackgroundImageContainer = () => {
+        return (
+            <BackgroundImageContainer>
+                {
+                    option === "배경" ?
+                        (board.background.includes('http') ?
+                            <BackgroundImage src={board.background} />
+                            : <>
+                                <Camera htmlFor="bgFileInput" />
+                                <ImageFileInput type="file" id="bgFileInput" onChange={onChangeBackgroundImage} />
+                            </>)
+                        : board.memoThemes[selectedMemoIndex].memoBackground.includes('http') ?
+                            <BackgroundImage src={board.memoThemes[selectedMemoIndex].memoBackground} />
+                            : <>
+                                <Camera htmlFor="bgFileInput" />
+                                <ImageFileInput type="file" id="bgFileInput" onChange={onChangeBackgroundImage} />
+                            </>
+                }
+            </BackgroundImageContainer>
+        )
+    }
+
+    const getMemoOption = () => {
+        return (
+            <MemoOptionContainer>
+                {
+                    board.memoThemes.map((el, i) => {
+                        return <TapBar
+                            isSelected={selectedMemoIndex == i}
+                            text={`메모지${i + 1}`}
+                            onClick={() => onClickTapBar(i)}
+                            icon={
+                                board.memoThemes.length > 1 &&
+                                <Close onClick={() => onClickRemoveMemoTheme(i)} />
+                            }
+                            key={`메모지${i + 1}`}
+                        />
+                    })
+                }
+                {
+                    board.memoThemes.length < 5 &&
+                    <TapBar onClick={onClickAddMemoTheme} text="+ 메모지 추가" />
+                }
+            </MemoOptionContainer>
+        )
+    }
+
     return (
         <ComponentWrapper open={open}>
-            {
-                option === "메모지" &&
-                <MemoOptionContainer>
-                    {
-                        board.memoThemes.map((el, i) => {
-                            return <TapBar
-                                isSelected={selectedMemoIndex == i}
-                                text={`메모지${i + 1}`}
-                                onClick={() => onClickTapBar(i)}
-                                icon={
-                                    board.memoThemes.length > 1 &&
-                                    <Close onClick={() => onClickRemoveMemoTheme(i)} />
-                                }
-                            />
-                        })
-                    }
-                    {
-                        board.memoThemes.length < 5 &&
-                        <TapBar onClick={onClickAddMemoTheme} text="+ 메모지 추가" />
-                    }
-                </MemoOptionContainer>
-            }
+            {option === "메모지" && getMemoOption()}
             <MenuContainer>
                 <TapButton text={`${option} 이미지`} isSelected={selectedMenu === "bgImage"} onClick={() => onClickTapMenu("bgImage")} />
                 <TapButton text="배경 색" isSelected={selectedMenu === "bgColor"} onClick={() => onClickTapMenu("bgColor")} />
@@ -90,27 +154,9 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard, children }
             </MenuContainer>
             {
                 (selectedMenu === "bgColor" || selectedMenu === "fontColor") &&
-                <>
-                    <ColorPaletteContainer>
-                        <ColorPalette option={[option, selectedMenu, selectedMemoIndex]} color={color} setColor={setColor} baseColor={baseColor} board={board} setBoard={setBoard} />
-                    </ColorPaletteContainer>
-                    <ColorSelectBarContainer>
-                        <ColorSelectBar color={baseColor} setColor={setBaseColor} />
-                    </ColorSelectBarContainer>
-                </>
+                <ColorPicker color={color} onChange={onChangeColor} />
             }
-            {
-                selectedMenu == "bgImage" &&
-                <BackgroundImageContainer>
-                    {
-                        option === "배경" ?
-                            (board.background.includes('http') ? <BackgroundImage src={board.background} /> : <Camera />)
-                            : board.memoThemes[selectedMemoIndex].memoBackground.includes('http') ?
-                                <BackgroundImage src={board.memoThemes[selectedMemoIndex].memoBackground} />
-                                : <Camera />
-                    }
-                </BackgroundImageContainer>
-            }
+            {selectedMenu == "bgImage" && getBackgroundImageContainer()}
             <Footer>
                 <div onClick={onClose}>x</div>
                 <div>{title}</div>
@@ -159,22 +205,6 @@ const MenuContainer = styled.div`
     padding: 0.75rem;
 `
 
-const ColorPaletteContainer = styled.div`
-    width: 100%;
-    min-height: 7rem;
-    height: 100%;
-    padding: 0.75rem;
-`
-
-const ColorSelectBarContainer = styled.div`
-    width: 100%;
-    height: 2.5rem;
-    padding: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-
 const BackgroundImageContainer = styled.div`
     width: 100%;
     height: max-content;
@@ -186,6 +216,9 @@ const BackgroundImageContainer = styled.div`
 
 const BackgroundImage = styled.img`
     max-height: 12rem;
+`
+
+const ImageFileInput = styled.input`
 `
 
 const Footer = styled.div`

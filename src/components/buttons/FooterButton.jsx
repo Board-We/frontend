@@ -28,6 +28,7 @@ const ButtonWrapper = styled.div`
   max-width: 600px;
   padding: ${(props) => (props.flat ? null : "1.2rem")};
 `;
+
 const Button = styled.div`
   display: flex;
   align-items: center;

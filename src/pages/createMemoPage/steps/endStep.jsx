@@ -35,37 +35,28 @@ const EndStep = () => {
   return (
     <PageWrapper>
       <ServiceNameHeader />
-      <BoardArea background={board.background}>
-        <BoardInfoContainer>
-          <SmallTitle text={board.name} />
-          <TagWrapper>
-            {board.tags.map((el) => {
-              return <Tag text={`#${el}`} size="small" key={el} />;
-            })}
-          </TagWrapper>
-          <Description text={board.description} size="small" />
-        </BoardInfoContainer>
-        <MemoTextContainer
-          background={memo.style.background}
-          color={memo.style.textColor}
-        >
-          <MemoTextArea text={memo.text} disabled={true} />
-        </MemoTextContainer>
-      </BoardArea>
-      <SmallTitle>롤링페이퍼가 작성되었어요!</SmallTitle>
-      <Description size={"medium"}>
-        이 롤링페이퍼는 {formattingDateObject(board.openStartTime)}에
-        공개됩니다.
-      </Description>
+      <BodyContainer>
+        <SmallTitle>롤링페이퍼가 작성되었어요! 🎉</SmallTitle>
+        <Description size={"medium"}>
+          {formattingDateObject(board.openStartTime)}에 공개됩니다.
+        </Description>
+        <EndStepImage />
+      </BodyContainer>
       <Alertcontainer>
         {/* <ChipButton flat fit color={"black"} background={"#E8E8E8"} text={"인기보드 보기"} onClick={onClickTopBoard}></ChipButton> */}
         {/* <ChipButton flat fit text={"롤링페이퍼 더 붙이기"} onClick={onClickMoreMemo} /> */}
         <ChipButton
           flat
-          background="#5B5B5B"
           width={"80%"}
           text={"롤링페이퍼 더 붙이기"}
           onClick={onClickMoreMemo}
+        />
+        <ChipButton
+          flat
+          backgroundGrey={true}
+          width={"80%"}
+          text={"공유하기"}
+          onClick={() => {}}
         />
       </Alertcontainer>
     </PageWrapper>
@@ -80,65 +71,32 @@ const PageWrapper = styled.div`
   flex-direction: column;
 `;
 
-const BoardArea = styled.div`
-  position: relative;
+const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 100vw;
-  max-width: 600px;
-  max-height: 600px;
-  padding: 3rem 0;
-  margin-bottom: 1.75rem;
-  line-height: 1.75rem;
-  height: fit-content;
-  background: ${(props) =>
-    props.background.includes("http")
-      ? `url(${props.background})`
-      : props.background};
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-`;
-
-const BoardInfoContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 1rem;
-  text-align: left;
-`;
-
-const MemoTextContainer = styled.div`
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: 80vw;
-  background: ${(props) =>
-    props.background.includes("http")
-      ? `url(${props.background})`
-      : props.background};
-  color: ${(props) => props.color};
-  padding: 1.25rem; // padding value of text area
-  border-radius: 0.5rem;
+  position: absolute;
+  top: -10%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto auto;
 `;
 
-const TagWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
+const EndStepImage = styled.div`
+  width: 20rem;
+  height: 20rem;
+  background-color: #d9d9d9;
 `;
 
 const Alertcontainer = styled.div`
   width: 100%;
   flex-grow: 1;
   display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 1.5rem 0;
