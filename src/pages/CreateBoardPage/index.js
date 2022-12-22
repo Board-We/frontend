@@ -19,7 +19,7 @@ import Title from "../../components/label/title";
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
-  const setBoard = useSetRecoilState(boardState)
+  const setBoard = useSetRecoilState(boardState);
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);
   const stepDescription = [
@@ -27,20 +27,20 @@ const CreateBoardPage = () => {
     "간단한 설명을 적어주세요.",
     "보드를 마음껏 꾸며보세요!",
     "기간을 설정해 주세요.",
-    "비밀번호를 설정할 수 있어요.",
+    "비밀번호를 설정해주세요.",
   ];
   const $stepDescription = useRef();
   const $footer = useRef();
-  const [paddingBottomOfContentArea, setPaddingBottomOfContentArea] = useState(0);
+  const [paddingBottomOfContentArea, setPaddingBottomOfContentArea] =
+    useState(0);
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const navigate = useNavigate();
 
   useEffect(() => {
     const heightOfFooter = $footer.current.offsetHeight;
     setPaddingBottomOfContentArea(heightOfFooter);
-    initBoard()
+    initBoard();
   }, [$stepDescription, $footer, deviceScreenSize]);
-
 
   const initBoard = () => {
     const initialBoardForm = {
@@ -48,11 +48,11 @@ const CreateBoardPage = () => {
       description: "",
       tags: [],
       writingStartTime: new Date(),
-      writingEndTime: new Date(new Date().getTime() + 1209600),
-      openStartTime: new Date(new Date().getTime() + 1209600),
-      openEndTime: new Date(new Date().getTime() + 2419200),
+      writingEndTime: new Date(new Date().getTime() + 1209600000),
+      openStartTime: new Date(new Date().getTime() + 1209600000),
+      openEndTime: new Date(new Date().getTime() + 2419200000),
       password: undefined,
-      privateMode: false,
+      openType: "", // "PUBLIC" or "PRIVATE"
       background: theme.colors.defaultBoardBg,
       font: "san-serif",
       memos: [],
@@ -62,10 +62,10 @@ const CreateBoardPage = () => {
           memoTextColor: theme.colors.black,
         }
       ],
-    }
+    };
 
-    setBoard(initialBoardForm)
-  }
+    setBoard(initialBoardForm);
+  };
 
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
@@ -83,20 +83,20 @@ const CreateBoardPage = () => {
     // To Do: 생성된 보드 링크로 이동
   };
 
-  const controlCreatBoardStep = (stepId, setDisabledFooterButton, footerRef) => {
+  const controlCreatBoardStep = (
+    stepId,
+    setDisabledFooterButton,
+    footerRef
+  ) => {
     switch (stepId) {
       case 1: {
         return (
-          <CreateBoardStep1
-            setDisabledFooterButton={setDisabledFooterButton}
-          />
+          <CreateBoardStep1 setDisabledFooterButton={setDisabledFooterButton} />
         );
       }
       case 2:
         return (
-          <CreateBoardStep2
-            setDisabledFooterButton={setDisabledFooterButton}
-          />
+          <CreateBoardStep2 setDisabledFooterButton={setDisabledFooterButton} />
         );
       case 3:
         return <CreateBoardStep3 footerRef={footerRef} />;
@@ -132,7 +132,10 @@ const CreateBoardPage = () => {
       )}
       <StepDescriptionContainer>
         {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
-        <Title ref={$stepDescription}>{stepDescription[currentStepId - 1]}</Title>
+        <Title ref={$stepDescription}>
+          {stepDescription[currentStepId - 1]}
+          {currentStepId === 5 ? <span>(선택)</span> : null}
+        </Title>
       </StepDescriptionContainer>
       <BoardInfoConatiner paddingBottom={paddingBottomOfContentArea}>
         {controlCreatBoardStep(currentStepId, setDisabledFooterButton, $footer)}
@@ -182,15 +185,15 @@ const StepDescriptionContainer = styled.div`
   height: fit-content;
   padding: 2rem 1.25rem 0.8125rem 1.25rem;
   text-align: left;
-  display:flex;
+  display: flex;
   flex-direction: column;
   gap: 0.75rem;
-`
+`;
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
   height: 100%;
-  padding-bottom: ${props => props.paddingBottomOfContentArea};
+  padding-bottom: ${(props) => props.paddingBottomOfContentArea};
 `;
 
 const PageFooter = styled.div`
