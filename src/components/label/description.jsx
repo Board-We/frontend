@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 
-const Description = React.forwardRef(({ text, color = "black", size = "medium", children, style }, ref) => (
+const Description = forwardRef(({ text, color = "black", size = "medium", children, style }, ref) => (
     <ComponentWrapper ref={ref} id="descib" style={style} color={color} size={size}>{text}{children}</ComponentWrapper>
 ))
 

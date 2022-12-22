@@ -1,14 +1,13 @@
 import React from "react";
+import { forwardRef } from "react";
 import styled from "styled-components";
 
-const SmallTitle = ({ text, color = "black", children, style }) => {
-  return (
-    <ComponentWrapper style={style} color={color}>
-      {text}
-      {children}
-    </ComponentWrapper>
-  );
-};
+const SmallTitle = forwardRef(({ text, color = "black", children, style }, ref) => (
+  <ComponentWrapper ref={ref} style={style} color={color}>
+    {text}
+    {children}
+  </ComponentWrapper>
+))
 
 const ComponentWrapper = styled.span`
   font-size: 1.25rem;
