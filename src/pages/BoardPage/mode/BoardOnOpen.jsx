@@ -125,48 +125,82 @@ const BoardOnOpen = ({
 
   return (
     <PageWrapper>
-      <BoardBackground boardInfo={board} backgroundRepeat={true} />
-      <MemoContainer
-        ref={$memoContainer}
-        onScroll={onScrollMemoContainer}
-        paddingTop={paddingTop}
-      >
-        {visibleMemos &&
-        privateModeForTest &&
-        !isDeleteMemoMode &&
-        !searchModeType
-          ? visibleMemos.map((el, i) => {
-              // memoThemeId
-              const theme = memoThemes[el.memoThemeId];
-              return (
-                <MemoOnBoard
-                  size={$memoContainer.current.clientWidth * 0.4}
-                  key={`${el}${i}`}
-                  text={el.memoContent}
-                  background={theme?.memoBackground}
-                  color={theme?.memoTextColor}
-                  marginOption={i % 2 === 0}
-                />
-              );
-            })
-          : null}{" "}
-        {searchModeType &&
-          searchResults &&
-          searchResults.map((el, i) => {
-            const theme = memoThemes[el.memoThemeId];
-            return (
-              <MemoOnBoard
-                size={$memoContainer.current.clientWidth * 0.4}
-                key={`${el}${i}`}
-                text={el.memoContent}
-                background={theme?.memoBackground}
-                color={theme?.memoTextColor}
-                marginOption={i % 2 === 0}
-              />
-            );
-          })}
-        {isDeleteMemoMode &&
-          visibleMemos.map((el, i) => (
+      {!isDeleteMemoMode && (
+        <>
+          <BoardBackground boardInfo={board} backgroundRepeat={true} />
+
+          <MemoContainer
+            ref={$memoContainer}
+            onScroll={onScrollMemoContainer}
+            paddingTop={paddingTop}
+          >
+            {visibleMemos &&
+            privateModeForTest &&
+            !isDeleteMemoMode &&
+            !searchModeType
+              ? visibleMemos.map((el, i) => {
+                  // memoThemeId
+                  const theme = memoThemes[el.memoThemeId];
+                  return (
+                    <MemoOnBoard
+                      size={$memoContainer.current.clientWidth * 0.4}
+                      key={`${el}${i}`}
+                      text={el.memoContent}
+                      background={theme?.memoBackground}
+                      color={theme?.memoTextColor}
+                      marginOption={i % 2 === 0}
+                    />
+                  );
+                })
+              : null}{" "}
+            {searchModeType &&
+              searchResults &&
+              searchResults.map((el, i) => {
+                const theme = memoThemes[el.memoThemeId];
+                return (
+                  <MemoOnBoard
+                    size={$memoContainer.current.clientWidth * 0.4}
+                    key={`${el}${i}`}
+                    text={el.memoContent}
+                    background={theme?.memoBackground}
+                    color={theme?.memoTextColor}
+                    marginOption={i % 2 === 0}
+                  />
+                );
+              })}
+            <PasswordModal
+              open={passwordModalState.open}
+              onClose={handleClosePasswordModal}
+              onValid={handleValidPassword}
+            />
+            <AlertModal
+              open={isOpenConfirmDeleteModal}
+              onClickArray={[
+                handleCloseConfirmDeleteModal,
+                handleConfirmDeleteBoard,
+              ]}
+              buttonTextArray={["취소", "삭제하기"]}
+              text="보드를 삭제하면 되돌릴 수 없습니다."
+              onClose={handleCloseConfirmDeleteModal}
+            />
+            {isDeleteMemoMode && (
+              <DeleteMemoButton
+                isExistCheckedmemo={checkedMemoList.length !== 0}
+                onClick={handleClickDeleteMemo}
+              >
+                삭제하기{" "}
+                {checkedMemoList.length !== 0 && (
+                  <span>{checkedMemoList.length}</span>
+                )}
+              </DeleteMemoButton>
+            )}
+          </MemoContainer>
+        </>
+      )}
+
+      {isDeleteMemoMode && (
+        <DeleteMemoContianer>
+          {visibleMemos.map((el, i) => (
             <CheckableMemo
               key={`${el}${i}`}
               id={`${el}${i}`}
@@ -174,39 +208,18 @@ const BoardOnOpen = ({
               onChange={handleChangeCheckableMemo}
             />
           ))}
-        <PasswordModal
-          open={passwordModalState.open}
-          onClose={handleClosePasswordModal}
-          onValid={handleValidPassword}
-        />
-        <AlertModal
-          open={isOpenConfirmDeleteModal}
-          onClickArray={[
-            handleCloseConfirmDeleteModal,
-            handleConfirmDeleteBoard,
-          ]}
-          buttonTextArray={["취소", "삭제하기"]}
-          text="보드를 삭제하면 되돌릴 수 없습니다."
-          onClose={handleCloseConfirmDeleteModal}
-        />
-        {isDeleteMemoMode && (
-          <DeleteMemoButton
-            isExistCheckedmemo={checkedMemoList.length !== 0}
-            onClick={handleClickDeleteMemo}
-          >
-            삭제하기{" "}
-            {checkedMemoList.length !== 0 && (
-              <span>{checkedMemoList.length}</span>
-            )}
-          </DeleteMemoButton>
-        )}
-      </MemoContainer>
+        </DeleteMemoContianer>
+      )}
       {isMemoLoading ? <Spinner /> : null}
-      <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
+      {!isDeleteMemoMode && (
+        <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
+      )}
       <CalendarButton
         open={openDueDate}
         isHidden={
-          passwordModalState.open | isDeleteMemoMode | isOpenConfirmDeleteModal
+          passwordModalState.open ||
+          isDeleteMemoMode ||
+          isOpenConfirmDeleteModal
         }
       />
     </PageWrapper>
@@ -223,6 +236,7 @@ const PageWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
+  background-color: ${(props) => props.theme.colors.grey_50};
 `;
 
 const MemoContainer = styled.div`
@@ -262,5 +276,26 @@ const DeleteMemoButton = styled.button`
 
   span {
     color: #cf281f;
+  }
+`;
+
+const DeleteMemoContianer = styled.div`
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  padding-top: ${(props) => `${props.paddingTop}px`};
+  padding-bottom: 2.5rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  grid-gap: 0.5rem;
+  z-index: 3;
+  &::-webkit-scrollbar {
+    width: 0;
   }
 `;

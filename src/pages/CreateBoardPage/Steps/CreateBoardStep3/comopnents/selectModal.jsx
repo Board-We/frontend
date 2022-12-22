@@ -51,7 +51,7 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
 
                 newMemoTheme.memoBackground = base64Image
                 newMemoThemes[selectedMemoIndex] = newMemoTheme
-                console.log(newMemoThemes)
+
                 setBoard({ ...board, memoThemes: newMemoThemes })
             } else if (option === "배경") {
                 setBoard({ ...board, background: base64Image })
@@ -170,7 +170,6 @@ const ComponentWrapper = styled.div`
     position:absolute;
     left:0;
     bottom: 0;
-    min-height: 10vh;
     width: 100%;
     display: flex;
     flex-direction: column;

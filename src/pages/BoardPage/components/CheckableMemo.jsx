@@ -5,7 +5,7 @@ const CheckableMemo = ({ id, text, onChange }) => {
     <MemoWrapper>
       <Checkbox type="checkbox" onChange={onChange} value={id} id="checker" />
       <CheckLabel htmlFor="checker" />
-      {text}
+      <MemoContent>{text}</MemoContent>
     </MemoWrapper>
   );
 };
@@ -14,14 +14,10 @@ export default CheckableMemo;
 
 const MemoWrapper = styled.div`
   position: relative;
-  width: 100%;
+  width: 95%;
   background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 0.5rem;
-  aspect-ratio: 1 / 1;
 `;
 
 const Checkbox = styled.input`
@@ -45,3 +41,13 @@ const Checkbox = styled.input`
 `;
 
 const CheckLabel = styled.label``;
+
+const MemoContent = styled.div`
+  margin-left: 2rem;
+  height: 100%;
+  display: flex;
+  text-align: left;
+  padding: 1rem;
+  padding-top: 0rem;
+  padding-left: 0.5rem;
+`;

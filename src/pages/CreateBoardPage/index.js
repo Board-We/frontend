@@ -31,23 +31,14 @@ const CreateBoardPage = () => {
   ];
   const $stepDescription = useRef();
   const $footer = useRef();
-  const [maxHeightOfContentsArea, setMaxHeightOfContentsArea] = useState(0);
+  const [paddingBottomOfContentArea, setPaddingBottomOfContentArea] =
+    useState(0);
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const deviceHeight = document.body.offsetHeight;
-    // 0.8125rem = margin of upper element
-    const bottomOfDescription =
-      $stepDescription.current.clientHeight +
-      $stepDescription.current.offsetTop +
-      Number(deviceScreenSize.rem.replace("px", "")) * 0.8125;
     const heightOfFooter = $footer.current.offsetHeight;
-
-    setMaxHeightOfContentsArea(
-      deviceHeight - bottomOfDescription - heightOfFooter
-    );
-
+    setPaddingBottomOfContentArea(heightOfFooter);
     initBoard();
   }, [$stepDescription, $footer, deviceScreenSize]);
 
@@ -92,7 +83,11 @@ const CreateBoardPage = () => {
     // To Do: 생성된 보드 링크로 이동
   };
 
-  const controlCreatBoardStep = (stepId, setDisabledFooterButton) => {
+  const controlCreatBoardStep = (
+    stepId,
+    setDisabledFooterButton,
+    footerRef
+  ) => {
     switch (stepId) {
       case 1: {
         return (
@@ -104,7 +99,7 @@ const CreateBoardPage = () => {
           <CreateBoardStep2 setDisabledFooterButton={setDisabledFooterButton} />
         );
       case 3:
-        return <CreateBoardStep3 />;
+        return <CreateBoardStep3 footerRef={footerRef} />;
       case 4:
         return <CreateBoardStep4 />;
       case 5:
@@ -121,48 +116,43 @@ const CreateBoardPage = () => {
 
   return (
     <PageWrapper>
-      <CreateBoardContainer>
-        {currentStepId !== finalStepId ? (
-          <StepHeader
-            title="새 보드 만들기"
-            onClick={handleClickBefore}
-            isFinalStep={currentStepId === finalStepId}
-          />
-        ) : (
-          <ServiceNameHeader />
-        )}
-        {currentStepId < 6 && (
-          <ProgressBarContainer>
-            <ProgressBar width={currentStepId} />
-          </ProgressBarContainer>
-        )}
-        <CreateBoardBody>
-          <StepDescriptionContainer>
-            {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
-            <Title ref={$stepDescription}>
-              {stepDescription[currentStepId - 1]}{" "}
-              {currentStepId === 5 ? <span>(선택)</span> : null}
-            </Title>
-          </StepDescriptionContainer>
-          <BoardInfoConatiner maxHeight={maxHeightOfContentsArea}>
-            {controlCreatBoardStep(currentStepId, setDisabledFooterButton)}
-          </BoardInfoConatiner>
-        </CreateBoardBody>
-        <PageFooter>
-          <FooterButton
-            ref={$footer}
-            color="black"
-            fontColor="white"
-            text={currentStepId === finalStepId ? "내 보드로 이동하기" : "다음"}
-            disabled={disabledFooterButton}
-            onClick={
-              currentStepId === finalStepId
-                ? handleClickGoToBoard
-                : handleClickNext
-            }
-          />
-        </PageFooter>
-      </CreateBoardContainer>
+      {currentStepId !== finalStepId ? (
+        <StepHeader
+          title="새 보드 만들기"
+          onClick={handleClickBefore}
+          isFinalStep={currentStepId === finalStepId}
+        />
+      ) : (
+        <ServiceNameHeader />
+      )}
+      {currentStepId < 6 && (
+        <ProgressBarContainer>
+          <ProgressBar width={currentStepId} />
+        </ProgressBarContainer>
+      )}
+      <StepDescriptionContainer>
+        {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
+        <Title ref={$stepDescription}>
+          {stepDescription[currentStepId - 1]}
+        </Title>
+      </StepDescriptionContainer>
+      <BoardInfoConatiner paddingBottom={paddingBottomOfContentArea}>
+        {controlCreatBoardStep(currentStepId, setDisabledFooterButton, $footer)}
+      </BoardInfoConatiner>
+      <PageFooter ref={$footer}>
+        <FooterButton
+          ref={$footer}
+          color="black"
+          fontColor="white"
+          text={currentStepId === finalStepId ? "내 보드로 이동하기" : "다음"}
+          disabled={disabledFooterButton}
+          onClick={
+            currentStepId === finalStepId
+              ? handleClickGoToBoard
+              : handleClickNext
+          }
+        />
+      </PageFooter>
     </PageWrapper>
   );
 };
@@ -172,33 +162,10 @@ export default CreateBoardPage;
 const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-`;
-
-const CreateBoardContainer = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  height: 100%;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  p {
-    text-align: left;
-    color: #bcbcbc;
-    margin: 0;
-    font-size: 1.2rem;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    text-align: left;
-    margin-bottom: 1.2rem;
-  }
 `;
 
 const ProgressBarContainer = styled.div`
@@ -213,13 +180,6 @@ const ProgressBar = styled.div`
   height: inherit;
 `;
 
-const CreateBoardBody = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 const StepDescriptionContainer = styled.div`
   height: fit-content;
   padding: 2rem 1.25rem 0.8125rem 1.25rem;
@@ -231,10 +191,8 @@ const StepDescriptionContainer = styled.div`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
-  height: ${(props) => props.maxHeight}px;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  height: 100%;
+  padding-bottom: ${(props) => props.paddingBottomOfContentArea};
 `;
 
 const PageFooter = styled.div`
@@ -244,4 +202,5 @@ const PageFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: baseline;
+  background: white;
 `;
