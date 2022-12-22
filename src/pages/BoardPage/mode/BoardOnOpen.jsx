@@ -108,8 +108,13 @@ const BoardOnOpen = ({
 
   const onScrollMemoContainer = (e) => {
     const memoContainerObject = e.target;
-    if (memoContainerObject.scrollTop > 0) setOpenToast(false);
-    else if (memoContainerObject.scrollTop === 0) setOpenToast(true);
+    if (memoContainerObject.scrollTop > 0) {
+      setOpenToast(false);
+      setOpenDueDate(true);
+    } else if (memoContainerObject.scrollTop === 0) {
+      setOpenToast(true);
+      setOpenDueDate(false);
+    }
 
     if (
       memoContainerObject.scrollHeight ==
