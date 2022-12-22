@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { theme } from "../../styles/theme";
-import SmallTitle from "../../components/label/smallTitle";
 import Title from "../../components/label/title";
 
 const CreateBoardPage = () => {
@@ -38,17 +37,19 @@ const CreateBoardPage = () => {
 
   useEffect(() => {
     const deviceHeight = document.body.offsetHeight;
+    // 0.8125rem = margin of upper element
     const bottomOfDescription =
-      $stepDescription.current.offsetHeight +
+      $stepDescription.current.clientHeight +
       $stepDescription.current.offsetTop +
-      Number(deviceScreenSize.rem.replace("px", "")) * 2;
+      Number(deviceScreenSize.rem.replace("px", "")) * 0.8125
     const heightOfFooter = $footer.current.offsetHeight;
 
     setMaxHeightOfContentsArea(
       deviceHeight - bottomOfDescription - heightOfFooter
     );
+
     initBoard()
-  }, []);
+  }, [$stepDescription, $footer, deviceScreenSize]);
 
 
   const initBoard = () => {

@@ -10,7 +10,6 @@ const ChipButton = ({
   children,
   backgroundGrey,
 }) => {
-  console.log(backgroundGrey);
   return (
     <ComponentWrapper
       width={width}

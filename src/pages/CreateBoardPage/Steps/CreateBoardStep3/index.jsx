@@ -134,7 +134,8 @@ const MemoArea = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    background: ${props => props.background.includes('http') ? `url(${props.background})` : props.background};
+    background: ${props => props.background.includes('base64') ? undefined : props.background};
+    background-image: ${props => props.background.includes('base64') ? `url(${props.background})` : undefined};
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -165,8 +166,13 @@ const SampleMemo = styled.div`
     justify-content: center;
     align-self: center;
     justify-self: center;
-    background: ${props => props.background};
+    background: ${props => props.background.includes('base64') ? 'white' : props.background};
+    background-image: ${props => props.background.includes('base64') ? `url(${props.background})` : undefined};
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
     color: ${props => props.color};
+    border: 1px solid ${theme.colors.grey_40};
     border-radius: 0.5rem;
     font-size: ${props => props.size * 0.04}px;
 `
