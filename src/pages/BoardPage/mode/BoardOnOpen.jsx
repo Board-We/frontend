@@ -206,7 +206,9 @@ const BoardOnOpen = ({
       <CalendarButton
         open={openDueDate}
         isHidden={
-          passwordModalState.open | isDeleteMemoMode | isOpenConfirmDeleteModal
+          passwordModalState.open ||
+          isDeleteMemoMode ||
+          isOpenConfirmDeleteModal
         }
       />
     </PageWrapper>

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { searchMemo } from "../../api/memoApi";
 import { searchMemoResults } from "../../api/mockData";
@@ -13,6 +14,9 @@ import BoardOnWrite from "./mode/BoardOnWrite";
 
 const BoardPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const [configMenuSetting, setConfigMenuSetting] = useState(null);
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [passwordModalState, setPasswordModalState] = useState({
@@ -35,27 +39,45 @@ const BoardPage = () => {
     }
   };
 
-  const handleClickDeleteBoard = () => {
+  const handleClickDeleteBoard = useCallback(() => {
     setPasswordModalState({
       ...passwordModalState,
       type: "deleteBoard",
       open: true,
     });
-  };
+  }, [passwordModalState]);
 
-  const handleClickDeleteMemo = () => {
+  const handleClickDeleteMemo = useCallback(() => {
     setPasswordModalState({
       ...passwordModalState,
       type: "deleteMemo",
       open: true,
     });
-  };
+  }, [passwordModalState]);
 
-  const configMenuSetting = {
-    configMenu: ["보드 삭제", "메모 삭제"],
-    configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
-  };
-
+  useEffect(() => {
+    switch (currentPath) {
+      case "/board/onWaitWrite":
+      case "/board/onwrite":
+      case "/board/onWaitOpen":
+        setConfigMenuSetting({
+          configMenu: ["보드 삭제"],
+          configMenuHandler: [handleClickDeleteBoard],
+        });
+        break;
+      case "/board/onOpen":
+        setConfigMenuSetting({
+          configMenu: ["보드 삭제", "메모 삭제"],
+          configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
+        });
+        break;
+      default:
+        setConfigMenuSetting({
+          configMenu: [],
+          configMenuHandler: [],
+        });
+    }
+  }, [currentPath, handleClickDeleteBoard, handleClickDeleteMemo]);
   return (
     <PageWrapper>
       <ServiceNameHeader
