@@ -32,7 +32,6 @@ const BoardPage = () => {
   };
 
   const handleKeyDownSearchIput = async (e) => {
-    console.log(query);
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
       const searchMemoResult = await searchMemo({});
       if (searchMemoResult) setSearchResults(searchMemoResult);

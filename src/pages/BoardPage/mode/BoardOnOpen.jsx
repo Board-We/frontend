@@ -12,6 +12,7 @@ import { deleteMemo } from "../../../api/memoApi";
 import AlertModal from "../../../components/modals/alertModal";
 import CheckableMemo from "../components/CheckableMemo";
 import CalendarButton from "../../../components/buttons/calendarButton";
+import BlockAccessBoard from "../components/blockAccessBoard";
 
 const BoardOnOpen = ({
   passwordModalState,
@@ -24,13 +25,14 @@ const BoardOnOpen = ({
   setCheckedMemoList,
 }) => {
   const board = useRecoilValue(boardState);
-  const privateModeForTest = true;
+  const privateModeForTest = false;
 
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
 
   const [openToast, setOpenToast] = useState(true);
   const [openDueDate, setOpenDueDate] = useState(false);
+
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
   const [memoThemes, setMemoThemes] = useState({});
@@ -129,7 +131,6 @@ const BoardOnOpen = ({
       {!isDeleteMemoMode && (
         <>
           <BoardBackground boardInfo={board} backgroundRepeat={true} />
-
           <MemoContainer
             ref={$memoContainer}
             onScroll={onScrollMemoContainer}
@@ -211,17 +212,20 @@ const BoardOnOpen = ({
         </DeleteMemoContianer>
       )}
       {isMemoLoading ? <Spinner /> : null}
-      {!isDeleteMemoMode && (
-        <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
+      {!isDeleteMemoMode && privateModeForTest && (
+        <>
+          <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
+          <CalendarButton
+            open={openDueDate}
+            isHidden={
+              passwordModalState.open ||
+              isDeleteMemoMode ||
+              isOpenConfirmDeleteModal
+            }
+          />
+        </>
       )}
-      <CalendarButton
-        open={openDueDate}
-        isHidden={
-          passwordModalState.open ||
-          isDeleteMemoMode ||
-          isOpenConfirmDeleteModal
-        }
-      />
+      {!privateModeForTest && <BlockAccessBoard />}
     </PageWrapper>
   );
 };
