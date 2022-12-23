@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import TextInput from "../../../components/TextInput";
+import { ReactComponent as Info } from "../../../assets/info.svg";
 import { boardState } from "../../../store";
 
 function CreateBoardStep5({ setDisabledFooterButton }) {
@@ -44,16 +45,18 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
     }
   }, [active, setBoard]);
 
+  console.log(board);
+
   return (
     <CreateBoardStepContainer>
       <PasswordInputContainer>
-        <p>비밀번호</p> <span>보드와 롤링페이퍼 삭제 가능</span>
+        <p>보드&롤링페이퍼를 삭제하거나 공개모드를 변경할 수 있어요.</p>
       </PasswordInputContainer>
       <TextInput
         type="password"
         commonSize={true}
         value={password}
-        placeholder="4자 이상 입력해주세요."
+        placeholder="4자 이상 입력하세요."
         pattern="[0-9]*"
         onChange={handlePasswordInput}
         setTextState={setPassword}
@@ -63,7 +66,11 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
         <WarningSpan show={isValidLength}>4자 이상 입력해주세요.</WarningSpan>
       )}
       <ModeContainer>
-        <p>모드</p>{" "}
+        <ModeSelectContainer style={{ display: "flex", alignItems: "center" }}>
+          <Info />
+          <p>공개/비공개 모드 선택</p>
+        </ModeSelectContainer>
+
         <div>
           <ButtonContainer>
             {buttonValue.map((item, idx) => {
@@ -101,39 +108,16 @@ const CreateBoardStepContainer = styled.div`
   padding: 1.25rem;
 `;
 
-const CreateBoardStepCounter = styled.div`
-  color: #bcbcbc;
-  margin-bottom: 0.8rem;
-  font-size: 1.2rem;
-`;
-
-const CreateBoardDescriptionText = styled.div`
-  width: 100%;
-  display: flex;
-  margin-bottom: 1.5rem;
-  p {
-    text-align: left;
-    font-weight: 600;
-    font-size: 1.5rem;
-    margin: 0;
-    margin-bottom: 0.8rem;
-  }
-`;
-
 const PasswordInputContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
   p {
     margin: 0;
-    font-weight: 700;
-    font-size: 1.3rem;
-  }
-  span {
-    margin: 0;
-    color: #b1b1b1;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    color: ${(props) => props.theme.colors.grey_20};
   }
 `;
 
@@ -149,29 +133,31 @@ const ModeContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  margin-top: 3rem;
+  margin-top: 1.25rem;
   p {
     margin: 0;
-    font-weight: 700;
-    font-size: 1.3rem;
+    font-weight: 500;
+    font-size: 1rem;
   }
 `;
 
 const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
   width: 40vw;
-  margin-top: 0.75rem;
-  background-color: #f0f0f0;
+  padding: 0.2rem;
+  background-color: ${(props) => props.theme.colors.grey_50};
   border-radius: 4px;
 `;
 
 const ModeButton = styled.button`
   width: 50%;
-  height: 2.5rem;
-  background-color: #f0f0f0;
+  height: 1.75rem;
+  background-color: ${(props) => props.theme.colors.grey_50};
   border: none;
   border-radius: 4px;
   &.active {
-    background-color: #d9d9d9;
+    background-color: ${(props) => props.theme.colors.white};
     font-weight: 600;
   }
 `;
@@ -182,4 +168,15 @@ const CommonSpan = styled.span`
   font-size: 0.8rem;
   margin-top: 0.6rem;
   color: #797979;
+`;
+
+const ModeSelectContainer = styled.div`
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 0.75rem;
+  }
+  p {
+    color: ${(props) => props.theme.colors.grey_10};
+  }
 `;

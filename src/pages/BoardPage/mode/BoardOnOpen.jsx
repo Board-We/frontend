@@ -5,7 +5,7 @@ import { boardState, deviceScreenState } from "../../../store";
 import PasswordModal from "../BoardPageModal/PasswordModal";
 import { useEffect, useRef, useState } from "react";
 import Toast from "../components/toast";
-import MemoOnBoard from "../components/memoOnBoard";
+import MemoOnBoard from "../../../components/memoOnBoard";
 import Spinner from "../components/spinner";
 import { deleteBoard } from "../../../api/boardsApi";
 import { deleteMemo } from "../../../api/memoApi";
