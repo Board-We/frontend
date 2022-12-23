@@ -1,8 +1,19 @@
 import styled from "styled-components";
 import ChipButton from "../../../components/buttons/chipButton";
 import { ReactComponent as Lock } from "../../../assets/lock.svg";
+import { useState } from "react";
+import PasswordModal from "../BoardPageModal/PasswordModal";
 
 const BlockAccessBoard = () => {
+  const [isOpenPasswordModal, setIsOpenPasswordModal] = useState(false);
+
+  const handleClickPasswordButton = () => {
+    setIsOpenPasswordModal(true);
+  };
+
+  const handleClosePasswordModal = () => {
+    setIsOpenPasswordModal(false);
+  };
   return (
     <ComponentWrapper>
       <BlockDescription>
@@ -10,8 +21,18 @@ const BlockAccessBoard = () => {
         <p>해당보드는 비공개 보드입니다.</p>
       </BlockDescription>
       <ButtonContainer>
-        <ChipButton text="비밀번호 입력하기" flat width="80%" />
+        <ChipButton
+          text="비밀번호 입력하기"
+          flat
+          width="80%"
+          onClick={handleClickPasswordButton}
+        />
       </ButtonContainer>
+      <PasswordModal
+        open={isOpenPasswordModal}
+        onClose={handleClosePasswordModal}
+        onValid={() => {}}
+      />
     </ComponentWrapper>
   );
 };
@@ -32,6 +53,10 @@ const BlockDescription = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  p {
+    color: ${(props) => props.theme.colors.black};
+  }
 `;
 
 const ButtonContainer = styled.div`
