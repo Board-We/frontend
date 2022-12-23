@@ -240,7 +240,6 @@ const PageWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
-  background-color: ${(props) => props.theme.colors.grey_50};
 `;
 
 const MemoContainer = styled.div`
