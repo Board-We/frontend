@@ -1,8 +1,16 @@
+import { useEffect } from "react"
+import { useRef } from "react"
 import styled from "styled-components"
 
 const MemoOnBoard = ({ size, text = "", background = "white", color = "black", children, marginOption }) => {
+    const $component = useRef()
+
+    useEffect(() => {
+        console.log($component)
+    }, [$component])
+
     return (
-        <ComponentWrapper size={size} background={background} color={color} marginOption={marginOption}>
+        <ComponentWrapper ref={$component} size={size} background={background} color={color} marginOption={marginOption}>
             <MemoText>{text}{children}</MemoText>
         </ComponentWrapper>
     )
@@ -14,9 +22,9 @@ const ComponentWrapper = styled.div`
     justify-content: center;
     background: ${props => props.background.includes("http") ? `url(${props.background})` : props.background};
     color: ${props => props.color};
-    width: ${props => props.size ? `${props.size}px` : `10.5rem`};
-    height: ${props => props.size ? `${props.size}px` : `10.5rem`};
-    border-radius: ${props => props.size ? `${props.size * 0.05}px` : `0.25rem`};
+    width: ${props => props.size ? `${props.size}` : `10.5rem`};
+    height: ${props => props.size ? `${props.size}` : `10.5rem`};
+    border-radius: ${props => props.size ? `${props.size * 0.05}` : `0.25rem`};
     padding: ${props => props.size ? `${props.size * 0.1}px` : `0.875rem`};
     font-size: ${props => props.size ? `${props.size * 0.07}px` : `0.625rem`};
     font-weight: 300;

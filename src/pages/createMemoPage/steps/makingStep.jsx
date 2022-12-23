@@ -8,11 +8,11 @@ import { createMemo } from "../../../api/memoApi";
 import FooterButton from "../../../components/buttons/FooterButton";
 import SmallTitle from "../../../components/label/smallTitle";
 import StepHeader from "../../../components/layout/headers/stepHeader";
+import Memo from "../../../components/memo";
 import MemoPaper from "../../../components/memoPaper";
 import AlertModal from "../../../components/modals/alertModal";
 import { boardState, memoStyleState } from "../../../store";
 import { theme } from "../../../styles/theme";
-import MemoTextArea from "../components/memoTextArea";
 
 const MakingStep = () => {
   const board = useRecoilValue(boardState);
@@ -41,8 +41,9 @@ const MakingStep = () => {
   }, [board]);
 
   const onChangeText = (text) => {
-    const newText = text;
-    setMemo({ ...memo, text: newText });
+    console.log(text)
+    // const newText = text;
+    // setMemo({ ...memo, text: newText });
   };
 
   const onClickBack = () => {
@@ -55,10 +56,6 @@ const MakingStep = () => {
 
   const cancelBack = () => {
     setAlertOpen(false);
-  };
-
-  const onClickMemoTextZone = () => {
-    $memo.current.focus();
   };
 
   const onClickMakeMemo = async () => {
@@ -93,10 +90,12 @@ const MakingStep = () => {
       ) : null}
       <StepHeader title={"롤링페이퍼 남기기"} onClick={onClickBack} />
       <BoardArea background={board.background}>
-        <MemoTextContainer
+        <Memo
+          size={"75%"}
           background={memo.style.background}
           color={memo.style.textColor}
-          onClick={onClickMemoTextZone}
+          text={memo.text} 
+          onChangeText={onChangeText}
         >
           {memo.text.length == 0 ? (
             <MemoPlaceHolder>
@@ -105,9 +104,8 @@ const MakingStep = () => {
               마음껏 작성해주세요!
             </MemoPlaceHolder>
           ) : null}
-          <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
-        </MemoTextContainer>
-        <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
+          <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
+        </Memo>
       </BoardArea>
       <OptionArea>
         <OptionAreaTitleContainer>
@@ -177,21 +175,6 @@ const BoardArea = styled.div`
   background-repeat: no-repeat;
 `;
 
-const MemoTextContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 75%;
-  height: 75%;
-  background: ${(props) =>
-    props.background.includes("http")
-      ? `url(${props.background})`
-      : props.background};
-  color: ${(props) => props.color};
-  border-radius: 1rem;
-  padding: 5%;
-`;
-
 const MemoPlaceHolder = styled.span`
   width: 100%;
   opacity: 0.4;
@@ -202,6 +185,9 @@ const MemoPlaceHolder = styled.span`
 `;
 
 const MemoTextIndicator = styled.pre`
+  position:absolute;
+  bottom: 1rem;
+  right: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
