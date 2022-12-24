@@ -23,6 +23,7 @@ const BoardPage = () => {
     type: "",
     open: false,
   });
+  const [checkedMemoList, setCheckedMemoList] = useState([]);
   const [isDeleteMemoMode, setIsDeleteMemoMode] = useState(false);
   const [searchModeType, setSearchModeType] = useState("");
 
@@ -31,7 +32,6 @@ const BoardPage = () => {
   };
 
   const handleKeyDownSearchIput = async (e) => {
-    console.log(query);
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
       const searchMemoResult = await searchMemo({});
       if (searchMemoResult) setSearchResults(searchMemoResult);
@@ -89,6 +89,8 @@ const BoardPage = () => {
         onSearch={handleClickSearch}
         onShare={() => {}}
         onConfig={configMenuSetting}
+        checkedMemoList={checkedMemoList}
+        setCheckedMemoList={setCheckedMemoList}
       />
       {isDeleteMemoMode && (
         <DeleteMemoSubHeader> 삭제할 메모를 선택하세요. </DeleteMemoSubHeader>
@@ -108,6 +110,8 @@ const BoardPage = () => {
                 setIsDeleteMemoMode={setIsDeleteMemoMode}
                 searchModeType={searchModeType}
                 searchResults={searchResults}
+                checkedMemoList={checkedMemoList}
+                setCheckedMemoList={setCheckedMemoList}
               />
             }
           />

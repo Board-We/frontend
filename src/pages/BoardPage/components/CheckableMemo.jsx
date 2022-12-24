@@ -1,9 +1,15 @@
 import styled from "styled-components";
 import CheckImage from "../../../assets/checkbox.png";
-const CheckableMemo = ({ id, text, onChange }) => {
+const CheckableMemo = ({ id, text, onChange, checkedMemoList }) => {
   return (
     <MemoWrapper>
-      <Checkbox type="checkbox" onChange={onChange} value={id} id="checker" />
+      <Checkbox
+        type="checkbox"
+        onChange={onChange}
+        value={id}
+        id="checker"
+        checked={checkedMemoList.includes(id)}
+      />
       <CheckLabel htmlFor="checker" />
       <MemoContent>{text}</MemoContent>
     </MemoWrapper>

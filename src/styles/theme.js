@@ -17,7 +17,7 @@ export const theme = {
   },
   dimmed: {
     opacity_b: "rgba(28, 27, 31, 0.5)",
-    opacitiy_w: "rgba(255, 255, 255, 0.8)",
+    opacity_w: "rgba(255, 255, 255, 0.8)",
   },
   shadows: {
     shadow_1: "0px 2px 8px rgba(0, 0, 0, 0.15)",

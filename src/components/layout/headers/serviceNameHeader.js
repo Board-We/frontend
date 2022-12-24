@@ -15,6 +15,8 @@ const ServiceNameHeader = ({
   onShare,
   onConfig,
   onSearch,
+  checkedMemoList,
+  setCheckedMemoList,
 }) => {
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
 
@@ -28,6 +30,10 @@ const ServiceNameHeader = ({
 
   const handleClickConfig = () => {
     setIsOpenConfigMenu((prev) => !prev);
+  };
+
+  const handleClickUnselect = () => {
+    setCheckedMemoList([]);
   };
 
   return (
@@ -82,7 +88,12 @@ const ServiceNameHeader = ({
           onKeyDown={onKeyDownSearchInput}
         />
         {isDeleteMemoMode ? (
-          <UnselectButton isActive={true}>선택 해제</UnselectButton>
+          <UnselectButton
+            disabled={checkedMemoList.length === 0}
+            onClick={handleClickUnselect}
+          >
+            선택 해제
+          </UnselectButton>
         ) : null}
       </ServiceNameHeaderContainer>
     </ComponentWrapper>
@@ -224,9 +235,11 @@ const HeaderInput = styled.input`
 `;
 
 const UnselectButton = styled.button`
-  color: ${(props) => (props.isActive ? "#757879" : "#757879")};
+  color: ${(props) =>
+    props.disabled ? props.theme.colors.grey_20 : props.theme.colors.black};
   background-color: transparent;
   border: none;
+  cursor: pointer;
 `;
 
 export default ServiceNameHeader;

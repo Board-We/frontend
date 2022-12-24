@@ -12,6 +12,7 @@ import { deleteMemo } from "../../../api/memoApi";
 import AlertModal from "../../../components/modals/alertModal";
 import CheckableMemo from "../components/CheckableMemo";
 import CalendarButton from "../../../components/buttons/calendarButton";
+import BlockAccessBoard from "../components/blockAccessBoard";
 
 const BoardOnOpen = ({
   passwordModalState,
@@ -20,15 +21,18 @@ const BoardOnOpen = ({
   setIsDeleteMemoMode,
   searchModeType,
   searchResults,
+  checkedMemoList,
+  setCheckedMemoList,
 }) => {
   const board = useRecoilValue(boardState);
-  const privateModeForTest = true;
+  const privateModeForTest = false;
 
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
-  const [checkedMemoList, setCheckedMemoList] = useState([]);
+
   const [openToast, setOpenToast] = useState(true);
   const [openDueDate, setOpenDueDate] = useState(false);
+
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
   const [memoThemes, setMemoThemes] = useState({});
@@ -59,7 +63,6 @@ const BoardOnOpen = ({
   };
 
   const handleChangeCheckableMemo = (e) => {
-    console.log(e.target.checked, e.target.value);
     if (e.target.checked) {
       setCheckedMemoList([...checkedMemoList, e.target.value]);
     } else
@@ -128,7 +131,6 @@ const BoardOnOpen = ({
       {!isDeleteMemoMode && (
         <>
           <BoardBackground boardInfo={board} backgroundRepeat={true} />
-
           <MemoContainer
             ref={$memoContainer}
             onScroll={onScrollMemoContainer}
@@ -183,17 +185,6 @@ const BoardOnOpen = ({
               text="보드를 삭제하면 되돌릴 수 없습니다."
               onClose={handleCloseConfirmDeleteModal}
             />
-            {isDeleteMemoMode && (
-              <DeleteMemoButton
-                isExistCheckedmemo={checkedMemoList.length !== 0}
-                onClick={handleClickDeleteMemo}
-              >
-                삭제하기{" "}
-                {checkedMemoList.length !== 0 && (
-                  <span>{checkedMemoList.length}</span>
-                )}
-              </DeleteMemoButton>
-            )}
           </MemoContainer>
         </>
       )}
@@ -206,22 +197,35 @@ const BoardOnOpen = ({
               id={`${el}${i}`}
               text={el.memoContent}
               onChange={handleChangeCheckableMemo}
+              checkedMemoList={checkedMemoList}
             />
           ))}
+          <DeleteMemoButton
+            isExistCheckedmemo={checkedMemoList.length !== 0}
+            onClick={handleClickDeleteMemo}
+          >
+            삭제하기{" "}
+            {checkedMemoList.length !== 0 && (
+              <span>{checkedMemoList.length}</span>
+            )}
+          </DeleteMemoButton>
         </DeleteMemoContianer>
       )}
       {isMemoLoading ? <Spinner /> : null}
-      {!isDeleteMemoMode && (
-        <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
+      {!isDeleteMemoMode && privateModeForTest && (
+        <>
+          <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
+          <CalendarButton
+            open={openDueDate}
+            isHidden={
+              passwordModalState.open ||
+              isDeleteMemoMode ||
+              isOpenConfirmDeleteModal
+            }
+          />
+        </>
       )}
-      <CalendarButton
-        open={openDueDate}
-        isHidden={
-          passwordModalState.open ||
-          isDeleteMemoMode ||
-          isOpenConfirmDeleteModal
-        }
-      />
+      {!privateModeForTest && <BlockAccessBoard />}
     </PageWrapper>
   );
 };
@@ -236,7 +240,6 @@ const PageWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
-  background-color: ${(props) => props.theme.colors.grey_50};
 `;
 
 const MemoContainer = styled.div`
