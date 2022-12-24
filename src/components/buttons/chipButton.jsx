@@ -9,6 +9,7 @@ const ChipButton = ({
   onClick,
   children,
   backgroundGrey,
+  sx,
 }) => {
   return (
     <ComponentWrapper
@@ -17,6 +18,7 @@ const ChipButton = ({
       fit={fit}
       onClick={onClick}
       backgroundGrey={backgroundGrey}
+      sx={sx}
     >
       {text}
       {children}
@@ -26,10 +28,11 @@ const ChipButton = ({
 
 const ComponentWrapper = styled.div`
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   padding: ${(props) => (props.fit ? `0.25rem 1.25rem` : `1.7rem 3rem`)};
-  width: ${(props) => (props.width ? props.width : "fit-content")};
+  max-width: ${(props) => (props.width ? props.width : "600px")};
   height: 3rem;
   font-size: 1rem;
   color: ${(props) => props.theme.colors.black};
@@ -42,6 +45,7 @@ const ComponentWrapper = styled.div`
   box-shadow: ${(props) => (props.flat ? "" : "2px 2px 8px black")};
   user-select: none;
   cursor: pointer;
+  ${(props) => props.sx}
 `;
 
 export default ChipButton;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { ReactComponent as ChevronRight } from "../../../assets/chevronRight.svg";
-import { ReactComponent as Close } from "../../../assets/close.svg";
+import { ReactComponent as ChevronRight } from "../../../assets/icons/chevronRight.svg";
+import { ReactComponent as Close } from "../../../assets/icons/close.svg";
 
 const StepHeader = ({ title, onClick, isFinalStep, stepId }) => {
   return (

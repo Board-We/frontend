@@ -1,9 +1,16 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import Backdrop from "./backdrop";
-import { ReactComponent as Alert } from "../../assets/alert.svg";
+import { ReactComponent as Alert } from "../../assets/icons/alert.svg";
 
-const AlertModal = ({ open, onClickArray, buttonTextArray, text, onClose }) => {
+const AlertModal = ({
+  open,
+  onClickArray,
+  buttonTextArray,
+  text,
+  subText,
+  onClose,
+}) => {
   useEffect(() => {
     const body = document.querySelector("body");
     body.style.overflow = open ? "hidden" : "auto";
@@ -15,6 +22,7 @@ const AlertModal = ({ open, onClickArray, buttonTextArray, text, onClose }) => {
           <Alert />
         </div>
         <ModalDescription>{text}</ModalDescription>
+        <ModalSubDescription>{subText}</ModalSubDescription>
         <ButtonContainer>
           {buttonTextArray.map((el, i) => {
             return (
@@ -54,6 +62,10 @@ const ModalContainer = styled.div`
 
 const ModalDescription = styled.div`
   color: ${(props) => props.theme.colors.black};
+`;
+
+const ModalSubDescription = styled.div`
+  color: ${(props) => props.theme.colors.grey_20};
 `;
 
 const ButtonStyle = styled.div`

@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import TextInput from "../../../components/TextInput";
 import TextLengthValidator from "../../../components/textLengthValidator";
-import { ReactComponent as Close } from "../../../assets/close.svg";
+import { ReactComponent as Close } from "../../../assets/icons/close.svg";
 import { boardState } from "../../../store";
 
 const CreateBoardStep1 = ({ setDisabledFooterButton }) => {

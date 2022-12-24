@@ -22,7 +22,8 @@ const ServiceFooterContainer = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 24rem;
+  margin-top: 27rem;
+  margin-bottom: 7rem;
 
   p {
     margin: 0;

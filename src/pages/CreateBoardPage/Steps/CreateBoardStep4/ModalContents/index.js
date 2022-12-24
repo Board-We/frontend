@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { ReactComponent as Close } from "../../../../../assets/close.svg";
+import { ReactComponent as Close } from "../../../../../assets/icons/close.svg";
 import { setDateStepId } from "../../../../../store";
 import SetAttachableEndTerm from "./SetAttachableEndTerm";
 import SetAttachableStartTerm from "./SetAttachableStartTerm";

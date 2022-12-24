@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ChipButton from "../../../components/buttons/chipButton";
-import { ReactComponent as Lock } from "../../../assets/lock.svg";
+import { ReactComponent as Lock } from "../../../assets/icons/lock.svg";
 import { useState } from "react";
 import PasswordModal from "../BoardPageModal/PasswordModal";
 

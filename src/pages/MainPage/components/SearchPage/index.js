@@ -1,22 +1,19 @@
 import styled from "styled-components";
 import Slide from "../BoardSlide/Slide";
-import { ReactComponent as ChevronTop } from "../../../../assets/chevronTop.svg";
+import { ReactComponent as ChevronTop } from "../../../../assets/icons/chevronTop.svg";
 import BoardSlide from "../BoardSlide";
 import { useCallback, useEffect, useState } from "react";
-import { getHotBoardsList } from "../../../../api/boardsApi";
-import { reccomendBoardsData } from "../../../../api/mockData";
+import { requestHotBoardList } from "../../../../api/boardsApi";
 
 const SearchPage = ({ keyword, searchResults }) => {
-  const [hotBoards, setHotBoards] = useState(reccomendBoardsData);
-  console.log(hotBoards);
-  console.log(hotBoards);
+  const [hotBoardList, setHotBoardList] = useState([]);
   const handleClickChevronTop = () => {
-    window.scroll(0, 0);
+    window.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
 
   const getHotBoardsData = useCallback(async () => {
-    const data = await getHotBoardsList();
-    if (data) setHotBoards(data);
+    const data = await requestHotBoardList();
+    if (data) setHotBoardList(data);
   }, []);
 
   useEffect(() => {
@@ -28,24 +25,24 @@ const SearchPage = ({ keyword, searchResults }) => {
       {keyword ? (
         <SearchResultHeader>
           {searchResults && searchResults.length > 0 ? (
-            <p>
+            <div>
               "
               <KeywordBox>
                 <span>{`${keyword}`}</span>
                 <Highlight></Highlight>
               </KeywordBox>
               " 검색결과를 찾았어요 🔍
-            </p>
+            </div>
           ) : searchResults && searchResults.length === 0 ? (
             <>
-              <p>
+              <div>
                 "
                 <KeywordBox>
                   <span>{`${keyword}`}</span>
                   <Highlight></Highlight>
                 </KeywordBox>
                 " 검색결과가 없어요 😥
-              </p>
+              </div>
               <p>대신 이런 인기보드는 어떠세요?</p>
             </>
           ) : null}
@@ -55,7 +52,7 @@ const SearchPage = ({ keyword, searchResults }) => {
           <HotBoardSection>
             <BoardSlide
               title="지금 핫한 인기보드"
-              boards={hotBoards}
+              boards={hotBoardList}
               positionValue="5%"
             />
           </HotBoardSection>
@@ -74,19 +71,21 @@ const SearchPage = ({ keyword, searchResults }) => {
                       boardName={result.boardName}
                       boardViews={result.boardViews}
                       boardBackground={result.boardBackground}
+                      sx={"margin: 0;"}
                     />
                   ))}
                 </SearchResultList>
-
-                <ChevronTopButton onClick={handleClickChevronTop}>
-                  <ChevronTop />
-                </ChevronTopButton>
+                <ButtonWrapper>
+                  <ChevronTopButton onClick={handleClickChevronTop}>
+                    <ChevronTop />
+                  </ChevronTopButton>
+                </ButtonWrapper>
               </>
             ) : (
               <HotBoardSection>
                 <BoardSlide
                   title="지금 핫한 인기보드"
-                  boards={hotBoards}
+                  boards={hotBoardList}
                   positionValue="0"
                 />
               </HotBoardSection>
@@ -102,18 +101,19 @@ export default SearchPage;
 
 const SearchPageBody = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.theme.colors.grey_50}; ;
 `;
 
 const HotBoardSection = styled.div`
   width: 100%;
-  height: 70vh;
+  height: 80vh;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  background-color: transparent;
 `;
 
 const SearchResultHeader = styled.div`
@@ -123,6 +123,7 @@ const SearchResultHeader = styled.div`
   align-items: flex-start;
   flex-direction: column;
   border-bottom: 1px solid ${(props) => props.theme.colors.grey_35};
+  background-color: ${(props) => props.theme.colors.white};
 
   p:first-child {
     font-size: 1.2rem;
@@ -161,8 +162,12 @@ const Highlight = styled.div`
 `;
 
 const SearchResultSection = styled.div`
+  width: 100%;
   position: relative;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10rem;
   p {
     text-align: start;
     font-size: 1.1rem;
@@ -174,13 +179,23 @@ const SearchResultSection = styled.div`
 const SearchResultList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 0fr);
-  row-gap: 1rem;
+  gap: 1rem;
   margin-top: 1rem;
+  align-items: center;
+  justify-items: center;
+`;
+
+const ButtonWrapper = styled.div`
+  position: fixed;
+  width: 100%;
+  max-width: 600px;
+  bottom: 2rem;
+  display: flex;
+  justify-content: end;
+  padding-right: 1rem; ;
 `;
 
 const ChevronTopButton = styled.button`
-  position: fixed;
-  bottom: 2vw;
   display: flex;
   justify-content: center;
   align-items: center;

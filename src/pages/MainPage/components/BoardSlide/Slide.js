@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { ReactComponent as Pen } from "../../../../assets/pen.svg";
+import { ReactComponent as Pen } from "../../../../assets/icons/pen.svg";
 
-const Slide = ({ boardLink, boardName, boardViews, boardBackground }) => {
+const Slide = ({ boardLink, boardName, boardViews, boardBackground, sx }) => {
   return (
-    <SlideContainer boardBackground={boardBackground}>
+    <SlideContainer boardBackground={boardBackground} sx={sx}>
       <SlideTopDescription>
         {boardViews} <Pen />
       </SlideTopDescription>
@@ -24,6 +24,7 @@ const SlideContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 0.8rem;
+  ${(props) => props.sx}
 `;
 
 const SlideTopDescription = styled.div`

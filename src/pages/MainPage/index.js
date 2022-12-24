@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getReccomendBoardsList, searchBoards } from "../../api/boardsApi";
-import { reccomendBoardsData } from "../../api/mockData";
+import {
+  requestReccomendBoardList,
+  requestSearchBoard,
+} from "../../api/boardsApi";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
@@ -10,10 +12,11 @@ import EnterLinkInput from "./components/EnterLinkInput";
 import BoardSlide from "./components/BoardSlide/index";
 import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
+import mainImage from "../../assets/images/mainImage.png";
 
 const Main = () => {
   const navigate = useNavigate();
-  const [reccomendBoards, setReccomendBoards] = useState(reccomendBoardsData);
+  const [reccomendBoardList, setReccomendBoardList] = useState([]);
 
   const [searchModeType, setSearchModeType] = useState("");
   const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
@@ -57,7 +60,7 @@ const Main = () => {
   const handleKeyDownSearchInput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
       setKeyword(query);
-      const searchBoardsResult = await searchBoards({
+      const searchBoardsResult = await requestSearchBoard({
         query,
       });
 
@@ -65,14 +68,14 @@ const Main = () => {
     }
   };
 
-  const getReccomendBoardsData = useCallback(async () => {
-    const data = await getReccomendBoardsList();
-    if (data) setReccomendBoards(data);
+  const getReccomendBoardList = useCallback(async () => {
+    const data = await requestReccomendBoardList();
+    if (data) setReccomendBoardList(data);
   }, []);
 
   useEffect(() => {
-    getReccomendBoardsData();
-  }, [getReccomendBoardsData]);
+    getReccomendBoardList();
+  }, [getReccomendBoardList]);
 
   return (
     <>
@@ -80,6 +83,7 @@ const Main = () => {
         onWheel={handleWheelPage}
         onTouchStart={handleTouchStartPage}
         onTouchMove={handleTouchMovePage}
+        noSearchResult={searchModeType && searchResults.length === 0}
       >
         <MainPageContainer>
           <ServiceNameHeader
@@ -94,9 +98,12 @@ const Main = () => {
               <ServiceMainImage>
                 <ChipButton
                   text="새 보드 만들기"
-                  width="100%"
+                  width="550px"
                   onClick={handleClickCreateNewboard}
                   flat
+                  sx={
+                    "position : fixed; z-index: 999999; left:0; right: 0; margin: 0 auto; "
+                  }
                 />
               </ServiceMainImage>
               <MainPageBody>
@@ -104,7 +111,7 @@ const Main = () => {
                 <BoardSlide
                   title="추천 보드"
                   description="공개한 보드는 랜덤으로 추천됩니다!"
-                  boards={reccomendBoards}
+                  boards={reccomendBoardList}
                   positionValue="70%"
                 />
               </MainPageBody>
@@ -134,10 +141,13 @@ export default Main;
 const PageWrapper = styled.div`
   position: relative;
   width: 100%;
+  height: ${(props) => props.noSearchResult && "100vh"};
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
+  background-color: ${(props) =>
+    props.noSearchResult && props.theme.colors.grey_50};
 `;
 
 const MainPageContainer = styled.div`
@@ -164,4 +174,8 @@ const ServiceMainImage = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  background-image: url(${mainImage});
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
 `;
