@@ -10,12 +10,12 @@ export const requestReccomendBoardList = async () => {
   return res.data;
 };
 
-export const searchBoards = async ({ query, page = 1, size = 10 }) => {
+export const requestSearchBoard = async ({ query, page = 1, size = 10 }) => {
   const res = await request({
     method: "GET",
     url: `/board/search?query=${query}&page=${page}&size=${size}`,
   });
-  return res.data;
+  return res.data.content;
 };
 
 export const deleteBoard = async ({ boardCode, password }) => {

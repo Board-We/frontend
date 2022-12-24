@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { requestReccomendBoardList, searchBoards } from "../../api/boardsApi";
+import {
+  requestReccomendBoardList,
+  requestSearchBoard,
+} from "../../api/boardsApi";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
@@ -57,7 +60,7 @@ const Main = () => {
   const handleKeyDownSearchInput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
       setKeyword(query);
-      const searchBoardsResult = await searchBoards({
+      const searchBoardsResult = await requestSearchBoard({
         query,
       });
 
@@ -80,6 +83,7 @@ const Main = () => {
         onWheel={handleWheelPage}
         onTouchStart={handleTouchStartPage}
         onTouchMove={handleTouchMovePage}
+        searchModeType={searchModeType}
       >
         <MainPageContainer>
           <ServiceNameHeader
@@ -137,10 +141,13 @@ export default Main;
 const PageWrapper = styled.div`
   position: relative;
   width: 100%;
+  height: ${(props) => props.searchModeType && "100vh"};
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
+  background-color: ${(props) =>
+    props.searchModeType && props.theme.colors.grey_50};
 `;
 
 const MainPageContainer = styled.div`

@@ -7,15 +7,14 @@ import { getHotBoardsList } from "../../../../api/boardsApi";
 import { reccomendBoardsData } from "../../../../api/mockData";
 
 const SearchPage = ({ keyword, searchResults }) => {
-  const [hotBoards, setHotBoards] = useState(reccomendBoardsData);
-
+  const [hotBoardList, setHotBoardList] = useState(reccomendBoardsData);
   const handleClickChevronTop = () => {
     window.scroll(0, 0);
   };
 
   const getHotBoardsData = useCallback(async () => {
     const data = await getHotBoardsList();
-    if (data) setHotBoards(data);
+    if (data) setHotBoardList(data);
   }, []);
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const SearchPage = ({ keyword, searchResults }) => {
           <HotBoardSection>
             <BoardSlide
               title="지금 핫한 인기보드"
-              boards={hotBoards}
+              boards={hotBoardList}
               positionValue="5%"
             />
           </HotBoardSection>
@@ -85,7 +84,7 @@ const SearchPage = ({ keyword, searchResults }) => {
               <HotBoardSection>
                 <BoardSlide
                   title="지금 핫한 인기보드"
-                  boards={hotBoards}
+                  boards={hotBoardList}
                   positionValue="0"
                 />
               </HotBoardSection>
@@ -101,18 +100,19 @@ export default SearchPage;
 
 const SearchPageBody = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.theme.colors.grey_50}; ;
 `;
 
 const HotBoardSection = styled.div`
   width: 100%;
-  height: 70vh;
+  height: 80vh;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  background-color: transparent;
 `;
 
 const SearchResultHeader = styled.div`
@@ -122,6 +122,7 @@ const SearchResultHeader = styled.div`
   align-items: flex-start;
   flex-direction: column;
   border-bottom: 1px solid ${(props) => props.theme.colors.grey_35};
+  background-color: ${(props) => props.theme.colors.white};
 
   p:first-child {
     font-size: 1.2rem;

@@ -11,8 +11,6 @@ export const request = ({ method, url, data }) => {
     url: BASE_URL + url,
     data,
   })
-    .then((res) => {
-      return res;
-    })
+    .then((res) => res)
     .catch((err) => err);
 };
