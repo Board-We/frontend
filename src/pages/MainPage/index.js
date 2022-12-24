@@ -83,7 +83,7 @@ const Main = () => {
         onWheel={handleWheelPage}
         onTouchStart={handleTouchStartPage}
         onTouchMove={handleTouchMovePage}
-        noSearchResult={searchResults.length === 0}
+        noSearchResult={searchModeType && searchResults.length === 0}
       >
         <MainPageContainer>
           <ServiceNameHeader

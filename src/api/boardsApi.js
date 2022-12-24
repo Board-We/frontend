@@ -11,6 +11,7 @@ export const requestReccomendBoardList = async () => {
 };
 
 export const requestSearchBoard = async ({ query, page = 0, size = 10 }) => {
+  // query = "크리스마스" 시 검색결과 볼 수 있음
   const res = await request({
     method: "GET",
     url: `/board/search?query=${query}&page=${page}&size=${size}`,

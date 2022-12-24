@@ -9,7 +9,7 @@ import { reccomendBoardsData } from "../../../../api/mockData";
 const SearchPage = ({ keyword, searchResults }) => {
   const [hotBoardList, setHotBoardList] = useState(reccomendBoardsData);
   const handleClickChevronTop = () => {
-    window.scroll(0, 0);
+    window.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
 
   const getHotBoardsData = useCallback(async () => {
@@ -76,10 +76,11 @@ const SearchPage = ({ keyword, searchResults }) => {
                     />
                   ))}
                 </SearchResultList>
-
-                <ChevronTopButton onClick={handleClickChevronTop}>
-                  <ChevronTop />
-                </ChevronTopButton>
+                <ButtonWrapper>
+                  <ChevronTopButton onClick={handleClickChevronTop}>
+                    <ChevronTop />
+                  </ChevronTopButton>
+                </ButtonWrapper>
               </>
             ) : (
               <HotBoardSection>
@@ -185,9 +186,17 @@ const SearchResultList = styled.div`
   justify-items: center;
 `;
 
-const ChevronTopButton = styled.button`
+const ButtonWrapper = styled.div`
   position: fixed;
-  bottom: 2vw;
+  width: 100%;
+  max-width: 600px;
+  bottom: 2rem;
+  display: flex;
+  justify-content: end;
+  padding-right: 1rem; ;
+`;
+
+const ChevronTopButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
