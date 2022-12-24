@@ -29,7 +29,9 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
           break;
       }
     } else if (option === "배경") {
-      setColor(board.background.includes("http") ? "#fff" : board.background);
+      setColor(
+        board.boardBackground.includes("http") ? "#fff" : board.boardBackground
+      );
     }
   }, [option, selectedMenu, selectedMemoIndex]);
 
@@ -57,7 +59,7 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
 
         setBoard({ ...board, memoThemes: newMemoThemes });
       } else if (option === "배경") {
-        setBoard({ ...board, background: base64Image });
+        setBoard({ ...board, boardBackground: base64Image });
       }
     };
 
@@ -82,7 +84,8 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
 
   const onChangeColor = (e) => {
     if (option === "배경") {
-      if (selectedMenu === "bgColor") setBoard({ ...board, background: color });
+      if (selectedMenu === "bgColor")
+        setBoard({ ...board, boardBackground: color });
     } else if (option === "메모지") {
       const newMemoThemes = [...board.memoThemes];
       const newMemoTheme = { ...newMemoThemes[selectedMemoIndex] };
@@ -100,8 +103,8 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
     return (
       <BackgroundImageContainer>
         {option === "배경" ? (
-          board.background.includes("http") ? (
-            <BackgroundImage src={board.background} />
+          board.boardBackground.includes("http") ? (
+            <BackgroundImage src={board.boardBackground} />
           ) : (
             <>
               <Camera htmlFor="bgFileInput" />
@@ -156,6 +159,8 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
       </MemoOptionContainer>
     );
   };
+
+  console.log(board);
 
   return (
     <ComponentWrapper open={open}>

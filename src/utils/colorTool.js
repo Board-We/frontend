@@ -27,7 +27,7 @@ export const parseColor = (color) => {
 }
 
 export const getSaturationCoordinates = (color) => {
-    const { s, v } = rgbToHsv(color.rgb)
+    const { s, v } = color.hsv
     const x = s
     const y = 100 - v
 
@@ -55,9 +55,9 @@ export const rgbToHex = (color) => {
     var hexG = g.toString(16)
     var hexB = b.toString(16)
 
-    if (hexR.length === 1) hexR = "0" + r
-    if (hexG.length === 1) hexG = "0" + g
-    if (hexB.length === 1) hexB = "0" + b
+    if (hexR.length === 1) hexR = "0" + hexR
+    if (hexG.length === 1) hexG = "0" + hexG
+    if (hexB.length === 1) hexB = "0" + hexB
 
     return "#" + hexR + hexG + hexB;
 }

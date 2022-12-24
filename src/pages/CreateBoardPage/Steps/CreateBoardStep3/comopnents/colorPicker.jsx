@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
 import {
@@ -54,7 +54,6 @@ const ColorPicker = ({ color, onChange }) => {
                     backgroundColor={`hsl(${parsedColor.hsv.h}, 100%, 50%)`}
                     onClick={onSaturationChange}
                     onTouchMove={onSaturationChange}
-                    onMouseMove={onSaturationChange}
                 />
                 <Thumb
                     color={parsedColor.hex}
