@@ -24,53 +24,78 @@ const CompleteCreate = () => {
 
   return (
     <>
-      <BoardContainer background={board.theme}>
+      <BoardContainer background={board.boardBackground}>
+        <BoardDescriptionContainer>
+          <h1>{board.name}</h1>
+          <TagContainer>
+            {board.tags?.map((item, idx) => {
+              return (
+                <React.Fragment key={`${item}${idx}`}>
+                  <span>{`#${item}`}</span>
+                </React.Fragment>
+              );
+            })}
+          </TagContainer>
+          <p>{board.description}</p>
+        </BoardDescriptionContainer>
         <MemoContainer>
           <Memo1
             memoBackground={
-              board.memoBackground[0] ? board.memoBackground[0] : "white"
+              board.memoThemes[0] ? board.memoThemes[0].memoBackground : "white"
             }
-            fontColor={board.memoColors[0]}
+            fontColor={
+              board.memoThemes[0] ? board.memoThemes[0].memoTextColor : "black"
+            }
           >
             <span>우리 내년에도 친하게 지내자</span>
           </Memo1>
           <Memo2
             memoBackground={
-              board.memoBackground[1] ? board.memoBackground[1] : "white"
+              board.memoThemes[1] ? board.memoThemes[1].memoBackground : "white"
             }
-            fontColor={board.memoColors[1]}
+            fontColor={
+              board.memoThemes[1] ? board.memoThemes[1].memoTextColor : "black"
+            }
           >
             <span>마라탕 모임 언제 가나요^^</span>
           </Memo2>
           <Memo3
             memoBackground={
-              board.memoBackground[2] ? board.memoBackground[2] : "white"
+              board.memoThemes[2] ? board.memoThemes[2].memoBackground : "white"
             }
-            fontColor={board.memoColors[2]}
+            fontColor={
+              board.memoThemes[2] ? board.memoThemes[2].memoTextColor : "black"
+            }
           >
             <span>크리스마스 파티해서 맛있는거 먹자~~! 파티룸 찾아둘께</span>
           </Memo3>
           <Memo4
             memoBackground={
-              board.memoBackground[3] ? board.memoBackground[3] : "white"
+              board.memoThemes[3] ? board.memoThemes[3].memoBackground : "white"
             }
-            fontColor={board.memoColors[3]}
+            fontColor={
+              board.memoThemes[3] ? board.memoThemes[3].memoTextColor : "black"
+            }
           >
             <span>선물 뭐 갖고싶어? 다 말해 사줄께ㅎㅎ -민지-</span>
           </Memo4>
           <Memo5
             memoBackground={
-              board.memoBackground[4] ? board.memoBackground[4] : "white"
+              board.memoThemes[4] ? board.memoThemes[4].memoBackground : "white"
             }
-            fontColor={board.memoColors[4]}
+            fontColor={
+              board.memoThemes[4] ? board.memoThemes[4].memoTextColor : "black"
+            }
           >
             <span>크리스마스 파티해서 맛있는거 먹자~~! 파티룸 찾아둘께</span>
           </Memo5>
           <Memo6
             memoBackground={
-              board.memoBackground[5] ? board.memoBackground[5] : "white"
+              board.memoThemes[5] ? board.memoThemes[5].memoBackground : "white"
             }
-            fontColor={board.memoColors[5]}
+            fontColor={
+              board.memoThemes[5] ? board.memoThemes[5].memoTextColor : "black"
+            }
           >
             <span>선물 뭐 갖고싶어? 다 말해 사줄께ㅎㅎ -민지-</span>
           </Memo6>
@@ -95,13 +120,42 @@ const BoardContainer = styled.div`
   height: 60vh;
   border-radius: 4px;
   background: ${(props) =>
-    props.background.boardBackgroundImage.includes("http")
-      ? `url(${props.background.boardBackgroundImage})`
-      : props.background.boardBackgroundColor};
+    props.background.includes("http")
+      ? `url(${props.background})`
+      : props.background};
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   padding: 1rem;
+`;
+
+const BoardDescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  h1 {
+    font-weight: 600;
+    color: ${(props) => props.theme.colors.black};
+    font-size: 1.55rem;
+    margin: 0;
+  }
+  p {
+    font-weight: 400;
+    color: ${(props) => props.theme.colors.black};
+    font-size: 1.5rem;
+    margin: 0;
+  }
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  margin: 0.75rem 0 0.75rem 0;
+  span {
+    font-weight: 400;
+    color: ${(props) => props.theme.colors.black};
+    font-size: 1.5rem;
+    margin-right: 0.8rem;
+  }
 `;
 
 const MemoContainer = styled.div`
@@ -112,31 +166,21 @@ const MemoContainer = styled.div`
   margin-top: 1.5rem;
 `;
 
-const Memo1 = styled.div.attrs((props) => {
-  return {
-    style: {
-      background: props.memoBackground.includes("http")
-        ? `url(${props.memoBackground})`
-        : props.memoBackground,
-      color: props.fontColor ? props.fontColor : "black",
-      backgroundPosition: props.memoBackground.includes("http")
-        ? "center"
-        : undefined,
-      backgroundSize: props.memoBackground.includes("http")
-        ? "100% 100%"
-        : undefined,
-      backgroundRepeat: props.memoBackground.includes("http")
-        ? "no-repeat"
-        : undefined,
-    },
-  };
-})`
+const Memo1 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 43%;
   height: 14.5vh;
-  background-color: white;
+  background: ${(props) => props.memoBackground};
+  background-image: ${(props) =>
+    props.memoBackground.includes("base64")
+      ? `url(${props.memoBackground})`
+      : undefined};
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: ${(props) => props.fontColor};
   margin-bottom: 1.5rem;
   border-radius: 4px;
   span {
