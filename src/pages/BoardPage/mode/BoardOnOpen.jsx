@@ -37,7 +37,7 @@ const BoardOnOpen = ({
   const [memoThemes, setMemoThemes] = useState({});
   const [visibleMemos, setVisibleMemos] = useState([]);
   const [isMemoLoading, setIsMemoLoading] = useState(true);
-  const [memoSize, setMemoSize] = useState(0)
+  const [memoSize, setMemoSize] = useState(0);
   const $memoContainer = useRef();
 
   const handleClosePasswordModal = () => {
@@ -84,9 +84,12 @@ const BoardOnOpen = ({
     const newPaddingTop =
       deviceScreenSize.y - Number(deviceScreenSize.rem.replace("px", "")) * 14;
     // 2.5 = padding left 1rem + padding right 1rem + gap between memo 0.5rem
-    const newMemoSize = ($memoContainer.current.clientWidth - Number(deviceScreenSize.rem.replace("px", "")) * 2.5) / 2
+    const newMemoSize =
+      ($memoContainer.current.clientWidth -
+        Number(deviceScreenSize.rem.replace("px", "")) * 2.5) /
+      2;
 
-    setMemoSize(newMemoSize)
+    setMemoSize(newMemoSize);
     setPaddingTop(newPaddingTop);
   }, [deviceScreenSize]);
 
@@ -141,22 +144,22 @@ const BoardOnOpen = ({
             paddingTop={paddingTop}
           >
             {visibleMemos &&
-              privateModeForTest &&
-              !isDeleteMemoMode &&
-              !searchModeType
+            privateModeForTest &&
+            !isDeleteMemoMode &&
+            !searchModeType
               ? visibleMemos.map((el, i) => {
-                // memoThemeId
-                const theme = memoThemes[el.memoThemeId];
-                return (
-                  <Memo
-                    size={memoSize + 'px'}
-                    key={`${el}${i}`}
-                    text={el.memoContent}
-                    background={theme?.memoBackground}
-                    color={theme?.memoTextColor}
-                  />
-                );
-              })
+                  // memoThemeId
+                  const theme = memoThemes[el.memoThemeId];
+                  return (
+                    <Memo
+                      size={memoSize + "px"}
+                      key={`${el}${i}`}
+                      text={el.memoContent}
+                      background={theme?.memoBackground}
+                      color={theme?.memoTextColor}
+                    />
+                  );
+                })
               : null}{" "}
             {searchModeType &&
               searchResults &&
@@ -164,7 +167,7 @@ const BoardOnOpen = ({
                 const theme = memoThemes[el.memoThemeId];
                 return (
                   <Memo
-                    size={memoSize + 'px'}
+                    size={memoSize + "px"}
                     key={`${el}${i}`}
                     text={el.memoContent}
                     background={theme?.memoBackground}

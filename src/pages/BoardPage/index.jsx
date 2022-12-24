@@ -16,7 +16,11 @@ const BoardPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
-  const [configMenuSetting, setConfigMenuSetting] = useState(null);
+  const [headerMenuSetting, setheaderMenuSetting] = useState({
+    search: null,
+    share: null,
+    config: null,
+  });
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [passwordModalState, setPasswordModalState] = useState({
@@ -60,19 +64,27 @@ const BoardPage = () => {
       case "/board/onWaitWrite":
       case "/board/onwrite":
       case "/board/onWaitOpen":
-        setConfigMenuSetting({
-          configMenu: ["보드 삭제"],
-          configMenuHandler: [handleClickDeleteBoard],
+        setheaderMenuSetting({
+          search: null,
+          share: () => {},
+          config: {
+            configMenu: ["보드 삭제"],
+            configMenuHandler: [handleClickDeleteBoard],
+          },
         });
         break;
       case "/board/onOpen":
-        setConfigMenuSetting({
-          configMenu: ["보드 삭제", "메모 삭제"],
+        setheaderMenuSetting({
+          search: handleClickSearch,
+          share: () => {},
+          config: ["보드 삭제", "메모 삭제"],
           configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
         });
         break;
       default:
-        setConfigMenuSetting({
+        setheaderMenuSetting({
+          search: null,
+          share: null,
           configMenu: [],
           configMenuHandler: [],
         });
@@ -86,9 +98,9 @@ const BoardPage = () => {
         setQuery={setQuery}
         onKeyDownSearchInput={handleKeyDownSearchIput}
         isDeleteMemoMode={isDeleteMemoMode}
-        onSearch={handleClickSearch}
-        onShare={() => {}}
-        onConfig={configMenuSetting}
+        onSearch={headerMenuSetting.search}
+        onShare={headerMenuSetting.share}
+        onConfig={headerMenuSetting.config}
         checkedMemoList={checkedMemoList}
         setCheckedMemoList={setCheckedMemoList}
       />
