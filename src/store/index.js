@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { theme } from "../../src/styles/theme";
 
 export const boardState = atom({
   key: "boardState",
@@ -13,9 +14,9 @@ export const boardState = atom({
     openEndTime: new Date(new Date().getTime() + 2419200000),
     password: undefined,
     openType: "", // "PUBLIC" or "PRIVATE"
-    background:
-      "https://dimg.donga.com/wps/NEWS/IMAGE/2022/12/03/116825963.2.jpg",
-    font: "san-serif",
+    boardThemeId: 0,
+    boardBackground: theme.colors.defaultBoardBg, // "Base-64" or "#FFFFFF"
+    boardFont: "san-serif",
     memos: [
       {
         memoThemeId: 13,

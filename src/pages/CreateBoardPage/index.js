@@ -53,14 +53,16 @@ const CreateBoardPage = () => {
       openEndTime: new Date(new Date().getTime() + 2419200000),
       password: undefined,
       openType: "", // "PUBLIC" or "PRIVATE"
-      background: theme.colors.defaultBoardBg,
-      font: "san-serif",
+
+      boardThemeId: 0,
+      boardBackground: theme.colors.defaultBoardBg, // "Base-64" or "#FFFFFF"
+      boardFont: "san-serif",
       memos: [],
       memoThemes: [
         {
           memoBackground: theme.colors.defaultMemoBg,
           memoTextColor: theme.colors.black,
-        }
+        },
       ],
     };
 
@@ -130,13 +132,15 @@ const CreateBoardPage = () => {
           <ProgressBar width={currentStepId} />
         </ProgressBarContainer>
       )}
-      <StepDescriptionContainer>
-        {currentStepId < 6 && <p>{currentStepId}/5단계</p>}
-        <Title ref={$stepDescription}>
-          {stepDescription[currentStepId - 1]}
-          {currentStepId === 5 ? <span>(선택)</span> : null}
-        </Title>
-      </StepDescriptionContainer>
+      {currentStepId < 6 && (
+        <StepDescriptionContainer>
+          <p>{currentStepId}/5단계</p>
+          <Title ref={$stepDescription}>
+            {stepDescription[currentStepId - 1]}
+            {currentStepId === 5 ? <span>(선택)</span> : null}
+          </Title>
+        </StepDescriptionContainer>
+      )}
       <BoardInfoConatiner paddingBottom={paddingBottomOfContentArea}>
         {controlCreatBoardStep(currentStepId, setDisabledFooterButton, $footer)}
       </BoardInfoConatiner>
