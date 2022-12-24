@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import CameraIcon from "../../../../../assets/camera.svg";
-import { ReactComponent as Close } from "../../../../../assets/close.svg";
+import CameraIcon from "../../../../../assets/icons/camera.svg";
+import { ReactComponent as Close } from "../../../../../assets/icons/close.svg";
 import styled from "styled-components";
 import TapBar from "../../../../../components/buttons/tapBar";
 import TapButton from "../../../../../components/buttons/tapButton";
