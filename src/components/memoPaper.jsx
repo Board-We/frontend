@@ -24,8 +24,8 @@ const ComponentWrapper = styled.div`
   justify-content: center;
   align-self: center;
   justify-self: center;
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 6rem;
+  height: 6rem;
   font-size: 1rem;
   font-weight: 400;
   border-radius: 0.25rem;

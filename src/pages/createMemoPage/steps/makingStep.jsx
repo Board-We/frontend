@@ -8,10 +8,11 @@ import { createMemo } from "../../../api/memoApi";
 import FooterButton from "../../../components/buttons/FooterButton";
 import SmallTitle from "../../../components/label/smallTitle";
 import StepHeader from "../../../components/layout/headers/stepHeader";
+import Memo from "../../../components/memo";
 import MemoPaper from "../../../components/memoPaper";
 import AlertModal from "../../../components/modals/alertModal";
 import { boardState, memoStyleState } from "../../../store";
-import MemoTextArea from "../components/memoTextArea";
+import { theme } from "../../../styles/theme";
 
 const MakingStep = () => {
   const board = useRecoilValue(boardState);
@@ -40,8 +41,9 @@ const MakingStep = () => {
   }, [board]);
 
   const onChangeText = (text) => {
-    const newText = text;
-    setMemo({ ...memo, text: newText });
+    console.log(text)
+    // const newText = text;
+    // setMemo({ ...memo, text: newText });
   };
 
   const onClickBack = () => {
@@ -56,18 +58,15 @@ const MakingStep = () => {
     setAlertOpen(false);
   };
 
-  const onClickMemoTextZone = () => {
-    $memo.current.focus();
-  };
-
   const onClickMakeMemo = async () => {
     const created = await createMemo({
       boardCode: 14,
       memoContent: memo.text,
       memoThemeId: 12,
     }); // boardCode와 memoThemeId는 임시로 넣어놓음
-    
-    if (created) navigate("/memo/end");
+
+    // if (created) navigate("/memo/end");
+    navigate("/memo/end");
   };
 
   const onClickMemoPaper = (option) => {
@@ -89,12 +88,14 @@ const MakingStep = () => {
           text={"편집을 중단할까요?"}
         />
       ) : null}
-      <StepHeader title={"러브레터 작성하기"} onClick={onClickBack} />
+      <StepHeader title={"롤링페이퍼 남기기"} onClick={onClickBack} />
       <BoardArea background={board.background}>
-        <MemoTextContainer
+        <Memo
+          size={"75%"}
           background={memo.style.background}
           color={memo.style.textColor}
-          onClick={onClickMemoTextZone}
+          text={memo.text} 
+          onChangeText={onChangeText}
         >
           {memo.text.length == 0 ? (
             <MemoPlaceHolder>
@@ -103,12 +104,13 @@ const MakingStep = () => {
               마음껏 작성해주세요!
             </MemoPlaceHolder>
           ) : null}
-          <MemoTextArea ref={$memo} text={memo.text} onChange={onChangeText} />
-        </MemoTextContainer>
-        <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
+          <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
+        </Memo>
       </BoardArea>
       <OptionArea>
-        <SmallTitle text={"메모지를 선택해주세요."} />
+        <OptionAreaTitleContainer>
+          <SmallTitle text={"메모지를 선택해 롤링페이퍼를 남겨보세요."} />
+        </OptionAreaTitleContainer>
         <OptionContainer>
           {memoBackgroundOptions.image.map((el) => {
             return (
@@ -125,7 +127,7 @@ const MakingStep = () => {
               >
                 <MemoPaper
                   background={el.background}
-                  text={"텍스트"}
+                  text={"Aa"}
                   color={el.textColor}
                   isSelected={JSON.stringify(el) === JSON.stringify(memo.style)}
                 />
@@ -156,8 +158,8 @@ const PageWrapper = styled.div`
 `;
 
 const BoardArea = styled.div`
-  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100vw;
@@ -173,23 +175,6 @@ const BoardArea = styled.div`
   background-repeat: no-repeat;
 `;
 
-const MemoTextContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: 80%;
-  background: ${(props) =>
-    props.background.includes("http")
-      ? `url(${props.background})`
-      : props.background};
-  color: ${(props) => props.color};
-  border-radius: 0.5rem;
-  padding: 1.25rem;
-  font-size: 1.25rem;
-  font-weight: 400;
-`;
-
 const MemoPlaceHolder = styled.span`
   width: 100%;
   opacity: 0.4;
@@ -200,17 +185,19 @@ const MemoPlaceHolder = styled.span`
 `;
 
 const MemoTextIndicator = styled.pre`
-  position: absolute;
+  position:absolute;
+  bottom: 1rem;
+  right: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  right: 2.5rem;
-  bottom: 0.75rem;
-  color: black;
+  color: ${theme.colors.grey_20};
   font-size: 0.875rem;
   font-weight: 500;
-  border-radius: 0.5rem;
-  margin: 0;
+  border-radius: 0.25rem;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: ${theme.dimmed.opacitiy_w};
 `;
 
 const OptionArea = styled.div`
@@ -219,22 +206,26 @@ const OptionArea = styled.div`
   width: 100%;
   height: 100%;
   align-items: flex-start;
-  padding: 0.5rem;
+  padding: 1rem 0 0 0.25rem;
 `;
+
+const OptionAreaTitleContainer = styled.div`
+  padding-left: 1rem;
+`
 
 const OptionContainer = styled.ul`
   width: 100%;
   list-style: none;
   margin: 0;
-  padding: 0;
-  margin-top: 1rem;
+  padding: 0 0.5rem;
+  margin-top: 0.75rem;
   overflow: scroll;
   flex-grow: 1;
 `;
 
 const Option = styled.li`
   float: left;
-  margin: 0.25rem;
+  margin: 0.5rem;
 `;
 
 const FooterButtonArea = styled.div`

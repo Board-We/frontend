@@ -12,7 +12,7 @@ export const boardState = atom({
     openStartTime: new Date(new Date().getTime() + 1209600000),
     openEndTime: new Date(new Date().getTime() + 2419200000),
     password: undefined,
-    privateMode: false,
+    openType: "", // "PUBLIC" or "PRIVATE"
     background:
       "https://dimg.donga.com/wps/NEWS/IMAGE/2022/12/03/116825963.2.jpg",
     font: "san-serif",

@@ -10,6 +10,11 @@ const ComponentWrapper = styled.span`
     font-size: 1.75rem;
     font-weight: 500;
     color: ${props => props.color};
+
+    span {
+        color:${(props)=>props.theme.colors.grey_30};
+        font-size:1.5rem;
+    }
 `
 
 export default Title
