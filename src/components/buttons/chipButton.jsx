@@ -31,7 +31,7 @@ const ComponentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: ${(props) => (props.fit ? `0.25rem 1.25rem` : `1.7rem 3rem`)};
-  width: ${(props) => (props.width ? props.width : "fit-content")};
+  max-width: ${(props) => (props.width ? props.width : "600px")};
   height: 3rem;
   font-size: 1rem;
   color: ${(props) => props.theme.colors.black};

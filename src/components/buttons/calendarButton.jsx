@@ -42,7 +42,7 @@ const collapseCalendarButton = keyframes`
 `;
 
 const ComponentWrapper = styled.div`
-  width: 600px;
+  max-width: 600px;
   position: absolute;
   bottom: 0;
   right: 0;

@@ -98,11 +98,11 @@ const Main = () => {
               <ServiceMainImage>
                 <ChipButton
                   text="새 보드 만들기"
-                  width="500px"
+                  width="550px"
                   onClick={handleClickCreateNewboard}
                   flat
                   sx={
-                    "position : fixed; z-index: 999999; left:0; right: 0; margin: 0 auto;"
+                    "position : fixed; z-index: 999999; left:0; right: 0; margin: 0 auto; "
                   }
                 />
               </ServiceMainImage>
