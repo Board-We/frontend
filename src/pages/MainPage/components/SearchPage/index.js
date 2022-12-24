@@ -72,6 +72,7 @@ const SearchPage = ({ keyword, searchResults }) => {
                       boardName={result.boardName}
                       boardViews={result.boardViews}
                       boardBackground={result.boardBackground}
+                      sx={"margin: 0;"}
                     />
                   ))}
                 </SearchResultList>
@@ -161,8 +162,12 @@ const Highlight = styled.div`
 `;
 
 const SearchResultSection = styled.div`
+  width: 100%;
   position: relative;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10rem;
   p {
     text-align: start;
     font-size: 1.1rem;
@@ -174,8 +179,10 @@ const SearchResultSection = styled.div`
 const SearchResultList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 0fr);
-  row-gap: 1rem;
+  gap: 1rem;
   margin-top: 1rem;
+  align-items: center;
+  justify-items: center;
 `;
 
 const ChevronTopButton = styled.button`

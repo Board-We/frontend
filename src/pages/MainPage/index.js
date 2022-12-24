@@ -83,7 +83,7 @@ const Main = () => {
         onWheel={handleWheelPage}
         onTouchStart={handleTouchStartPage}
         onTouchMove={handleTouchMovePage}
-        searchModeType={searchModeType}
+        noSearchResult={searchResults.length === 0}
       >
         <MainPageContainer>
           <ServiceNameHeader
@@ -141,13 +141,13 @@ export default Main;
 const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: ${(props) => props.searchModeType && "100vh"};
+  height: ${(props) => props.noSearchResult && "100vh"};
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
   background-color: ${(props) =>
-    props.searchModeType && props.theme.colors.grey_50};
+    props.noSearchResult && props.theme.colors.grey_50};
 `;
 
 const MainPageContainer = styled.div`
