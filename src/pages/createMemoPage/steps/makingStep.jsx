@@ -9,7 +9,6 @@ import FooterButton from "../../../components/buttons/FooterButton";
 import SmallTitle from "../../../components/label/smallTitle";
 import StepHeader from "../../../components/layout/headers/stepHeader";
 import Memo from "../../../components/memo";
-import MemoPaper from "../../../components/memoPaper";
 import AlertModal from "../../../components/modals/alertModal";
 import { boardState, memoStyleState } from "../../../store";
 import { theme } from "../../../styles/theme";
@@ -117,7 +116,7 @@ const MakingStep = () => {
                 key={JSON.stringify(el)}
                 onClick={() => onClickMemoPaper(el)}
               >
-                <MemoPaper
+                <Memo
                   background={el.background}
                   text={"Aa"}
                   color={el.textColor}

@@ -5,7 +5,6 @@ import { boardState, deviceScreenState } from "../../../store";
 import PasswordModal from "../BoardPageModal/PasswordModal";
 import { useEffect, useRef, useState } from "react";
 import Toast from "../components/toast";
-import MemoOnBoard from "../../../components/memoOnBoard";
 import Spinner from "../components/spinner";
 import { deleteBoard } from "../../../api/boardsApi";
 import { deleteMemo } from "../../../api/memoApi";
@@ -13,6 +12,7 @@ import AlertModal from "../../../components/modals/alertModal";
 import CheckableMemo from "../components/CheckableMemo";
 import CalendarButton from "../../../components/buttons/calendarButton";
 import BlockAccessBoard from "../components/blockAccessBoard";
+import Memo from "../../../components/memo";
 
 const BoardOnOpen = ({
   passwordModalState,
@@ -25,19 +25,19 @@ const BoardOnOpen = ({
   setCheckedMemoList,
 }) => {
   const board = useRecoilValue(boardState);
-  const privateModeForTest = false;
+  const privateModeForTest = true;
 
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
 
   const [openToast, setOpenToast] = useState(true);
   const [openDueDate, setOpenDueDate] = useState(false);
-
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
   const [memoThemes, setMemoThemes] = useState({});
   const [visibleMemos, setVisibleMemos] = useState([]);
   const [isMemoLoading, setIsMemoLoading] = useState(true);
+  const [memoSize, setMemoSize] = useState(0)
   const $memoContainer = useRef();
 
   const handleClosePasswordModal = () => {
@@ -83,6 +83,10 @@ const BoardOnOpen = ({
     // 14 = service header 3rem + top 9 rem + padding bottom 2rem
     const newPaddingTop =
       deviceScreenSize.y - Number(deviceScreenSize.rem.replace("px", "")) * 14;
+    // 2.5 = padding left 1rem + padding right 1rem + gap between memo 0.5rem
+    const newMemoSize = ($memoContainer.current.clientWidth - Number(deviceScreenSize.rem.replace("px", "")) * 2.5) / 2
+
+    setMemoSize(newMemoSize)
     setPaddingTop(newPaddingTop);
   }, [deviceScreenSize]);
 
@@ -137,36 +141,34 @@ const BoardOnOpen = ({
             paddingTop={paddingTop}
           >
             {visibleMemos &&
-            privateModeForTest &&
-            !isDeleteMemoMode &&
-            !searchModeType
+              privateModeForTest &&
+              !isDeleteMemoMode &&
+              !searchModeType
               ? visibleMemos.map((el, i) => {
-                  // memoThemeId
-                  const theme = memoThemes[el.memoThemeId];
-                  return (
-                    <MemoOnBoard
-                      size={$memoContainer.current.clientWidth * 0.4}
-                      key={`${el}${i}`}
-                      text={el.memoContent}
-                      background={theme?.memoBackground}
-                      color={theme?.memoTextColor}
-                      marginOption={i % 2 === 0}
-                    />
-                  );
-                })
+                // memoThemeId
+                const theme = memoThemes[el.memoThemeId];
+                return (
+                  <Memo
+                    size={memoSize + 'px'}
+                    key={`${el}${i}`}
+                    text={el.memoContent}
+                    background={theme?.memoBackground}
+                    color={theme?.memoTextColor}
+                  />
+                );
+              })
               : null}{" "}
             {searchModeType &&
               searchResults &&
               searchResults.map((el, i) => {
                 const theme = memoThemes[el.memoThemeId];
                 return (
-                  <MemoOnBoard
-                    size={$memoContainer.current.clientWidth * 0.4}
+                  <Memo
+                    size={memoSize + 'px'}
                     key={`${el}${i}`}
                     text={el.memoContent}
                     background={theme?.memoBackground}
                     color={theme?.memoTextColor}
-                    marginOption={i % 2 === 0}
                   />
                 );
               })}
@@ -248,6 +250,8 @@ const MemoContainer = styled.div`
   left: 0;
   padding-top: ${(props) => `${props.paddingTop}px`};
   padding-bottom: 2.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   width: 100%;
   height: 0;
   display: grid;

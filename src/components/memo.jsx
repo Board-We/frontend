@@ -14,14 +14,15 @@ const Memo = ({ text, onChangeText, color = "black", background = "white", size,
         const newSizeUnit = $memo.current.clientWidth / 17
         setSizeUnit(newSizeUnit)
         setHeightTA(newSizeUnit * 2.5)
-    }, [$memo])
+        setMemoText(text)
+    }, [size])
 
     useEffect(() => {
         if (memoText.length > 100 || memoText.split('\n').length > 5) {
             setMemoText(prevMemo.current)
             return
         } else {
-            onChangeText(memoText)
+            if (onChangeText) onChangeText(memoText)
         }
     }, [memoText])
 
@@ -29,7 +30,6 @@ const Memo = ({ text, onChangeText, color = "black", background = "white", size,
         prevMemo.current = text
         const newText = e.target.value
         const newHeight = e.target.scrollHeight
-        console.log(e)
 
         setHeightTA(newHeight)
         setMemoText(newText);
@@ -37,9 +37,11 @@ const Memo = ({ text, onChangeText, color = "black", background = "white", size,
 
     return (
         <ComponentWrapper ref={$memo} background={background} size={size} sizeUnit={sizeUnit} >
-            <MemoTextTA value={memoText} color={color} onChange={onChangeMemoTextTA} fontSize={sizeUnit} placeholder={"남기고 싶은 내용을\n마음껏 작성해주세요!"} height={heightTA}>
-                {!onChangeMemoTextTA && text}
-            </MemoTextTA>
+            {
+                onChangeText ?
+                    <MemoTextTA value={memoText} color={color} onChange={onChangeMemoTextTA} fontSize={sizeUnit} placeholder={"남기고 싶은 내용을\n마음껏 작성해주세요!"} height={heightTA} />
+                    : <MemoText color={color} fontSize={sizeUnit} >{text}</MemoText>
+            }
             {children}
         </ComponentWrapper>
     )
@@ -76,6 +78,11 @@ const MemoTextTA = styled.textarea`
         border: 0;
         outline: 0;
     }
+`
+
+const MemoText = styled.div`
+    font-size: ${props => props.fontSize}px;
+    color: ${props => props.color};
 `
 
 export default Memo
