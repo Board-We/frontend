@@ -11,6 +11,7 @@ import CheckableMemo from "../components/CheckableMemo";
 import CalendarButton from "../../../components/buttons/calendarButton";
 import BlockAccessBoard from "../components/blockAccessBoard";
 import Memo from "../../../components/memo";
+import AlertModal from "../../../components/modals/alertModal";
 
 const BoardOnOpen = ({
   passwordModalState,
@@ -25,8 +26,11 @@ const BoardOnOpen = ({
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
 
+  const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
+
   const [openToast, setOpenToast] = useState(true);
   const [openDueDate, setOpenDueDate] = useState(false);
+
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
   const [memoThemes, setMemoThemes] = useState({});
@@ -35,16 +39,23 @@ const BoardOnOpen = ({
   const [memoSize, setMemoSize] = useState(0);
   const $memoContainer = useRef();
 
+  const handleClickDeleteMemo = () => {
+    setIsOpenDeleteMemoModal(true);
+  };
+  const handleCloseDeleteMemoModal = () => {
+    setIsDeleteMemoMode(false);
+  };
+
+  const handleConfirmDeleteMemo = async (boardCode) => {
+    const deleted = await deleteMemo({ boardCode, checkedMemoList });
+    setIsOpenDeleteMemoModal(false);
+  };
+
   const handleChangeCheckableMemo = (e) => {
     if (e.target.checked) {
       setCheckedMemoList([...checkedMemoList, e.target.value]);
     } else
       setCheckedMemoList(checkedMemoList.filter((id) => id !== e.target.value));
-  };
-
-  const handleClickDeleteMemo = async (boardCode) => {
-    const deleted = await deleteMemo({ boardCode, checkedMemoList });
-    setIsDeleteMemoMode(false);
   };
 
   useEffect(() => {
@@ -182,6 +193,14 @@ const BoardOnOpen = ({
         </>
       )}
       {!privateModeForTest && <BlockAccessBoard />}
+      <AlertModal
+        open={isOpenDeleteMemoModal}
+        onClickArray={[handleCloseDeleteMemoModal, handleConfirmDeleteMemo]}
+        buttonTextArray={["취소", "삭제하기"]}
+        text="정말 삭제할까요?"
+        subText="한번 삭제하면 되돌릴 수 없습니다"
+        onClose={handleCloseDeleteMemoModal}
+      />
     </PageWrapper>
   );
 };
