@@ -15,7 +15,6 @@ import { theme } from "../../../styles/theme";
 
 const MakingStep = () => {
   const board = useRecoilValue(boardState);
-  const $memo = useRef();
   const [memo, setMemo] = useRecoilState(memoStyleState);
   const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();

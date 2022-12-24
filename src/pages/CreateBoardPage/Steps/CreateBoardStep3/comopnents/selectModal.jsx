@@ -1,17 +1,28 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { ReactComponent as Camera } from "../../../../../assets/camera.svg";
+import CameraIcon from "../../../../../assets/camera.svg";
 import { ReactComponent as Close } from "../../../../../assets/close.svg";
 import styled from "styled-components";
 import TapBar from "../../../../../components/buttons/tapBar";
 import TapButton from "../../../../../components/buttons/tapButton";
 import { theme } from "../../../../../styles/theme";
 import ColorPicker from "./colorPicker";
+import { useRef } from "react";
 
 const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
   const [color, setColor] = useState("#FFFFFF");
   const [selectedMemoIndex, setSelectedMemoIndex] = useState(0);
   const [selectedMenu, setSelectedMenu] = useState("bgImage");
+  const $file = useRef()
+
+  useEffect(() => {
+    if (option === "메모지") {
+      const memoTheme = board.memoThemes[selectedMemoIndex];
+      setSelectedMenu(isImage(memoTheme.memoBackground) ? "bgImage" : "bgColor")
+    } else if (option === "배경") {
+      setSelectedMenu(isImage(board.boardBackground) ? "bgImage" : "bgColor")
+    }
+  }, [])
 
   useEffect(() => {
     if (option === "메모지") {
@@ -99,38 +110,41 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
     setColor(e);
   };
 
+  const onClickCameraIcon = () => {
+    $file.current.click()
+  }
+
+  const getImageComponent = () => {
+    return (
+      <Camera htmlFor="bgFileInput" src={CameraIcon} onClick={onClickCameraIcon} />
+    )
+  }
+
+  const isImage = (data) => {
+    if (data.includes('http') || data.includes('base64')) return true
+    else return false
+  }
+
   const getBackgroundImageContainer = () => {
     return (
       <BackgroundImageContainer>
         {option === "배경" ? (
-          board.boardBackground.includes("http") ? (
-            <BackgroundImage src={board.boardBackground} />
-          ) : (
-            <>
-              <Camera htmlFor="bgFileInput" />
-              <ImageFileInput
-                type="file"
-                id="bgFileInput"
-                onChange={onChangeBackgroundImage}
-              />
-            </>
-          )
-        ) : board.memoThemes[selectedMemoIndex].memoBackground.includes(
-            "http"
-          ) ? (
+          isImage(board.boardBackground) ? (
+            <BackgroundImage src={board.boardBackground}
+              onClick={onClickCameraIcon} />
+          ) : getImageComponent()
+        ) : isImage(board.memoThemes[selectedMemoIndex].memoBackground) ? (
           <BackgroundImage
             src={board.memoThemes[selectedMemoIndex].memoBackground}
+            onClick={onClickCameraIcon}
           />
-        ) : (
-          <>
-            <Camera htmlFor="bgFileInput" />
-            <ImageFileInput
-              type="file"
-              id="bgFileInput"
-              onChange={onChangeBackgroundImage}
-            />
-          </>
-        )}
+        ) : getImageComponent()
+        }
+        <ImageFileInput
+          type="file"
+          ref={$file}
+          onChange={onChangeBackgroundImage}
+        />
       </BackgroundImageContainer>
     );
   };
@@ -159,8 +173,6 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
       </MemoOptionContainer>
     );
   };
-
-  console.log(board);
 
   return (
     <ComponentWrapper open={open}>
@@ -245,6 +257,7 @@ const BackgroundImageContainer = styled.div`
   width: 100%;
   height: max-content;
   max-height: 12rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -252,9 +265,12 @@ const BackgroundImageContainer = styled.div`
 
 const BackgroundImage = styled.img`
   max-height: 12rem;
+  max-width: 100%;
 `;
 
-const ImageFileInput = styled.input``;
+const ImageFileInput = styled.input`
+  display: none;
+`;
 
 const Footer = styled.div`
   background: transparent;
@@ -266,5 +282,10 @@ const Footer = styled.div`
   align-items: center;
   padding: 0 1rem;
 `;
+
+const Camera = styled.img`
+  width: 30%;
+  height: 30%;
+`
 
 export default SelectModal;
