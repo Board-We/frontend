@@ -9,7 +9,6 @@ import FooterButton from "../../../components/buttons/FooterButton";
 import SmallTitle from "../../../components/label/smallTitle";
 import StepHeader from "../../../components/layout/headers/stepHeader";
 import Memo from "../../../components/memo";
-import MemoPaper from "../../../components/memoPaper";
 import AlertModal from "../../../components/modals/alertModal";
 import { boardState, memoStyleState } from "../../../store";
 import { theme } from "../../../styles/theme";
@@ -41,9 +40,8 @@ const MakingStep = () => {
   }, [board]);
 
   const onChangeText = (text) => {
-    console.log(text)
-    // const newText = text;
-    // setMemo({ ...memo, text: newText });
+    const newText = text;
+    setMemo({ ...memo, text: newText });
   };
 
   const onClickBack = () => {
@@ -94,16 +92,9 @@ const MakingStep = () => {
           size={"75%"}
           background={memo.style.background}
           color={memo.style.textColor}
-          text={memo.text} 
+          text={memo.text}
           onChangeText={onChangeText}
         >
-          {memo.text.length == 0 ? (
-            <MemoPlaceHolder>
-              남기고 싶은 내용을
-              <br />
-              마음껏 작성해주세요!
-            </MemoPlaceHolder>
-          ) : null}
           <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
         </Memo>
       </BoardArea>
@@ -125,7 +116,7 @@ const MakingStep = () => {
                 key={JSON.stringify(el)}
                 onClick={() => onClickMemoPaper(el)}
               >
-                <MemoPaper
+                <Memo
                   background={el.background}
                   text={"Aa"}
                   color={el.textColor}
@@ -175,7 +166,7 @@ const BoardArea = styled.div`
   background-repeat: no-repeat;
 `;
 
-const MemoPlaceHolder = styled.span`
+const MemoPlaceHolder = styled.div`
   width: 100%;
   opacity: 0.4;
   color: #000000;
