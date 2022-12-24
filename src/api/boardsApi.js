@@ -16,8 +16,13 @@ export const requestSearchBoard = async ({ query, page = 0, size = 10 }) => {
     method: "GET",
     url: `/board/search?query=${query}&page=${page}&size=${size}`,
   });
-  console.log(res);
   return res.data.content;
+};
+
+export const requestHotBoardList = async () => {
+  const res = await request({ method: "GET", url: "/boards/hot" });
+  console.log(res);
+  return res.data;
 };
 
 export const deleteBoard = async ({ boardCode, password }) => {
@@ -28,11 +33,6 @@ export const deleteBoard = async ({ boardCode, password }) => {
   });
   if (res.status === 200) return true;
   return false;
-};
-
-export const getHotBoardsList = async () => {
-  const res = await request({ method: "GET", url: "/boards/hot" });
-  return res.data;
 };
 
 export const requestLoginBoard = async ({ password, boardCode }) => {

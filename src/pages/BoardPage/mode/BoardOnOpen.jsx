@@ -25,7 +25,7 @@ const BoardOnOpen = ({
   setCheckedMemoList,
 }) => {
   const board = useRecoilValue(boardState);
-  const privateModeForTest = false;
+  const privateModeForTest = true;
 
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);

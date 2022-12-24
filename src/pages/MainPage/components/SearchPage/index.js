@@ -3,17 +3,16 @@ import Slide from "../BoardSlide/Slide";
 import { ReactComponent as ChevronTop } from "../../../../assets/icons/chevronTop.svg";
 import BoardSlide from "../BoardSlide";
 import { useCallback, useEffect, useState } from "react";
-import { getHotBoardsList } from "../../../../api/boardsApi";
-import { reccomendBoardsData } from "../../../../api/mockData";
+import { requestHotBoardList } from "../../../../api/boardsApi";
 
 const SearchPage = ({ keyword, searchResults }) => {
-  const [hotBoardList, setHotBoardList] = useState(reccomendBoardsData);
+  const [hotBoardList, setHotBoardList] = useState([]);
   const handleClickChevronTop = () => {
     window.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
 
   const getHotBoardsData = useCallback(async () => {
-    const data = await getHotBoardsList();
+    const data = await requestHotBoardList();
     if (data) setHotBoardList(data);
   }, []);
 
