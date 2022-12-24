@@ -7,26 +7,21 @@ import styled from "styled-components";
 import ChipButton from "../../../components/buttons/chipButton";
 import Description from "../../../components/label/description";
 import SmallTitle from "../../../components/label/smallTitle";
-import Tag from "../../../components/label/tag";
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader";
-import { boardState, memoStyleState } from "../../../store";
+import { boardState } from "../../../store";
 import {
   formattingDateObject,
-  setDefaultOpenDay,
 } from "../../../utils/setDefaultDay";
-import MemoTextArea from "../components/memoTextArea";
 
 const EndStep = () => {
   const board = useRecoilValue(boardState);
-  const memo = useRecoilValue(memoStyleState);
   const navigate = useNavigate();
-  const [timer, setTimer] = useState(3);
 
   useEffect(() => {
     setTimerForFlip();
   }, []);
 
-  const setTimerForFlip = () => {};
+  const setTimerForFlip = () => { };
 
   const onClickMoreMemo = () => {
     navigate("/board/onWrite");
@@ -42,9 +37,7 @@ const EndStep = () => {
         </Description>
         <EndStepImage />
       </BodyContainer>
-      <Alertcontainer>
-        {/* <ChipButton flat fit color={"black"} background={"#E8E8E8"} text={"인기보드 보기"} onClick={onClickTopBoard}></ChipButton> */}
-        {/* <ChipButton flat fit text={"롤링페이퍼 더 붙이기"} onClick={onClickMoreMemo} /> */}
+      <ButtonContainer>
         <ChipButton
           flat
           width={"80%"}
@@ -56,9 +49,9 @@ const EndStep = () => {
           backgroundGrey={true}
           width={"80%"}
           text={"공유하기"}
-          onClick={() => {}}
+          onClick={() => { }}
         />
-      </Alertcontainer>
+      </ButtonContainer>
     </PageWrapper>
   );
 };
@@ -76,23 +69,20 @@ const BodyContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: -10%;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-grow: 1;
   margin: auto auto;
 `;
 
 const EndStepImage = styled.div`
-  width: 20rem;
-  height: 20rem;
+  width: 75vw;
+  height: 75vw;
+  max-width: 400px;
+  max-height: 400px;
   background-color: #d9d9d9;
 `;
 
-const Alertcontainer = styled.div`
+const ButtonContainer = styled.div`
   width: 100%;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
