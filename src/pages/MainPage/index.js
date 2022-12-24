@@ -9,6 +9,7 @@ import EnterLinkInput from "./components/EnterLinkInput";
 import BoardSlide from "./components/BoardSlide/index";
 import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
+import mainImage from "../../assets/images/mainImage.png";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -166,4 +167,8 @@ const ServiceMainImage = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  background-image: url(${mainImage});
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
 `;
