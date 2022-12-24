@@ -9,6 +9,7 @@ const ChipButton = ({
   onClick,
   children,
   backgroundGrey,
+  sx,
 }) => {
   return (
     <ComponentWrapper
@@ -17,6 +18,7 @@ const ChipButton = ({
       fit={fit}
       onClick={onClick}
       backgroundGrey={backgroundGrey}
+      sx={sx}
     >
       {text}
       {children}
@@ -42,6 +44,7 @@ const ComponentWrapper = styled.div`
   box-shadow: ${(props) => (props.flat ? "" : "2px 2px 8px black")};
   user-select: none;
   cursor: pointer;
+  ${(props) => props.sx}
 `;
 
 export default ChipButton;

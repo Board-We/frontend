@@ -12,7 +12,7 @@ export const request = ({ method, url, data }) => {
     data,
   })
     .then((res) => {
-      return res.data;
+      return res;
     })
     .catch((err) => err);
 };

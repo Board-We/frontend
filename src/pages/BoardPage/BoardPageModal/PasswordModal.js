@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
-import { ReactComponent as Close } from "../../../assets/close.svg";
+import { ReactComponent as Close } from "../../../assets/icons/close.svg";
 import { requestLoginBoard } from "../../../api/boardsApi";
 
 const PasswordModal = ({ open, onClose, onValid }) => {

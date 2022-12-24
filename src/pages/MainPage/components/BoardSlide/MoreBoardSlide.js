@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReactComponent as ArrowBack } from "../../../../assets/arrowBack.svg";
+import { ReactComponent as ArrowBack } from "../../../../assets/icons/arrowBack.svg";
 
 const MoreBoardSlide = () => {
   return (

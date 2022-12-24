@@ -5,7 +5,7 @@ export const postUserBoardState = async ({ boardState }) => {
   return res.boardLink;
 };
 
-export const getReccomendBoardsList = async () => {
+export const requestReccomendBoardList = async () => {
   const res = await request({ method: "GET", url: "/boards/recommend" });
   return res.data;
 };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Slide from "../BoardSlide/Slide";
-import { ReactComponent as ChevronTop } from "../../../../assets/chevronTop.svg";
+import { ReactComponent as ChevronTop } from "../../../../assets/icons/chevronTop.svg";
 import BoardSlide from "../BoardSlide";
 import { useCallback, useEffect, useState } from "react";
 import { getHotBoardsList } from "../../../../api/boardsApi";
@@ -8,8 +8,7 @@ import { reccomendBoardsData } from "../../../../api/mockData";
 
 const SearchPage = ({ keyword, searchResults }) => {
   const [hotBoards, setHotBoards] = useState(reccomendBoardsData);
-  console.log(hotBoards);
-  console.log(hotBoards);
+
   const handleClickChevronTop = () => {
     window.scroll(0, 0);
   };
@@ -28,24 +27,24 @@ const SearchPage = ({ keyword, searchResults }) => {
       {keyword ? (
         <SearchResultHeader>
           {searchResults && searchResults.length > 0 ? (
-            <p>
+            <div>
               "
               <KeywordBox>
                 <span>{`${keyword}`}</span>
                 <Highlight></Highlight>
               </KeywordBox>
               " 검색결과를 찾았어요 🔍
-            </p>
+            </div>
           ) : searchResults && searchResults.length === 0 ? (
             <>
-              <p>
+              <div>
                 "
                 <KeywordBox>
                   <span>{`${keyword}`}</span>
                   <Highlight></Highlight>
                 </KeywordBox>
                 " 검색결과가 없어요 😥
-              </p>
+              </div>
               <p>대신 이런 인기보드는 어떠세요?</p>
             </>
           ) : null}

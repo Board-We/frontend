@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getReccomendBoardsList, searchBoards } from "../../api/boardsApi";
-import { reccomendBoardsData } from "../../api/mockData";
+import { requestReccomendBoardList, searchBoards } from "../../api/boardsApi";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
@@ -13,7 +12,7 @@ import ServiceFooter from "./components/ServiceFooter";
 
 const Main = () => {
   const navigate = useNavigate();
-  const [reccomendBoards, setReccomendBoards] = useState(reccomendBoardsData);
+  const [reccomendBoardList, setReccomendBoardList] = useState([]);
 
   const [searchModeType, setSearchModeType] = useState("");
   const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
@@ -65,14 +64,14 @@ const Main = () => {
     }
   };
 
-  const getReccomendBoardsData = useCallback(async () => {
-    const data = await getReccomendBoardsList();
-    if (data) setReccomendBoards(data);
+  const getReccomendBoardList = useCallback(async () => {
+    const data = await requestReccomendBoardList();
+    if (data) setReccomendBoardList(data);
   }, []);
 
   useEffect(() => {
-    getReccomendBoardsData();
-  }, [getReccomendBoardsData]);
+    getReccomendBoardList();
+  }, [getReccomendBoardList]);
 
   return (
     <>
@@ -94,9 +93,12 @@ const Main = () => {
               <ServiceMainImage>
                 <ChipButton
                   text="새 보드 만들기"
-                  width="100%"
+                  width="500px"
                   onClick={handleClickCreateNewboard}
                   flat
+                  sx={
+                    "position : fixed; z-index: 999999; left:0; right: 0; margin: 0 auto;"
+                  }
                 />
               </ServiceMainImage>
               <MainPageBody>
@@ -104,7 +106,7 @@ const Main = () => {
                 <BoardSlide
                   title="추천 보드"
                   description="공개한 보드는 랜덤으로 추천됩니다!"
-                  boards={reccomendBoards}
+                  boards={reccomendBoardList}
                   positionValue="70%"
                 />
               </MainPageBody>

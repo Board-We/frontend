@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import Backdrop from "./backdrop";
-import { ReactComponent as Alert } from "../../assets/alert.svg";
+import { ReactComponent as Alert } from "../../assets/icons/alert.svg";
 
 const AlertModal = ({ open, onClickArray, buttonTextArray, text, onClose }) => {
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import styled, { keyframes, css } from "styled-components";
-import { ReactComponent as Calendar } from "../../assets/calendar.svg";
+import { ReactComponent as Calendar } from "../../assets/icons/calendar.svg";
 import { boardState } from "../../store";
 import { formattingDateObject } from "../../utils/setDefaultDay";
 

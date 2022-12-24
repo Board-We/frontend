@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReactComponent as Pen } from "../../../../assets/pen.svg";
+import { ReactComponent as Pen } from "../../../../assets/icons/pen.svg";
 
 const Slide = ({ boardLink, boardName, boardViews, boardBackground }) => {
   return (
