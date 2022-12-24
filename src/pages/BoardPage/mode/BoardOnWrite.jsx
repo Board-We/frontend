@@ -37,7 +37,13 @@ const BoardOnWrite = () => {
     <PageWrapper>
       <BoardBackground boardInfo={board} />
       <Buttons>
-        <ChipButton onClick={onClickMMP} text={"롤링페이퍼 남기기"} flat />
+        <ChipButton
+          width={"550px"}
+          onClick={onClickMMP}
+          text={"롤링페이퍼 남기기"}
+          flat
+          sx={"left:0; right: 0; margin: 0 auto; "}
+        />
       </Buttons>
     </PageWrapper>
   );

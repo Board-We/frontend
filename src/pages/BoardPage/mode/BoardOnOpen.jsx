@@ -2,13 +2,11 @@ import styled from "styled-components";
 import BoardBackground from "../components/boardBackground";
 import { useRecoilValue } from "recoil";
 import { boardState, deviceScreenState } from "../../../store";
-import PasswordModal from "../BoardPageModal/PasswordModal";
 import { useEffect, useRef, useState } from "react";
 import Toast from "../components/toast";
 import Spinner from "../components/spinner";
 import { deleteBoard } from "../../../api/boardsApi";
 import { deleteMemo } from "../../../api/memoApi";
-import AlertModal from "../../../components/modals/alertModal";
 import CheckableMemo from "../components/CheckableMemo";
 import CalendarButton from "../../../components/buttons/calendarButton";
 import BlockAccessBoard from "../components/blockAccessBoard";
@@ -27,9 +25,6 @@ const BoardOnOpen = ({
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
 
-  const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
-    useState(false);
-
   const [openToast, setOpenToast] = useState(true);
   const [openDueDate, setOpenDueDate] = useState(false);
   const deviceScreenSize = useRecoilValue(deviceScreenState);
@@ -39,28 +34,6 @@ const BoardOnOpen = ({
   const [isMemoLoading, setIsMemoLoading] = useState(true);
   const [memoSize, setMemoSize] = useState(0);
   const $memoContainer = useRef();
-
-  const handleClosePasswordModal = () => {
-    setPasswordModalState({ ...passwordModalState, open: false });
-  };
-
-  const handleValidPassword = () => {
-    if (passwordModalState.type === "deleteBoard")
-      setIsOpenConfirmDeleteModal(true);
-    else if (passwordModalState.type === "deleteMemo")
-      setIsDeleteMemoMode(true);
-    else if (passwordModalState.type === "privateBoard")
-      console.log("진입 허가");
-  };
-
-  const handleCloseConfirmDeleteModal = () => {
-    setIsOpenConfirmDeleteModal(false);
-  };
-
-  const handleConfirmDeleteBoard = async ({ boardCode, password }) => {
-    const deleted = await deleteBoard({ boardCode, password }); // param : {boardCode, password}
-    setIsOpenConfirmDeleteModal(false);
-  };
 
   const handleChangeCheckableMemo = (e) => {
     if (e.target.checked) {
@@ -175,21 +148,6 @@ const BoardOnOpen = ({
                   />
                 );
               })}
-            <PasswordModal
-              open={passwordModalState.open}
-              onClose={handleClosePasswordModal}
-              onValid={handleValidPassword}
-            />
-            <AlertModal
-              open={isOpenConfirmDeleteModal}
-              onClickArray={[
-                handleCloseConfirmDeleteModal,
-                handleConfirmDeleteBoard,
-              ]}
-              buttonTextArray={["취소", "삭제하기"]}
-              text="보드를 삭제하면 되돌릴 수 없습니다."
-              onClose={handleCloseConfirmDeleteModal}
-            />
           </MemoContainer>
         </>
       )}
@@ -220,14 +178,7 @@ const BoardOnOpen = ({
       {!isDeleteMemoMode && privateModeForTest && (
         <>
           <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
-          <CalendarButton
-            open={openDueDate}
-            isHidden={
-              passwordModalState.open ||
-              isDeleteMemoMode ||
-              isOpenConfirmDeleteModal
-            }
-          />
+          <CalendarButton open={openDueDate} />
         </>
       )}
       {!privateModeForTest && <BlockAccessBoard />}
@@ -291,10 +242,10 @@ const DeleteMemoButton = styled.button`
 
 const DeleteMemoContianer = styled.div`
   position: absolute;
-  top: 1rem;
+  background-color: ${(props) => props.theme.colors.grey_50};
+  top: 0;
   left: 0;
-  padding-top: ${(props) => `${props.paddingTop}px`};
-  padding-bottom: 2.5rem;
+  padding: 1.5rem 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -303,7 +254,7 @@ const DeleteMemoContianer = styled.div`
   align-items: center;
   overflow-y: scroll;
   overflow-x: hidden;
-  grid-gap: 0.5rem;
+  grid-gap: 1rem;
   z-index: 3;
   &::-webkit-scrollbar {
     width: 0;

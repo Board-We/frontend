@@ -13,7 +13,7 @@ const PasswordModal = ({ open, onClose, onValid }) => {
 
   const handleClickConfrimPassword = async ({ boardCode }) => {
     // boardCode는 임의로 처리
-    const isSuccess = await requestLoginBoard({ password, boardCode });
+    // const isSuccess = await requestLoginBoard({ password, boardCode });
     if (true) {
       onValid();
       setPassword("");

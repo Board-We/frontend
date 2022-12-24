@@ -28,6 +28,7 @@ const ChipButton = ({
 
 const ComponentWrapper = styled.div`
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   padding: ${(props) => (props.fit ? `0.25rem 1.25rem` : `1.7rem 3rem`)};

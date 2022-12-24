@@ -5,6 +5,7 @@ import { ReactComponent as Config } from "../../../assets/icons/config.svg";
 import { ReactComponent as Search } from "../../../assets/icons/search.svg";
 import { ReactComponent as ChevronLeft } from "../../../assets/icons/chevronLeft.svg";
 import DropDownMenu from "./dropDownMenu";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ServiceNameHeader = ({
   searchModeType,
@@ -18,9 +19,11 @@ const ServiceNameHeader = ({
   checkedMemoList,
   setCheckedMemoList,
 }) => {
+  const navigate = useNavigate();
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
 
   const handleClickChevronLeft = () => {
+    navigate(-1);
     setSearchModeType("");
   };
 
