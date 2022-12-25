@@ -5,20 +5,25 @@ import TextLengthValidator from "../../../components/textLengthValidator";
 import { boardState } from "../../../store";
 import { ReactComponent as Delete } from "../../../assets/icons/delete.svg";
 import { ReactComponent as AlertExclamation } from "../../../assets/icons/alertExclamation.svg";
+import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const maxLength = 50;
 
 const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const [boardDescription, setBoardDescription] = useState("");
+  const [editable, setEditable] = useState(true);
   const [isValidLength, setIsValidLength] = useState(true);
 
   const handleChangeBoardDescription = (e) => {
-    setBoardDescription(e.target.innerText);
-    const currentBoardState = { ...board, description: e.target.innerText };
-    setBoard(currentBoardState);
+    if (e.currentTarget.textContent.length <= maxLength) {
+      setBoardDescription(e.currentTarget.textContent);
+      const currentBoardState = { ...board, description: e.target.innerText };
+      setBoard(currentBoardState);
+    }
   };
-  console.log(board.description);
+
+  console.log(boardDescription);
 
   const handleClickDeleteText = () => {
     setBoardDescription("");
@@ -31,15 +36,16 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   }, [boardDescription, setDisabledFooterButton, board.description.length]);
 
   useEffect(() => {
-    if (board.description.length > maxLength) setIsValidLength(false);
+    if (boardDescription.length > maxLength) setIsValidLength(false);
     else setIsValidLength(true);
-  }, [board.description, setIsValidLength]);
+  }, [boardDescription, setIsValidLength]);
 
   return (
     <CreateBoardStepContainer>
       <MultilineTextInput
-        contentEditable
+        contentEditable={editable}
         suppressContentEditableWarning={true}
+        textContent={boardDescription}
         isValidLength={isValidLength}
         placeholder="ex. 이 보드에 3일동안 메모를 남겨줘!"
         onInput={handleChangeBoardDescription}
@@ -56,7 +62,7 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
-          text={board.description}
+          text={boardDescription}
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>
@@ -101,6 +107,7 @@ const MultilineTextInput = styled.div`
     content: attr(placeholder);
     color: grey;
     display: inline-block;
+  }
 `;
 
 const DeleteButton = styled.button`
