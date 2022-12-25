@@ -9,9 +9,7 @@ import Description from "../../../components/label/description";
 import SmallTitle from "../../../components/label/smallTitle";
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader";
 import { boardState } from "../../../store";
-import {
-  formattingDateObject,
-} from "../../../utils/setDefaultDay";
+import { formattingDateObject } from "../../../utils/setDefaultDay";
 
 const EndStep = () => {
   const board = useRecoilValue(boardState);
@@ -21,7 +19,7 @@ const EndStep = () => {
     setTimerForFlip();
   }, []);
 
-  const setTimerForFlip = () => { };
+  const setTimerForFlip = () => {};
 
   const onClickMoreMemo = () => {
     navigate("/board/onWrite");
@@ -31,10 +29,12 @@ const EndStep = () => {
     <PageWrapper>
       <ServiceNameHeader />
       <BodyContainer>
-        <SmallTitle>롤링페이퍼가 작성되었어요! 🎉</SmallTitle>
-        <Description size={"medium"}>
-          {formattingDateObject(board.openStartTime)}에 공개됩니다.
-        </Description>
+        <TextContainer>
+          <SmallTitle>롤링페이퍼가 작성되었어요! 🎉</SmallTitle>
+          <Description size={"medium"}>
+            {formattingDateObject(board.openStartTime)}에 공개됩니다.
+          </Description>
+        </TextContainer>
         <EndStepImage />
       </BodyContainer>
       <ButtonContainer>
@@ -49,7 +49,7 @@ const EndStep = () => {
           backgroundGrey={true}
           width={"80%"}
           text={"공유하기"}
-          onClick={() => { }}
+          onClick={() => {}}
         />
       </ButtonContainer>
     </PageWrapper>
@@ -62,6 +62,14 @@ const PageWrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
 `;
 
 const BodyContainer = styled.div`
