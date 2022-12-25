@@ -5,9 +5,9 @@ import TextInput from "../../../components/TextInput";
 import TextLengthValidator from "../../../components/textLengthValidator";
 import { ReactComponent as Close } from "../../../assets/icons/close.svg";
 import { boardState } from "../../../store";
+const maxLength = 20;
 
 const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
-  const maxLength = 20;
   const inputRef = useRef();
 
   const [board, setBoard] = useRecoilState(boardState);
@@ -61,7 +61,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   useEffect(() => {
     if (boardName.length > maxLength) setIsValidLength(false);
     else setIsValidLength(true);
-  }, [boardName, maxLength, setIsValidLength]);
+  }, [boardName, setIsValidLength]);
 
   useEffect(() => {
     inputRef.current?.focus();
