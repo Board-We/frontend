@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { postUserBoardState } from "../../../../api/boardsApi";
 import SlideModal from "../../../../components/modals/slideModal";
 import { boardState } from "../../../../store";
+import { setDateISOstring } from "../../../../utils/setDefaultDay";
 import ModalContents from "./ModalContents";
 
 const CompleteCreate = () => {
@@ -15,7 +16,35 @@ const CompleteCreate = () => {
   const mockURL = "/board/bc57b0d3-259f-4f4e-b54f-c73d87cb4da4/welcome";
 
   useEffect(() => {
-    const res = postUserBoardState({});
+    const memoBackgroundList = [];
+    const memoTextColorsList = [];
+    board.memoThemes.map((val) => {
+      memoBackgroundList.push(val.memoBackground);
+      memoTextColorsList.push(val.memoTextColor);
+    });
+
+    const currentBoardState = {
+      boardName: board.name,
+      boardDescription: board.description,
+      tags: [...board.tags],
+      writingStartTime: setDateISOstring(board.writingStartTime),
+      writingEndTime: setDateISOstring(board.writingEndTime),
+      openStartTime: setDateISOstring(board.openStartTime),
+      openEndTime: setDateISOstring(board.openEndTime),
+      password: board.password,
+      openType: board.openType,
+      boardThemeId: board.boardBackground ? undefined : board.boardThemeId,
+
+      boardBackground: board.boardBackground,
+      boardFont: board.boardFont,
+      memoThemes: {
+        backgrounds: memoBackgroundList,
+        textColors: memoTextColorsList,
+      },
+    };
+
+    const res = postUserBoardState({ currentBoardState });
+
     if (res) {
       setBoardURL(res);
     }
