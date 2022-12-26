@@ -2,17 +2,16 @@ import styled from "styled-components";
 import BoardBackground from "../components/boardBackground";
 import { useRecoilValue } from "recoil";
 import { boardState, deviceScreenState } from "../../../store";
-import PasswordModal from "../BoardPageModal/PasswordModal";
 import { useEffect, useRef, useState } from "react";
 import Toast from "../components/toast";
 import Spinner from "../components/spinner";
 import { deleteBoard } from "../../../api/boardsApi";
 import { deleteMemo } from "../../../api/memoApi";
-import AlertModal from "../../../components/modals/alertModal";
 import CheckableMemo from "../components/CheckableMemo";
 import CalendarButton from "../../../components/buttons/calendarButton";
 import BlockAccessBoard from "../components/blockAccessBoard";
 import Memo from "../../../components/memo";
+import AlertModal from "../../../components/modals/alertModal";
 
 const BoardOnOpen = ({
   passwordModalState,
@@ -27,39 +26,29 @@ const BoardOnOpen = ({
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
 
-  const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
-    useState(false);
+  const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
 
   const [openToast, setOpenToast] = useState(true);
   const [openDueDate, setOpenDueDate] = useState(false);
+
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
   const [memoThemes, setMemoThemes] = useState({});
   const [visibleMemos, setVisibleMemos] = useState([]);
   const [isMemoLoading, setIsMemoLoading] = useState(true);
-  const [memoSize, setMemoSize] = useState(0)
+  const [memoSize, setMemoSize] = useState(0);
   const $memoContainer = useRef();
 
-  const handleClosePasswordModal = () => {
-    setPasswordModalState({ ...passwordModalState, open: false });
+  const handleClickDeleteMemo = () => {
+    setIsOpenDeleteMemoModal(true);
+  };
+  const handleCloseDeleteMemoModal = () => {
+    setIsDeleteMemoMode(false);
   };
 
-  const handleValidPassword = () => {
-    if (passwordModalState.type === "deleteBoard")
-      setIsOpenConfirmDeleteModal(true);
-    else if (passwordModalState.type === "deleteMemo")
-      setIsDeleteMemoMode(true);
-    else if (passwordModalState.type === "privateBoard")
-      console.log("진입 허가");
-  };
-
-  const handleCloseConfirmDeleteModal = () => {
-    setIsOpenConfirmDeleteModal(false);
-  };
-
-  const handleConfirmDeleteBoard = async ({ boardCode, password }) => {
-    const deleted = await deleteBoard({ boardCode, password }); // param : {boardCode, password}
-    setIsOpenConfirmDeleteModal(false);
+  const handleConfirmDeleteMemo = async (boardCode) => {
+    const deleted = await deleteMemo({ boardCode, checkedMemoList });
+    setIsOpenDeleteMemoModal(false);
   };
 
   const handleChangeCheckableMemo = (e) => {
@@ -67,11 +56,6 @@ const BoardOnOpen = ({
       setCheckedMemoList([...checkedMemoList, e.target.value]);
     } else
       setCheckedMemoList(checkedMemoList.filter((id) => id !== e.target.value));
-  };
-
-  const handleClickDeleteMemo = async (boardCode) => {
-    const deleted = await deleteMemo({ boardCode, checkedMemoList });
-    setIsDeleteMemoMode(false);
   };
 
   useEffect(() => {
@@ -84,9 +68,12 @@ const BoardOnOpen = ({
     const newPaddingTop =
       deviceScreenSize.y - Number(deviceScreenSize.rem.replace("px", "")) * 14;
     // 2.5 = padding left 1rem + padding right 1rem + gap between memo 0.5rem
-    const newMemoSize = ($memoContainer.current.clientWidth - Number(deviceScreenSize.rem.replace("px", "")) * 2.5) / 2
+    const newMemoSize =
+      ($memoContainer.current.clientWidth -
+        Number(deviceScreenSize.rem.replace("px", "")) * 2.5) /
+      2;
 
-    setMemoSize(newMemoSize)
+    setMemoSize(newMemoSize);
     setPaddingTop(newPaddingTop);
   }, [deviceScreenSize]);
 
@@ -141,22 +128,22 @@ const BoardOnOpen = ({
             paddingTop={paddingTop}
           >
             {visibleMemos &&
-              privateModeForTest &&
-              !isDeleteMemoMode &&
-              !searchModeType
+            privateModeForTest &&
+            !isDeleteMemoMode &&
+            !searchModeType
               ? visibleMemos.map((el, i) => {
-                // memoThemeId
-                const theme = memoThemes[el.memoThemeId];
-                return (
-                  <Memo
-                    size={memoSize + 'px'}
-                    key={`${el}${i}`}
-                    text={el.memoContent}
-                    background={theme?.memoBackground}
-                    color={theme?.memoTextColor}
-                  />
-                );
-              })
+                  // memoThemeId
+                  const theme = memoThemes[el.memoThemeId];
+                  return (
+                    <Memo
+                      size={memoSize + "px"}
+                      key={`${el}${i}`}
+                      text={el.memoContent}
+                      background={theme?.memoBackground}
+                      color={theme?.memoTextColor}
+                    />
+                  );
+                })
               : null}{" "}
             {searchModeType &&
               searchResults &&
@@ -164,7 +151,7 @@ const BoardOnOpen = ({
                 const theme = memoThemes[el.memoThemeId];
                 return (
                   <Memo
-                    size={memoSize + 'px'}
+                    size={memoSize + "px"}
                     key={`${el}${i}`}
                     text={el.memoContent}
                     background={theme?.memoBackground}
@@ -172,21 +159,6 @@ const BoardOnOpen = ({
                   />
                 );
               })}
-            <PasswordModal
-              open={passwordModalState.open}
-              onClose={handleClosePasswordModal}
-              onValid={handleValidPassword}
-            />
-            <AlertModal
-              open={isOpenConfirmDeleteModal}
-              onClickArray={[
-                handleCloseConfirmDeleteModal,
-                handleConfirmDeleteBoard,
-              ]}
-              buttonTextArray={["취소", "삭제하기"]}
-              text="보드를 삭제하면 되돌릴 수 없습니다."
-              onClose={handleCloseConfirmDeleteModal}
-            />
           </MemoContainer>
         </>
       )}
@@ -217,17 +189,18 @@ const BoardOnOpen = ({
       {!isDeleteMemoMode && privateModeForTest && (
         <>
           <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
-          <CalendarButton
-            open={openDueDate}
-            isHidden={
-              passwordModalState.open ||
-              isDeleteMemoMode ||
-              isOpenConfirmDeleteModal
-            }
-          />
+          <CalendarButton open={openDueDate} />
         </>
       )}
       {!privateModeForTest && <BlockAccessBoard />}
+      <AlertModal
+        open={isOpenDeleteMemoModal}
+        onClickArray={[handleCloseDeleteMemoModal, handleConfirmDeleteMemo]}
+        buttonTextArray={["취소", "삭제하기"]}
+        text="정말 삭제할까요?"
+        subText="한번 삭제하면 되돌릴 수 없습니다"
+        onClose={handleCloseDeleteMemoModal}
+      />
     </PageWrapper>
   );
 };
@@ -288,10 +261,10 @@ const DeleteMemoButton = styled.button`
 
 const DeleteMemoContianer = styled.div`
   position: absolute;
-  top: 1rem;
+  background-color: ${(props) => props.theme.colors.grey_50};
+  top: 0;
   left: 0;
-  padding-top: ${(props) => `${props.paddingTop}px`};
-  padding-bottom: 2.5rem;
+  padding: 1.5rem 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -300,7 +273,7 @@ const DeleteMemoContianer = styled.div`
   align-items: center;
   overflow-y: scroll;
   overflow-x: hidden;
-  grid-gap: 0.5rem;
+  grid-gap: 1rem;
   z-index: 3;
   &::-webkit-scrollbar {
     width: 0;

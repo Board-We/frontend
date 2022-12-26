@@ -37,12 +37,7 @@ const BoardOnWaitWrite = () => {
         centerContent={getTimer()}
       ></BoardBackground>
       <Buttons>
-        <ChipButton
-          width="100%"
-          onClick={onClickMakeBoard}
-          background="#5B5B5B"
-          flat
-        >
+        <ChipButton onClick={onClickMakeBoard} background="#5B5B5B" flat>
           새 보드 만들기
         </ChipButton>
       </Buttons>

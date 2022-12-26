@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect } from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
-import { ReactComponent as Delete } from "../assets/delete.svg";
-import { ReactComponent as AlertExclamation } from "../assets/alertExclamation.svg";
+import { ReactComponent as Delete } from "../assets/icons/delete.svg";
+import { ReactComponent as AlertExclamation } from "../assets/icons/alertExclamation.svg";
 
 const TextInput = forwardRef(
   (
@@ -32,11 +32,6 @@ const TextInput = forwardRef(
           onChange={onChange}
           disabled={disabled}
           maxLength={inputMaxLength}
-          /*  ref={function (ref) {
-            if (ref !== null) {
-              ref.focus();
-            }
-          }} */
         />
         {isValidLength ? (
           <DeleteButton onClick={handleClickDeleteText}>

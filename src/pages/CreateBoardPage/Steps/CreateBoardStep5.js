@@ -89,10 +89,13 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
           </ButtonContainer>
         </div>
       </ModeContainer>
-      <CommonSpan>공개모드: 아무나 볼 수 있어요.</CommonSpan>
-      <CommonSpan>
-        비공개 모드: 비밀번호가 있어야 보드를 확인할 수 있어요.
-      </CommonSpan>
+      <Ballon>
+        <CommonSpan>공개모드: 모두에게 공개</CommonSpan>
+        <CommonSpan>
+          비공개모드: 비밀번호를 입력 후 확인가능 전체 보드 검색에서 보이지
+          않아요.
+        </CommonSpan>
+      </Ballon>
     </CreateBoardStepContainer>
   );
 }
@@ -144,7 +147,7 @@ const ModeContainer = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 40vw;
+  width: 35vw;
   padding: 0.2rem;
   background-color: ${(props) => props.theme.colors.grey_50};
   border-radius: 4px;
@@ -153,9 +156,12 @@ const ButtonContainer = styled.div`
 const ModeButton = styled.button`
   width: 50%;
   height: 1.75rem;
-  background-color: ${(props) => props.theme.colors.grey_50};
+  background-color: transparent;
   border: none;
   border-radius: 4px;
+  font-weight: 400;
+  box-shadow: ${(props) => props.theme.shadows.shadow_2};
+
   &.active {
     background-color: ${(props) => props.theme.colors.white};
     font-weight: 600;
@@ -166,8 +172,8 @@ const CommonSpan = styled.span`
   text-align: left;
   font-weight: 500;
   font-size: 0.8rem;
-  margin-top: 0.6rem;
-  color: #797979;
+  margin: 0.25rem;
+  color: ${(props) => props.theme.colors.grey_20};
 `;
 
 const ModeSelectContainer = styled.div`
@@ -178,5 +184,46 @@ const ModeSelectContainer = styled.div`
   }
   p {
     color: ${(props) => props.theme.colors.grey_10};
+  }
+`;
+
+const Ballon = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  width: 230px;
+  height: 95px;
+  top: 43%;
+  background: ${(props) => props.theme.colors.white};
+  border: 1px solid ${(props) => props.theme.colors.grey_40};
+  color: white;
+  border-radius: 4px;
+  padding: 0.5rem;
+
+  &::before {
+    border-color: ${(props) => props.theme.colors.grey_40} transparent;
+    border-style: solid;
+    border-width: 0 8px 8px 6.5px;
+    content: "";
+    display: block;
+    left: 6px;
+    position: absolute;
+    top: -8px;
+    width: 0;
+    z-index: 0;
+  }
+
+  &::after {
+    border-color: ${(props) => props.theme.colors.white} transparent;
+    border-style: solid;
+    border-width: 0 8px 8px 6.5px;
+    content: "";
+    display: block;
+    left: 6px;
+    position: absolute;
+    top: -7px;
+    width: 0;
+    z-index: 1;
   }
 `;

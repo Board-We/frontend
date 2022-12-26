@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ReactComponent as Vector } from "../../../../assets/Vector.svg";
+import { ReactComponent as Vector } from "../../../../assets/icons/Vector.svg";
 import { useRecoilState } from "recoil";
 import { boardState, setDateStepId } from "../../../../store/index.js";
 import SlideModal from "../../../../components/modals/slideModal";

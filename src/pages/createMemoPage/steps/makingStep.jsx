@@ -15,7 +15,6 @@ import { theme } from "../../../styles/theme";
 
 const MakingStep = () => {
   const board = useRecoilValue(boardState);
-  const $memo = useRef();
   const [memo, setMemo] = useRecoilState(memoStyleState);
   const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();
@@ -87,7 +86,7 @@ const MakingStep = () => {
         />
       ) : null}
       <StepHeader title={"롤링페이퍼 남기기"} onClick={onClickBack} />
-      <BoardArea background={board.background}>
+      <BoardArea background={board.boardBackground}>
         <Memo
           size={"75%"}
           background={memo.style.background}
@@ -176,7 +175,7 @@ const MemoPlaceHolder = styled.div`
 `;
 
 const MemoTextIndicator = styled.pre`
-  position:absolute;
+  position: absolute;
   bottom: 1rem;
   right: 1.5rem;
   display: flex;
@@ -202,7 +201,7 @@ const OptionArea = styled.div`
 
 const OptionAreaTitleContainer = styled.div`
   padding-left: 1rem;
-`
+`;
 
 const OptionContainer = styled.ul`
   width: 100%;

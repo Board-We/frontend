@@ -1,56 +1,98 @@
-import React from "react"
-import { useNavigate } from "react-router-dom"
-import styled from "styled-components"
-import ChipButton from "../../../components/buttons/chipButton"
-import SmallTitle from "../../../components/label/smallTitle"
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import ChipButton from "../../../components/buttons/chipButton";
+import SmallTitle from "../../../components/label/smallTitle";
 
 const BoardOnEnd = () => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  const onClickNewBoard = () => {
+    navigate("/board/new");
+  };
 
-    const onClickNewBoard = () => {
-        navigate("/board/new")
-    }
+  const onClickExplore = () => {
+    navigate("/");
+  };
 
-    const onClickExplore = () => {
-        navigate("/")
-    }
-
-    return (
-        <PageWrapper>
-            <SmallTitle>롤링페이퍼의 확인기간이 마감되었습니다.</SmallTitle>
-            <OnEndImage />
-            <ButtonContainer>
-                <ChipButton flat width="100%" background="#FDC62E" color="black" onClick={onClickNewBoard}>새 보드 만들기</ChipButton>
-                <ChipButton flat width="100%" background="#EFF3F4" color="black" onClick={onClickExplore}>다른 보드 탐색하기</ChipButton>
-            </ButtonContainer>
-        </PageWrapper>
-    )
-}
+  return (
+    <PageWrapper>
+      <BodyContainer>
+        <TextContainer>
+          <SmallTitle>
+            보드의 확인기간이
+            <br /> 종료되었어요.😥
+          </SmallTitle>
+        </TextContainer>
+        <OnEndImage />
+      </BodyContainer>
+      <ButtonContainer>
+        <ChipButton
+          flat
+          width="100%"
+          background="#FDC62E"
+          color="black"
+          onClick={onClickNewBoard}
+        >
+          새 보드 만들기
+        </ChipButton>
+        <ChipButton
+          flat
+          width="100%"
+          backgroundGrey={true}
+          color="black"
+          onClick={onClickExplore}
+        >
+          다른 보드 탐색하기
+        </ChipButton>
+      </ButtonContainer>
+    </PageWrapper>
+  );
+};
 
 const PageWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: inherit;
-`
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
+
+const BodyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  margin: auto auto;
+`;
+
 const OnEndImage = styled.img`
-    width: 65vw;
-    height: 65vw;
-    max-width: 400px;
-    max-height: 400px;
-`
+  width: 75vw;
+  height: 75vw;
+  max-width: 400px;
+  max-height: 400px;
+  background-color: #d9d9d9;
+`;
 
 const ButtonContainer = styled.div`
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 1rem;
-    gap: 0.5rem;
-`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+  gap: 0.5rem;
+`;
 
-export default BoardOnEnd
+export default BoardOnEnd;

@@ -54,9 +54,9 @@ const BoardSlider = ({ boards }) => {
       onTouchMove={handleTouchMoveSlider}
     >
       <Slides>
-        {boards.map((board) => (
+        {boards.map((board, i) => (
           <Slide
-            key={board.boardName}
+            key={board.boardName + i}
             boardLink={board.boardLink}
             boardName={board.boardName}
             boardViews={board.boardViews}
