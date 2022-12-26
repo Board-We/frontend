@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../../../assets/close.svg";
 import { setDateStepId } from "../../../../../store";
+import DatePicker from "../Components/datePicker";
 import SetAttachableEndTerm from "./SetAttachableEndTerm";
 import SetAttachableStartTerm from "./SetAttachableStartTerm";
 import SetOpenEndTerm from "./SetOpenEndTerm";
@@ -43,9 +44,7 @@ function ModalContents({ setModalOpen }) {
         setStep={setStep}
         setModalOpen={setModalOpen}
       />
-
-      {renderModalBody(step)}
-
+      <DatePicker />
       <FooterButton onClick={handleStepClick}>확인</FooterButton>
     </ModalContainer>
   );
