@@ -1,31 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import TextLengthValidator from "../../../components/textLengthValidator";
 import { boardState } from "../../../store";
 import { ReactComponent as Delete } from "../../../assets/icons/delete.svg";
 import { ReactComponent as AlertExclamation } from "../../../assets/icons/alertExclamation.svg";
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const maxLength = 50;
 
 const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
+  const prevBoardDescription = useRef();
+
   const [board, setBoard] = useRecoilState(boardState);
   const [boardDescription, setBoardDescription] = useState("");
-  const [editable, setEditable] = useState(true);
+
+  const [sizeUnit, setSizeUnit] = useState(0);
+  const [heightInput, setHeightInput] = useState(30); // 임시값, 수정 필요
+
   const [isValidLength, setIsValidLength] = useState(true);
 
-  const handleChangeBoardDescription = (e) => {
-    if (e.currentTarget.textContent.length <= maxLength) {
-      setBoardDescription(e.currentTarget.textContent);
-      const currentBoardState = { ...board, description: e.target.innerText };
-      setBoard(currentBoardState);
-    }
+  console.log(boardDescription, prevBoardDescription.current);
+
+  const handleChangeBoardDescription = (text) => {
+    const description = text;
+    setBoard({ ...board, description });
   };
 
-  console.log(boardDescription);
+  const handleChangeTextInput = (e) => {
+    prevBoardDescription.current = boardDescription;
+    setBoardDescription(e.target.value);
+    setHeightInput(e.target.scrollHeight);
+  };
 
-  const handleClickDeleteText = () => {
+  const handleClickDeleteText = (e) => {
     setBoardDescription("");
   };
 
@@ -40,15 +47,23 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
     else setIsValidLength(true);
   }, [boardDescription, setIsValidLength]);
 
+  useEffect(() => {
+    if (boardDescription.length > maxLength + 1) {
+      setBoardDescription(prevBoardDescription.current);
+      return;
+    } else {
+      handleChangeBoardDescription(boardDescription);
+    }
+  }, [boardDescription]);
+
   return (
     <CreateBoardStepContainer>
       <MultilineTextInput
-        contentEditable={editable}
-        suppressContentEditableWarning={true}
-        textContent={boardDescription}
+        value={boardDescription}
+        onChange={handleChangeTextInput}
+        height={heightInput}
         isValidLength={isValidLength}
         placeholder="ex. 이 보드에 3일동안 메모를 남겨줘!"
-        onInput={handleChangeBoardDescription}
       />
       {isValidLength ? (
         <DeleteButton onClick={handleClickDeleteText}>
@@ -89,11 +104,16 @@ const CreateBoardGuide = styled.div`
   padding-top: 0.5rem;
 `;
 
-const MultilineTextInput = styled.div`
+const MultilineTextInput = styled.textarea`
   width: 100%;
+  height: ${(props) => props.height}px;
+  font-size: 1.2rem;
   margin-top: 1rem;
   text-align: start;
   padding-bottom: 0.5rem;
+  border: 0;
+  overflow: hidden;
+  resize: none;
   border-bottom: ${(props) =>
     props.isValidLength
       ? `0.1rem solid ${props.theme.colors.primary}`
@@ -101,6 +121,11 @@ const MultilineTextInput = styled.div`
 
   &:focus {
     outline: none;
+  }
+
+  :disabled {
+    background-color: inherit;
+    color: inherit;
   }
 
   &:empty:before {
