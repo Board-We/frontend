@@ -15,9 +15,10 @@ const CompleteCreate = () => {
 
   const mockURL = "/board/bc57b0d3-259f-4f4e-b54f-c73d87cb4da4/welcome";
 
-  useEffect(() => {
+  const postCurrentBoardState = async () => {
     const memoBackgroundList = [];
     const memoTextColorsList = [];
+
     board.memoThemes.map((val) => {
       memoBackgroundList.push(val.memoBackground);
       memoTextColorsList.push(val.memoTextColor);
@@ -43,12 +44,15 @@ const CompleteCreate = () => {
       },
     };
 
-    const res = postUserBoardState({ currentBoardState });
-
+    const res = await postUserBoardState({ currentBoardState });
     if (res) {
       setBoardURL(res);
     }
     setBoardURL(mockURL);
+  };
+
+  useEffect(() => {
+    postCurrentBoardState();
   }, []);
 
   return (
