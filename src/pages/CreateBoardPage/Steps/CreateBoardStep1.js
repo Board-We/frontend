@@ -144,9 +144,9 @@ const AddTagButton = styled.button`
   height: 2.5rem;
   border: none;
   background-color: transparent;
-  border: 1px solid #d5d9da;
+  border: 1px solid ${(props) => props.theme.colors.grey_35};
   border-radius: 20px;
-  color: #d5d9da;
+  color: ${(props) => props.theme.colors.grey_30};
   margin-right: 0.75rem;
   margin-bottom: 0.75em;
 `;
@@ -158,7 +158,8 @@ const AddTagInput = styled.input`
   border-radius: 20px;
   border: none;
   outline: none;
-  background-color: #eff3f4;
+  background-color: ${(props) => props.theme.colors.grey_50};
+  color: ${(props) => props.theme.colors.black};
   margin-right: 0.75rem;
 `;
 
@@ -170,7 +171,8 @@ const Tag = styled.div`
   padding: 1rem;
   border-radius: 20px;
   border: none;
-  background-color: #eff3f4;
+  background-color: ${(props) => props.theme.colors.grey_50};
+  color: ${(props) => props.theme.colors.black};
   margin-right: 0.75rem;
   margin-bottom: 0.75em;
 `;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { boardState } from "../../../../store";
@@ -10,9 +10,10 @@ const ModalContents = ({ boardURL }) => {
   const board = useRecoilValue(boardState);
   const [openToast, setOpenToast] = useState(false);
 
-  const handleCopyUrlLink = () => {
+  const handleCopyUrlLink = async (text) => {
     setOpenToast(true);
-    // to do : 실제 URL 복사
+    await navigator.clipboard.writeText(text);
+
     setTimeout(() => {
       setOpenToast(false);
     }, 3000);
@@ -28,7 +29,11 @@ const ModalContents = ({ boardURL }) => {
         <BoardLinkUrlText>
           <p>{boardURL && boardURL}</p>
         </BoardLinkUrlText>
-        <BoardLinkCopyButton onClick={handleCopyUrlLink}>
+        <BoardLinkCopyButton
+          onClick={() => {
+            handleCopyUrlLink(boardURL);
+          }}
+        >
           공유
         </BoardLinkCopyButton>
       </BoardLinkBox>
