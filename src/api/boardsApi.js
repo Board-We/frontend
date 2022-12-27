@@ -5,6 +5,11 @@ export const postUserBoardState = async ({ boardState }) => {
   return res.boardLink;
 };
 
+export const requestBoard = async (boardCode) => {
+  const res = await request({ method: "GET", url: `/board/${boardCode}` });
+  return res;
+};
+
 export const requestReccomendBoardList = async () => {
   const res = await request({ method: "GET", url: "/boards/recommend" });
   return res.data;

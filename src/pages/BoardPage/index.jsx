@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import styled from "styled-components";
-import { deleteBoard } from "../../api/boardsApi";
+import { deleteBoard, requestBoard } from "../../api/boardsApi";
 import { searchMemo } from "../../api/memoApi";
 import { searchMemoResults } from "../../api/mockData";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
@@ -16,7 +22,9 @@ import BoardOnWaitWrite from "./mode/BoardOnWaitWrite";
 import BoardOnWrite from "./mode/BoardOnWrite";
 
 const BoardPage = () => {
-  const navigate = useNavigate();
+  const { boardCode } = useParams();
+  const [board, setBoard] = useState(null);
+
   const location = useLocation();
   const currentPath = location.pathname;
   const [headerMenuSetting, setheaderMenuSetting] = useState({
@@ -86,6 +94,15 @@ const BoardPage = () => {
       open: true,
     });
   }, [passwordModalState]);
+
+  useEffect(() => {
+    const accessBoard = async () => {
+      const board = await requestBoard(boardCode);
+      console.log(board);
+      setBoard(board);
+    };
+    accessBoard();
+  }, [boardCode]);
 
   useEffect(() => {
     switch (currentPath) {
