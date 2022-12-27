@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import TextLengthValidator from "../../../components/textLengthValidator";
@@ -9,18 +9,29 @@ import { ReactComponent as AlertExclamation } from "../../../assets/icons/alertE
 const maxLength = 50;
 
 const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
+  const prevBoardDescription = useRef();
+
   const [board, setBoard] = useRecoilState(boardState);
   const [boardDescription, setBoardDescription] = useState("");
+
+  const [heightInput, setHeightInput] = useState(30); // 임시값, 수정 필요
+
   const [isValidLength, setIsValidLength] = useState(true);
 
-  const handleChangeBoardDescription = (e) => {
-    setBoardDescription(e.target.innerText);
-    const currentBoardState = { ...board, description: e.target.innerText };
-    setBoard(currentBoardState);
-  };
-  console.log(board.description);
+  console.log(boardDescription, prevBoardDescription.current);
 
-  const handleClickDeleteText = () => {
+  const handleChangeBoardDescription = (text) => {
+    const description = text;
+    setBoard({ ...board, description });
+  };
+
+  const handleChangeTextInput = (e) => {
+    prevBoardDescription.current = boardDescription;
+    setBoardDescription(e.target.value);
+    setHeightInput(e.target.scrollHeight);
+  };
+
+  const handleClickDeleteText = (e) => {
     setBoardDescription("");
   };
 
@@ -31,32 +42,43 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   }, [boardDescription, setDisabledFooterButton, board.description.length]);
 
   useEffect(() => {
-    if (board.description.length > maxLength) setIsValidLength(false);
+    if (boardDescription.length > maxLength) setIsValidLength(false);
     else setIsValidLength(true);
-  }, [board.description, setIsValidLength]);
+  }, [boardDescription, setIsValidLength]);
+
+  useEffect(() => {
+    if (boardDescription.length > maxLength + 1) {
+      setBoardDescription(prevBoardDescription.current);
+      return;
+    } else {
+      handleChangeBoardDescription(boardDescription);
+    }
+  }, [boardDescription]);
 
   return (
     <CreateBoardStepContainer>
-      <MultilineTextInput
-        contentEditable
-        suppressContentEditableWarning={true}
-        isValidLength={isValidLength}
-        placeholder="ex. 이 보드에 3일동안 메모를 남겨줘!"
-        onInput={handleChangeBoardDescription}
-      />
-      {isValidLength ? (
-        <DeleteButton onClick={handleClickDeleteText}>
-          <Delete />
-        </DeleteButton>
-      ) : (
-        <AlertExclamationWrapper>
-          <AlertExclamation />
-        </AlertExclamationWrapper>
-      )}
+      <TextInputSection>
+        <MultilineTextInput
+          value={boardDescription}
+          onChange={handleChangeTextInput}
+          height={heightInput}
+          isValidLength={isValidLength}
+          placeholder="ex. 이 보드에 3일동안 메모를 남겨줘!"
+        />
+        {isValidLength ? (
+          <DeleteButton onClick={handleClickDeleteText}>
+            <Delete />
+          </DeleteButton>
+        ) : (
+          <AlertExclamationWrapper>
+            <AlertExclamation />
+          </AlertExclamationWrapper>
+        )}
+      </TextInputSection>
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
-          text={board.description}
+          text={boardDescription}
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>
@@ -83,11 +105,21 @@ const CreateBoardGuide = styled.div`
   padding-top: 0.5rem;
 `;
 
-const MultilineTextInput = styled.div`
+const TextInputSection = styled.div`
+  position: relative;
   width: 100%;
+`;
+
+const MultilineTextInput = styled.textarea`
+  width: 100%;
+  height: ${(props) => props.height}px;
+  font-size: 1.2rem;
   margin-top: 1rem;
   text-align: start;
   padding-bottom: 0.5rem;
+  border: 0;
+  overflow: hidden;
+  resize: none;
   border-bottom: ${(props) =>
     props.isValidLength
       ? `0.1rem solid ${props.theme.colors.primary}`
@@ -97,16 +129,22 @@ const MultilineTextInput = styled.div`
     outline: none;
   }
 
+  :disabled {
+    background-color: inherit;
+    color: inherit;
+  }
+
   &:empty:before {
     content: attr(placeholder);
     color: grey;
     display: inline-block;
+  }
 `;
 
 const DeleteButton = styled.button`
   position: absolute;
   right: 1%;
-  top: 50%;
+  bottom: 10%;
   margin: auto;
   transform: translate(-50%);
   border: none;
@@ -118,7 +156,7 @@ const DeleteButton = styled.button`
 const AlertExclamationWrapper = styled.div`
   position: absolute;
   right: 1%;
-  top: 50%;
+  bottom: 10%;
   margin: auto;
   transform: translate(-50%);
 `;
