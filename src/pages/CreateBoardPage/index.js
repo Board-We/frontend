@@ -144,7 +144,7 @@ const CreateBoardPage = () => {
       <BoardInfoConatiner paddingBottom={paddingBottomOfContentArea}>
         {controlCreatBoardStep(currentStepId, setDisabledFooterButton, $footer)}
       </BoardInfoConatiner>
-      <PageFooter ref={$footer}>
+      <PageFooter>
         <FooterButton
           ref={$footer}
           color="black"
@@ -158,7 +158,7 @@ const CreateBoardPage = () => {
           }
         />
       </PageFooter>
-    </PageWrapper>
+    </PageWrapper >
   );
 };
 
