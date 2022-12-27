@@ -16,8 +16,6 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   const [toggleTagInput, setToggleTagInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  console.log(board.name);
-
   const handleChangeBoardName = (e) => {
     setBoardName(e.target.value);
     const currentBoardState = { ...board, name: e.target.value };
