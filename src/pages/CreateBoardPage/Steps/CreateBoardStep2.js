@@ -14,7 +14,6 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const [boardDescription, setBoardDescription] = useState("");
 
-  const [sizeUnit, setSizeUnit] = useState(0);
   const [heightInput, setHeightInput] = useState(30); // 임시값, 수정 필요
 
   const [isValidLength, setIsValidLength] = useState(true);
@@ -58,22 +57,24 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
 
   return (
     <CreateBoardStepContainer>
-      <MultilineTextInput
-        value={boardDescription}
-        onChange={handleChangeTextInput}
-        height={heightInput}
-        isValidLength={isValidLength}
-        placeholder="ex. 이 보드에 3일동안 메모를 남겨줘!"
-      />
-      {isValidLength ? (
-        <DeleteButton onClick={handleClickDeleteText}>
-          <Delete />
-        </DeleteButton>
-      ) : (
-        <AlertExclamationWrapper>
-          <AlertExclamation />
-        </AlertExclamationWrapper>
-      )}
+      <TextInputSection>
+        <MultilineTextInput
+          value={boardDescription}
+          onChange={handleChangeTextInput}
+          height={heightInput}
+          isValidLength={isValidLength}
+          placeholder="ex. 이 보드에 3일동안 메모를 남겨줘!"
+        />
+        {isValidLength ? (
+          <DeleteButton onClick={handleClickDeleteText}>
+            <Delete />
+          </DeleteButton>
+        ) : (
+          <AlertExclamationWrapper>
+            <AlertExclamation />
+          </AlertExclamationWrapper>
+        )}
+      </TextInputSection>
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
@@ -102,6 +103,11 @@ const CreateBoardGuide = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-top: 0.5rem;
+`;
+
+const TextInputSection = styled.div`
+  position: relative;
+  width: 100%;
 `;
 
 const MultilineTextInput = styled.textarea`
@@ -138,7 +144,7 @@ const MultilineTextInput = styled.textarea`
 const DeleteButton = styled.button`
   position: absolute;
   right: 1%;
-  top: 50%;
+  bottom: 10%;
   margin: auto;
   transform: translate(-50%);
   border: none;
@@ -150,7 +156,7 @@ const DeleteButton = styled.button`
 const AlertExclamationWrapper = styled.div`
   position: absolute;
   right: 1%;
-  top: 50%;
+  bottom: 10%;
   margin: auto;
   transform: translate(-50%);
 `;
