@@ -31,15 +31,24 @@ const CreateBoardPage = () => {
   ];
   const $stepDescription = useRef();
   const $footer = useRef();
-  const [heightOfContentArea, setHeightOfContentArea] = useState(0)
+  const [heightOfContentArea, setHeightOfContentArea] = useState(0);
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!$footer.current || !$stepDescription.current || deviceScreenSize.y === 0) return
-    const bottomOfDescription = $stepDescription.current.clientHeight + Number(deviceScreenSize.rem.replace("px", "")) * 0.8125
+    if (
+      !$footer.current ||
+      !$stepDescription.current ||
+      deviceScreenSize.y === 0
+    )
+      return;
+    const bottomOfDescription =
+      $stepDescription.current.clientHeight +
+      Number(deviceScreenSize.rem.replace("px", "")) * 0.8125;
     const heightOfFooter = $footer.current.clientHeight;
-    setHeightOfContentArea(deviceScreenSize.y - heightOfFooter - bottomOfDescription)
+    setHeightOfContentArea(
+      deviceScreenSize.y - heightOfFooter - bottomOfDescription
+    );
     initBoard();
   }, [$stepDescription.current, $footer.current, deviceScreenSize]);
 
@@ -50,7 +59,7 @@ const CreateBoardPage = () => {
       tags: [],
       writingStartTime: new Date(),
       writingEndTime: new Date(new Date().getTime() + 1209600000),
-      openStartTime: new Date(new Date().getTime() + 1209600000),
+      openStartTime: new Date(new Date().getTime() + 1209601000),
       openEndTime: new Date(new Date().getTime() + 2419200000),
       password: undefined,
       openType: "", // "PUBLIC" or "PRIVATE"
@@ -136,7 +145,7 @@ const CreateBoardPage = () => {
       {currentStepId < 6 && (
         <StepDescriptionContainer ref={$stepDescription}>
           <p>{currentStepId}/5단계</p>
-          <Title >
+          <Title>
             {stepDescription[currentStepId - 1]}
             {currentStepId === 5 ? <span>(선택)</span> : null}
           </Title>
@@ -159,7 +168,7 @@ const CreateBoardPage = () => {
           }
         />
       </PageFooter>
-    </PageWrapper >
+    </PageWrapper>
   );
 };
 
@@ -197,7 +206,7 @@ const StepDescriptionContainer = styled.div`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
-  height: ${props => props.height}px;
+  height: ${(props) => props.height}px;
   overflow: hidden;
 `;
 
