@@ -2,40 +2,52 @@ import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../../../assets/icons/close.svg";
-import { setDateStepId } from "../../../../../store";
+import { boardState, setDateStepId } from "../../../../../store";
 import DatePicker from "../Components/datePicker";
-import SetAttachableEndTerm from "./SetAttachableEndTerm";
-import SetAttachableStartTerm from "./SetAttachableStartTerm";
-import SetOpenEndTerm from "./SetOpenEndTerm";
-import SetOpenStartTerm from "./SetOpenStartTerm";
+
 function ModalContents({ setModalOpen }) {
   const [step, setStep] = useRecoilState(setDateStepId);
+  const [board, setBoard] = useRecoilState(boardState)
+
+  useEffect(() => {
+    if (step > 3) {
+      setModalOpen(false);
+    }
+  }, [setModalOpen, setStep, step]);
+
+  const getSetter = () => {
+    if (step === 0) return setWritingStartTime
+    else if (step === 1) return setWritingEndTime
+    else if (step === 2) return setOpenStartTime
+    else if (step === 3) return setOpenEndTime
+  }
+
+  const getDateTime = () => {
+    if (step === 0) return new Date()
+    else if (step === 1) return board.writingStartTime
+    else if (step === 2) return board.writingEndTime
+    else if (step === 3) return board.openEndTime
+  }
 
   const handleStepClick = () => {
     setStep((prev) => prev + 1);
   };
 
-  const renderModalBody = (stepId) => {
-    switch (stepId) {
-      case 1:
-        return <SetAttachableStartTerm />;
-      case 2:
-        return <SetAttachableEndTerm />;
-      case 4:
-        return <SetOpenStartTerm />;
-      case 5:
-        return <SetOpenEndTerm />;
-      default:
-        break;
-    }
-  };
+  const setWritingStartTime = (datetime) => {
+    console.log("setWritingStartTime", datetime)
+  }
 
-  useEffect(() => {
-    if (step === 3 || step === 6) {
-      setModalOpen(false);
-      setStep(1);
-    }
-  }, [setModalOpen, setStep, step]);
+  const setWritingEndTime = (datetime) => {
+    console.log("setWritingEndTime", datetime)
+  }
+
+  const setOpenStartTime = (datetime) => {
+    console.log("setOpenStartTime", datetime)
+  }
+
+  const setOpenEndTime = (datetime) => {
+    console.log("setOpenEndTime", datetime)
+  }
 
   return (
     <ModalContainer>
@@ -44,7 +56,12 @@ function ModalContents({ setModalOpen }) {
         setStep={setStep}
         setModalOpen={setModalOpen}
       />
-      <DatePicker />
+      <DatePicker
+        text={step % 2 === 0 ? `부터` : `까지`}
+        setter={getSetter}
+        datetime={getDateTime} 
+        step={step}
+        />
       <FooterButton onClick={handleStepClick}>확인</FooterButton>
     </ModalContainer>
   );

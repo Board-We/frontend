@@ -31,16 +31,17 @@ const CreateBoardPage = () => {
   ];
   const $stepDescription = useRef();
   const $footer = useRef();
-  const [paddingBottomOfContentArea, setPaddingBottomOfContentArea] =
-    useState(0);
+  const [heightOfContentArea, setHeightOfContentArea] = useState(0)
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const heightOfFooter = $footer.current.offsetHeight;
-    setPaddingBottomOfContentArea(heightOfFooter);
+    if (!$footer.current || !$stepDescription.current || deviceScreenSize.y === 0) return
+    const bottomOfDescription = $stepDescription.current.clientHeight + Number(deviceScreenSize.rem.replace("px", "")) * 0.8125
+    const heightOfFooter = $footer.current.clientHeight;
+    setHeightOfContentArea(deviceScreenSize.y - heightOfFooter - bottomOfDescription)
     initBoard();
-  }, [$stepDescription, $footer, deviceScreenSize]);
+  }, [$stepDescription.current, $footer.current, deviceScreenSize]);
 
   const initBoard = () => {
     const initialBoardForm = {
@@ -103,7 +104,7 @@ const CreateBoardPage = () => {
       case 3:
         return <CreateBoardStep3 footerRef={footerRef} />;
       case 4:
-        return <CreateBoardStep4 />;
+        return <CreateBoardStep4 footerRef={footerRef} />;
       case 5:
         return (
           <CreateBoardStep5 setDisabledFooterButton={setDisabledFooterButton} />
@@ -133,15 +134,15 @@ const CreateBoardPage = () => {
         </ProgressBarContainer>
       )}
       {currentStepId < 6 && (
-        <StepDescriptionContainer>
+        <StepDescriptionContainer ref={$stepDescription}>
           <p>{currentStepId}/5단계</p>
-          <Title ref={$stepDescription}>
+          <Title >
             {stepDescription[currentStepId - 1]}
             {currentStepId === 5 ? <span>(선택)</span> : null}
           </Title>
         </StepDescriptionContainer>
       )}
-      <BoardInfoConatiner paddingBottom={paddingBottomOfContentArea}>
+      <BoardInfoConatiner height={heightOfContentArea}>
         {controlCreatBoardStep(currentStepId, setDisabledFooterButton, $footer)}
       </BoardInfoConatiner>
       <PageFooter>
@@ -196,8 +197,8 @@ const StepDescriptionContainer = styled.div`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
-  height: 100%;
-  padding-bottom: ${(props) => props.paddingBottomOfContentArea};
+  height: ${props => props.height}px;
+  overflow: hidden;
 `;
 
 const PageFooter = styled.div`

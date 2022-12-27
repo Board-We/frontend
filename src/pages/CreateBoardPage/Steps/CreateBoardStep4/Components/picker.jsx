@@ -1,40 +1,71 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { deviceScreenState } from "../../../../../store";
 import { theme } from "../../../../../styles/theme";
 
 const Picker = ({ data, selectedData, setSelectedData }) => {
-
     const [index, setIndex] = useState(0)
+    const deviceScreen = useRecoilValue(deviceScreenState)
+    const eventTimer = useRef()
+    const $scroll = useRef()
 
     useEffect(() => {
         setIndex(data.indexOf(selectedData))
+        $scroll.current.scrollTop = data.indexOf(selectedData) * Number(deviceScreen.rem.replace("px", "")) * 2.5
     }, [selectedData])
+
+    useEffect(() => {
+    }, [eventTimer.current])
 
     const onClickData = (el) => {
         setSelectedData(el)
     }
 
+    const initEventTimer = () => {
+        eventTimer.current = 500
+    }
+
+    const onScrollData = (e) => {
+        initEventTimer()
+        const heightOfEntity = Number(deviceScreen.rem.replace("px", "")) * 2.5
+        const newIndex = Math.round(e.target.scrollTop / heightOfEntity)
+
+        setSelectedData(data[newIndex])
+    }
+
     return (
-        <ComponentWrapper >
-            {index === 0 && <Entity />}
-            {
-                data.map((el, i) => {
-                    return (
-                        Math.abs(index - i) < 2 && <Entity onClick={() => onClickData(el)} isSelected={el === selectedData} isSingle={data.length === 1} key={el}>{el}</Entity>
-                    )
-                })
-            }
-            {index === data.length - 1 && <Entity />}
+        <ComponentWrapper>
+            <Bar top={"1.875rem"} />
+            <ScrollWrapper ref={$scroll} onScroll={onScrollData} >
+                <Entity>&nbsp;</Entity>
+                {
+                    data.map((el) => {
+                        return (
+                            <Entity onClick={() => onClickData(el)} isSelected={el === selectedData} isSingle={data.length === 1} key={el}>{el}</Entity>
+                        )
+                    })
+                }
+                <Entity>&nbsp;</Entity>
+            </ScrollWrapper>
+            <Bar bottom={"1.875rem"} />
         </ComponentWrapper>
     )
 }
 
-
 const ComponentWrapper = styled.div`
+    position: relative;
+`
+
+const ScrollWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    
+    height: 7.5rem;
+    overflow: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
 `
 
 const Entity = styled.span`
@@ -42,14 +73,25 @@ const Entity = styled.span`
     align-items: center;
     justify-content: center;
     color: ${props => props.isSelected ? theme.colors.black : theme.colors.grey_30};
-    height: 2rem;
-    width: 4.5rem;
-    font-size: 1rem;
+    height: 2.5rem;
+    min-width: 3.625rem;
+    font-size: 1.25rem;
+    font-weight: 400;
     margin: 0 0.5rem;
     padding: 0.5rem 0;
-    border: ${props => (props.isSelected && !props.isSingle) ? 1.5 : 0}px solid transparent;
-    border-image: linear-gradient(to left, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,1) 20.1%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 80.1%, rgba(0,0,0,0) 100%);
-    border-image-slice: 1;
+`
+
+const Bar = styled.hr`
+    position: absolute;
+    width: 3.625rem;
+    height: 2px;
+    border: 0;
+    color: ${theme.colors.black};
+    background: ${theme.colors.black};
+    top: ${props => props.top};
+    bottom: ${props => props.bottom};
+    left: 50%;
+    transform: translateX(-50%);
 `
 
 export default Picker

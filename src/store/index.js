@@ -147,7 +147,7 @@ export const createBoardStepId = atom({
 
 export const setDateStepId = atom({
   key: "setDateStepId",
-  default: 1,
+  default: 0,
 });
 
 export const deviceScreenState = atom({

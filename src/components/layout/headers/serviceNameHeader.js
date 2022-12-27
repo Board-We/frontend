@@ -39,11 +39,15 @@ const ServiceNameHeader = ({
     setCheckedMemoList([]);
   };
 
+  const onClickTitle = () => {
+    navigate('/')
+  }
+
   return (
     <ComponentWrapper>
       <ServiceNameHeaderContainer>
         {!(searchModeType || isDeleteMemoMode) && (
-          <ServiceNameHeaderTitle>Side project</ServiceNameHeaderTitle>
+          <ServiceNameHeaderTitle onClick={onClickTitle}>Side project</ServiceNameHeaderTitle>
         )}
         {(searchModeType || isDeleteMemoMode) && (
           <ChevronLeftButton>

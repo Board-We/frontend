@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Vector } from "../../../../assets/icons/Vector.svg";
 import { useRecoilState } from "recoil";
@@ -15,16 +15,16 @@ function CreateBoardStep4() {
 
   const handleAttachableTerm = () => {
     setModalOpen(true);
-    setStep(1);
+    setStep(0);
   };
 
   const handleOpenTerm = () => {
     setModalOpen(true);
-    setStep(4);
+    setStep(2);
   };
 
   return (
-    <>
+    <ComponentWrapper>
       <CreateBoardStepContainer>
         <CreateBoardDescriptionText>
           <p>롤링페이퍼 받는 기간</p>
@@ -46,7 +46,6 @@ function CreateBoardStep4() {
         <CreateBoardDescriptionText>
           <p>롤링페이퍼 확인 기간</p>
         </CreateBoardDescriptionText>
-
         <SetTimeWrapper onClick={handleOpenTerm}>
           <SetTimeContainer>
             <p style={{ color: "black" }}>
@@ -68,14 +67,24 @@ function CreateBoardStep4() {
           open={modalOpen}
         />
       )}
-    </>
+    </ComponentWrapper>
   );
 }
 
 export default CreateBoardStep4;
 
+const ComponentWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  overflow: scroll;
+`
+
 const CreateBoardStepContainer = styled.div`
   width: 100%;
+  height: ${props => props.height}px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

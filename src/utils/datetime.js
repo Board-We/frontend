@@ -1,5 +1,6 @@
 
 export const get4WeekDateTime = (baseTime) => {
+    console.log(baseTime)
     const newDates = []
     const oneDay = 60 * 60 * 24 * 1000
     const hour = 24
