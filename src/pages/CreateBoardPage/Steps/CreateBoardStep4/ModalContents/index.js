@@ -35,23 +35,19 @@ function ModalContents({ setModalOpen }) {
     setStep((prev) => prev + 1);
   };
 
-  const setWritingStartTime = (datetime) => {
-    console.log("setWritingStartTime", datetime)
+  const setWritingStartTime = () => {
     setBoard({ ...board, writingStartTime: tempDatetime })
   }
 
-  const setWritingEndTime = (datetime) => {
-    console.log("setWritingEndTime", datetime)
+  const setWritingEndTime = () => {
     setBoard({ ...board, writingEndTime: tempDatetime })
   }
 
-  const setOpenStartTime = (datetime) => {
-    console.log("setOpenStartTime", datetime)
+  const setOpenStartTime = () => {
     setBoard({ ...board, openStartTime: tempDatetime })
   }
 
-  const setOpenEndTime = (datetime) => {
-    console.log("setOpenEndTime", datetime)
+  const setOpenEndTime = () => {
     setBoard({ ...board, openEndTime: tempDatetime })
   }
 
@@ -63,7 +59,6 @@ function ModalContents({ setModalOpen }) {
     <ModalContainer>
       <StepDiscription
         step={step}
-        setStep={setStep}
         setModalOpen={setModalOpen}
       />
       <DatePicker
@@ -98,7 +93,7 @@ const ModalContainer = styled.div`
   justify-content: space-between;
 `;
 
-const StepDiscription = ({ step, setStep, setModalOpen }) => {
+const StepDiscription = ({ step, setModalOpen }) => {
   return (
     <Container>
       <DiscriptionContainer>
