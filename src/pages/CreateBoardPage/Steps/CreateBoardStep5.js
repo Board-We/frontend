@@ -104,6 +104,7 @@ export default CreateBoardStep5;
 
 const CreateBoardStepContainer = styled.div`
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -192,9 +193,9 @@ const Ballon = styled.div`
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  width: 230px;
-  height: 95px;
-  top: 43%;
+  width: 15rem;
+  height: 6.25rem;
+  top: 95%;
   background: ${(props) => props.theme.colors.white};
   border: 1px solid ${(props) => props.theme.colors.grey_40};
   color: white;
