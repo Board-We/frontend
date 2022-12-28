@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../../../assets/icons/close.svg";
@@ -8,6 +8,7 @@ import DatePicker from "../Components/datePicker";
 function ModalContents({ setModalOpen }) {
   const [step, setStep] = useRecoilState(setDateStepId);
   const [board, setBoard] = useRecoilState(boardState)
+  const [tempDatetime, setTempDatetime] = useState(new Date());
 
   useEffect(() => {
     if (step > 3) {
@@ -29,40 +30,44 @@ function ModalContents({ setModalOpen }) {
     else if (step === 3) return board.openEndTime
   }
 
-  const handleStepClick = () => {
+  const onClickConfirm = () => {
+    getSetter()(tempDatetime)
     setStep((prev) => prev + 1);
   };
 
-  const setWritingStartTime = (datetime) => {
-    console.log("setWritingStartTime", datetime)
+  const setWritingStartTime = () => {
+    setBoard({ ...board, writingStartTime: tempDatetime })
   }
 
-  const setWritingEndTime = (datetime) => {
-    console.log("setWritingEndTime", datetime)
+  const setWritingEndTime = () => {
+    setBoard({ ...board, writingEndTime: tempDatetime })
   }
 
-  const setOpenStartTime = (datetime) => {
-    console.log("setOpenStartTime", datetime)
+  const setOpenStartTime = () => {
+    setBoard({ ...board, openStartTime: tempDatetime })
   }
 
-  const setOpenEndTime = (datetime) => {
-    console.log("setOpenEndTime", datetime)
+  const setOpenEndTime = () => {
+    setBoard({ ...board, openEndTime: tempDatetime })
+  }
+
+  const setTempDatetimeData = (datetime) => {
+    setTempDatetime(datetime)
   }
 
   return (
     <ModalContainer>
       <StepDiscription
         step={step}
-        setStep={setStep}
         setModalOpen={setModalOpen}
       />
       <DatePicker
         text={step % 2 === 0 ? `부터` : `까지`}
-        setter={getSetter}
-        datetime={getDateTime} 
+        setter={setTempDatetimeData}
+        datetime={getDateTime}
         step={step}
-        />
-      <FooterButton onClick={handleStepClick}>확인</FooterButton>
+      />
+      <FooterButton onClick={onClickConfirm}>확인</FooterButton>
     </ModalContainer>
   );
 }
@@ -88,14 +93,14 @@ const ModalContainer = styled.div`
   justify-content: space-between;
 `;
 
-const StepDiscription = ({ step, setStep, setModalOpen }) => {
+const StepDiscription = ({ step, setModalOpen }) => {
   return (
     <Container>
       <DiscriptionContainer>
         <p style={{ color: "black" }}>
-          롤링 페이퍼 {step <= 2 ? "받는" : "공개"} 기간
+          롤링 페이퍼 {step < 2 ? "받는" : "공개"} 기간
         </p>
-        {step <= 2 ? (
+        {step < 2 ? (
           <span>친구들이 롤링 페이퍼를 작성할 수 있어요.</span>
         ) : (
           <span>작성된 롤링페이퍼를 확인할 수 있어요.</span>
@@ -104,7 +109,6 @@ const StepDiscription = ({ step, setStep, setModalOpen }) => {
       <CloseButton
         onClick={() => {
           setModalOpen(false);
-          setStep(1);
         }}
       >
         <Close />

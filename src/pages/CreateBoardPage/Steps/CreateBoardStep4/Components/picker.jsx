@@ -10,10 +10,10 @@ const Picker = ({ data, selectedData, setSelectedData }) => {
     const deviceScreen = useRecoilValue(deviceScreenState)
     const eventTimer = useRef()
     const $scroll = useRef()
+    const timer = useRef()
 
     useEffect(() => {
         setIndex(data.indexOf(selectedData))
-        $scroll.current.scrollTop = data.indexOf(selectedData) * Number(deviceScreen.rem.replace("px", "")) * 2.5
     }, [selectedData])
 
     useEffect(() => {
@@ -31,8 +31,17 @@ const Picker = ({ data, selectedData, setSelectedData }) => {
         initEventTimer()
         const heightOfEntity = Number(deviceScreen.rem.replace("px", "")) * 2.5
         const newIndex = Math.round(e.target.scrollTop / heightOfEntity)
-
+        detectOnScrollEnd()
         setSelectedData(data[newIndex])
+    }
+
+    const detectOnScrollEnd = () => {
+        if (timer.current !== null) {
+            clearTimeout(timer.current);
+        }
+        timer.current = setTimeout(function () {
+            $scroll.current.scrollTop = data.indexOf(selectedData) * Number(deviceScreen.rem.replace("px", "")) * 2.5
+        }, 100);
     }
 
     return (
@@ -63,6 +72,7 @@ const ScrollWrapper = styled.div`
     flex-direction: column;
     height: 7.5rem;
     overflow: scroll;
+    scroll-behavior: smooth;
     &::-webkit-scrollbar{
         display: none;
     }

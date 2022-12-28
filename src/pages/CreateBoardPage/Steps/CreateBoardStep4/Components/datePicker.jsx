@@ -34,7 +34,6 @@ const DatePicker = ({ text, datetime, setter, step }) => {
     }, [selectedDate])
 
     useEffect(() => {
-        console.log(selectedYear, selectedDate, selectedHour)
         setDateTime()
     }, [selectedYear, selectedDate, selectedHour])
 
@@ -47,7 +46,7 @@ const DatePicker = ({ text, datetime, setter, step }) => {
         newDateTime.setMinutes(0)
         newDateTime.setSeconds(0)
 
-        setter()(newDateTime)
+        setter(newDateTime)
     }
 
     const createDateObjects = () => {
@@ -108,7 +107,7 @@ const DatePicker = ({ text, datetime, setter, step }) => {
     }
 
     const getKeys = (obj) => {
-        if(!obj) return []
+        if (!obj) return []
         return Object.keys(obj)
     }
 
