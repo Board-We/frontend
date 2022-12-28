@@ -44,11 +44,10 @@ const CompleteCreate = () => {
       },
     };
 
-    const res = await postUserBoardState({ currentBoardState });
-    if (res) {
-      setBoardURL(res);
-    }
-    setBoardURL(mockURL);
+    const boardLinkRes = await postUserBoardState({
+      boardState: currentBoardState,
+    });
+    setBoardURL(boardLinkRes);
   };
 
   useEffect(() => {

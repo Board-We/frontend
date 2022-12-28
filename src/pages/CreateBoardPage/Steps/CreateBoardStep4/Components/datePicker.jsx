@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
+import SmallTitle from "../../../../../components/label/smallTitle"
 import { get4WeekDateTime } from "../../../../../utils/datetime"
 import Picker from "./picker"
 
-const DatePicker = ({ datetime, text="부터" }) => {
+const DatePicker = ({ text, datetime, setter, step }) => {
     const [dateObjects, setDateObjects] = useState([])
     const [years, setYears] = useState({});
     const [dates, setDates] = useState({});
     const [hours, setHours] = useState({});
-    const [selectedYear, setSelectedYear] = useState()
-    const [selectedDate, setSelectedDate] = useState()
-    const [selectedHour, setSelectedHour] = useState()
+    const [selectedYear, setSelectedYear] = useState('2023년')
+    const [selectedDate, setSelectedDate] = useState('1월1일')
+    const [selectedHour, setSelectedHour] = useState('0시')
 
     useEffect(() => {
         createDateObjects()
-    }, [])
+    }, [step])
 
     useEffect(() => {
         parseDateObjects()
@@ -32,8 +33,25 @@ const DatePicker = ({ datetime, text="부터" }) => {
         setHourByDate()
     }, [selectedDate])
 
+    useEffect(() => {
+        console.log(selectedYear, selectedDate, selectedHour)
+        setDateTime()
+    }, [selectedYear, selectedDate, selectedHour])
+
+    const setDateTime = () => {
+        const newDateTime = new Date()
+        newDateTime.setFullYear(selectedYear.replace("년", ''))
+        newDateTime.setMonth(selectedDate.split('월')[0] - 1)
+        newDateTime.setDate(selectedDate.split('월')[1].replace('일', ''))
+        newDateTime.setHours(selectedHour.replace('시', ''))
+        newDateTime.setMinutes(0)
+        newDateTime.setSeconds(0)
+
+        setter()(newDateTime)
+    }
+
     const createDateObjects = () => {
-        const newDateObjects = get4WeekDateTime(datetime ? datetime : new Date())
+        const newDateObjects = get4WeekDateTime(datetime() ? datetime() : new Date())
         setDateObjects(newDateObjects)
     }
 
@@ -43,6 +61,7 @@ const DatePicker = ({ datetime, text="부터" }) => {
         const newYears = {}
         const newDates = {}
         const newHours = {}
+
         dateObjects.forEach(el => {
             const yearStr = `${el.getFullYear()}년`
             const dateStr = `${el.getMonth() + 1}월${el.getDate()}일`
@@ -83,11 +102,13 @@ const DatePicker = ({ datetime, text="부터" }) => {
 
     const setHourByDate = () => {
         if (getKeys(dates).length === 0) return
-        const newSelectedHour = getKeys(dates[selectedDate])[0]
+        const newHours = getKeys(dates[selectedDate])
+        const newSelectedHour = newHours.includes(selectedHour) ? selectedHour : newHours[0]
         setSelectedHour(newSelectedHour)
     }
 
     const getKeys = (obj) => {
+        if(!obj) return []
         return Object.keys(obj)
     }
 
@@ -96,10 +117,10 @@ const DatePicker = ({ datetime, text="부터" }) => {
             {
                 selectedHour && (
                     <>
-                        <Picker data={getKeys(years)} selectedData={selectedYear} setSelectedData={setSelectedYear}/>
+                        <Picker data={getKeys(years)} selectedData={selectedYear} setSelectedData={setSelectedYear} />
                         <Picker data={getKeys(years[selectedYear])} selectedData={selectedDate} setSelectedData={setSelectedDate} />
                         <Picker data={getKeys(dates[selectedDate])} selectedData={selectedHour} setSelectedData={setSelectedHour} />
-                        {text}
+                        <SmallTitle>{text}</SmallTitle>
                     </>
                 )
             }
@@ -110,7 +131,6 @@ const DatePicker = ({ datetime, text="부터" }) => {
 const ComponentWrapper = styled.div`
     height: max-content;
     max-width: 600px;
-    background: green;
     display: flex;
     flex-direction: row;
     align-items: center;

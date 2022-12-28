@@ -1,8 +1,12 @@
 import { request } from ".";
 
 export const postUserBoardState = async ({ boardState }) => {
-  const res = await request({ method: "POST", url: "/board", boardState });
-  return res.boardLink;
+  const res = await request({
+    method: "POST",
+    url: "/board",
+    data: boardState,
+  });
+  return res.data.boardLink;
 };
 
 export const requestBoard = async (boardCode) => {
