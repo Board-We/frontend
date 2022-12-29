@@ -225,7 +225,6 @@ const ButtonArea = styled.div`
   width: 100%;
   height: 100%;
   flex-direction: row;
-  height: fit-content;
   gap: 0.5rem;
   align-items: flex-start;
   justify-content: flex-start;
