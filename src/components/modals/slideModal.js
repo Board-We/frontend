@@ -12,7 +12,7 @@ const SlideModal = ({ children, open, onClose, height, isBackdrop }) => {
       <ModalContainer open={open} height={height}>
         {children}
       </ModalContainer>
-      {isBackdrop ? <Backdrop onClick={onClose}></Backdrop> : null}
+      {isBackdrop ? <Backdrop open={open} onClick={onClose} /> : null}
     </>
   );
 };
@@ -29,12 +29,9 @@ const ModalContainer = styled.div`
   left: 0;
   margin: 0 auto;
   background-color: white;
-  display: ${(props) => (props.open ? "flex" : "none")};
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   z-index: 1500;
   padding: 1.5rem;
+  padding-bottom: 0;
 `;

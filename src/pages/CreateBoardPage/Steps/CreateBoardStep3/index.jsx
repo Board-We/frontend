@@ -32,7 +32,6 @@ const CreateBoardStep3 = ({ footerRef }) => {
     const bottomOfDescription = $desciprion.current.offsetTop + $desciprion.current.clientHeight;
     const heightOfButtonArea = $buttonArea.current.clientHeight;
     const marginTop = Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
-
     setHeightOfMemoGrid(
       deviceScreenSize.y -
       bottomOfDescription -

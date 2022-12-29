@@ -13,6 +13,7 @@ const Picker = ({ data, selectedData, setSelectedData }) => {
     const timer = useRef()
 
     useEffect(() => {
+        console.log(selectedData, data.indexOf(selectedData))
         setIndex(data.indexOf(selectedData))
     }, [selectedData])
 

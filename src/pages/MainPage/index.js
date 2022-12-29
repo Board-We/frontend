@@ -98,11 +98,11 @@ const Main = () => {
               <ServiceMainImage>
                 <ChipButton
                   text="새 보드 만들기"
-                  width="550px"
+                  width="90%"
                   onClick={handleClickCreateNewboard}
                   flat
                   sx={
-                    "position : fixed; z-index: 999999; left:0; right: 0; margin: 0 auto; "
+                    "position : fixed; z-index: 999999; left:0; right: 0; margin: 0 auto;"
                   }
                 />
               </ServiceMainImage>
@@ -176,6 +176,6 @@ const ServiceMainImage = styled.div`
   justify-content: flex-end;
   background-image: url(${mainImage});
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   background-position: center;
 `;
