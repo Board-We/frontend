@@ -135,7 +135,7 @@ const CompleteCreate = () => {
         <SlideModal
           open={modalOpen}
           isBackdrop={false}
-          height={"40vh"}
+          height={"28rem"}
           children={<ModalContents boardURL={boardURL} />}
         />
       )}

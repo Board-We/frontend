@@ -23,21 +23,21 @@ const ModalContents = ({ boardURL }) => {
   return (
     <Container>
       <h1>🎉 보드가 완성되었어요! 🎉</h1>
-      <p style={{ textAlign: "left", marginBottom: "0.3rem" }}>
-        친구에게 알려주기
-      </p>
-      <BoardLinkBox>
-        <BoardLinkUrlText>
-          <p>{boardURL && boardURL}</p>
-        </BoardLinkUrlText>
-        <BoardLinkCopyButton
-          onClick={() => {
-            handleCopyUrlLink(boardURL);
-          }}
-        >
-          공유
-        </BoardLinkCopyButton>
-      </BoardLinkBox>
+      <SubContainer>
+        <span style={{ textAlign: "left", margin: 0 }}>친구에게 알려주기</span>
+        <BoardLinkBox>
+          <BoardLinkUrlText>
+            <p style={{ margin: 0 }}>{boardURL && boardURL}</p>
+          </BoardLinkUrlText>
+          <BoardLinkCopyButton
+            onClick={() => {
+              handleCopyUrlLink(boardURL);
+            }}
+          >
+            공유
+          </BoardLinkCopyButton>
+        </BoardLinkBox>
+      </SubContainer>
 
       <DescriptionContainer>
         <CommonParagraph>롤링페이퍼 받는 기간</CommonParagraph>{" "}
@@ -69,10 +69,15 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   h1 {
     font-size: 1.2rem;
   }
+`;
+
+const SubContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 const BoardLinkBox = styled.div`
   width: 100%;
