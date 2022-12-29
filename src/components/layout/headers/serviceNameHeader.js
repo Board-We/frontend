@@ -6,6 +6,8 @@ import { ReactComponent as Search } from "../../../assets/icons/search.svg";
 import { ReactComponent as ChevronLeft } from "../../../assets/icons/chevronLeft.svg";
 import DropDownMenu from "./dropDownMenu";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { createBoardStepId } from "../../../store";
 
 const ServiceNameHeader = ({
   searchModeType,
@@ -21,6 +23,7 @@ const ServiceNameHeader = ({
 }) => {
   const navigate = useNavigate();
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
+  const [step, setStep] = useRecoilState(createBoardStepId);
 
   const handleClickChevronLeft = () => {
     navigate(-1);
@@ -40,14 +43,17 @@ const ServiceNameHeader = ({
   };
 
   const onClickTitle = () => {
-    navigate('/')
-  }
+    navigate("/");
+    setStep(0);
+  };
 
   return (
     <ComponentWrapper>
       <ServiceNameHeaderContainer>
         {!(searchModeType || isDeleteMemoMode) && (
-          <ServiceNameHeaderTitle onClick={onClickTitle}>Side project</ServiceNameHeaderTitle>
+          <ServiceNameHeaderTitle onClick={onClickTitle}>
+            Side project
+          </ServiceNameHeaderTitle>
         )}
         {(searchModeType || isDeleteMemoMode) && (
           <ChevronLeftButton>
