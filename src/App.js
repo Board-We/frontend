@@ -17,14 +17,14 @@ function App() {
 
   const addEventListenerResize = () => {
     setDeviceScreenSize({
-      x: window.screen.width,
-      y: window.screen.height,
+      x: window.innerWidth,
+      y: window.innerHeight,
       rem: getComputedStyle(document.documentElement).fontSize,
     });
     window.addEventListener("resize", () => {
       setDeviceScreenSize({
-        x: window.screen.width,
-        y: window.screen.height,
+        x: window.innerWidth,
+        y: window.innerHeight,
         rem: getComputedStyle(document.documentElement).fontSize,
       });
     });

@@ -27,7 +27,7 @@ function ModalContents({ setModalOpen }) {
     if (step === 0) return new Date()
     else if (step === 1) return board.writingStartTime
     else if (step === 2) return board.writingEndTime
-    else if (step === 3) return board.openEndTime
+    else if (step === 3) return board.openStartTime
   }
 
   const onClickConfirm = () => {
@@ -74,9 +74,12 @@ function ModalContents({ setModalOpen }) {
 
 const FooterButton = styled.button`
   width: 100%;
-  height: 5vh;
-  border-radius: 12px;
-  font-size: 1.5rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  margin: 1rem 0;
   color: ${(props) => props.theme.colors.black};
   background-color: ${(props) => props.theme.colors.primary};
   border: none;

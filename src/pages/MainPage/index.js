@@ -154,6 +154,6 @@ const ServiceMainImage = styled.div`
   justify-content: flex-end;
   background-image: url(${mainImage});
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   background-position: center;
 `;

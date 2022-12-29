@@ -9,7 +9,6 @@ import { formattingDateObject } from "../../../../utils/setDefaultDay";
 
 function CreateBoardStep4() {
   const [modalOpen, setModalOpen] = useState(false);
-
   const [board, setBoard] = useRecoilState(boardState);
   const [step, setStep] = useRecoilState(setDateStepId);
 
@@ -22,6 +21,10 @@ function CreateBoardStep4() {
     setModalOpen(true);
     setStep(2);
   };
+
+  const closeModal = () => {
+    setModalOpen(false)
+  }
 
   return (
     <ComponentWrapper>
@@ -65,6 +68,8 @@ function CreateBoardStep4() {
           height="65vh"
           children={<ModalContents setModalOpen={setModalOpen} />}
           open={modalOpen}
+          isBackdrop={true}
+          onClose={closeModal}
         />
       )}
     </ComponentWrapper>
