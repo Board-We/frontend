@@ -13,8 +13,6 @@ const CompleteCreate = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const [boardURL, setBoardURL] = useState("");
 
-  const mockURL = "/board/bc57b0d3-259f-4f4e-b54f-c73d87cb4da4/welcome";
-
   const postCurrentBoardState = async () => {
     const memoBackgroundList = [];
     const memoTextColorsList = [];
