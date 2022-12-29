@@ -21,7 +21,7 @@ const BlockAccessBoard = () => {
         <p>해당보드는 비공개 보드입니다.</p>
       </BlockDescription>
       <ButtonContainer>
-        <ChipButton width="80%" onClick={handleClickPasswordButton}>
+        <ChipButton onClick={handleClickPasswordButton}>
           비밀번호 입력하기
         </ChipButton>
       </ButtonContainer>

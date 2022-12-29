@@ -12,10 +12,10 @@ const ChipButton = ({ width, onClick, children, style = {} }) => {
 const ComponentWrapper = styled.div`
   display: flex;
   width: 100%;
+  max-width: 550px;
   align-items: center;
   justify-content: center;
   padding: 1.7rem 3rem;
-  max-width: ${(props) => (props.width ? props.width : "600px")};
   height: 3rem;
   font-size: 1rem;
   border-radius: 12px;

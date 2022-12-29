@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import ChipButton from "../../../../components/buttons/chipButton";
 import { boardState } from "../../../../store";
 import { formattingDateObject } from "../../../../utils/setDefaultDay";
 import Toast from "./components/toast";
 
 const ModalContents = ({ boardURL }) => {
+  const navigate = useNavigate();
   const board = useRecoilValue(boardState);
   const [openToast, setOpenToast] = useState(false);
-
   const handleCopyUrlLink = async (text) => {
     setOpenToast(true);
     await navigator.clipboard.writeText(text);
@@ -52,11 +53,9 @@ const ModalContents = ({ boardURL }) => {
         <CommonParagraph>비밀번호</CommonParagraph>{" "}
         <BoardValue>{board.password}</BoardValue>
       </DescriptionContainer>
-      <GoToMyBoardButton>
-        <Link to="/board/onWaitOpen" target="_blank" rel="noopener noreferrer">
-          만든 보드 확인하기
-        </Link>
-      </GoToMyBoardButton>
+      <ChipButton onClick={() => navigate(`${boardURL}`)}>
+        만든 보드 확인하기
+      </ChipButton>
       {openToast && <Toast text={"URL이 복사되었습니다."} />}
     </Container>
   );
@@ -68,8 +67,9 @@ const Container = styled.div`
   position: relative;
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   h1 {
     font-size: 1.2rem;
   }
@@ -123,17 +123,4 @@ const BoardValue = styled(CommonParagraph)`
 const DescriptionContainer = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-
-const GoToMyBoardButton = styled.button`
-  height: 12vw;
-  border-radius: 12px;
-  font-size: 1.2rem;
-  background-color: ${(props) => props.theme.colors.primary};
-  border: none;
-  margin-top: 1.5rem;
-  a {
-    text-decoration: none;
-    color: ${(props) => props.theme.colors.black};
-  }
 `;

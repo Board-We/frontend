@@ -29,15 +29,10 @@ const BoardOnEnd = () => {
         <OnEndImage />
       </BodyContainer>
       <ButtonContainer>
-        <ChipButton
-          width="100%"
-          onClick={onClickNewBoard}
-          style={{ color: "black" }}
-        >
+        <ChipButton onClick={onClickNewBoard} style={{ color: "black" }}>
           새 보드 만들기
         </ChipButton>
         <ChipButton
-          width="100%"
           onClick={onClickExplore}
           style={{ color: "black", backgroundColor: "grey_50" }}
         >

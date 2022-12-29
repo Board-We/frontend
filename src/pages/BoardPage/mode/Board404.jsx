@@ -24,15 +24,10 @@ const Board404 = () => {
         <OnEndImage />
       </BodyContainer>
       <ButtonContainer>
-        <ChipButton
-          width="100%"
-          onClick={handleClickNewBoard}
-          style={{ color: "black" }}
-        >
+        <ChipButton onClick={handleClickNewBoard} style={{ color: "black" }}>
           새 보드 만들기
         </ChipButton>
         <ChipButton
-          width="100%"
           onClick={handleClickExplore}
           style={{ backgroundColor: "grey_50", color: "black" }}
         >

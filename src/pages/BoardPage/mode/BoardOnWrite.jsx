@@ -38,7 +38,6 @@ const BoardOnWrite = () => {
       <BoardBackground boardInfo={board} />
       <Buttons>
         <ChipButton
-          width={"550px"}
           onClick={onClickMMP}
           style={{ left: 0, right: 0, margin: "0 auto" }}
         >
