@@ -1,18 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 
-const ChipButton = ({ width, onClick, children, style = {} }) => {
+const ChipButton = ({ fixed, onClick, children, style = {} }) => {
   return (
-    <ComponentWrapper width={width} onClick={onClick} style={style}>
-      {children}
+    <ComponentWrapper fixed={fixed}>
+      <ButtonContainer onClick={onClick} style={style}>
+        {children}
+      </ButtonContainer>
     </ComponentWrapper>
   );
 };
 
 const ComponentWrapper = styled.div`
-  display: flex;
   width: 100%;
-  max-width: 550px;
+  max-width: 600px;
+  ${(props) =>
+    props.fixed
+      ? ` position: fixed;
+  bottom: 1.5%;
+  z-index: 99999;`
+      : null};
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  width: 90%;
   align-items: center;
   justify-content: center;
   padding: 1.7rem 3rem;
@@ -21,6 +33,9 @@ const ComponentWrapper = styled.div`
   border-radius: 12px;
   font-weight: 500;
   user-select: none;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   cursor: pointer;
   ${(props) => (props.style ? props.style : null)};
   background-color: ${(props) =>

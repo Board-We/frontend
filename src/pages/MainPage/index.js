@@ -82,17 +82,7 @@ const Main = () => {
           {!searchModeType ? (
             <>
               <ServiceMainImage />
-              <ChipButton
-                onClick={() => navigate("/board/new")}
-                style={{
-                  position: "fixed",
-                  zIndex: 999999,
-                  left: 0,
-                  right: 0,
-                  bottom: 15,
-                  margin: "0 auto",
-                }}
-              >
+              <ChipButton fixed onClick={() => navigate("/board/new")}>
                 새 보드 만들기
               </ChipButton>
               <MainPageBody>
