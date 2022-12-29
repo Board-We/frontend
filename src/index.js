@@ -9,7 +9,7 @@ import { theme } from "./styles/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/frontend">
     <ThemeProvider theme={theme}>
       <RecoilRoot>
         <App />
