@@ -132,12 +132,9 @@ const CompleteCreate = () => {
         </MemoContainer>
       </BoardContainer>
       {modalOpen && (
-        <SlideModal
-          open={modalOpen}
-          isBackdrop={false}
-          height={"28rem"}
-          children={<ModalContents boardURL={boardURL} />}
-        />
+        <SlideModal open={modalOpen} isBackdrop={false} height={"fit-content"}>
+          <ModalContents boardURL={boardURL} />
+        </SlideModal>
       )}
     </>
   );
