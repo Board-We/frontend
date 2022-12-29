@@ -13,15 +13,11 @@ const TextInput = forwardRef(
       onChange,
       disabled,
       inputMaxLength,
-      setTextState,
+      onClickDelete,
       isValidLength,
     },
     ref
   ) => {
-    const handleClickDeleteText = () => {
-      setTextState("");
-    };
-
     return (
       <InputContainer isValidLength={isValidLength}>
         <InputArea
@@ -34,7 +30,7 @@ const TextInput = forwardRef(
           maxLength={inputMaxLength}
         />
         {isValidLength ? (
-          <DeleteButton onClick={handleClickDeleteText}>
+          <DeleteButton onClick={onClickDelete}>
             <Delete />
           </DeleteButton>
         ) : (

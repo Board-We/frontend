@@ -11,13 +11,11 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   const inputRef = useRef();
 
   const [board, setBoard] = useRecoilState(boardState);
-  const [boardName, setBoardName] = useState("");
   const [isValidLength, setIsValidLength] = useState(true);
   const [toggleTagInput, setToggleTagInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
   const handleChangeBoardName = (e) => {
-    setBoardName(e.target.value);
     const currentBoardState = { ...board, name: e.target.value };
     setBoard(currentBoardState);
   };
@@ -53,15 +51,15 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   };
 
   useEffect(() => {
-    boardName.length >= 1 && boardName.length < maxLength + 1
+    board.name.length >= 1 && board.name.length < maxLength + 1
       ? setDisabledFooterButton(false)
       : setDisabledFooterButton(true);
-  }, [boardName, setDisabledFooterButton]);
+  }, [board.name, setDisabledFooterButton]);
 
   useEffect(() => {
-    if (boardName.length > maxLength) setIsValidLength(false);
+    if (board.name.length > maxLength) setIsValidLength(false);
     else setIsValidLength(true);
-  }, [boardName, setIsValidLength]);
+  }, [board.name, setIsValidLength]);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -70,20 +68,20 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   return (
     <CreateBoardStepContainer>
       <TextInput
-        value={boardName}
+        value={board.name}
         commonSize={true}
         placeholder="ex. 김땡땡 생일 축하해~!"
         type="text"
         onChange={handleChangeBoardName}
         inputMaxLength={maxLength + 1}
-        setTextState={setBoardName}
+        onClickDelete={() => setBoard({ ...board, name: "" })}
         isValidLength={isValidLength}
         ref={inputRef}
       />
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
-          text={boardName}
+          text={board.name}
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>
