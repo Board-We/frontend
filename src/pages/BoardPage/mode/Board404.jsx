@@ -25,20 +25,16 @@ const Board404 = () => {
       </BodyContainer>
       <ButtonContainer>
         <ChipButton
-          flat
           width="100%"
-          background="#FDC62E"
-          color="black"
           onClick={handleClickNewBoard}
+          style={{ color: "black" }}
         >
           새 보드 만들기
         </ChipButton>
         <ChipButton
-          flat
           width="100%"
-          backgroundGrey={true}
-          color="black"
           onClick={handleClickExplore}
+          style={{ backgroundColor: "grey_50", color: "black" }}
         >
           다른 보드 탐색하기
         </ChipButton>

@@ -38,19 +38,12 @@ const EndStep = () => {
         <EndStepImage />
       </BodyContainer>
       <ButtonContainer>
-        <ChipButton
-          flat
-          width={"80%"}
-          text={"롤링페이퍼 더 붙이기"}
-          onClick={onClickMoreMemo}
-        />
-        <ChipButton
-          flat
-          backgroundGrey={true}
-          width={"80%"}
-          text={"공유하기"}
-          onClick={() => {}}
-        />
+        <ChipButton width={"80%"} onClick={onClickMoreMemo}>
+          롤링페이퍼 더 붙이기
+        </ChipButton>
+        <ChipButton width={"80%"} onClick={() => {}}>
+          공유하기
+        </ChipButton>
       </ButtonContainer>
     </PageWrapper>
   );

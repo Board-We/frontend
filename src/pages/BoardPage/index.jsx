@@ -10,6 +10,7 @@ import AlertModal from "../../components/modals/alertModal";
 import { getBoardState } from "../../utils/board";
 import BoardPageFactory from "./BoardPageFactory";
 import PasswordModal from "./BoardPageModal/PasswordModal";
+import BoardOnEnd from "./mode/BoardOnEnd";
 
 const BoardPage = () => {
   const { boardCode } = useParams();
@@ -161,6 +162,7 @@ const BoardPage = () => {
           checkedMemoList={checkedMemoList}
           setCheckedMemoList={setCheckedMemoList}
         />
+
         <PasswordModal
           open={passwordModalState.open}
           onClose={handleClosePasswordModal}

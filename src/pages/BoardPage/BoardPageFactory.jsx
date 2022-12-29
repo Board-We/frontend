@@ -18,6 +18,7 @@ const BoardPageFactory = ({ boardState, boardCode, ...args }) => {
     case "onEnd":
       return <BoardOnEnd />;
     default:
+      console.log("zz");
       return <Board404 />;
   }
 };
