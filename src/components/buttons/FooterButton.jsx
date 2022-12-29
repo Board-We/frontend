@@ -2,15 +2,13 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 
 const FooterButton = React.forwardRef(
-  ({ color, fontColor, text, onClick, disabled, flat }, ref) => (
-    <ButtonWrapper ref={ref} flat={flat}>
+  ({ color, fontColor, text, onClick, disabled }, ref) => (
+    <ButtonWrapper ref={ref}>
       <Button
         color={color}
         fontColor={fontColor}
-        text={text}
         onClick={disabled ? null : onClick}
         disabled={disabled}
-        flat={flat}
       >
         {text}
       </Button>
@@ -26,7 +24,7 @@ const ButtonWrapper = styled.div`
   align-self: flex-end;
   width: 100vw;
   max-width: 600px;
-  padding: ${(props) => (props.flat ? null : "1.2rem")};
+  padding: 1.2rem;
 `;
 
 const Button = styled.div`
@@ -36,7 +34,7 @@ const Button = styled.div`
   padding: 1rem;
   width: 100vw;
   max-width: 700px;
-  border-radius: ${(props) => (props.flat ? null : "0.5rem")};
+  border-radius: 0.5rem;
   font-size: 1.3rem;
   color: ${(props) =>
     props.disabled ? props.theme.colors.grey_20 : props.theme.colors.black};

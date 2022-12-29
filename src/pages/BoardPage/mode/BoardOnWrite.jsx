@@ -38,12 +38,11 @@ const BoardOnWrite = () => {
       <BoardBackground boardInfo={board} />
       <Buttons>
         <ChipButton
-          width={"550px"}
           onClick={onClickMMP}
-          text={"롤링페이퍼 남기기"}
-          flat
-          sx={"left:0; right: 0; margin: 0 auto; "}
-        />
+          style={{ left: 0, right: 0, margin: "0 auto" }}
+        >
+          롤링페이퍼 남기기
+        </ChipButton>
       </Buttons>
     </PageWrapper>
   );

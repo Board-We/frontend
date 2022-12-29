@@ -15,6 +15,8 @@ const BoardOnEnd = () => {
     navigate("/");
   };
 
+  console.log("on");
+
   return (
     <PageWrapper>
       <BodyContainer>
@@ -27,21 +29,12 @@ const BoardOnEnd = () => {
         <OnEndImage />
       </BodyContainer>
       <ButtonContainer>
-        <ChipButton
-          flat
-          width="100%"
-          background="#FDC62E"
-          color="black"
-          onClick={onClickNewBoard}
-        >
+        <ChipButton onClick={onClickNewBoard} style={{ color: "black" }}>
           새 보드 만들기
         </ChipButton>
         <ChipButton
-          flat
-          width="100%"
-          backgroundGrey={true}
-          color="black"
           onClick={onClickExplore}
+          style={{ color: "black", backgroundColor: "grey_50" }}
         >
           다른 보드 탐색하기
         </ChipButton>

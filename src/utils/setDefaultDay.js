@@ -13,6 +13,7 @@ export const formattingDateObject = (date) => {
 };
 
 export const setDateISOstring = (date) => {
+  console.log(date);
   const TIME_ZONE = 3240 * 10000;
   const filterDateString = new Date(+date + TIME_ZONE)
     .toISOString()

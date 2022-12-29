@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { deleteBoard } from "../../api/boardsApi";
+import { deleteBoard, requestBoard } from "../../api/boardsApi";
 import { searchMemo } from "../../api/memoApi";
 import { searchMemoResults } from "../../api/mockData";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
+import { getBoardState } from "../../utils/board";
+import BoardPageFactory from "./BoardPageFactory";
 import PasswordModal from "./BoardPageModal/PasswordModal";
-import Board404 from "./mode/Board404";
 import BoardOnEnd from "./mode/BoardOnEnd";
-import BoardOnOpen from "./mode/BoardOnOpen";
-import BoardOnWaitOpen from "./mode/BoardOnWaitOpen";
-import BoardOnWaitWrite from "./mode/BoardOnWaitWrite";
-import BoardOnWrite from "./mode/BoardOnWrite";
 
 const BoardPage = () => {
-  const navigate = useNavigate();
+  const { boardCode } = useParams();
+  const [board, setBoard] = useState(null);
+  const [boardState, setBoardState] = useState(null);
+
   const location = useLocation();
   const currentPath = location.pathname;
   const [headerMenuSetting, setheaderMenuSetting] = useState({
@@ -88,10 +88,20 @@ const BoardPage = () => {
   }, [passwordModalState]);
 
   useEffect(() => {
-    switch (currentPath) {
-      case "/board/onWaitWrite":
-      case "/board/onwrite":
-      case "/board/onWaitOpen":
+    const accessBoard = async () => {
+      const board = await requestBoard(boardCode);
+      const boardState = getBoardState(board);
+      setBoardState(boardState);
+      setBoard(board);
+    };
+    accessBoard();
+  }, [boardCode]);
+
+  useEffect(() => {
+    switch (boardState) {
+      case "onWaitWrite":
+      case "onWrite":
+      case "onWaitOpen":
         setheaderMenuSetting({
           search: null,
           share: () => {},
@@ -101,7 +111,7 @@ const BoardPage = () => {
           },
         });
         break;
-      case "/board/onOpen":
+      case "onOpen":
         setheaderMenuSetting({
           search: handleClickSearch,
           share: () => {},
@@ -121,7 +131,7 @@ const BoardPage = () => {
           },
         });
     }
-  }, [currentPath, handleClickDeleteBoard, handleClickDeleteMemo]);
+  }, [boardState, handleClickDeleteBoard, handleClickDeleteMemo]);
   return (
     <PageWrapper>
       <ServiceNameHeader
@@ -140,28 +150,19 @@ const BoardPage = () => {
         <DeleteMemoSubHeader> 삭제할 메모를 선택하세요. </DeleteMemoSubHeader>
       )}
       <BodyContainer>
-        <Routes>
-          <Route path="/onWaitWrite" element={<BoardOnWaitWrite />} />
-          <Route path="/onWrite" element={<BoardOnWrite />} />
-          <Route path="/onWaitOpen" element={<BoardOnWaitOpen />} />
-          <Route
-            path="/onOpen"
-            element={
-              <BoardOnOpen
-                passwordModalState={passwordModalState}
-                setPasswordModalState={setPasswordModalState}
-                isDeleteMemoMode={isDeleteMemoMode}
-                setIsDeleteMemoMode={setIsDeleteMemoMode}
-                searchModeType={searchModeType}
-                searchResults={searchResults}
-                checkedMemoList={checkedMemoList}
-                setCheckedMemoList={setCheckedMemoList}
-              />
-            }
-          />
-          <Route path="/onEnd" element={<BoardOnEnd />} />
-          <Route path="/404" element={<Board404 />} />
-        </Routes>
+        <BoardPageFactory
+          boardState={boardState}
+          boardCode={boardCode}
+          passwordModalState={passwordModalState}
+          setPasswordModalState={setPasswordModalState}
+          isDeleteMemoMode={isDeleteMemoMode}
+          setIsDeleteMemoMode={setIsDeleteMemoMode}
+          searchModeType={searchModeType}
+          searchResults={searchResults}
+          checkedMemoList={checkedMemoList}
+          setCheckedMemoList={setCheckedMemoList}
+        />
+
         <PasswordModal
           open={passwordModalState.open}
           onClose={handleClosePasswordModal}

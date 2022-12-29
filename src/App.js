@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route path="/board/new" element={<CreateBoardPage />} />
         <Route path="/memo/*" element={<CreateMemoPage />}></Route>
-        <Route path="/board/*" element={<BoardPage />} />
+        <Route path="/board/:boardCode/*" element={<BoardPage />} />
         <Route path="/" element={<Main />} />
       </Routes>
     </div>

@@ -28,10 +28,6 @@ const Main = () => {
   const [isFooter, setIsFooter] = useState(false);
   const [mobileStartY, setMobileStartY] = useState(0);
 
-  const handleClickCreateNewboard = () => {
-    navigate("/board/new");
-  };
-
   const handleWheelPage = (e) => {
     if (e.deltaY > 0) setIsFooter(true);
   };
@@ -39,22 +35,12 @@ const Main = () => {
   // mobile event handlers
   const handleTouchStartPage = (e) => {
     const startY = e.touches[0].pageY;
-
     setMobileStartY(startY);
   };
 
   const handleTouchMovePage = (e) => {
     const deltaY = mobileStartY - e.touches[0].pageY;
-
     if (deltaY > 0) setIsFooter(true);
-  };
-
-  const handleClickSearch = () => {
-    setSearchModeType("board");
-  };
-
-  const handleCloseInvalidLinkModal = () => {
-    setIsOpenInvalidLinkModal(false);
   };
 
   const handleKeyDownSearchInput = async (e) => {
@@ -91,21 +77,24 @@ const Main = () => {
             setSearchModeType={setSearchModeType}
             setQuery={setQuery}
             onKeyDownSearchInput={handleKeyDownSearchInput}
-            onSearch={handleClickSearch}
+            onSearch={() => setSearchModeType("board")}
           />
           {!searchModeType ? (
             <>
-              <ServiceMainImage>
-                <ChipButton
-                  text="새 보드 만들기"
-                  width="90%"
-                  onClick={handleClickCreateNewboard}
-                  flat
-                  sx={
-                    "position : fixed; z-index: 999999; left:0; right: 0; margin: 0 auto;"
-                  }
-                />
-              </ServiceMainImage>
+              <ServiceMainImage />
+              <ChipButton
+                onClick={() => navigate("/board/new")}
+                style={{
+                  position: "fixed",
+                  zIndex: 999999,
+                  left: 0,
+                  right: 0,
+                  bottom: 15,
+                  margin: "0 auto",
+                }}
+              >
+                새 보드 만들기
+              </ChipButton>
               <MainPageBody>
                 <EnterLinkInput />
                 <BoardSlide
@@ -121,17 +110,16 @@ const Main = () => {
             <SearchPage keyword={keyword} searchResults={searchResults} />
           )}
         </MainPageContainer>
+        {isOpenInvalidLinkModal && (
+          <AlertModal
+            open={isOpenInvalidLinkModal}
+            text="유효하지 않은 링크입니다."
+            buttonTextArray={["확인"]}
+            onClickArray={[() => setIsOpenInvalidLinkModal(false)]}
+            onClose={() => setIsOpenInvalidLinkModal(false)}
+          />
+        )}
       </PageWrapper>
-
-      {isOpenInvalidLinkModal && (
-        <AlertModal
-          open={isOpenInvalidLinkModal}
-          text="유효하지 않은 링크입니다."
-          buttonTextArray={["확인"]}
-          onClickArray={[handleCloseInvalidLinkModal]}
-          onClose={handleCloseInvalidLinkModal}
-        />
-      )}
     </>
   );
 };
