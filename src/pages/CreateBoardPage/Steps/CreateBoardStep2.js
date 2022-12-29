@@ -10,12 +10,9 @@ const maxLength = 50;
 
 const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   const prevBoardDescription = useRef();
-
   const [board, setBoard] = useRecoilState(boardState);
-  const [boardDescription, setBoardDescription] = useState("");
 
   const [heightInput, setHeightInput] = useState(30); // 임시값, 수정 필요
-
   const [isValidLength, setIsValidLength] = useState(true);
 
   const handleChangeTextInput = (e) => {
@@ -25,14 +22,14 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   };
 
   const handleClickDeleteText = (e) => {
-    setBoardDescription("");
+    setBoard({ ...board, description: "" });
   };
 
   useEffect(() => {
     board.description.length >= 1 && board.description.length < maxLength + 1
       ? setDisabledFooterButton(false)
       : setDisabledFooterButton(true);
-  }, [boardDescription, setDisabledFooterButton, board.description.length]);
+  }, [setDisabledFooterButton, board.description.length]);
 
   useEffect(() => {
     if (board.description.length > maxLength) setIsValidLength(false);
