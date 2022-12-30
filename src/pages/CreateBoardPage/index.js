@@ -206,7 +206,7 @@ const StepDescriptionContainer = styled.div`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
-  height: ${(props) => props.height}px;
+  height: fit-content;
   height: 100%;
   overflow: hidden;
 `;
