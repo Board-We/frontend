@@ -158,7 +158,6 @@ const SampleBoard = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   padding: 0 1rem;
-  background-color: red;
 `;
 
 const MemoArea = styled.div`
@@ -229,7 +228,7 @@ const ButtonArea = styled.div`
   gap: 0.5rem;
   align-items: flex-start;
   justify-content: flex-start;
-  background: white;
+  background: red;
   padding: 0.8rem 1.25rem;
 `;
 

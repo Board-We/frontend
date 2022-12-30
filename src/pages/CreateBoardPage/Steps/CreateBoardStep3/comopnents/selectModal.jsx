@@ -13,16 +13,18 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
   const [color, setColor] = useState("#FFFFFF");
   const [selectedMemoIndex, setSelectedMemoIndex] = useState(0);
   const [selectedMenu, setSelectedMenu] = useState("bgImage");
-  const $file = useRef()
+  const $file = useRef();
 
   useEffect(() => {
     if (option === "메모지") {
       const memoTheme = board.memoThemes[selectedMemoIndex];
-      setSelectedMenu(isImage(memoTheme.memoBackground) ? "bgImage" : "bgColor")
+      setSelectedMenu(
+        isImage(memoTheme.memoBackground) ? "bgImage" : "bgColor"
+      );
     } else if (option === "배경") {
-      setSelectedMenu(isImage(board.boardBackground) ? "bgImage" : "bgColor")
+      setSelectedMenu(isImage(board.boardBackground) ? "bgImage" : "bgColor");
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (option === "메모지") {
@@ -111,35 +113,44 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
   };
 
   const onClickCameraIcon = () => {
-    $file.current.click()
-  }
+    $file.current.click();
+  };
 
   const getImageComponent = () => {
     return (
-      <Camera htmlFor="bgFileInput" src={CameraIcon} onClick={onClickCameraIcon} />
-    )
-  }
+      <Camera
+        htmlFor="bgFileInput"
+        src={CameraIcon}
+        onClick={onClickCameraIcon}
+      />
+    );
+  };
 
   const isImage = (data) => {
-    if (data.includes('http') || data.includes('base64')) return true
-    else return false
-  }
+    if (data.includes("http") || data.includes("base64")) return true;
+    else return false;
+  };
 
   const getBackgroundImageContainer = () => {
     return (
       <BackgroundImageContainer>
         {option === "배경" ? (
           isImage(board.boardBackground) ? (
-            <BackgroundImage src={board.boardBackground}
-              onClick={onClickCameraIcon} />
-          ) : getImageComponent()
+            <BackgroundImage
+              src={board.boardBackground}
+              onClick={onClickCameraIcon}
+            />
+          ) : (
+            getImageComponent()
+          )
         ) : isImage(board.memoThemes[selectedMemoIndex].memoBackground) ? (
           <BackgroundImage
             src={board.memoThemes[selectedMemoIndex].memoBackground}
             onClick={onClickCameraIcon}
           />
-        ) : getImageComponent()
-        }
+        ) : (
+          getImageComponent()
+        )}
         <ImageFileInput
           type="file"
           ref={$file}
@@ -225,6 +236,7 @@ const ComponentWrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-end;
   background: #ffffff;
+  background-color: blue;
   visibility: ${(props) => (props.open ? `visible` : `hidden`)};
   z-index: 3;
 `;
@@ -286,6 +298,6 @@ const Footer = styled.div`
 const Camera = styled.img`
   width: 30%;
   height: 30%;
-`
+`;
 
 export default SelectModal;
