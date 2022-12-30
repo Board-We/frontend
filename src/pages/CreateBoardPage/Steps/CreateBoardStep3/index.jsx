@@ -221,17 +221,15 @@ const SampleMemo = styled.div`
 
 const ButtonArea = styled.div`
   display: flex;
-  position: absolute;
-  bottom: 10%;
   width: 100%;
   height: 100%;
-  max-height: 5rem;
+  max-height: 8vh;
   flex-direction: row;
   gap: 0.5rem;
   align-items: flex-start;
   justify-content: flex-start;
   background: white;
-  padding: 0.825rem 1.25rem 0.5rem;
+  padding: 0.8rem 1.25rem;
 `;
 
 export default CreateBoardStep3;
