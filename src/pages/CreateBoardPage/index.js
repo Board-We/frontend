@@ -151,7 +151,10 @@ const CreateBoardPage = () => {
           </Title>
         </StepDescriptionContainer>
       )}
-      <BoardInfoConatiner height={heightOfContentArea}>
+      <BoardInfoConatiner
+        currentStepId={currentStepId}
+        height={heightOfContentArea}
+      >
         {controlCreatBoardStep(currentStepId, setDisabledFooterButton, $footer)}
       </BoardInfoConatiner>
       <PageFooter>
@@ -206,8 +209,10 @@ const StepDescriptionContainer = styled.div`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
-  height: ${(props) => props.height}px;
+  height: ${(props) =>
+    props.currentStepId === 3 ? "auto" : `${props.height}px`};
   overflow: hidden;
+  background-color: blue;
 `;
 
 const PageFooter = styled.div`
