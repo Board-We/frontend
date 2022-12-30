@@ -143,7 +143,7 @@ const CreateBoardStep3 = ({ footerRef }) => {
 
 const ComponentWrapper = styled.div`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 0.5rem;
