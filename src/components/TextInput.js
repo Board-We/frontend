@@ -11,6 +11,7 @@ const TextInput = forwardRef(
       placeholder,
       type,
       onChange,
+      onKeyDown,
       disabled,
       inputMaxLength,
       onClickDelete,
@@ -26,6 +27,7 @@ const TextInput = forwardRef(
           placeholder={placeholder}
           type={type}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           disabled={disabled}
           maxLength={inputMaxLength}
         />
