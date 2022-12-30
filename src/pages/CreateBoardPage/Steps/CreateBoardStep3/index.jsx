@@ -143,10 +143,9 @@ const CreateBoardStep3 = ({ footerRef }) => {
 
 const ComponentWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  background: ${theme.colors.grey_50};
   margin-top: 0.5rem;
 `;
 
@@ -222,8 +221,11 @@ const SampleMemo = styled.div`
 
 const ButtonArea = styled.div`
   display: flex;
+  position: absolute;
+  bottom: 10%;
   width: 100%;
-  height: auto;
+  height: 100%;
+  max-height: 5rem;
   flex-direction: row;
   gap: 0.5rem;
   align-items: flex-start;
