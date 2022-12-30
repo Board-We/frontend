@@ -13,11 +13,14 @@ import BoardSlide from "./components/BoardSlide/index";
 import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
 import mainImage from "../../assets/images/mainImage.png";
+import { theme } from "../../styles/theme";
+import { boardState } from "../../store";
+import { useRecoilState } from "recoil";
 
 const Main = () => {
   const navigate = useNavigate();
   const [reccomendBoardList, setReccomendBoardList] = useState([]);
-
+  const [board, setBoard] = useRecoilState(boardState);
   const [searchModeType, setSearchModeType] = useState("");
   const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
   const [keyword, setKeyword] = useState(""); // 결과창 키워드 표시를 위한 값
@@ -54,6 +57,31 @@ const Main = () => {
     }
   };
 
+  const initBoard = () => {
+    const initialBoardForm = {
+      name: "",
+      description: "",
+      tags: [],
+      writingStartTime: new Date(),
+      writingEndTime: new Date(new Date().getTime() + 1209600000),
+      openStartTime: new Date(new Date().getTime() + 1209601000),
+      openEndTime: new Date(new Date().getTime() + 2419200000),
+      password: "",
+      openType: "",
+      boardThemeId: 0,
+      boardBackground: theme.colors.defaultBoardBg,
+      boardFont: "san-serif",
+      memos: [],
+      memoThemes: [
+        {
+          memoBackground: theme.colors.defaultMemoBg,
+          memoTextColor: theme.colors.black,
+        },
+      ],
+    };
+    setBoard(initialBoardForm);
+  };
+
   const getReccomendBoardList = useCallback(async () => {
     const data = await requestReccomendBoardList();
     if (data) setReccomendBoardList(data);
@@ -62,6 +90,10 @@ const Main = () => {
   useEffect(() => {
     getReccomendBoardList();
   }, [getReccomendBoardList]);
+
+  useEffect(() => {
+    initBoard();
+  }, []);
 
   return (
     <>

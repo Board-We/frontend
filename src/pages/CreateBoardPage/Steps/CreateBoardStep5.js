@@ -10,8 +10,11 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
   const [password, setPassword] = useState("");
   const [isValidLength, setIsValidLength] = useState(false);
 
-  const buttonValue = ["공개", "비공개"];
-  const [active, setActive] = useState("0");
+  const [buttonValue, setButtonValue] = useState(board.openType);
+
+  const handleOnKeyDownBlockSpacebar = (e) => {
+    if (e.code === "Space") e.nativeEvent.returnValue = false;
+  };
 
   const handlePasswordInput = (e) => {
     const boardState = { ...board, password: e.target.value };
@@ -19,33 +22,33 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
     setBoard(boardState);
   };
 
-  const handlePrivateMode = (e) => {
-    setActive((prev) => {
+  const handleIsPublicMode = (e) => {
+    setButtonValue((prev) => {
       return e.target.value;
     });
   };
 
   useEffect(() => {
-    password.length < 4
+    board.password.length < 4
       ? setDisabledFooterButton(true)
       : setDisabledFooterButton(false);
-  }, [password, setDisabledFooterButton]);
+  }, [board.password, setDisabledFooterButton]);
 
   useEffect(() => {
-    password.length < 4 ? setIsValidLength(false) : setIsValidLength(true);
-  }, [setIsValidLength, password]);
+    board.password.length < 4
+      ? setIsValidLength(false)
+      : setIsValidLength(true);
+  }, [setIsValidLength, board.password]);
 
   useEffect(() => {
-    if (active === "0") {
+    if (buttonValue === "PUBLIC") {
       let setPublicMode = { ...board, openType: "PUBLIC" };
       setBoard(setPublicMode);
     } else {
       let setPrivateMode = { ...board, openType: "PRIVATE" };
       setBoard(setPrivateMode);
     }
-  }, [active, setBoard]);
-
-  console.log(board);
+  }, [buttonValue, setBoard]);
 
   return (
     <CreateBoardStepContainer>
@@ -55,11 +58,12 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
       <TextInput
         type="password"
         commonSize={true}
-        value={password}
+        value={board.password}
         placeholder="4자 이상 입력하세요."
         pattern="[0-9]*"
+        onKeyDown={handleOnKeyDownBlockSpacebar}
         onChange={handlePasswordInput}
-        setTextState={setPassword}
+        onClickDelete={() => setBoard({ ...board, password: "" })}
         isValidLength={isValidLength}
       />
       {!isValidLength && (
@@ -72,19 +76,20 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
         </ModeSelectContainer>
 
         <ButtonContainer>
-          {buttonValue.map((item, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <ModeButton
-                  value={idx}
-                  className={idx == active ? "active" : ""}
-                  onClick={handlePrivateMode}
-                >
-                  {item}
-                </ModeButton>
-              </React.Fragment>
-            );
-          })}
+          <ModeButton
+            value="PUBLIC"
+            className={board.openType === "PUBLIC" ? "active" : ""}
+            onClick={handleIsPublicMode}
+          >
+            공개
+          </ModeButton>{" "}
+          <ModeButton
+            value="PRIVATE"
+            className={board.openType === "PRIVATE" ? "active" : ""}
+            onClick={handleIsPublicMode}
+          >
+            비공개
+          </ModeButton>
         </ButtonContainer>
       </ModeContainer>
 
@@ -119,6 +124,7 @@ const PasswordInputContainer = styled.div`
   margin-bottom: 1rem;
   p {
     margin: 0;
+    text-align: left;
     font-size: 0.9rem;
     color: ${(props) => props.theme.colors.grey_20};
   }
