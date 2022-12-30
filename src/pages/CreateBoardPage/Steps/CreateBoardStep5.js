@@ -62,7 +62,7 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
         setTextState={setPassword}
         isValidLength={isValidLength}
       />
-      {!isValidLength && (
+      {!isValidLength && password.length > 0 && (
         <WarningSpan show={isValidLength}>4자 이상 입력해주세요.</WarningSpan>
       )}
       <ModeContainer>
@@ -120,6 +120,7 @@ const PasswordInputContainer = styled.div`
   margin-bottom: 1rem;
   p {
     margin: 0;
+    text-align: left;
     font-size: 0.9rem;
     color: ${(props) => props.theme.colors.grey_20};
   }
