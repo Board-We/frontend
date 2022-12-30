@@ -10,8 +10,7 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
   const [password, setPassword] = useState("");
   const [isValidLength, setIsValidLength] = useState(false);
 
-  const buttonValue = ["공개", "비공개"];
-  const [active, setActive] = useState("0");
+  const [buttonValue, setButtonValue] = useState(board.openType);
 
   const handleOnKeyDownBlockSpacebar = (e) => {
     if (e.code === "Space") e.nativeEvent.returnValue = false;
@@ -23,8 +22,8 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
     setBoard(boardState);
   };
 
-  const handlePrivateMode = (e) => {
-    setActive((prev) => {
+  const handleIsPublicMode = (e) => {
+    setButtonValue((prev) => {
       return e.target.value;
     });
   };
@@ -42,14 +41,14 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
   }, [setIsValidLength, board.password]);
 
   useEffect(() => {
-    if (active === "0") {
+    if (buttonValue === "PUBLIC") {
       let setPublicMode = { ...board, openType: "PUBLIC" };
       setBoard(setPublicMode);
     } else {
       let setPrivateMode = { ...board, openType: "PRIVATE" };
       setBoard(setPrivateMode);
     }
-  }, [active, setBoard]);
+  }, [buttonValue, setBoard]);
 
   return (
     <CreateBoardStepContainer>
@@ -77,19 +76,20 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
         </ModeSelectContainer>
 
         <ButtonContainer>
-          {buttonValue.map((item, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <ModeButton
-                  value={idx}
-                  className={idx == active ? "active" : ""}
-                  onClick={handlePrivateMode}
-                >
-                  {item}
-                </ModeButton>
-              </React.Fragment>
-            );
-          })}
+          <ModeButton
+            value="PUBLIC"
+            className={board.openType === "PUBLIC" ? "active" : ""}
+            onClick={handleIsPublicMode}
+          >
+            공개
+          </ModeButton>{" "}
+          <ModeButton
+            value="PRIVATE"
+            className={board.openType === "PRIVATE" ? "active" : ""}
+            onClick={handleIsPublicMode}
+          >
+            비공개
+          </ModeButton>
         </ButtonContainer>
       </ModeContainer>
 
