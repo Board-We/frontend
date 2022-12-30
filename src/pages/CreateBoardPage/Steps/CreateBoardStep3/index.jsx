@@ -108,27 +108,25 @@ const CreateBoardStep3 = ({ footerRef }) => {
 
   return (
     <ComponentWrapper ref={$component}>
-      <TmpWrapper>
-        <SampleBoard>
-          <MemoArea ref={$memoArea} background={board.boardBackground}>
-            <SmallTitle>{board.name}</SmallTitle>
-            <Description ref={$desciprion}>{board.description}</Description>
-            <MemoGrid height={heightOfMemoGrid}>{memos}</MemoGrid>
-          </MemoArea>
-        </SampleBoard>
-        <ButtonArea ref={$buttonArea}>
-          <TapButton
-            isSelected={true}
-            text="배경"
-            onClick={onClickSetBackground}
-          />
-          <TapButton
-            isSelected={true}
-            text="메모지"
-            onClick={onClickSetMemoTheme}
-          />
-        </ButtonArea>
-      </TmpWrapper>
+      <SampleBoard>
+        <MemoArea ref={$memoArea} background={board.boardBackground}>
+          <SmallTitle>{board.name}</SmallTitle>
+          <Description ref={$desciprion}>{board.description}</Description>
+          <MemoGrid height={heightOfMemoGrid}>{memos}</MemoGrid>
+        </MemoArea>
+      </SampleBoard>
+      <ButtonArea ref={$buttonArea}>
+        <TapButton
+          isSelected={true}
+          text="배경"
+          onClick={onClickSetBackground}
+        />
+        <TapButton
+          isSelected={true}
+          text="메모지"
+          onClick={onClickSetMemoTheme}
+        />
+      </ButtonArea>
       {isModalOpen && (
         <SelectModal
           open={isModalOpen}
@@ -142,10 +140,6 @@ const CreateBoardStep3 = ({ footerRef }) => {
     </ComponentWrapper>
   );
 };
-
-const TmpWrapper = styled.div`
-  height: 100%;
-`;
 
 const ComponentWrapper = styled.div`
   width: 100%;
@@ -234,7 +228,7 @@ const ButtonArea = styled.div`
   gap: 0.5rem;
   align-items: flex-start;
   justify-content: flex-start;
-  background: red;
+  background-color: white;
   padding: 0.8rem 1.25rem;
 `;
 

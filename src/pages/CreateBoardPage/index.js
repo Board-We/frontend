@@ -181,7 +181,6 @@ const PageWrapper = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background-color: violet;
 `;
 
 const ProgressBarContainer = styled.div`
@@ -210,7 +209,6 @@ const BoardInfoConatiner = styled.div`
   height: ${(props) => props.height}px;
   height: 100%;
   overflow: hidden;
-  background-color: blue;
 `;
 
 const PageFooter = styled.div`
