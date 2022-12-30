@@ -110,7 +110,6 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
   };
 
   useEffect(() => {
-    console.log("selectedIdx?", selectedMemoIndex);
     if (option === "메모지") {
       const memoTheme = board.memoThemes[selectedMemoIndex];
       switch (selectedMenu) {
