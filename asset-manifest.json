@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/frontend/static/css/main.65e683af.css",
-    "main.js": "/frontend/static/js/main.b5ded196.js",
+    "main.js": "/frontend/static/js/main.2be05aed.js",
     "static/media/Pretendard-Black.subset.woff": "/frontend/static/media/Pretendard-Black.subset.9748a4898931104fb46b.woff",
     "static/media/Pretendard-ExtraBold.subset.woff": "/frontend/static/media/Pretendard-ExtraBold.subset.819ba6b8b367336d9572.woff",
     "static/media/Pretendard-Bold.subset.woff": "/frontend/static/media/Pretendard-Bold.subset.fd82943b2c9a8209851b.woff",
@@ -40,10 +40,10 @@
     "static/media/delete.svg": "/frontend/static/media/delete.6b993d55640466280c709bdc45fa1e51.svg",
     "static/media/chevronRight.svg": "/frontend/static/media/chevronRight.6b21174bd31fff12204b3025652bb4d5.svg",
     "main.65e683af.css.map": "/frontend/static/css/main.65e683af.css.map",
-    "main.b5ded196.js.map": "/frontend/static/js/main.b5ded196.js.map"
+    "main.2be05aed.js.map": "/frontend/static/js/main.2be05aed.js.map"
   },
   "entrypoints": [
     "static/css/main.65e683af.css",
-    "static/js/main.b5ded196.js"
+    "static/js/main.2be05aed.js"
   ]
 }
