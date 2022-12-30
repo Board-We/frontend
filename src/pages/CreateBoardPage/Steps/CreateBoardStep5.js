@@ -13,6 +13,10 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
   const buttonValue = ["공개", "비공개"];
   const [active, setActive] = useState("0");
 
+  const handleOnKeyDownBlockSpacebar = (e) => {
+    if (e.code === "Space") e.nativeEvent.returnValue = false;
+  };
+
   const handlePasswordInput = (e) => {
     const boardState = { ...board, password: e.target.value };
     setPassword(e.target.value);
@@ -26,14 +30,16 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
   };
 
   useEffect(() => {
-    password.length < 4
+    board.password.length < 4
       ? setDisabledFooterButton(true)
       : setDisabledFooterButton(false);
-  }, [password, setDisabledFooterButton]);
+  }, [board.password, setDisabledFooterButton]);
 
   useEffect(() => {
-    password.length < 4 ? setIsValidLength(false) : setIsValidLength(true);
-  }, [setIsValidLength, password]);
+    board.password.length < 4
+      ? setIsValidLength(false)
+      : setIsValidLength(true);
+  }, [setIsValidLength, board.password]);
 
   useEffect(() => {
     if (active === "0") {
@@ -45,8 +51,6 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
     }
   }, [active, setBoard]);
 
-  console.log(board);
-
   return (
     <CreateBoardStepContainer>
       <PasswordInputContainer>
@@ -55,14 +59,15 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
       <TextInput
         type="password"
         commonSize={true}
-        value={password}
+        value={board.password}
         placeholder="4자 이상 입력하세요."
         pattern="[0-9]*"
+        onKeyDown={handleOnKeyDownBlockSpacebar}
         onChange={handlePasswordInput}
-        setTextState={setPassword}
+        onClickDelete={() => setBoard({ ...board, password: "" })}
         isValidLength={isValidLength}
       />
-      {!isValidLength && password.length > 0 && (
+      {!isValidLength && (
         <WarningSpan show={isValidLength}>4자 이상 입력해주세요.</WarningSpan>
       )}
       <ModeContainer>

@@ -66,7 +66,7 @@ const Main = () => {
       writingEndTime: new Date(new Date().getTime() + 1209600000),
       openStartTime: new Date(new Date().getTime() + 1209601000),
       openEndTime: new Date(new Date().getTime() + 2419200000),
-      password: undefined,
+      password: "",
       openType: "",
       boardThemeId: 0,
       boardBackground: theme.colors.defaultBoardBg,
