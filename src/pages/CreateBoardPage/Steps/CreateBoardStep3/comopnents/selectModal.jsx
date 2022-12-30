@@ -14,7 +14,6 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
   const [selectedMemoIndex, setSelectedMemoIndex] = useState(0);
   const [selectedMenu, setSelectedMenu] = useState("bgImage");
   const $file = useRef();
-
   useEffect(() => {
     if (option === "메모지") {
       const memoTheme = board.memoThemes[selectedMemoIndex];
@@ -25,28 +24,6 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
       setSelectedMenu(isImage(board.boardBackground) ? "bgImage" : "bgColor");
     }
   }, []);
-
-  useEffect(() => {
-    if (option === "메모지") {
-      const memoTheme = board.memoThemes[selectedMemoIndex];
-      switch (selectedMenu) {
-        case "fontColor":
-          setColor(memoTheme.memoTextColor);
-          break;
-        case "bgColor":
-          setColor(
-            memoTheme.memoBackground.includes("http")
-              ? "#fff"
-              : memoTheme.memoBackground
-          );
-          break;
-      }
-    } else if (option === "배경") {
-      setColor(
-        board.boardBackground.includes("http") ? "#fff" : board.boardBackground
-      );
-    }
-  }, [option, selectedMenu, selectedMemoIndex]);
 
   const onClickTapMenu = (e) => {
     setSelectedMenu(e);
@@ -86,7 +63,8 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
     setSelectedMemoIndex(newMemoThemes.length - 1);
   };
 
-  const onClickRemoveMemoTheme = (idx) => {
+  const onClickRemoveMemoTheme = (e, idx) => {
+    e.stopPropagation();
     const newMemoThemes = [...board.memoThemes];
     const nextIdx =
       idx > selectedMemoIndex ? selectedMemoIndex : selectedMemoIndex - 1;
@@ -131,6 +109,31 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
     else return false;
   };
 
+  useEffect(() => {
+    console.log("selectedIdx?", selectedMemoIndex);
+    if (option === "메모지") {
+      const memoTheme = board.memoThemes[selectedMemoIndex];
+      switch (selectedMenu) {
+        case "fontColor":
+          setColor(memoTheme.memoTextColor);
+          break;
+        case "bgColor":
+          setColor(
+            memoTheme.memoBackground.includes("http")
+              ? "#fff"
+              : memoTheme.memoBackground
+          );
+          break;
+        default:
+          break;
+      }
+    } else if (option === "배경") {
+      setColor(
+        board.boardBackground.includes("http") ? "#fff" : board.boardBackground
+      );
+    }
+  }, [option, selectedMenu, selectedMemoIndex]);
+
   const getBackgroundImageContainer = () => {
     return (
       <BackgroundImageContainer>
@@ -171,7 +174,7 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
               onClick={() => onClickTapBar(i)}
               icon={
                 board.memoThemes.length > 1 && (
-                  <Close onClick={() => onClickRemoveMemoTheme(i)} />
+                  <Close onClick={(e) => onClickRemoveMemoTheme(e, i)} />
                 )
               }
               key={`메모지${i + 1}`}
@@ -216,7 +219,7 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
       {(selectedMenu === "bgColor" || selectedMenu === "fontColor") && (
         <ColorPicker color={color} onChange={onChangeColor} />
       )}
-      {selectedMenu == "bgImage" && getBackgroundImageContainer()}
+      {selectedMenu === "bgImage" && getBackgroundImageContainer()}
       <Footer>
         <div onClick={onClose}>x</div>
         <div>{title}</div>
