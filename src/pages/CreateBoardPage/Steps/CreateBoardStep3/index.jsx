@@ -231,7 +231,7 @@ const ButtonArea = styled.div`
   gap: 0.5rem;
   align-items: flex-start;
   justify-content: flex-start;
-  background: white;
+  background: red;
   padding: 0.8rem 1.25rem;
 `;
 
