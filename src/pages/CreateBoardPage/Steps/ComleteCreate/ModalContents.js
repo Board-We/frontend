@@ -21,9 +21,9 @@ const ModalContents = ({ boardURL }) => {
   };
 
   return (
-    <Container>
+    <ContentContainer>
       <h1>🎉 보드가 완성되었어요! 🎉</h1>
-      <SubContainer>
+      <ContentBody>
         <span style={{ textAlign: "left", margin: 0 }}>친구에게 알려주기</span>
         <BoardLinkBox>
           <BoardLinkUrlText>
@@ -37,33 +37,36 @@ const ModalContents = ({ boardURL }) => {
             공유
           </BoardLinkCopyButton>
         </BoardLinkBox>
-      </SubContainer>
-
-      <DescriptionContainer>
-        <CommonParagraph>롤링페이퍼 받는 기간</CommonParagraph>{" "}
-        <BoardValue>
-          {formattingDateObject(board.openStartTime)} 부터
-        </BoardValue>
-      </DescriptionContainer>
-      <DescriptionContainer>
-        <CommonParagraph>롤링페이퍼 확인 기간</CommonParagraph>{" "}
-        <BoardValue>{formattingDateObject(board.openEndTime)} 까지</BoardValue>
-      </DescriptionContainer>
-      <DescriptionContainer>
-        <CommonParagraph>비밀번호</CommonParagraph>{" "}
-        <BoardValue>{board.password}</BoardValue>
-      </DescriptionContainer>
+        <>
+          <DescriptionContainer>
+            <CommonParagraph>롤링페이퍼 받는 기간</CommonParagraph>{" "}
+            <BoardValue>
+              {formattingDateObject(board.openStartTime)} 부터
+            </BoardValue>
+          </DescriptionContainer>
+          <DescriptionContainer>
+            <CommonParagraph>롤링페이퍼 확인 기간</CommonParagraph>{" "}
+            <BoardValue>
+              {formattingDateObject(board.openEndTime)} 까지
+            </BoardValue>
+          </DescriptionContainer>
+          <DescriptionContainer>
+            <CommonParagraph>비밀번호</CommonParagraph>{" "}
+            <BoardValue>{board.password}</BoardValue>
+          </DescriptionContainer>
+        </>
+      </ContentBody>
       <ChipButton onClick={() => navigate(`${boardURL}`)}>
         만든 보드 확인하기
       </ChipButton>
       {openToast && <Toast text={"URL이 복사되었습니다."} />}
-    </Container>
+    </ContentContainer>
   );
 };
 
 export default ModalContents;
 
-const Container = styled.div`
+const ContentContainer = styled.div`
   position: relative;
   display: flex;
   width: 100%;
@@ -75,9 +78,10 @@ const Container = styled.div`
   }
 `;
 
-const SubContainer = styled.div`
+const ContentBody = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 2.5rem;
 `;
 const BoardLinkBox = styled.div`
   width: 100%;
@@ -114,15 +118,18 @@ const BoardLinkCopyButton = styled.button`
   border-radius: 0.5rem;
 `;
 
-const CommonParagraph = styled.p`
+const CommonParagraph = styled.div`
+  display: flex;
+  font-size: 0.9rem;
   text-align: left;
-  margin-top: 0.7rem;
-  margin-bottom: 0.25rem;
+  margin: 0.5rem 0;
   color: #757879;
 `;
 
 const BoardValue = styled(CommonParagraph)`
   color: black;
+  margin-left: 1rem;
+  justify-content: flex-end;
 `;
 
 const DescriptionContainer = styled.div`

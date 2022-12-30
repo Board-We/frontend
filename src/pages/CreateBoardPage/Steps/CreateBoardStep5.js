@@ -66,29 +66,28 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
         <WarningSpan show={isValidLength}>4자 이상 입력해주세요.</WarningSpan>
       )}
       <ModeContainer>
-        <ModeSelectContainer style={{ display: "flex", alignItems: "center" }}>
+        <ModeSelectContainer>
           <Info />
           <p>공개/비공개 모드 선택</p>
         </ModeSelectContainer>
 
-        <div>
-          <ButtonContainer>
-            {buttonValue.map((item, idx) => {
-              return (
-                <React.Fragment key={idx}>
-                  <ModeButton
-                    value={idx}
-                    className={idx == active ? "active" : ""}
-                    onClick={handlePrivateMode}
-                  >
-                    {item}
-                  </ModeButton>
-                </React.Fragment>
-              );
-            })}
-          </ButtonContainer>
-        </div>
+        <ButtonContainer>
+          {buttonValue.map((item, idx) => {
+            return (
+              <React.Fragment key={idx}>
+                <ModeButton
+                  value={idx}
+                  className={idx == active ? "active" : ""}
+                  onClick={handlePrivateMode}
+                >
+                  {item}
+                </ModeButton>
+              </React.Fragment>
+            );
+          })}
+        </ButtonContainer>
       </ModeContainer>
+
       <Ballon>
         <CommonSpan>공개모드: 모두에게 공개</CommonSpan>
         <CommonSpan>
@@ -149,7 +148,8 @@ const ModeContainer = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 35vw;
+  flex: 1;
+  margin-left: 1rem;
   padding: 0.2rem;
   background-color: ${(props) => props.theme.colors.grey_50};
   border-radius: 4px;

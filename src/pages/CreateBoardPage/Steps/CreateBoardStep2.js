@@ -10,56 +10,44 @@ const maxLength = 50;
 
 const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   const prevBoardDescription = useRef();
-
   const [board, setBoard] = useRecoilState(boardState);
-  const [boardDescription, setBoardDescription] = useState("");
 
   const [heightInput, setHeightInput] = useState(30); // 임시값, 수정 필요
-
   const [isValidLength, setIsValidLength] = useState(true);
 
-  console.log(boardDescription, prevBoardDescription.current);
-
-  const handleChangeBoardDescription = (text) => {
-    const description = text;
-    setBoard({ ...board, description });
-  };
-
   const handleChangeTextInput = (e) => {
-    prevBoardDescription.current = boardDescription;
-    setBoardDescription(e.target.value);
+    prevBoardDescription.current = board.description;
+    setBoard({ ...board, description: e.target.value });
     setHeightInput(e.target.scrollHeight);
   };
 
   const handleClickDeleteText = (e) => {
-    setBoardDescription("");
+    setBoard({ ...board, description: "" });
   };
 
   useEffect(() => {
     board.description.length >= 1 && board.description.length < maxLength + 1
       ? setDisabledFooterButton(false)
       : setDisabledFooterButton(true);
-  }, [boardDescription, setDisabledFooterButton, board.description.length]);
+  }, [setDisabledFooterButton, board.description.length]);
 
   useEffect(() => {
-    if (boardDescription.length > maxLength) setIsValidLength(false);
+    if (board.description.length > maxLength) setIsValidLength(false);
     else setIsValidLength(true);
-  }, [boardDescription, setIsValidLength]);
+  }, [board.description, setIsValidLength]);
 
   useEffect(() => {
-    if (boardDescription.length > maxLength + 1) {
-      setBoardDescription(prevBoardDescription.current);
+    if (board.description.length > maxLength + 1) {
+      setBoard({ ...board, description: prevBoardDescription.current });
       return;
-    } else {
-      handleChangeBoardDescription(boardDescription);
     }
-  }, [boardDescription]);
+  }, [board.description, board, setBoard]);
 
   return (
     <CreateBoardStepContainer>
       <TextInputSection>
         <MultilineTextInput
-          value={boardDescription}
+          value={board.description}
           onChange={handleChangeTextInput}
           height={heightInput}
           isValidLength={isValidLength}
@@ -78,7 +66,7 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
-          text={boardDescription}
+          text={board.description}
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>

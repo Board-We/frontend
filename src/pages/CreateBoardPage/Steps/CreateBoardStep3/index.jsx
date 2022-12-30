@@ -29,18 +29,24 @@ const CreateBoardStep3 = ({ footerRef }) => {
     // button area의 height => 4번
     // memoGrid의 top margin => 5번
     // heightOfMemoGrid = 1번 - 2번 - 3번 - 4번 - 5번
-    const bottomOfDescription = $desciprion.current.offsetTop + $desciprion.current.clientHeight;
+    const bottomOfDescription =
+      $desciprion.current.offsetTop + $desciprion.current.clientHeight;
     const heightOfButtonArea = $buttonArea.current.clientHeight;
     const marginTop = Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
     setHeightOfMemoGrid(
       deviceScreenSize.y -
-      bottomOfDescription -
-      footerRef.current.clientHeight -
-      heightOfButtonArea -
-      marginTop +
-      2
+        bottomOfDescription -
+        footerRef.current.clientHeight -
+        heightOfButtonArea -
+        marginTop +
+        2
     );
-  }, [deviceScreenSize, $component.current, $desciprion.current, footerRef.current]);
+  }, [
+    deviceScreenSize,
+    $component.current,
+    $desciprion.current,
+    footerRef.current,
+  ]);
 
   useEffect(() => {
     setMemos(getMemos());
@@ -217,8 +223,8 @@ const SampleMemo = styled.div`
 const ButtonArea = styled.div`
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: row;
-  height: fit-content;
   gap: 0.5rem;
   align-items: flex-start;
   justify-content: flex-start;
