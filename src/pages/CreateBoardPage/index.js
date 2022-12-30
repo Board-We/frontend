@@ -176,10 +176,11 @@ export default CreateBoardPage;
 
 const PageWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const ProgressBarContainer = styled.div`
