@@ -223,12 +223,15 @@ const SampleMemo = styled.div`
 const ButtonArea = styled.div`
   display: flex;
   width: 100%;
+  position: absolute;
+  bottom: 10%;
   height: fit-content;
+  max-height: 5vh;
   flex-direction: row;
   gap: 0.5rem;
   align-items: flex-start;
   justify-content: flex-start;
-  background: red;
+  background: white;
   padding: 0.8rem 1.25rem;
 `;
 

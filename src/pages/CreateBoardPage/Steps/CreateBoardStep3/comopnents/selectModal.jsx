@@ -236,7 +236,6 @@ const ComponentWrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-end;
   background: #ffffff;
-  background-color: blue;
   visibility: ${(props) => (props.open ? `visible` : `hidden`)};
   z-index: 3;
 `;
