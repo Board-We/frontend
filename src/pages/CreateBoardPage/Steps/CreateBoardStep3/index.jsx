@@ -147,6 +147,7 @@ const ComponentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 0.5rem;
+  background-color: ${(props) => props.theme.colors.grey_50};
 `;
 
 const SampleBoard = styled.div`
@@ -157,6 +158,7 @@ const SampleBoard = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   padding: 0 1rem;
+  background-color: red;
 `;
 
 const MemoArea = styled.div`
