@@ -12,21 +12,35 @@ import { useRef } from "react";
 const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
   const [color, setColor] = useState("#FFFFFF");
   const [selectedMemoIndex, setSelectedMemoIndex] = useState(0);
-  const [selectedMenu, setSelectedMenu] = useState("bgImage");
+  const [selectedMenu, setSelectedMenu] = useState(["bgImage"]);
   const $file = useRef();
+  console.log(selectedMenu);
+
   useEffect(() => {
     if (option === "메모지") {
       const memoTheme = board.memoThemes[selectedMemoIndex];
-      setSelectedMenu(
-        isImage(memoTheme.memoBackground) ? "bgImage" : "bgColor"
+      const menu = isImage(memoTheme.memoBackground) ? "bgImage" : "bgColor";
+      const newSelectedMenu = [...selectedMenu].splice(
+        selectedMemoIndex,
+        1,
+        menu
       );
+      setSelectedMenu(newSelectedMenu);
     } else if (option === "배경") {
-      setSelectedMenu(isImage(board.boardBackground) ? "bgImage" : "bgColor");
+      const menu = isImage(board.boardBackground ? "bgImage" : "bgColor");
+      const newSelectedMenu = [...selectedMenu].splice(
+        selectedMemoIndex,
+        1,
+        menu
+      );
+      setSelectedMenu(newSelectedMenu);
     }
   }, []);
 
   const onClickTapMenu = (e) => {
-    setSelectedMenu(e);
+    const newSelectedMenu = [...selectedMenu];
+    newSelectedMenu.splice(selectedMemoIndex, 1, e);
+    setSelectedMenu(newSelectedMenu);
   };
 
   const onClickTapBar = (e) => {
@@ -61,6 +75,9 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
     newMemoThemes.push({ memoBackground: "#FFF", memoTextColor: "#000" });
     setBoard({ ...board, memoThemes: newMemoThemes });
     setSelectedMemoIndex(newMemoThemes.length - 1);
+    const newSelectedMenu = [...selectedMenu];
+    newSelectedMenu.push("bgImage");
+    setSelectedMenu(newSelectedMenu);
   };
 
   const onClickRemoveMemoTheme = (e, idx) => {
@@ -71,18 +88,23 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
     newMemoThemes.splice(idx, 1);
     setSelectedMemoIndex(nextIdx);
     setBoard({ ...board, memoThemes: newMemoThemes });
+    const newSelectedMenu = [...selectedMenu];
+    newSelectedMenu.pop();
+    setSelectedMenu(newSelectedMenu);
   };
 
   const onChangeColor = (e) => {
     if (option === "배경") {
-      if (selectedMenu === "bgColor")
+      if (selectedMenu[selectedMemoIndex] === "bgColor")
         setBoard({ ...board, boardBackground: color });
     } else if (option === "메모지") {
       const newMemoThemes = [...board.memoThemes];
       const newMemoTheme = { ...newMemoThemes[selectedMemoIndex] };
 
-      if (selectedMenu === "bgColor") newMemoTheme.memoBackground = color;
-      else if (selectedMenu === "fontColor") newMemoTheme.memoTextColor = color;
+      if (selectedMenu[selectedMemoIndex] === "bgColor")
+        newMemoTheme.memoBackground = color;
+      else if (selectedMenu[selectedMemoIndex] === "fontColor")
+        newMemoTheme.memoTextColor = color;
 
       newMemoThemes[selectedMemoIndex] = newMemoTheme;
       setBoard({ ...board, memoThemes: newMemoThemes });
@@ -112,7 +134,7 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
   useEffect(() => {
     if (option === "메모지") {
       const memoTheme = board.memoThemes[selectedMemoIndex];
-      switch (selectedMenu) {
+      switch (selectedMenu[selectedMemoIndex]) {
         case "fontColor":
           setColor(memoTheme.memoTextColor);
           break;
@@ -193,32 +215,34 @@ const SelectModal = ({ open, onClose, title, option, board, setBoard }) => {
       <MenuContainer>
         <TapButton
           text={`${option} 이미지`}
-          isSelected={selectedMenu === "bgImage"}
+          isSelected={selectedMenu[selectedMemoIndex] === "bgImage"}
           onClick={() => onClickTapMenu("bgImage")}
         />
         <TapButton
           text="배경 색"
-          isSelected={selectedMenu === "bgColor"}
+          isSelected={selectedMenu[selectedMemoIndex] === "bgColor"}
           onClick={() => onClickTapMenu("bgColor")}
         />
         {option === "배경" ? (
           <TapButton
             text="글자 종류"
-            isSelected={selectedMenu === "font"}
+            isSelected={selectedMenu[selectedMemoIndex] === "font"}
             onClick={() => onClickTapMenu("font")}
           />
         ) : (
           <TapButton
             text="글자 색"
-            isSelected={selectedMenu === "fontColor"}
+            isSelected={selectedMenu[selectedMemoIndex] === "fontColor"}
             onClick={() => onClickTapMenu("fontColor")}
           />
         )}
       </MenuContainer>
-      {(selectedMenu === "bgColor" || selectedMenu === "fontColor") && (
+      {(selectedMenu[selectedMemoIndex] === "bgColor" ||
+        selectedMenu[selectedMemoIndex] === "fontColor") && (
         <ColorPicker color={color} onChange={onChangeColor} />
       )}
-      {selectedMenu === "bgImage" && getBackgroundImageContainer()}
+      {selectedMenu[selectedMemoIndex] === "bgImage" &&
+        getBackgroundImageContainer()}
       <Footer>
         <div onClick={onClose}>x</div>
         <div>{title}</div>
