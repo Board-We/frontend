@@ -9,7 +9,7 @@ import CreateBoardStep3 from "./Steps/CreateBoardStep3";
 import { useState } from "react";
 import CreateBoardStep2 from "./Steps/CreateBoardStep2";
 import CreateBoardStep5 from "./Steps/CreateBoardStep5";
-import CompleteCreate from "./Steps/ComleteCreate";
+import CompleteCreate from "./Steps/CompleteCreate";
 import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";

@@ -88,6 +88,10 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
+    const getReccomendBoardList = async () => {
+      const data = await requestReccomendBoardList();
+      if (data) setReccomendBoardList(data);
+    };
     getReccomendBoardList();
   }, [getReccomendBoardList]);
 

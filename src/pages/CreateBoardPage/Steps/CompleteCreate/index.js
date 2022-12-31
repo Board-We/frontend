@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 import { postUserBoardState } from "../../../../api/boardsApi";
 import SlideModal from "../../../../components/modals/slideModal";
@@ -10,6 +10,7 @@ import ModalContents from "./ModalContents";
 
 const CompleteCreate = () => {
   const board = useRecoilValue(boardState);
+  const resetBaord = useResetRecoilState(boardState);
   const [modalOpen, setModalOpen] = useState(true);
   const [boardURL, setBoardURL] = useState("");
 
@@ -46,6 +47,7 @@ const CompleteCreate = () => {
       boardState: currentBoardState,
     });
     setBoardURL(boardLinkRes);
+    resetBaord();
   };
 
   useEffect(() => {
