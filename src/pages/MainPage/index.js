@@ -13,6 +13,8 @@ import BoardSlide from "./components/BoardSlide/index";
 import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
 import mainImage from "../../assets/images/mainImage.png";
+import { useRecoilValue } from "recoil";
+import { boardState } from "../../store";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -27,7 +29,8 @@ const Main = () => {
 
   const [isFooter, setIsFooter] = useState(false);
   const [mobileStartY, setMobileStartY] = useState(0);
-
+  const board = useRecoilValue(boardState);
+  console.log(board);
   const handleWheelPage = (e) => {
     if (e.deltaY > 0) setIsFooter(true);
   };
