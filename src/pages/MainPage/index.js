@@ -29,8 +29,7 @@ const Main = () => {
 
   const [isFooter, setIsFooter] = useState(false);
   const [mobileStartY, setMobileStartY] = useState(0);
-  const board = useRecoilValue(boardState);
-  console.log(board);
+
   const handleWheelPage = (e) => {
     if (e.deltaY > 0) setIsFooter(true);
   };
@@ -57,14 +56,13 @@ const Main = () => {
     }
   };
 
-  const getReccomendBoardList = useCallback(async () => {
-    const data = await requestReccomendBoardList();
-    if (data) setReccomendBoardList(data);
-  }, []);
-
   useEffect(() => {
+    const getReccomendBoardList = async () => {
+      const data = await requestReccomendBoardList();
+      if (data) setReccomendBoardList(data);
+    };
     getReccomendBoardList();
-  }, [getReccomendBoardList]);
+  }, []);
 
   return (
     <>

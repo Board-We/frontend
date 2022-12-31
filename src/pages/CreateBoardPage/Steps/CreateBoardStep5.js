@@ -45,8 +45,6 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
     }
   }, [active, setBoard]);
 
-  console.log(board);
-
   return (
     <CreateBoardStepContainer>
       <PasswordInputContainer>

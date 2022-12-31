@@ -5,7 +5,7 @@ import { ReactComponent as Config } from "../../../assets/icons/config.svg";
 import { ReactComponent as Search } from "../../../assets/icons/search.svg";
 import { ReactComponent as ChevronLeft } from "../../../assets/icons/chevronLeft.svg";
 import DropDownMenu from "./dropDownMenu";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { createBoardStepId } from "../../../store";
 
@@ -43,8 +43,8 @@ const ServiceNameHeader = ({
   };
 
   const onClickTitle = () => {
-    navigate("/");
     setStep(0);
+    navigate("/");
   };
 
   return (
@@ -139,6 +139,7 @@ const ServiceNameHeaderTitle = styled.div`
   align-items: center;
   left: 0;
   color: ${(props) => props.theme.colors.black};
+  cursor: pointer;
 `;
 
 const ServiceNameHeaderButtonGroup = styled.div`
