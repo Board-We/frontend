@@ -124,6 +124,7 @@ const MultilineTextInput = styled.textarea`
   font-size: 1.2rem;
   margin-top: 1rem;
   text-align: start;
+  padding-right: 2rem;
   border: 0;
   overflow: hidden;
   resize: none;
