@@ -15,6 +15,8 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   const [heightInput, setHeightInput] = useState(30); // 임시값, 수정 필요
   const [isValidLength, setIsValidLength] = useState(true);
 
+  const textAreaRef = useRef(null);
+
   const handleChangeTextInput = (e) => {
     prevBoardDescription.current = board.description;
     setBoard({ ...board, description: e.target.value });
@@ -43,6 +45,15 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
     }
   }, [board.description, board, setBoard]);
 
+  useEffect(() => {
+    if (textAreaRef) {
+      textAreaRef.current.style.height = "auto";
+      const scrollHeight = textAreaRef.current.scrollHeight;
+
+      textAreaRef.current.style.height = scrollHeight + "px";
+    }
+  }, [textAreaRef, board.description]);
+
   return (
     <CreateBoardStepContainer>
       <TextInputSection>
@@ -50,6 +61,8 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
           value={board.description}
           onChange={handleChangeTextInput}
           height={heightInput}
+          ref={textAreaRef}
+          rows={1}
           isValidLength={isValidLength}
           placeholder="ex. 이 보드에 3일동안 메모를 남겨줘!"
         />
@@ -100,14 +113,13 @@ const TextInputSection = styled.div`
 
 const MultilineTextInput = styled.textarea`
   width: 100%;
-  height: ${(props) => props.height}px;
   font-size: 1.2rem;
   margin-top: 1rem;
   text-align: start;
-  padding-bottom: 0.5rem;
   border: 0;
   overflow: hidden;
   resize: none;
+  line-height: 1.5;
   border-bottom: ${(props) =>
     props.isValidLength
       ? `0.1rem solid ${props.theme.colors.primary}`
