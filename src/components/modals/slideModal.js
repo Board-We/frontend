@@ -1,21 +1,23 @@
-import { useEffect } from "react";
+import { React, forwardRef, useEffect } from "react";
 import styled from "styled-components";
 import Backdrop from "./backdrop";
 
-const SlideModal = ({ children, open, onClose, height, isBackdrop }) => {
-  // useEffect(() => {
-  //   const body = document.querySelector("body");
-  //   body.style.overflow = open ? "hidden" : "auto";
-  // });
-  return (
-    <>
-      <ModalContainer open={open} height={height}>
-        {children}
-      </ModalContainer>
-      {/* {isBackdrop ? <Backdrop open={open} onClick={onClose} /> : null} */}
-    </>
-  );
-};
+const SlideModal = forwardRef(
+  ({ children, open, onClose, height, isBackdrop }, ref) => {
+    // useEffect(() => {
+    //   const body = document.querySelector("body");
+    //   body.style.overflow = open ? "hidden" : "auto";
+    // });
+    return (
+      <>
+        <ModalContainer open={open} height={height} ref={ref}>
+          {children}
+        </ModalContainer>
+        {/* {isBackdrop ? <Backdrop open={open} onClick={onClose} /> : null} */}
+      </>
+    );
+  }
+);
 
 export default SlideModal;
 
