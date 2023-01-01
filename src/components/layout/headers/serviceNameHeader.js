@@ -43,7 +43,7 @@ const ServiceNameHeader = ({
   };
 
   const onClickTitle = () => {
-    setStep(0);
+    setStep(1);
     navigate("/");
   };
 

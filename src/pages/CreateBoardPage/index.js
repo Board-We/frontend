@@ -133,6 +133,7 @@ const CreateBoardPage = () => {
           title="새 보드 만들기"
           onClick={handleClickBefore}
           isFinalStep={currentStepId === finalStepId}
+          stepId={currentStepId}
         />
       ) : (
         <ServiceNameHeader />
