@@ -41,11 +41,8 @@ const SelectModal = ({
     if (option === "메모지") {
       const memoTheme = board.memoThemes[selectedMemoIndex];
       const menu = isImage(memoTheme.memoBackground) ? "bgImage" : "bgColor";
-      const newSelectedMemoMenu = [...selectedMemoMenu].splice(
-        selectedMemoIndex,
-        1,
-        menu
-      );
+      const newSelectedMemoMenu = [...selectedMemoMenu];
+      newSelectedMemoMenu.splice(selectedMemoIndex, 1, menu);
       setSelectedTab("memo");
       setSelectedMemoMenu(newSelectedMemoMenu);
     } else if (option === "배경") {
