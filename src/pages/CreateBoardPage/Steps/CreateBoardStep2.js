@@ -54,12 +54,20 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
     }
   }, [textAreaRef, board.description]);
 
+  const handleKeyDown = (e) => {
+    console.log(e.keyCode);
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <CreateBoardStepContainer>
       <TextInputSection>
         <MultilineTextInput
           value={board.description}
           onChange={handleChangeTextInput}
+          onKeyDown={handleKeyDown}
           height={heightInput}
           ref={textAreaRef}
           rows={1}
