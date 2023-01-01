@@ -155,20 +155,18 @@ const CreateBoardPage = () => {
       <BoardInfoConatiner height={heightOfContentArea}>
         {controlCreatBoardStep(currentStepId, setDisabledFooterButton, $footer)}
       </BoardInfoConatiner>
-      <PageFooter>
-        <FooterButton
-          ref={$footer}
-          color="black"
-          fontColor="white"
-          text={currentStepId === finalStepId ? "내 보드로 이동하기" : "다음"}
-          disabled={disabledFooterButton}
-          onClick={
-            currentStepId === finalStepId
-              ? handleClickGoToBoard
-              : handleClickNext
-          }
-        />
-      </PageFooter>
+      {currentStepId < 6 && (
+        <PageFooter>
+          <FooterButton
+            ref={$footer}
+            color="black"
+            fontColor="white"
+            text="다음"
+            disabled={disabledFooterButton}
+            onClick={handleClickNext}
+          />
+        </PageFooter>
+      )}
     </PageWrapper>
   );
 };
