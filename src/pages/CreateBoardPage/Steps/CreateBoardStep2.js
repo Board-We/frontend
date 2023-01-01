@@ -27,6 +27,13 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
     setBoard({ ...board, description: "" });
   };
 
+  const handleKeyDown = (e) => {
+    console.log(e.keyCode);
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  };
+
   useEffect(() => {
     board.description.length >= 1 && board.description.length < maxLength + 1
       ? setDisabledFooterButton(false)
@@ -53,13 +60,6 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
       textAreaRef.current.style.height = scrollHeight + "px";
     }
   }, [textAreaRef, board.description]);
-
-  const handleKeyDown = (e) => {
-    console.log(e.keyCode);
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
-  };
 
   return (
     <CreateBoardStepContainer>
