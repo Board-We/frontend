@@ -26,6 +26,7 @@ const SelectModal = ({
   setSelectedBgMenu,
 }) => {
   const [color, setColor] = useState("#FFFFFF");
+  const [fontButtonValue, setFontButtonValue] = useState("0");
 
   const $file = useRef();
   console.log("currentTab", selectedTab);
@@ -36,6 +37,13 @@ const SelectModal = ({
     "currentMemoMenu",
     selectedMemoMenu
   );
+
+  const font = [
+    "기본 글씨체",
+    "에스코어 드림체",
+    "강원교육모두체",
+    "코트라희망체",
+  ];
 
   useEffect(() => {
     if (option === "메모지") {
@@ -110,6 +118,11 @@ const SelectModal = ({
     const newSelectedMenu = [...selectedMemoMenu];
     newSelectedMenu.pop();
     setSelectedMemoMenu(newSelectedMenu);
+  };
+
+  const onClickSetFontOption = (e) => {
+    console.log(e.target.value);
+    setFontButtonValue(e.target.value);
   };
 
   const onChangeColor = (e) => {
@@ -228,6 +241,8 @@ const SelectModal = ({
     );
   };
 
+  console.log(selectedTab);
+
   return (
     <ComponentWrapper open={open}>
       {option === "메모지" && getMemoOption()}
@@ -274,6 +289,22 @@ const SelectModal = ({
         selectedMemoMenu[selectedMemoIndex] === "bgImage") ||
         (selectedTab === "bg" && selectedBgMenu === "bgImage")) &&
         getBackgroundImageContainer()}
+
+      {selectedTab === "bg" && selectedBgMenu === "font" && (
+        <SetFontArea>
+          {font.map((val, idx) => {
+            return (
+              <SetFontButton
+                className={idx == fontButtonValue ? "active" : ""}
+                onClick={onClickSetFontOption}
+                value={idx}
+              >
+                {val}
+              </SetFontButton>
+            );
+          })}
+        </SetFontArea>
+      )}
       <Footer>
         <div onClick={onClose}>x</div>
         <div>{title}</div>
@@ -354,6 +385,30 @@ const Footer = styled.div`
 const Camera = styled.img`
   width: 30%;
   height: 30%;
+`;
+
+const SetFontArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+  overflow-y: scroll;
+  width: 100%;
+  padding: 1rem;
+`;
+const SetFontButton = styled.button`
+  display: flex;
+  align-items: center;
+  text-align: left;
+  height: 2.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: ${theme.colors.grey_50};
+  &.active {
+    background-color: ${theme.colors.white};
+    border: 1px solid ${theme.colors.primary};
+  }
 `;
 
 export default SelectModal;
