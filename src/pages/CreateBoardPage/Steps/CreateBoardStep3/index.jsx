@@ -21,6 +21,11 @@ const CreateBoardStep3 = ({ footerRef }) => {
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [heightOfMemoGrid, setHeightOfMemoGrid] = useState(0);
 
+  const [selectedTab, setSelectedTab] = useState("");
+  const [selectedMemoIndex, setSelectedMemoIndex] = useState(0);
+  const [selectedMemoMenu, setSelectedMemoMenu] = useState(["bgImage"]);
+  const [selectedBgMenu, setSelectedBgMenu] = useState("bgColor");
+
   useEffect(() => {
     // memoGrid의 높이를 정하는 방법
     // 화면 height => 1번
@@ -94,11 +99,13 @@ const CreateBoardStep3 = ({ footerRef }) => {
 
   const onClickSetBackground = () => {
     setModalTitle("배경");
+    setSelectedTab("bg");
     setIsModalOpen(true);
   };
 
   const onClickSetMemoTheme = () => {
     setModalTitle("메모지");
+    setSelectedTab("memo");
     setIsModalOpen(true);
   };
 
@@ -135,6 +142,14 @@ const CreateBoardStep3 = ({ footerRef }) => {
           option={modalTitle}
           board={board}
           setBoard={setBoard}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          selectedMemoIndex={selectedMemoIndex}
+          setSelectedMemoIndex={setSelectedMemoIndex}
+          selectedMemoMenu={selectedMemoMenu}
+          setSelectedMemoMenu={setSelectedMemoMenu}
+          selectedBgMenu={selectedBgMenu}
+          setSelectedBgMenu={setSelectedBgMenu}
         />
       )}
     </ComponentWrapper>
