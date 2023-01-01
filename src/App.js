@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import CreateBoardPage from "./pages/CreateBoardPage";
 import CreateMemoPage from "./pages/createMemoPage";
 import Main from "./pages/MainPage";

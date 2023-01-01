@@ -7,14 +7,23 @@ import { formattingDateObject } from "../../utils/setDefaultDay";
 
 const CalendarButton = ({ open }) => {
   const board = useRecoilValue(boardState);
+
+  const dueDateRef = useRef();
+
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        dueDateRef.current.innerText = `${formattingDateObject(
+          board.openEndTime
+        )}에 공개됩니다.`;
+      }, 2000);
+    }
+  }, [open, board.openEndTime]);
+
   return (
     <ComponentWrapper>
-      <CalendarContainer open={open}>
-        {open ? (
-          `${formattingDateObject(board.openEndTime)}에 공개됩니다.`
-        ) : (
-          <Calendar />
-        )}
+      <CalendarContainer open={open} ref={dueDateRef}>
+        {open ? "" : <Calendar />}
       </CalendarContainer>
     </ComponentWrapper>
   );
