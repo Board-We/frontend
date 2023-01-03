@@ -30,6 +30,13 @@ function ModalContents({ setModalOpen }) {
     else if (step === 3) return board.openStartTime
   }
 
+  const getSelectedDateTime = () => {
+    if (step === 0) return board.writingStartTime
+    else if (step === 1) return board.writingEndTime
+    else if (step === 2) return board.openStartTime
+    else if (step === 3) return board.openEndTime
+  }
+
   const onClickConfirm = () => {
     getSetter()(tempDatetime)
     setStep((prev) => prev + 1);
@@ -65,6 +72,7 @@ function ModalContents({ setModalOpen }) {
         text={step % 2 === 0 ? `부터` : `까지`}
         setter={setTempDatetimeData}
         datetime={getDateTime}
+        selectedDatetime={getSelectedDateTime()}
         step={step}
       />
       <FooterButton onClick={onClickConfirm}>확인</FooterButton>

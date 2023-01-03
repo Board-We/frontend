@@ -4,14 +4,14 @@ import SmallTitle from "../../../../../components/label/smallTitle"
 import { get4WeekDateTime } from "../../../../../utils/datetime"
 import Picker from "./picker"
 
-const DatePicker = ({ text, datetime, setter, step }) => {
+const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
     const [dateObjects, setDateObjects] = useState([])
     const [years, setYears] = useState({});
     const [dates, setDates] = useState({});
     const [hours, setHours] = useState({});
-    const [selectedYear, setSelectedYear] = useState('2023년')
-    const [selectedDate, setSelectedDate] = useState('1월1일')
-    const [selectedHour, setSelectedHour] = useState('0시')
+    const [selectedYear, setSelectedYear] = useState(`${selectedDatetime?.getFullYear()}년`)
+    const [selectedDate, setSelectedDate] = useState(`${selectedDatetime?.getMonth() + 1}월${selectedDatetime?.getDate()}일`)
+    const [selectedHour, setSelectedHour] = useState(`${selectedDatetime?.getHours()}시`)
 
     useEffect(() => {
         createDateObjects()
@@ -45,7 +45,6 @@ const DatePicker = ({ text, datetime, setter, step }) => {
         newDateTime.setHours(selectedHour.replace('시', ''))
         newDateTime.setMinutes(0)
         newDateTime.setSeconds(0)
-
         setter(newDateTime)
     }
 
@@ -84,9 +83,9 @@ const DatePicker = ({ text, datetime, setter, step }) => {
     const initSelectedTime = () => {
         if (getKeys(years).length === 0 || getKeys(dates).length === 0 || getKeys(hours).length === 0) return
 
-        const initYear = getKeys(years)[0]
-        const initDate = getKeys(years[initYear])[0]
-        const initHour = getKeys(dates[initDate])[0]
+        const initYear = selectedYear
+        const initDate = selectedDate
+        const initHour = selectedHour
 
         setSelectedYear(initYear)
         setSelectedDate(initDate)
@@ -116,9 +115,9 @@ const DatePicker = ({ text, datetime, setter, step }) => {
             {
                 selectedHour && (
                     <>
-                        <Picker data={getKeys(years)} selectedData={selectedYear} setSelectedData={setSelectedYear} />
-                        <Picker data={getKeys(years[selectedYear])} selectedData={selectedDate} setSelectedData={setSelectedDate} />
-                        <Picker data={getKeys(dates[selectedDate])} selectedData={selectedHour} setSelectedData={setSelectedHour} />
+                        {getKeys(years).length && <Picker data={getKeys(years)} selectedData={selectedYear} setSelectedData={setSelectedYear} />}
+                        {getKeys(years[selectedYear]).length && <Picker data={getKeys(years[selectedYear])} selectedData={selectedDate} setSelectedData={setSelectedDate} />}
+                        {getKeys(dates[selectedDate]).length && <Picker data={getKeys(dates[selectedDate])} selectedData={selectedHour} setSelectedData={setSelectedHour} />}
                         <SmallTitle>{text}</SmallTitle>
                     </>
                 )

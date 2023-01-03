@@ -6,19 +6,27 @@ import { deviceScreenState } from "../../../../../store";
 import { theme } from "../../../../../styles/theme";
 
 const Picker = ({ data, selectedData, setSelectedData }) => {
-    const [index, setIndex] = useState(0)
+    const [index, setIndex] = useState(data.indexOf(selectedData))
     const deviceScreen = useRecoilValue(deviceScreenState)
     const eventTimer = useRef()
     const $scroll = useRef()
+    const useScroll = useRef(false)
     const timer = useRef()
 
     useEffect(() => {
-        console.log(selectedData, data.indexOf(selectedData))
         setIndex(data.indexOf(selectedData))
-    }, [selectedData])
+        setIntervalForInitValue()
+    }, [])
 
     useEffect(() => {
-    }, [eventTimer.current])
+        if (data.length) setScrollToSelectedData()
+    }, [selectedData])
+
+    const setIntervalForInitValue = () => {
+        setInterval(() => {
+            useScroll.current = true
+        }, 500)
+    }
 
     const onClickData = (el) => {
         setSelectedData(el)
@@ -29,6 +37,8 @@ const Picker = ({ data, selectedData, setSelectedData }) => {
     }
 
     const onScrollData = (e) => {
+        if (!useScroll.current) return
+
         initEventTimer()
         const heightOfEntity = Number(deviceScreen.rem.replace("px", "")) * 2.5
         const newIndex = Math.round(e.target.scrollTop / heightOfEntity)
@@ -41,8 +51,12 @@ const Picker = ({ data, selectedData, setSelectedData }) => {
             clearTimeout(timer.current);
         }
         timer.current = setTimeout(function () {
-            $scroll.current.scrollTop = data.indexOf(selectedData) * Number(deviceScreen.rem.replace("px", "")) * 2.5
+            setScrollToSelectedData()
         }, 100);
+    }
+
+    const setScrollToSelectedData = () => {
+        $scroll.current.scrollTop = data.indexOf(selectedData) * Number(deviceScreen.rem.replace("px", "")) * 2.5
     }
 
     return (
