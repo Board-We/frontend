@@ -15,7 +15,7 @@ const CalendarButton = ({ open }) => {
       setTimeout(() => {
         dueDateRef.current.innerText = `${formattingDateObject(
           board.openEndTime
-        )}에 공개됩니다.`;
+        )}까지 공개됩니다.`;
       }, 500);
     }
   }, [open, board.openEndTime]);
