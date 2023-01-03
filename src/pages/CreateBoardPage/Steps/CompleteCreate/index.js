@@ -8,9 +8,11 @@ import { boardState, deviceScreenState } from "../../../../store";
 import { setDateISOstring } from "../../../../utils/setDefaultDay";
 import { theme } from "../../../../styles/theme";
 import ModalContents from "./ModalContents";
+import { useLocation } from "react-router-dom";
 
 const CompleteCreate = () => {
   const board = useRecoilValue(boardState);
+  const location = useLocation();
   const resetBaord = useResetRecoilState(boardState);
   const [modalOpen, setModalOpen] = useState(true);
   const [boardURL, setBoardURL] = useState("");
@@ -116,7 +118,6 @@ const CompleteCreate = () => {
       boardState: currentBoardState,
     });
     setBoardURL(boardLinkRes);
-    resetBaord();
   };
 
   useEffect(() => {
@@ -125,6 +126,12 @@ const CompleteCreate = () => {
 
   useEffect(() => {
     setMemos(getMemos());
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      resetBaord();
+    };
   }, []);
 
   return (
