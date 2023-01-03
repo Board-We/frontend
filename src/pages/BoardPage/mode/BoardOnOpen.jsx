@@ -23,7 +23,6 @@ const BoardOnOpen = ({
   checkedMemoList,
   setCheckedMemoList,
 }) => {
-  console.log(isDeleteMemoMode);
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
 
