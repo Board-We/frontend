@@ -18,7 +18,6 @@ const BoardPage = () => {
   const [boardState, setBoardState] = useState(null);
 
   const location = useLocation();
-  const currentPath = location.pathname;
   const [headerMenuSetting, setheaderMenuSetting] = useState({
     search: null,
     share: null,
