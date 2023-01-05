@@ -70,8 +70,14 @@ const BoardOnOpen = ({
   };
 
   const getMemos = async () => {
-    const memos = await requestGetMemoList({ boardCode });
-    if (memos) setMemoList(memos);
+    const newMemos = await requestGetMemoList({ boardCode });
+
+    newMemos.forEach(el => {
+      el["index"] = Math.random()
+    })
+    newMemos.sort((o1, o2) => { return o1.index - o2.index })
+
+    if (newMemos) setMemoList(newMemos);
   };
 
   useEffect(() => {
