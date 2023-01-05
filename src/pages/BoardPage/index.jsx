@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { deleteBoard, requestBoard } from "../../api/boardsApi";
-import { searchMemo } from "../../api/memoApi";
+import { requestSearchMemo } from "../../api/memoApi";
 import { searchMemoResults } from "../../api/mockData";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
@@ -64,9 +64,8 @@ const BoardPage = () => {
 
   const handleKeyDownSearchIput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
-      const searchMemoResult = await searchMemo({});
+      const searchMemoResult = await requestSearchMemo({ boardCode, query });
       if (searchMemoResult) setSearchResults(searchMemoResult);
-      setSearchResults(searchMemoResults.memos); // set mock data
     }
   };
 
@@ -92,6 +91,7 @@ const BoardPage = () => {
       const boardState = getBoardState(board);
       setBoardState(boardState);
       setBoard(board);
+      console.log(board);
     };
     accessBoard();
   }, [boardCode]);

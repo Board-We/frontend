@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { createMemo } from "../../../api/memoApi";
+import { requestCreateMemo } from "../../../api/memoApi";
 import FooterButton from "../../../components/buttons/FooterButton";
 import SmallTitle from "../../../components/label/smallTitle";
 import StepHeader from "../../../components/layout/headers/stepHeader";
@@ -56,7 +56,7 @@ const MakingStep = () => {
   };
 
   const onClickMakeMemo = async () => {
-    const created = await createMemo({
+    const created = await requestCreateMemo({
       boardCode: 14,
       memoContent: memo.text,
       memoThemeId: 12,

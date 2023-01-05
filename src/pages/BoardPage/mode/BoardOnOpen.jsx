@@ -6,7 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import Toast from "../components/toast";
 import Spinner from "../components/spinner";
 import { deleteBoard } from "../../../api/boardsApi";
-import { deleteMemo } from "../../../api/memoApi";
+import {
+  requestDeleteMemo,
+  requestGetMemoList,
+  requestGetMemoThemeList,
+} from "../../../api/memoApi";
 import CheckableMemo from "../components/CheckableMemo";
 import CalendarButton from "../../../components/buttons/calendarButton";
 import BlockAccessBoard from "../components/blockAccessBoard";
@@ -14,6 +18,7 @@ import Memo from "../../../components/memo";
 import AlertModal from "../../../components/modals/alertModal";
 
 const BoardOnOpen = ({
+  boardCode,
   passwordModalState,
   setPasswordModalState,
   isDeleteMemoMode,
@@ -31,6 +36,9 @@ const BoardOnOpen = ({
   const [openToast, setOpenToast] = useState(true);
   const [openDueDate, setOpenDueDate] = useState(false);
 
+  const [memoList, setMemoList] = useState([]);
+  const [meemoThemeList, setMemoThemeList] = useState([]);
+
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
   const [memoThemes, setMemoThemes] = useState({});
@@ -47,7 +55,7 @@ const BoardOnOpen = ({
   };
 
   const handleConfirmDeleteMemo = async (boardCode) => {
-    const deleted = await deleteMemo({ boardCode, checkedMemoList });
+    const deleted = await requestDeleteMemo({ boardCode, checkedMemoList });
     setIsOpenDeleteMemoModal(false);
   };
 
@@ -57,6 +65,22 @@ const BoardOnOpen = ({
     } else
       setCheckedMemoList(checkedMemoList.filter((id) => id !== e.target.value));
   };
+
+  useEffect(() => {
+    const getMemos = async () => {
+      const memos = await requestGetMemoList({ boardCode });
+      if (memos) setMemoList(memos);
+    };
+    getMemos();
+  }, [boardCode]);
+
+  useEffect(() => {
+    const getMemoThemes = async () => {
+      const memoThemes = await requestGetMemoThemeList({ boardCode });
+      if (memoThemes) setMemoThemeList(memoThemes);
+    };
+    getMemoThemes();
+  }, [boardCode]);
 
   useEffect(() => {
     makeMemoThemes();
@@ -79,23 +103,23 @@ const BoardOnOpen = ({
 
   const makeMemoThemes = () => {
     const newMemoThemes = {};
-    board.memoThemes.forEach((el) => {
+    meemoThemeList.forEach((el) => {
       newMemoThemes[el.memoThemeId] = el;
     });
     setMemoThemes(newMemoThemes);
   };
 
   const makeVisibleMemos = () => {
-    setVisibleMemos(board.memos.slice(0, 10));
+    setVisibleMemos(memoList.slice(0, 10));
     setIsMemoLoading(false);
   };
 
   const addVisibleMemos = () => {
-    if (visibleMemos.length === board.memos.length) return;
+    if (visibleMemos.length === memoList.length) return;
 
     setIsMemoLoading(true);
     setTimeout(() => {
-      setVisibleMemos(board.memos.slice(0, visibleMemos.length + 10));
+      setVisibleMemos(memoList.slice(0, visibleMemos.length + 10));
       setIsMemoLoading(false);
     }, 750);
   };
