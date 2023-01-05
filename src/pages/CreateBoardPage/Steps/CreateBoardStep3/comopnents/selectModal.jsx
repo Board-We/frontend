@@ -27,16 +27,7 @@ const SelectModal = ({
 }) => {
   const [color, setColor] = useState("#FFFFFF");
   const [fontButtonValue, setFontButtonValue] = useState("0");
-
   const $file = useRef();
-  console.log("currentTab", selectedTab);
-  console.log("memoIndex", selectedMemoIndex);
-  console.log(
-    "currentBgMenu",
-    selectedBgMenu,
-    "currentMemoMenu",
-    selectedMemoMenu
-  );
 
   const font = [
     "기본 글씨체",
@@ -59,6 +50,30 @@ const SelectModal = ({
       setSelectedBgMenu(menu);
     }
   }, []);
+
+  useEffect(() => {
+    if (option === "메모지") {
+      const memoTheme = board.memoThemes[selectedMemoIndex];
+      switch (selectedMemoMenu[selectedMemoIndex]) {
+        case "fontColor":
+          setColor(memoTheme.memoTextColor);
+          break;
+        case "bgColor":
+          setColor(
+            memoTheme.memoBackground.includes("http")
+              ? "#fff"
+              : memoTheme.memoBackground
+          );
+          break;
+        default:
+          break;
+      }
+    } else if (option === "배경") {
+      setColor(
+        board.boardBackground.includes("http") ? "#fff" : board.boardBackground
+      );
+    }
+  }, [option, selectedMemoMenu, selectedMemoIndex]);
 
   const onClickTapMenu = (e) => {
     if (selectedTab === "bg") {
@@ -121,7 +136,6 @@ const SelectModal = ({
   };
 
   const onClickSetFontOption = (e) => {
-    console.log(e.target.value);
     setFontButtonValue(e.target.value);
   };
 
@@ -162,30 +176,6 @@ const SelectModal = ({
     if (data.includes("http") || data.includes("base64")) return true;
     else return false;
   };
-
-  useEffect(() => {
-    if (option === "메모지") {
-      const memoTheme = board.memoThemes[selectedMemoIndex];
-      switch (selectedMemoMenu[selectedMemoIndex]) {
-        case "fontColor":
-          setColor(memoTheme.memoTextColor);
-          break;
-        case "bgColor":
-          setColor(
-            memoTheme.memoBackground.includes("http")
-              ? "#fff"
-              : memoTheme.memoBackground
-          );
-          break;
-        default:
-          break;
-      }
-    } else if (option === "배경") {
-      setColor(
-        board.boardBackground.includes("http") ? "#fff" : board.boardBackground
-      );
-    }
-  }, [option, selectedMemoMenu, selectedMemoIndex]);
 
   const getBackgroundImageContainer = () => {
     return (
@@ -241,8 +231,6 @@ const SelectModal = ({
     );
   };
 
-  console.log(selectedTab);
-
   return (
     <ComponentWrapper open={open}>
       {option === "메모지" && getMemoOption()}
@@ -283,13 +271,12 @@ const SelectModal = ({
         (selectedMemoMenu[selectedMemoIndex] === "bgColor" ||
           selectedMemoMenu[selectedMemoIndex] === "fontColor")) ||
         (selectedTab === "bg" && selectedBgMenu === "bgColor")) && (
-        <ColorPicker color={color} onChange={onChangeColor} />
-      )}
+          <ColorPicker color={color} onChange={onChangeColor} />
+        )}
       {((selectedTab === "memo" &&
         selectedMemoMenu[selectedMemoIndex] === "bgImage") ||
         (selectedTab === "bg" && selectedBgMenu === "bgImage")) &&
         getBackgroundImageContainer()}
-
       {selectedTab === "bg" && selectedBgMenu === "font" && (
         <SetFontArea>
           {font.map((val, idx) => {
