@@ -5,7 +5,6 @@ import { boardState, deviceScreenState } from "../../../store";
 import { useEffect, useRef, useState } from "react";
 import Toast from "../components/toast";
 import Spinner from "../components/spinner";
-import { deleteBoard } from "../../../api/boardsApi";
 import {
   requestDeleteMemo,
   requestGetMemoList,
@@ -47,6 +46,10 @@ const BoardOnOpen = ({
   const [memoSize, setMemoSize] = useState(0);
   const $memoContainer = useRef();
 
+  useEffect(() => {
+    getMemos();
+  }, [boardCode]);
+
   const handleClickDeleteMemo = () => {
     setIsOpenDeleteMemoModal(true);
   };
@@ -66,26 +69,19 @@ const BoardOnOpen = ({
       setCheckedMemoList(checkedMemoList.filter((id) => id !== e.target.value));
   };
 
-  useEffect(() => {
-    const getMemos = async () => {
-      const memos = await requestGetMemoList({ boardCode });
-      if (memos) setMemoList(memos);
-    };
-    getMemos();
-  }, [boardCode]);
+  const getMemos = async () => {
+    const memos = await requestGetMemoList({ boardCode });
+    if (memos) setMemoList(memos);
+  };
 
   useEffect(() => {
-    const getMemoThemes = async () => {
-      const memoThemes = await requestGetMemoThemeList({ boardCode });
-      if (memoThemes) setMemoThemeList(memoThemes);
-    };
     getMemoThemes();
   }, [boardCode]);
 
   useEffect(() => {
     makeMemoThemes();
     makeVisibleMemos();
-  }, []);
+  }, [memoList]);
 
   useEffect(() => {
     // 14 = service header 3rem + top 9 rem + padding bottom 2rem
@@ -100,6 +96,11 @@ const BoardOnOpen = ({
     setMemoSize(newMemoSize);
     setPaddingTop(newPaddingTop);
   }, [deviceScreenSize]);
+
+  const getMemoThemes = async () => {
+    const memoThemes = await requestGetMemoThemeList({ boardCode });
+    if (memoThemes) setMemoThemeList(memoThemes);
+  };
 
   const makeMemoThemes = () => {
     const newMemoThemes = {};
@@ -134,11 +135,7 @@ const BoardOnOpen = ({
       setOpenDueDate(false);
     }
 
-    if (
-      memoContainerObject.scrollHeight ==
-      memoContainerObject.offsetHeight + memoContainerObject.scrollTop
-    )
-      addVisibleMemos();
+    if (memoContainerObject.scrollHeight - 10 < memoContainerObject.offsetHeight + memoContainerObject.scrollTop) addVisibleMemos();
   };
 
   return (
@@ -152,22 +149,22 @@ const BoardOnOpen = ({
             paddingTop={paddingTop}
           >
             {visibleMemos &&
-            privateModeForTest &&
-            !isDeleteMemoMode &&
-            !searchModeType
+              privateModeForTest &&
+              !isDeleteMemoMode &&
+              !searchModeType
               ? visibleMemos.map((el, i) => {
-                  // memoThemeId
-                  const theme = memoThemes[el.memoThemeId];
-                  return (
-                    <Memo
-                      size={memoSize + "px"}
-                      key={`${el}${i}`}
-                      text={el.memoContent}
-                      background={theme?.memoBackground}
-                      color={theme?.memoTextColor}
-                    />
-                  );
-                })
+                // memoThemeId
+                const theme = memoThemes[el.memoThemeId];
+                return (
+                  <Memo
+                    size={memoSize + "px"}
+                    key={`${el}${i}`}
+                    text={el.memoContent}
+                    background={theme?.memoBackground}
+                    color={theme?.memoTextColor}
+                  />
+                );
+              })
               : null}{" "}
             {searchModeType &&
               searchResults &&
