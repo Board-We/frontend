@@ -89,7 +89,7 @@ const ComponentWrapper = styled.div`
 
 const CreateBoardStepContainer = styled.div`
   width: 100%;
-  height: ${props => props.height}px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
