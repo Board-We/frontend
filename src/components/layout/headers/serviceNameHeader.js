@@ -26,7 +26,6 @@ const ServiceNameHeader = ({
   const [step, setStep] = useRecoilState(createBoardStepId);
 
   const handleClickChevronLeft = () => {
-    navigate(-1);
     setSearchModeType("");
   };
 
