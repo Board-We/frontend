@@ -10,7 +10,7 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
   const [password, setPassword] = useState("");
   const [isValidLength, setIsValidLength] = useState(false);
 
-  const [buttonValue, setButtonValue] = useState(board.openType);
+  const [buttonValue, setButtonValue] = useState("PUBLIC");
 
   const handleOnKeyDownBlockSpacebar = (e) => {
     if (e.code === "Space") e.nativeEvent.returnValue = false;
