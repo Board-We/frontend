@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   requestReccomendBoardList,
@@ -13,10 +13,13 @@ import BoardSlide from "./components/BoardSlide/index";
 import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
 import mainImage from "../../assets/images/mainImage.png";
+import Toast from "./components/toast";
 
 const Main = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [reccomendBoardList, setReccomendBoardList] = useState([]);
+  const [isBoardDeleted, setIsBoardDeleted] = useState(false);
 
   const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
   const [keyword, setKeyword] = useState(""); // 결과창 키워드 표시를 위한 값
@@ -78,6 +81,16 @@ const Main = () => {
     getReccomendBoardList();
   }, [getReccomendBoardList]);
 
+  useEffect(() => {
+    if (location.state && location.state.isDeleted) {
+      setIsBoardDeleted(true);
+      navigate("/", { replace: true });
+      setTimeout(() => {
+        setIsBoardDeleted(false);
+      }, 3000);
+    }
+  }, []);
+
   return (
     <>
       <PageWrapper
@@ -126,6 +139,7 @@ const Main = () => {
             onClose={() => setIsOpenInvalidLinkModal(false)}
           />
         )}
+        {isBoardDeleted && <Toast text="보드가 삭제되었습니다." />}
       </PageWrapper>
     </>
   );

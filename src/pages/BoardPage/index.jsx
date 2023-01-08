@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { deleteBoard, requestBoard } from "../../api/boardsApi";
 import { requestSearchMemo } from "../../api/memoApi";
@@ -12,9 +12,12 @@ import PasswordModal from "./BoardPageModal/PasswordModal";
 
 const BoardPage = () => {
   const { boardCode } = useParams();
+  const navigate = useNavigate();
 
   const [board, setBoard] = useState(null);
   const [boardState, setBoardState] = useState(null);
+
+  const [password, setPassword] = useState("");
 
   const [headerState, setHeaderState] = useState({
     isSearchMode: false,
@@ -60,9 +63,12 @@ const BoardPage = () => {
     setIsOpenConfirmDeleteModal(false);
   };
 
-  const handleConfirmDeleteBoard = async ({ boardCode, password }) => {
+  const handleConfirmDeleteBoard = async () => {
     const deleted = await deleteBoard({ boardCode, password });
-    setIsOpenConfirmDeleteModal(false);
+    if (deleted) {
+      setIsOpenConfirmDeleteModal(false);
+      navigate("/", { state: { isDeleted: true } });
+    }
   };
 
   const handleKeyDownSearchIput = async (e) => {
@@ -93,7 +99,7 @@ const BoardPage = () => {
       const board = await requestBoard(boardCode);
       const boardState = getBoardState(board);
       setBoardState(boardState);
-      setBoard(board);
+      setBoard(board.data);
       console.log(board);
     };
     accessBoard();
@@ -142,6 +148,7 @@ const BoardPage = () => {
       <BodyContainer>
         <BoardPageFactory
           boardState={boardState}
+          boardInfo={board}
           boardCode={boardCode}
           passwordModalState={passwordModalState}
           setPasswordModalState={setPasswordModalState}
@@ -150,6 +157,9 @@ const BoardPage = () => {
         />
 
         <PasswordModal
+          password={password}
+          setPassword={setPassword}
+          boardCode={boardCode}
           open={passwordModalState.open}
           onClose={handleClosePasswordModal}
           onValid={handleValidPassword}
