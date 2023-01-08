@@ -7,7 +7,7 @@ import { boardState } from "../../../store";
 import BoardBackground from "../components/boardBackground";
 import Buttons from "../components/buttons";
 
-const BoardOnWrite = ({ boardCode }) => {
+const BoardOnWrite = ({ boardCode, boardInfo }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const BoardOnWrite = ({ boardCode }) => {
 
   return (
     <PageWrapper>
-      <BoardBackground boardInfo={board} />
+      <BoardBackground boardInfo={boardInfo} />
       <Buttons>
         <ChipButton
           onClick={onClickMMP}

@@ -11,13 +11,13 @@ const BoardBackground = ({ boardInfo, centerContent }) => {
       <Blind />
       <CenterContentContainer>{centerContent}</CenterContentContainer>
       <ContentContainer>
-        <SmallTitle color="white">{boardInfo.name}</SmallTitle>
+        <SmallTitle color="white">{boardInfo.boardName}</SmallTitle>
         <Tags>
-          {boardInfo.tags.map((el) => {
+          {boardInfo.boardTags?.map((el) => {
             return <Tag color="white" key={el}>{`#${el}`}</Tag>;
           })}
         </Tags>
-        <Description color={"white"}>{boardInfo.description}</Description>
+        <Description color={"white"}>{boardInfo.boardDescription}</Description>
       </ContentContainer>
     </ComponentWrapper>
   );
@@ -31,7 +31,7 @@ const ComponentWrapper = styled.div`
   justify-content: flex-start;
   padding: 1.5rem;
   background: ${(props) =>
-    props.background.includes("http")
+    props.background.includes("base64")
       ? `url(${props.background})`
       : props.background};
   background-position: center;
@@ -40,6 +40,7 @@ const ComponentWrapper = styled.div`
   width: 100%;
   height: 100%;
   line-height: 2rem;
+  text-align: left;
 `;
 
 const Blind = styled.div`
