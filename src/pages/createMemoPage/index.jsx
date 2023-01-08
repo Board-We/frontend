@@ -9,18 +9,15 @@ const CreateMemoPage = () => {
   const { boardCode } = useParams();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   navigate(`/board/${boardCode}/memo/making`);
-  // }, []);
+  useEffect(() => {
+    navigate(`/board/${boardCode}/memo/making`);
+  }, []);
 
   return (
     <PageWrapper>
       <Routes>
-        <Route
-          path={"/board/:boardCode/memo/making"}
-          element={<MakingStep />}
-        />
-        <Route path={"/board/:boardCode/memo/end"} element={<EndStep />} />
+        <Route path={"/making"} element={<MakingStep />} />
+        <Route path={"/end"} element={<EndStep />} />
       </Routes>
     </PageWrapper>
   );
