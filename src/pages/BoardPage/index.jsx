@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { deleteBoard, requestBoard } from "../../api/boardsApi";
 import { requestSearchMemo } from "../../api/memoApi";
-import { searchMemoResults } from "../../api/mockData";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
 import { getBoardState } from "../../utils/board";
 import BoardPageFactory from "./BoardPageFactory";
 import PasswordModal from "./BoardPageModal/PasswordModal";
-import BoardOnEnd from "./mode/BoardOnEnd";
 
 const BoardPage = () => {
   const { boardCode } = useParams();
+
   const [board, setBoard] = useState(null);
   const [boardState, setBoardState] = useState(null);
 
-  const location = useLocation();
-  const [headerMenuSetting, setheaderMenuSetting] = useState({
-    search: null,
-    share: null,
-    config: null,
+  const [headerState, setHeaderState] = useState({
+    isSearchMode: false,
+    searchType: null, // board | memo | deleteMemo
+    menu: [],
+    configMenu: [],
+    configMenuHandler: [],
+    setQuery: null,
+    onKeydown: null,
+    checkedMemoList: [],
+    setCheckedMemoList: null,
   });
+
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [passwordModalState, setPasswordModalState] = useState({
@@ -33,8 +38,6 @@ const BoardPage = () => {
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
   const [checkedMemoList, setCheckedMemoList] = useState([]);
-  const [isDeleteMemoMode, setIsDeleteMemoMode] = useState(false);
-  const [searchModeType, setSearchModeType] = useState("");
 
   const handleClosePasswordModal = () => {
     setPasswordModalState({ ...passwordModalState, open: false });
@@ -44,7 +47,11 @@ const BoardPage = () => {
     if (passwordModalState.type === "deleteBoard")
       setIsOpenConfirmDeleteModal(true);
     else if (passwordModalState.type === "deleteMemo")
-      setIsDeleteMemoMode(true);
+      setHeaderState({
+        ...headerState,
+        isSearchMode: true,
+        searchType: "deleteMemo",
+      });
     else if (passwordModalState.type === "privateBoard")
       console.log("진입 허가");
   };
@@ -56,10 +63,6 @@ const BoardPage = () => {
   const handleConfirmDeleteBoard = async ({ boardCode, password }) => {
     const deleted = await deleteBoard({ boardCode, password });
     setIsOpenConfirmDeleteModal(false);
-  };
-
-  const handleClickSearch = () => {
-    setSearchModeType("memo");
   };
 
   const handleKeyDownSearchIput = async (e) => {
@@ -101,51 +104,39 @@ const BoardPage = () => {
       case "onWaitWrite":
       case "onWrite":
       case "onWaitOpen":
-        setheaderMenuSetting({
-          search: null,
-          share: () => {},
-          config: {
-            configMenu: ["보드 삭제"],
-            configMenuHandler: [handleClickDeleteBoard],
-          },
+        setHeaderState({
+          ...headerState,
+          menu: ["share", "config"],
+
+          configMenu: ["보드 삭제"],
+          configMenuHandler: [handleClickDeleteBoard],
         });
         break;
       case "onOpen":
-        setheaderMenuSetting({
-          search: handleClickSearch,
-          share: () => {},
-          config: {
-            configMenu: ["보드 삭제", "메모 삭제"],
-            configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
-          },
+        setHeaderState({
+          ...headerState,
+          searchType: "memo",
+          menu: ["search", "share", "config"],
+          configMenu: ["보드 삭제", "메모 삭제"],
+          configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
+          setQuery,
+          onKeydown: handleKeyDownSearchIput,
+          checkedMemoList,
+          setCheckedMemoList,
         });
         break;
       default:
-        setheaderMenuSetting({
-          search: null,
-          share: null,
-          cofig: {
-            configMenu: [],
-            configMenuHandler: [],
-          },
-        });
+        break;
     }
-  }, [boardState, handleClickDeleteBoard, handleClickDeleteMemo]);
+  }, [boardState]);
+
   return (
     <PageWrapper>
       <ServiceNameHeader
-        searchModeType={searchModeType}
-        setSearchModeType={setSearchModeType}
-        setQuery={setQuery}
-        onKeyDownSearchInput={handleKeyDownSearchIput}
-        isDeleteMemoMode={isDeleteMemoMode}
-        onSearch={headerMenuSetting.search}
-        onShare={headerMenuSetting.share}
-        onConfig={headerMenuSetting.config}
-        checkedMemoList={checkedMemoList}
-        setCheckedMemoList={setCheckedMemoList}
+        headerState={headerState}
+        setHeaderState={setHeaderState}
       />
-      {isDeleteMemoMode && (
+      {headerState.isSearchMode && headerState.searchType === "dleteMemo" && (
         <DeleteMemoSubHeader> 삭제할 메모를 선택하세요. </DeleteMemoSubHeader>
       )}
       <BodyContainer>
@@ -154,12 +145,8 @@ const BoardPage = () => {
           boardCode={boardCode}
           passwordModalState={passwordModalState}
           setPasswordModalState={setPasswordModalState}
-          isDeleteMemoMode={isDeleteMemoMode}
-          setIsDeleteMemoMode={setIsDeleteMemoMode}
-          searchModeType={searchModeType}
+          headerState={headerState}
           searchResults={searchResults}
-          checkedMemoList={checkedMemoList}
-          setCheckedMemoList={setCheckedMemoList}
         />
 
         <PasswordModal

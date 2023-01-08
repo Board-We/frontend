@@ -34,8 +34,11 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/board/new" element={<CreateBoardPage />} />
-        <Route path="/memo/*" element={<CreateMemoPage />}></Route>
-        <Route path="/board/:boardCode/*" element={<BoardPage />} />
+        <Route
+          path="/board/:boardCode/memo/*"
+          element={<CreateMemoPage />}
+        ></Route>
+        <Route path="/board/:boardCode/" element={<BoardPage />} />
         <Route path="/" element={<Main />} />
       </Routes>
     </div>

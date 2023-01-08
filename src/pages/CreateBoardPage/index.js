@@ -91,10 +91,6 @@ const CreateBoardPage = () => {
     setCurrentStepId((prev) => prev - 1);
   };
 
-  const handleClickGoToBoard = () => {
-    // To Do: 생성된 보드 링크로 이동
-  };
-
   const controlCreatBoardStep = (
     stepId,
     setDisabledFooterButton,
@@ -205,7 +201,7 @@ const StepDescriptionContainer = styled.div`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
-  height: ${props => props.height}px;
+  height: ${(props) => props.height}px;
   overflow: hidden;
 `;
 

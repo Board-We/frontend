@@ -8,15 +8,15 @@ import BoardOnWrite from "./mode/BoardOnWrite";
 const BoardPageFactory = ({ boardState, boardCode, ...args }) => {
   switch (boardState) {
     case "onWaitWrite":
-      return <BoardOnWaitWrite />;
+      return <BoardOnWaitWrite boardCode={boardCode} />;
     case "onWrite":
-      return <BoardOnWrite />;
+      return <BoardOnWrite boardCode={boardCode} />;
     case "onWaitOpen":
-      return <BoardOnWaitOpen />;
+      return <BoardOnWaitOpen boardCode={boardCode} />;
     case "onOpen":
       return <BoardOnOpen boardCode={boardCode} {...args} />;
     case "onEnd":
-      return <BoardOnEnd />;
+      return <BoardOnEnd boardCode={boardCode} />;
     default:
       return <Board404 />;
   }

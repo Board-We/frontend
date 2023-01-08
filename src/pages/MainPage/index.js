@@ -17,10 +17,22 @@ import mainImage from "../../assets/images/mainImage.png";
 const Main = () => {
   const navigate = useNavigate();
   const [reccomendBoardList, setReccomendBoardList] = useState([]);
-  const [searchModeType, setSearchModeType] = useState("");
+
   const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
   const [keyword, setKeyword] = useState(""); // 결과창 키워드 표시를 위한 값
   const [searchResults, setSearchResults] = useState([]);
+
+  const [headerState, setHeaderState] = useState({
+    isSearchMode: false,
+    searchType: null, // board | memo | deleteMemo
+    menu: [],
+    configMenu: [],
+    configMenuHandler: [],
+    setQuery,
+    onKeydown: null,
+    checkedMemoList: [],
+    setCheckedMemoList: null,
+  });
 
   const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
 
@@ -72,17 +84,19 @@ const Main = () => {
         onWheel={handleWheelPage}
         onTouchStart={handleTouchStartPage}
         onTouchMove={handleTouchMovePage}
-        noSearchResult={searchModeType && searchResults.length === 0}
+        noSearchResult={headerState.isSearchMode && searchResults.length === 0}
       >
         <MainPageContainer>
           <ServiceNameHeader
-            searchModeType={searchModeType}
-            setSearchModeType={setSearchModeType}
-            setQuery={setQuery}
-            onKeyDownSearchInput={handleKeyDownSearchInput}
-            onSearch={() => setSearchModeType("board")}
+            headerState={{
+              ...headerState,
+              menu: ["search"],
+              searchType: "board",
+              onKeydown: handleKeyDownSearchInput,
+            }}
+            setHeaderState={setHeaderState}
           />
-          {!searchModeType ? (
+          {!headerState.isSearchMode ? (
             <>
               <ServiceMainImage />
               <ChipButton fixed onClick={() => navigate("/board/new")}>

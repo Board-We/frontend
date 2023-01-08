@@ -7,17 +7,13 @@ import { boardState } from "../../../store";
 import BoardBackground from "../components/boardBackground";
 import Buttons from "../components/buttons";
 
-const BoardOnWrite = () => {
+const BoardOnWrite = ({ boardCode }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(new Date());
-  });
-
   const onClickMMP = () => {
     getMemoInfo(board.id);
-    navigate("/memo/making");
+    navigate(`/board/${boardCode}/memo/making`);
   };
 
   const getMemoInfo = (boardId) => {

@@ -10,27 +10,44 @@ import { useRecoilState } from "recoil";
 import { createBoardStepId } from "../../../store";
 
 const ServiceNameHeader = ({
-  searchModeType,
-  setSearchModeType,
-  setQuery,
-  onKeyDownSearchInput,
-  isDeleteMemoMode,
-  onShare,
-  onConfig,
-  onSearch,
-  checkedMemoList,
-  setCheckedMemoList,
+  headerState = {
+    isSearchMode: false,
+    searchType: null,
+    menu: [],
+    configMenu: [],
+    configMenuHandler: [],
+    setQuery: null,
+    onKeydown: null,
+    checkedMemoList: [],
+    setCheckedMemoList: null,
+  },
+  setHeaderState,
 }) => {
   const navigate = useNavigate();
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
   const [step, setStep] = useRecoilState(createBoardStepId);
+  const [inputText, setInputText] = useState("");
 
   const handleClickChevronLeft = () => {
-    setSearchModeType("");
+    setHeaderState((prev) =>
+      prev.searchType === "deleteMemo"
+        ? { ...headerState, isSearchMode: false, searchType: "memo" }
+        : { ...headerState, isSearchMode: false }
+    );
+    setInputText("");
+    headerState.setQuery("");
   };
 
   const handleChangeHeaderInput = (e) => {
-    setQuery(e.target.value);
+    setInputText(e.target.value);
+    headerState.setQuery(e.target.value);
+  };
+
+  const handleClickSearch = () => {
+    setHeaderState({
+      ...headerState,
+      isSearchMode: true,
+    });
   };
 
   const handleClickConfig = () => {
@@ -38,7 +55,7 @@ const ServiceNameHeader = ({
   };
 
   const handleClickUnselect = () => {
-    setCheckedMemoList([]);
+    headerState.setCheckedMemoList([]);
   };
 
   const onClickTitle = () => {
@@ -49,64 +66,65 @@ const ServiceNameHeader = ({
   return (
     <ComponentWrapper>
       <ServiceNameHeaderContainer>
-        {!(searchModeType || isDeleteMemoMode) && (
+        {!headerState.isSearchMode && (
           <ServiceNameHeaderTitle onClick={onClickTitle}>
-            Side project
+            보드미
           </ServiceNameHeaderTitle>
         )}
-        {(searchModeType || isDeleteMemoMode) && (
+        {headerState.isSearchMode && (
           <ChevronLeftButton>
             <ChevronLeft onClick={handleClickChevronLeft} />
           </ChevronLeftButton>
         )}
         <ServiceNameHeaderButtonGroup>
-          {onSearch ? (
+          {headerState.menu.includes("search") && (
             <SearchButton
-              onClick={onSearch}
-              searchModeType={searchModeType}
-              isDeleteMemoMode={isDeleteMemoMode}
+              onClick={handleClickSearch}
+              isSearchMode={headerState.isSearchMode}
             >
               <Search />
             </SearchButton>
-          ) : null}
-          {onShare && !(searchModeType || isDeleteMemoMode) ? (
-            <ShareButton onClick={onShare}>
+          )}
+          {headerState.menu.includes("share") && !headerState.isSearchMode && (
+            <ShareButton onClick={() => {}}>
               <Share />
             </ShareButton>
-          ) : null}
-          {onConfig && !(searchModeType || isDeleteMemoMode) ? (
+          )}
+          {headerState.menu.includes("config") && !headerState.isSearchMode && (
             <ConfigButton onClick={handleClickConfig}>
               <Config />
               {isOpenConfigMenu && (
                 <DropDownMenu
-                  menuArray={onConfig.configMenu}
-                  menuHandlerArray={onConfig.configMenuHandler}
+                  menuArray={headerState.configMenu}
+                  menuHandlerArray={headerState.configMenuHandler}
                 />
               )}
             </ConfigButton>
-          ) : null}
+          )}
         </ServiceNameHeaderButtonGroup>
         <HeaderInput
+          value={inputText}
           onChange={handleChangeHeaderInput}
-          searchModeType={searchModeType}
-          isDeleteMemoMode={isDeleteMemoMode}
+          isSearchMode={headerState.isSearchMode}
+          searchType={headerState.searchType}
+          onKeyDown={headerState.onKeyDown}
           placeholder={
-            searchModeType === "board"
+            headerState.searchType === "board"
               ? "보드를 검색하세요."
-              : searchModeType === "memo"
+              : headerState.searchType === "memo"
               ? "메모 내용을 검색하세요"
               : "내용을 검색하세요"
           }
-          onKeyDown={onKeyDownSearchInput}
         />
-        {isDeleteMemoMode ? (
-          <UnselectButton
-            disabled={checkedMemoList.length === 0}
-            onClick={handleClickUnselect}
-          >
-            선택 해제
-          </UnselectButton>
-        ) : null}
+        {headerState.searchType === "deleteMemo" &&
+          headerState.isSearchMode && (
+            <UnselectButton
+              disabled={headerState.checkedMemoList.length === 0}
+              onClick={handleClickUnselect}
+            >
+              선택 해제
+            </UnselectButton>
+          )}
       </ServiceNameHeaderContainer>
     </ComponentWrapper>
   );
@@ -171,7 +189,7 @@ const SearchButton = styled.button`
   cursor: pointer;
   right: 0;
   animation: ${(props) =>
-    props.searchModeType || props.isDeleteMemoMode
+    props.isSearchMode
       ? css`
           ${moveSearchButton} 0.3s linear
         `
@@ -225,8 +243,7 @@ const HeaderInput = styled.input`
   background-color: ${(props) => props.theme.colors.grey_50};
   border: none;
   border-radius: 0.5rem;
-  display: ${(props) =>
-    props.searchModeType || props.isDeleteMemoMode ? "block" : "none"};
+  display: ${(props) => (props.isSearchMode ? "block" : "none")};
   z-index: 0;
 
   &:focus {
@@ -235,11 +252,11 @@ const HeaderInput = styled.input`
   }
 
   animation: ${(props) =>
-    props.searchModeType
+    props.searchType !== "deleteMemo"
       ? css`
           ${expandSearchInput} 0.3s linear
         `
-      : props.isDeleteMemoMode
+      : props.searchType === "deleteMemo"
       ? css`
           ${expandDeleteMemoInput} 0.3s linear
         `

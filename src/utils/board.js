@@ -1,11 +1,10 @@
 export const getBoardState = (board) => {
-  console.log(board);
   const now = new Date().getTime();
   const isOnWrite = now - new Date(board.data.writingStartTime).getTime();
   const isEndWrite = now - new Date(board.data.writingEndTime).getTime();
   const isOnOpen = now - new Date(board.data.openStartTime).getTime();
   const isEndOpen = now - new Date(board.data.openEndTime).getTime();
-  console.log(isOnWrite, isEndWrite, isOnOpen, isEndOpen);
+
   if (isOnWrite < 0) {
     // 현재가 메모 쓰기 시작보다 과거
     return "onWaitWrite";
