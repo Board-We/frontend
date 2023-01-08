@@ -3,17 +3,27 @@ import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
 import { ReactComponent as Close } from "../../../assets/icons/close.svg";
 import { requestLoginBoard } from "../../../api/boardsApi";
+import { deleteBoard } from "../../../api/boardsApi";
 
-const PasswordModal = ({ open, onClose, onValid }) => {
-  const [password, setPassword] = useState("");
-
+const PasswordModal = ({
+  password,
+  setPassword,
+  boardCode,
+  open,
+  onClose,
+  onValid,
+}) => {
   const handleOnChangePasswordInput = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleClickConfrimPassword = async ({ boardCode }) => {
+  const handleClickConfrimPassword = async () => {
     // boardCode는 임의로 처리
     // const isSuccess = await requestLoginBoard({ password, boardCode });
+
+    // 해당 보드 비밀번호 검증 API 필요할듯
+    // 검증 후 삭제 확인 모달
+
     if (true) {
       onValid();
       setPassword("");
