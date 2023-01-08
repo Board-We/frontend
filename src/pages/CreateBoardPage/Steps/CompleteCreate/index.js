@@ -4,7 +4,11 @@ import { useRecoilValue, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 import { postUserBoardState } from "../../../../api/boardsApi";
 import SlideModal from "../../../../components/modals/slideModal";
-import { boardState, deviceScreenState } from "../../../../store";
+import {
+  boardState,
+  createBoardStepId,
+  deviceScreenState,
+} from "../../../../store";
 import { setDateISOstring } from "../../../../utils/setDefaultDay";
 import { theme } from "../../../../styles/theme";
 import ModalContents from "./ModalContents";
@@ -12,8 +16,8 @@ import { useLocation } from "react-router-dom";
 
 const CompleteCreate = () => {
   const board = useRecoilValue(boardState);
-  const location = useLocation();
   const resetBaord = useResetRecoilState(boardState);
+  const resetStep = useResetRecoilState(createBoardStepId);
   const [modalOpen, setModalOpen] = useState(true);
   const [boardURL, setBoardURL] = useState("");
 
@@ -131,6 +135,7 @@ const CompleteCreate = () => {
   useEffect(() => {
     return () => {
       resetBaord();
+      resetStep();
     };
   }, []);
 
