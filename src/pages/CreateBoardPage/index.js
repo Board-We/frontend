@@ -67,7 +67,6 @@ const CreateBoardPage = () => {
       openEndTime: new Date(new Date().getTime() + 2419200000),
       password: "",
       openType: "", // "PUBLIC" or "PRIVATE"
-
       boardThemeId: 0,
       boardBackground: basicThemeBG, // "Base-64" or "#FFFFFF"
       // boardBackground: theme.colors.defaultBoardBg, // "Base-64" or "#FFFFFF"
@@ -92,8 +91,6 @@ const CreateBoardPage = () => {
         },
       ],
     };
-
-    console.log(initialBoardForm)
 
     setBoard(initialBoardForm);
   };

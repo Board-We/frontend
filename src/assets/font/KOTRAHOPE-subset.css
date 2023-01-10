@@ -1,0 +1,5 @@
+@font-face {
+	font-family: 'KOTRAHOPE';
+	font-display: swap;
+	src: local('KOTRA HOPE'), url('./otf/KOTRAHOPE.otf') format('otf')
+}

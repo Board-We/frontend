@@ -257,6 +257,8 @@ const SelectModal = ({
         {option === "배경" ? (
           <TapButton
             text="글자 종류"
+            isFill={true}
+
             isSelected={selectedBgMenu === "font"}
             onClick={() => onClickTapMenu("font")}
           />
@@ -264,6 +266,7 @@ const SelectModal = ({
           <TapButton
             text="글자 색"
             isSelected={selectedMemoMenu[selectedMemoIndex] === "fontColor"}
+            isFill={true}
             onClick={() => onClickTapMenu("fontColor")}
           />
         )}

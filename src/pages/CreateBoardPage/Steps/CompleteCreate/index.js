@@ -12,7 +12,6 @@ import {
 import { setDateISOstring } from "../../../../utils/setDefaultDay";
 import { theme } from "../../../../styles/theme";
 import ModalContents from "./ModalContents";
-import { useLocation } from "react-router-dom";
 
 const CompleteCreate = () => {
   const board = useRecoilValue(boardState);
@@ -39,10 +38,10 @@ const CompleteCreate = () => {
     const marginTop = Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
     setHeightOfMemoGrid(
       deviceScreenSize.y -
-        bottomOfDescription -
-        heightOfModalArea -
-        marginTop +
-        2
+      bottomOfDescription -
+      heightOfModalArea -
+      marginTop +
+      2
     );
   }, [
     deviceScreenSize,
