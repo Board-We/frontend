@@ -12,7 +12,7 @@ import EnterLinkInput from "./components/EnterLinkInput";
 import BoardSlide from "./components/BoardSlide/index";
 import SearchPage from "./components/SearchPage";
 import ServiceFooter from "./components/ServiceFooter";
-import mainImage from "../../assets/images/mainImage.png";
+import mainPageImage from "../../assets/images/mainPageImage.jpg";
 import Toast from "./components/toast";
 
 const Main = () => {
@@ -183,7 +183,7 @@ const ServiceMainImage = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background-image: url(${mainImage});
+  background-image: url(${mainPageImage});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

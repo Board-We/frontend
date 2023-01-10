@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import CameraIcon from "../../../../../assets/icons/camera.svg";
 import { ReactComponent as Close } from "../../../../../assets/icons/close.svg";
+import { ReactComponent as Confirm } from "../../../../../assets/icons/confirm.svg";
 import styled from "styled-components";
 import TapBar from "../../../../../components/buttons/tapBar";
 import TapButton from "../../../../../components/buttons/tapButton";
@@ -293,9 +294,9 @@ const SelectModal = ({
         </SetFontArea>
       )}
       <Footer>
-        <div onClick={onClose}>x</div>
+        <div onClick={onClose}><Close /></div>
         <div>{title}</div>
-        <div onClick={onClose}>v</div>
+        <div onClick={onClose}><Confirm /></div>
       </Footer>
     </ComponentWrapper>
   );
@@ -361,7 +362,8 @@ const ImageFileInput = styled.input`
 const Footer = styled.div`
   background: transparent;
   width: 100%;
-  height: 2rem;
+  height: 3rem;
+  font-weight: 500;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

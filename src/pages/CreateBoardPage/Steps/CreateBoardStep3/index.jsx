@@ -40,11 +40,11 @@ const CreateBoardStep3 = ({ footerRef }) => {
     const marginTop = Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
     setHeightOfMemoGrid(
       deviceScreenSize.y -
-        bottomOfDescription -
-        footerRef.current.clientHeight -
-        heightOfButtonArea -
-        marginTop +
-        2
+      bottomOfDescription -
+      footerRef.current.clientHeight -
+      heightOfButtonArea -
+      marginTop +
+      2
     );
   }, [
     deviceScreenSize,
@@ -183,14 +183,15 @@ const MemoArea = styled.div`
   align-items: flex-start;
   justify-content: center;
   background: ${(props) =>
-    props.background.includes("base64") ? undefined : props.background};
+    props.background.includes("base64") ? "white" : props.background};
   background-image: ${(props) =>
     props.background.includes("base64")
       ? `url(${props.background})`
       : undefined};
-  background-size: cover;
+  /* background-size: cover;
+  background-repeat: no-repeat; */
+  background-size: contain;
   background-position: center;
-  background-repeat: no-repeat;
   padding: 1rem 1rem 0 1rem;
   border: solid ${theme.colors.grey_30};
   border-width: 0 0.1rem 0 0.1rem;

@@ -16,6 +16,10 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { theme } from "../../styles/theme";
 import Title from "../../components/label/title";
+import basicThemeBG from '../../assets/images/basicThemeBG.png'
+import basicThemeMemo1 from '../../assets/images/basicThemeMemo1.png'
+import basicThemeMemo2 from '../../assets/images/basicThemeMemo2.png'
+import basicThemeMemo3 from '../../assets/images/basicThemeMemo3.png'
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
@@ -65,16 +69,31 @@ const CreateBoardPage = () => {
       openType: "", // "PUBLIC" or "PRIVATE"
 
       boardThemeId: 0,
-      boardBackground: theme.colors.defaultBoardBg, // "Base-64" or "#FFFFFF"
+      boardBackground: basicThemeBG, // "Base-64" or "#FFFFFF"
+      // boardBackground: theme.colors.defaultBoardBg, // "Base-64" or "#FFFFFF"
       boardFont: "san-serif",
       memos: [],
       memoThemes: [
+        {
+          memoBackground: basicThemeMemo1,
+          memoTextColor: theme.colors.black
+        },
+        {
+          memoBackground: basicThemeMemo2,
+          memoTextColor: theme.colors.black
+        },
+        {
+          memoBackground: basicThemeMemo3,
+          memoTextColor: theme.colors.black
+        },
         {
           memoBackground: theme.colors.defaultMemoBg,
           memoTextColor: theme.colors.black,
         },
       ],
     };
+
+    console.log(initialBoardForm)
 
     setBoard(initialBoardForm);
   };
