@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import CameraIcon from "../../../../../assets/icons/camera.svg";
-import { ReactComponent as Close } from "../../../../../assets/icons/close.svg";
-import { ReactComponent as Confirm } from "../../../../../assets/icons/confirm.svg";
+import closeIcon from "../../../../../assets/icons/close.svg";
+import confirmIcon from "../../../../../assets/icons/confirm.svg";
 import styled from "styled-components";
 import TapBar from "../../../../../components/buttons/tapBar";
 import TapButton from "../../../../../components/buttons/tapButton";
@@ -218,7 +218,7 @@ const SelectModal = ({
               onClick={() => onClickTapBar(i)}
               icon={
                 board.memoThemes.length > 1 && (
-                  <Close onClick={(e) => onClickRemoveMemoTheme(e, i)} />
+                  <IconContainer src={closeIcon} onClick={(e) => onClickRemoveMemoTheme(e, i)} />
                 )
               }
               key={`메모지${i + 1}`}
@@ -294,9 +294,9 @@ const SelectModal = ({
         </SetFontArea>
       )}
       <Footer>
-        <div onClick={onClose}><Close /></div>
+        <div onClick={onClose}><img src={closeIcon} /></div>
         <div>{title}</div>
-        <div onClick={onClose}><Confirm /></div>
+        <div onClick={onClose}><img src={confirmIcon} /></div>
       </Footer>
     </ComponentWrapper>
   );
@@ -376,6 +376,11 @@ const Camera = styled.img`
   height: 30%;
 `;
 
+const IconContainer = styled.img`
+  width: 1.25rem;
+  height: 1.25rem;
+`
+
 const SetFontArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -399,5 +404,6 @@ const SetFontButton = styled.button`
     border: 1px solid ${theme.colors.primary};
   }
 `;
+
 
 export default SelectModal;

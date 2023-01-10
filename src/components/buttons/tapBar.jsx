@@ -23,8 +23,9 @@ const ComponentWrapper = styled.div`
     props.isSelected ? theme.colors.primary : theme.colors.grey_20};
   border-bottom: ${(props) =>
     props.isSelected ? `2px solid ${theme.colors.primary}` : null};
-  background: #ffffff;
   cursor: pointer;
+  background: #ffffff;
+  gap: 0.5rem;
 `;
 
 export default TapBar;

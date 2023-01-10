@@ -16,7 +16,7 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { theme } from "../../styles/theme";
 import Title from "../../components/label/title";
-import basicThemeBG from '../../assets/images/basicThemeBG.png'
+import basicThemeBG from '../../assets/images/basicThemeBG.jpg'
 import basicThemeMemo1 from '../../assets/images/basicThemeMemo1.png'
 import basicThemeMemo2 from '../../assets/images/basicThemeMemo2.png'
 import basicThemeMemo3 from '../../assets/images/basicThemeMemo3.png'
