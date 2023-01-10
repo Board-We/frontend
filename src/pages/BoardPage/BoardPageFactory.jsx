@@ -5,7 +5,14 @@ import BoardOnWaitOpen from "./mode/BoardOnWaitOpen";
 import BoardOnWaitWrite from "./mode/BoardOnWaitWrite";
 import BoardOnWrite from "./mode/BoardOnWrite";
 
-const BoardPageFactory = ({ boardInfo, boardState, boardCode, ...args }) => {
+const BoardPageFactory = ({
+  boardInfo,
+  boardState,
+  boardCode,
+  headerState,
+  setHeaderState,
+  searchResults,
+}) => {
   switch (boardState) {
     case "onWaitWrite":
       return <BoardOnWaitWrite boardCode={boardCode} />;
@@ -14,7 +21,14 @@ const BoardPageFactory = ({ boardInfo, boardState, boardCode, ...args }) => {
     case "onWaitOpen":
       return <BoardOnWaitOpen boardCode={boardCode} />;
     case "onOpen":
-      return <BoardOnOpen boardCode={boardCode} {...args} />;
+      return (
+        <BoardOnOpen
+          boardCode={boardCode}
+          headerState={headerState}
+          setHeaderState={setHeaderState}
+          searchResults={searchResults}
+        />
+      );
     case "onEnd":
       return <BoardOnEnd boardCode={boardCode} />;
     default:

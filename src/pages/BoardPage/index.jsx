@@ -32,6 +32,7 @@ const BoardPage = () => {
   });
 
   const [query, setQuery] = useState("");
+
   const [searchResults, setSearchResults] = useState(null);
   const [passwordModalState, setPasswordModalState] = useState({
     type: "",
@@ -142,7 +143,7 @@ const BoardPage = () => {
         headerState={headerState}
         setHeaderState={setHeaderState}
       />
-      {headerState.isSearchMode && headerState.searchType === "dleteMemo" && (
+      {headerState.isSearchMode && headerState.searchType === "deleteMemo" && (
         <DeleteMemoSubHeader> 삭제할 메모를 선택하세요. </DeleteMemoSubHeader>
       )}
       <BodyContainer>
@@ -150,9 +151,8 @@ const BoardPage = () => {
           boardState={boardState}
           boardInfo={board}
           boardCode={boardCode}
-          passwordModalState={passwordModalState}
-          setPasswordModalState={setPasswordModalState}
           headerState={headerState}
+          setHeaderState={setHeaderState}
           searchResults={searchResults}
         />
 

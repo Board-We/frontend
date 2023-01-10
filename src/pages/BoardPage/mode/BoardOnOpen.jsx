@@ -18,14 +18,9 @@ import AlertModal from "../../../components/modals/alertModal";
 
 const BoardOnOpen = ({
   boardCode,
-  passwordModalState,
-  setPasswordModalState,
-  isDeleteMemoMode,
-  setIsDeleteMemoMode,
-  searchModeType,
   searchResults,
-  checkedMemoList,
-  setCheckedMemoList,
+  headerState,
+  setHeaderState,
 }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
@@ -54,28 +49,47 @@ const BoardOnOpen = ({
     setIsOpenDeleteMemoModal(true);
   };
   const handleCloseDeleteMemoModal = () => {
-    setIsDeleteMemoMode(false);
+    setHeaderState({ ...headerState, isSearchMode: false });
   };
 
-  const handleConfirmDeleteMemo = async (boardCode) => {
-    const deleted = await requestDeleteMemo({ boardCode, checkedMemoList });
+  const handleConfirmDeleteMemo = async () => {
+    const deleted = await requestDeleteMemo({
+      boardCode,
+      memoIds: headerState.checkedMemoList,
+    });
     setIsOpenDeleteMemoModal(false);
   };
 
   const handleChangeCheckableMemo = (e) => {
+    console.log(typeof e.target.value);
     if (e.target.checked) {
-      setCheckedMemoList([...checkedMemoList, e.target.value]);
-    } else
-      setCheckedMemoList(checkedMemoList.filter((id) => id !== e.target.value));
+      setHeaderState({
+        ...headerState,
+        checkedMemoList: [
+          ...headerState.checkedMemoList,
+          Number(e.target.value),
+        ],
+      });
+    } else {
+      const filteredCheckedMemoList = headerState.checkedMemoList.filter(
+        (id) => id !== Number(e.target.value)
+      );
+      setHeaderState({
+        ...headerState,
+        checkedMemoList: filteredCheckedMemoList,
+      });
+    }
   };
 
   const getMemos = async () => {
     const newMemos = await requestGetMemoList({ boardCode });
 
-    newMemos.forEach(el => {
-      el["index"] = Math.random()
-    })
-    newMemos.sort((o1, o2) => { return o1.index - o2.index })
+    newMemos.forEach((el) => {
+      el["index"] = Math.random();
+    });
+    newMemos.sort((o1, o2) => {
+      return o1.index - o2.index;
+    });
 
     if (newMemos) setMemoList(newMemos);
   };
@@ -141,12 +155,17 @@ const BoardOnOpen = ({
       setOpenDueDate(false);
     }
 
-    if (memoContainerObject.scrollHeight - 10 < memoContainerObject.offsetHeight + memoContainerObject.scrollTop) addVisibleMemos();
+    if (
+      memoContainerObject.scrollHeight - 10 <
+      memoContainerObject.offsetHeight + memoContainerObject.scrollTop
+    )
+      addVisibleMemos();
   };
-
   return (
     <PageWrapper>
-      {!isDeleteMemoMode && (
+      {!(
+        headerState.isSearchMode && headerState.searchType === "deleteMemo"
+      ) && (
         <>
           <BoardBackground boardInfo={board} backgroundRepeat={true} />
           <MemoContainer
@@ -154,27 +173,24 @@ const BoardOnOpen = ({
             onScroll={onScrollMemoContainer}
             paddingTop={paddingTop}
           >
-            {visibleMemos &&
-              privateModeForTest &&
-              !isDeleteMemoMode &&
-              !searchModeType
+            {visibleMemos && privateModeForTest
               ? visibleMemos.map((el, i) => {
-                // memoThemeId
-                const theme = memoThemes[el.memoThemeId];
-                return (
-                  <Memo
-                    size={memoSize + "px"}
-                    key={`${el}${i}`}
-                    text={el.memoContent}
-                    background={theme?.memoBackground}
-                    color={theme?.memoTextColor}
-                  />
-                );
-              })
-              : null}{" "}
-            {searchModeType &&
+                  // memoThemeId
+                  const theme = memoThemes[el.memoThemeId];
+                  return (
+                    <Memo
+                      size={memoSize + "px"}
+                      key={`${el}${i}`}
+                      text={el.memoContent}
+                      background={theme?.memoBackground}
+                      color={theme?.memoTextColor}
+                    />
+                  );
+                })
+              : null}
+            {headerState.isSearchMode &&
               searchResults &&
-              searchResults.map((el, i) => {
+              searchResults.memos.map((el, i) => {
                 const theme = memoThemes[el.memoThemeId];
                 return (
                   <Memo
@@ -190,30 +206,30 @@ const BoardOnOpen = ({
         </>
       )}
 
-      {isDeleteMemoMode && (
+      {headerState.isSearchMode && headerState.searchType === "deleteMemo" && (
         <DeleteMemoContianer>
           {visibleMemos.map((el, i) => (
             <CheckableMemo
               key={`${el}${i}`}
-              id={`${el}${i}`}
+              id={el.memoId}
               text={el.memoContent}
               onChange={handleChangeCheckableMemo}
-              checkedMemoList={checkedMemoList}
+              checkedMemoList={headerState.checkedMemoList}
             />
           ))}
           <DeleteMemoButton
-            isExistCheckedmemo={checkedMemoList.length !== 0}
+            isExistCheckedmemo={headerState.checkedMemoList.length !== 0}
             onClick={handleClickDeleteMemo}
           >
-            삭제하기{" "}
-            {checkedMemoList.length !== 0 && (
-              <span>{checkedMemoList.length}</span>
+            삭제하기
+            {headerState.checkedMemoList.length !== 0 && (
+              <span>{headerState.checkedMemoList.length}</span>
             )}
           </DeleteMemoButton>
         </DeleteMemoContianer>
       )}
       {isMemoLoading ? <Spinner /> : null}
-      {!isDeleteMemoMode && privateModeForTest && (
+      {!headerState.isSearchMode && privateModeForTest && (
         <>
           <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
           <CalendarButton open={openDueDate} />

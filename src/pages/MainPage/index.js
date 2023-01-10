@@ -59,6 +59,7 @@ const Main = () => {
 
   const handleKeyDownSearchInput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
+      console.log("dd", query);
       setKeyword(query);
       const searchBoardsResult = await requestSearchBoard({
         query,

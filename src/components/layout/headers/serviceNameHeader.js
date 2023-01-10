@@ -107,7 +107,7 @@ const ServiceNameHeader = ({
           onChange={handleChangeHeaderInput}
           isSearchMode={headerState.isSearchMode}
           searchType={headerState.searchType}
-          onKeyDown={headerState.onKeyDown}
+          onKeyDown={headerState.onKeydown}
           placeholder={
             headerState.searchType === "board"
               ? "보드를 검색하세요."
