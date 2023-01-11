@@ -3,7 +3,7 @@ import { useRef } from "react"
 import styled from "styled-components"
 
 const Memo = ({ text, onChangeText, color = "black", background = "white", size, children }) => {
-
+    console.log(background)
     const $memo = useRef()
     const prevMemo = useRef()
     const [memoText, setMemoText] = useState("")
@@ -53,6 +53,8 @@ const ComponentWrapper = styled.div`
     align-items: center;
     justify-content: center;
     background: ${props => props.background.includes('http' || 'base64') ? `url(${props.background})` : props.background};
+    background-position: center;
+    background-size: cover;
     width: ${props => props.size};
     height: ${props => props.size};
     padding: ${props => props.sizeUnit * 3.2}px;

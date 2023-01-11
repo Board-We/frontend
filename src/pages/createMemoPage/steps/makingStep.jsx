@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { requestCreateMemo } from "../../../api/memoApi";
+import { requestCreateMemo, requestGetMemoThemeList } from "../../../api/memoApi";
 import FooterButton from "../../../components/buttons/FooterButton";
 import SmallTitle from "../../../components/label/smallTitle";
 import StepHeader from "../../../components/layout/headers/stepHeader";
@@ -14,29 +13,20 @@ import { boardState, memoStyleState } from "../../../store";
 import { theme } from "../../../styles/theme";
 
 const MakingStep = () => {
-  const board = useRecoilValue(boardState);
+  const { boardCode } = useParams();
+  const [board, setBoard] = useRecoilState(boardState);
   const [memo, setMemo] = useRecoilState(memoStyleState);
   const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();
 
-  const memoBackgroundOptions = {
-    image: [],
-    color: [
-      { background: "white", textColor: "black" },
-      { background: "red", textColor: "white" },
-      { background: "green", textColor: "white" },
-      { background: "blue", textColor: "white" },
-      { background: "orange", textColor: "white" },
-      { background: "yellow", textColor: "black" },
-    ],
-  };
-
   useEffect(() => {
-    const initMemoStyle = memoBackgroundOptions.image[0]
-      ? memoBackgroundOptions.image[0]
-      : memoBackgroundOptions.color[0];
-    setMemo({ ...memo, style: initMemoStyle });
-  }, [board]);
+    getMemoThemes()
+  }, [boardCode]);
+
+  const getMemoThemes = async () => {
+    const newMemoThemes = await requestGetMemoThemeList({ boardCode: boardCode })
+    setBoard({ ...board, memoThemes: newMemoThemes })
+  }
 
   const onChangeText = (text) => {
     const newText = text;
@@ -89,8 +79,8 @@ const MakingStep = () => {
       <BoardArea background={board.boardBackground}>
         <Memo
           size={"75%"}
-          background={memo.style.background}
-          color={memo.style.textColor}
+          background={memo.style.memoBackground}
+          color={memo.style.memoTextColor}
           text={memo.text}
           onChangeText={onChangeText}
         >
@@ -102,23 +92,17 @@ const MakingStep = () => {
           <SmallTitle text={"메모지를 선택해 롤링페이퍼를 남겨보세요."} />
         </OptionAreaTitleContainer>
         <OptionContainer>
-          {memoBackgroundOptions.image.map((el) => {
-            return (
-              <Option key={el} onClick={() => onClickMemoPaper(el)}>
-                {el}
-              </Option>
-            );
-          })}
-          {memoBackgroundOptions.color.map((el) => {
+          {board.memoThemes.map((el) => {
             return (
               <Option
                 key={JSON.stringify(el)}
                 onClick={() => onClickMemoPaper(el)}
               >
                 <Memo
-                  background={el.background}
+                  background={el.memoBackground}
+                  color={el.memoTextColor}
+                  size={"4.5rem"}
                   text={"Aa"}
-                  color={el.textColor}
                   isSelected={JSON.stringify(el) === JSON.stringify(memo.style)}
                 />
               </Option>
