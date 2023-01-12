@@ -1,34 +1,45 @@
 import { atom } from "recoil";
 import { theme } from "../../src/styles/theme";
+const basicThemeBG = require(`../assets/images/basicThemeBG.png`)
+const basicThemeMemo1 = require(`../assets/images/basicThemeMemo1.png`)
+const basicThemeMemo2 = require(`../assets/images/basicThemeMemo2.png`)
+const basicThemeMemo3 = require(`../assets/images/basicThemeMemo3.png`)
 
 export const boardState = atom({
   key: "boardState",
   default: {
-    id: "1",
-    name: "boardName",
-    description: "boardDescription",
-    tags: ["tag1", "tag2", "tag3"],
+    id: null,
+    name: "",
+    description: "",
+    tags: [],
     writingStartTime: new Date(),
     writingEndTime: new Date(new Date().getTime() + 1209600000),
     openStartTime: new Date(new Date().getTime() + 1209600000),
     openEndTime: new Date(new Date().getTime() + 2419200000),
-    password: undefined,
+    password: "",
     openType: "", // "PUBLIC" or "PRIVATE"
-    boardThemeId: 0,
-    boardBackground: theme.colors.defaultBoardBg, // "Base-64" or "#FFFFFF"
+    boardThemeId: null,
+    boardBackground: basicThemeBG, // "Base-64" or "#FFFFFF"
     boardFont: "san-serif",
-    memos: [
-      {
-        memoThemeId: 0,
-        memoContent: ""
-      }
-    ],
+    memos: [],
     memoThemes: [
       {
-        memoThemeId: 0,
-        memoBackgroundType: "IMAGE" || "COLOR",
-        memoBackground: "",
-        memoTextColor: "",
+        memoThemeId: null,
+        memoBackgroundType: "IMAGE",
+        memoBackground: basicThemeMemo1,
+        memoTextColor: theme.colors.black
+      },
+      {
+        memoThemeId: null,
+        memoBackgroundType: "IMAGE",
+        memoBackground: basicThemeMemo2,
+        memoTextColor: theme.colors.black
+      },
+      {
+        memoThemeId: null,
+        memoBackgroundType: "IMAGE",
+        memoBackground: basicThemeMemo3,
+        memoTextColor: theme.colors.black
       },
     ],
   },

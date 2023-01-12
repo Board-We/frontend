@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 import CreateBoardStep1 from "./Steps/CreateBoardStep1";
 import StepHeader from "../../components/layout/headers/stepHeader";
@@ -14,16 +14,11 @@ import CreateBoardStep4 from "./Steps/CreateBoardStep4";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { theme } from "../../styles/theme";
 import Title from "../../components/label/title";
-import basicThemeBG from '../../assets/images/basicThemeBG.png'
-import basicThemeMemo1 from '../../assets/images/basicThemeMemo1.png'
-import basicThemeMemo2 from '../../assets/images/basicThemeMemo2.png'
-import basicThemeMemo3 from '../../assets/images/basicThemeMemo3.png'
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
-  const setBoard = useSetRecoilState(boardState);
+  const resetBoard = useResetRecoilState(boardState)
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);
   const stepDescription = [
@@ -40,6 +35,10 @@ const CreateBoardPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    resetBoard();
+  }, [])
+
+  useEffect(() => {
     if (
       !$footer.current ||
       !$stepDescription.current ||
@@ -53,47 +52,7 @@ const CreateBoardPage = () => {
     setHeightOfContentArea(
       deviceScreenSize.y - heightOfFooter - bottomOfDescription
     );
-    initBoard();
   }, [$stepDescription.current, $footer.current, deviceScreenSize]);
-
-  const initBoard = () => {
-    const initialBoardForm = {
-      name: "",
-      description: "",
-      tags: [],
-      writingStartTime: new Date(),
-      writingEndTime: new Date(new Date().getTime() + 1209600000),
-      openStartTime: new Date(new Date().getTime() + 1209601000),
-      openEndTime: new Date(new Date().getTime() + 2419200000),
-      password: "",
-      openType: "", // "PUBLIC" or "PRIVATE"
-      boardThemeId: 0,
-      boardBackground: basicThemeBG, // "Base-64" or "#FFFFFF"
-      // boardBackground: theme.colors.defaultBoardBg, // "Base-64" or "#FFFFFF"
-      boardFont: "san-serif",
-      memos: [],
-      memoThemes: [
-        {
-          memoBackground: basicThemeMemo1,
-          memoTextColor: theme.colors.black
-        },
-        {
-          memoBackground: basicThemeMemo2,
-          memoTextColor: theme.colors.black
-        },
-        {
-          memoBackground: basicThemeMemo3,
-          memoTextColor: theme.colors.black
-        },
-        {
-          memoBackground: theme.colors.defaultMemoBg,
-          memoTextColor: theme.colors.black,
-        },
-      ],
-    };
-
-    setBoard(initialBoardForm);
-  };
 
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
