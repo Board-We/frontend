@@ -100,7 +100,6 @@ const BoardPage = () => {
       const boardState = getBoardState(board);
       setBoardState(boardState);
       setBoard(board.data);
-      console.log(board);
     };
     accessBoard();
   }, [boardCode]);
