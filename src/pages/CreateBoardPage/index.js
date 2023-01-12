@@ -91,7 +91,6 @@ const CreateBoardPage = () => {
         },
       ],
     };
-    console.log(initialBoardForm)
 
     setBoard(initialBoardForm);
   };

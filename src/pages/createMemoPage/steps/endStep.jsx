@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect } from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -10,8 +9,10 @@ import SmallTitle from "../../../components/label/smallTitle";
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader";
 import { boardState } from "../../../store";
 import { formattingDateObject } from "../../../utils/setDefaultDay";
+import onSendMemoImage from "../../../assets/images/onSendMemoImage.png"
+import { theme } from "../../../styles/theme";
 
-const EndStep = () => {
+const EndStep = ({ boardCode }) => {
   const board = useRecoilValue(boardState);
   const navigate = useNavigate();
 
@@ -19,10 +20,10 @@ const EndStep = () => {
     setTimerForFlip();
   }, []);
 
-  const setTimerForFlip = () => {};
+  const setTimerForFlip = () => { };
 
   const onClickMoreMemo = () => {
-    navigate("/board/onWrite");
+    navigate(`/board/${boardCode}`);
   };
 
   return (
@@ -35,11 +36,11 @@ const EndStep = () => {
             {formattingDateObject(board.openStartTime)}에 공개됩니다.
           </Description>
         </TextContainer>
-        <EndStepImage />
+        <EndStepImage src={onSendMemoImage} />
       </BodyContainer>
       <ButtonContainer>
         <ChipButton onClick={onClickMoreMemo}>롤링페이퍼 더 붙이기</ChipButton>
-        <ChipButton onClick={() => {}}>공유하기</ChipButton>
+        <ChipButton onClick={() => { }} background={theme.colors.grey_50} >공유하기</ChipButton>
       </ButtonContainer>
     </PageWrapper>
   );
@@ -58,7 +59,7 @@ const TextContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2.75rem;
 `;
 
 const BodyContainer = styled.div`
@@ -70,9 +71,11 @@ const BodyContainer = styled.div`
   margin: auto auto;
 `;
 
-const EndStepImage = styled.div`
+const EndStepImage = styled.img`
   width: 75vw;
   height: 75vw;
+  width: 15rem;
+  height: 15rem;
   max-width: 400px;
   max-height: 400px;
   background-color: #d9d9d9;

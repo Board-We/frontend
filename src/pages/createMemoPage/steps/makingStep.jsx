@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 import { requestCreateMemo, requestGetMemoThemeList } from "../../../api/memoApi";
 import FooterButton from "../../../components/buttons/FooterButton";
@@ -9,13 +9,13 @@ import SmallTitle from "../../../components/label/smallTitle";
 import StepHeader from "../../../components/layout/headers/stepHeader";
 import Memo from "../../../components/memo";
 import AlertModal from "../../../components/modals/alertModal";
-import { boardState, memoStyleState } from "../../../store";
+import { boardState, memoState } from "../../../store";
 import { theme } from "../../../styles/theme";
 
-const MakingStep = () => {
-  const { boardCode } = useParams();
+const MakingStep = ({ boardCode }) => {
   const [board, setBoard] = useRecoilState(boardState);
-  const [memo, setMemo] = useRecoilState(memoStyleState);
+  const [memo, setMemo] = useRecoilState(memoState);
+  const resetMemo = useResetRecoilState(memoState)
   const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -47,13 +47,17 @@ const MakingStep = () => {
 
   const onClickMakeMemo = async () => {
     const created = await requestCreateMemo({
-      boardCode: 14,
+      boardCode: boardCode,
       memoContent: memo.text,
-      memoThemeId: 12,
+      memoThemeId: memo.style.memoThemeId,
     }); // boardCode와 memoThemeId는 임시로 넣어놓음
 
-    // if (created) navigate("/memo/end");
-    navigate("/memo/end");
+    if (created) {
+      resetMemo()
+      navigate(`/board/${boardCode}/memo/end`);
+    } else {
+
+    }
   };
 
   const onClickMemoPaper = (option) => {
@@ -147,15 +151,6 @@ const BoardArea = styled.div`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-`;
-
-const MemoPlaceHolder = styled.div`
-  width: 100%;
-  opacity: 0.4;
-  color: #000000;
-  font-size: 1.25rem;
-  font-weight: 400;
-  line-height: 1.875rem;
 `;
 
 const MemoTextIndicator = styled.pre`
