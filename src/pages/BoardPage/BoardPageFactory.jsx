@@ -5,10 +5,10 @@ import BoardOnWaitOpen from "./mode/BoardOnWaitOpen";
 import BoardOnWaitWrite from "./mode/BoardOnWaitWrite";
 import BoardOnWrite from "./mode/BoardOnWrite";
 
-const BoardPageFactory = ({ boardInfo, boardState, boardCode, ...args }) => {
-  switch (boardState) {
+const BoardPageFactory = ({ boardInfo, boardLifeCycle, boardCode, ...args }) => {
+  switch (boardLifeCycle) {
     case "onWaitWrite":
-      return <BoardOnWaitWrite boardCode={boardCode} />;
+      return <BoardOnWaitWrite boardCode={boardCode} boardInfo={boardInfo} />;
     case "onWrite":
       return <BoardOnWrite boardCode={boardCode} boardInfo={boardInfo} />;
     case "onWaitOpen":

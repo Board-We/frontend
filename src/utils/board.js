@@ -1,9 +1,9 @@
-export const getBoardState = (board) => {
+export const getBoardLifeCycle = (board) => {
   const now = new Date().getTime();
-  const isOnWrite = now - new Date(board.data.writingStartTime).getTime();
-  const isEndWrite = now - new Date(board.data.writingEndTime).getTime();
-  const isOnOpen = now - new Date(board.data.openStartTime).getTime();
-  const isEndOpen = now - new Date(board.data.openEndTime).getTime();
+  const isOnWrite = now - new Date(board.writingStartTime).getTime();
+  const isEndWrite = now - new Date(board.writingEndTime).getTime();
+  const isOnOpen = now - new Date(board.openStartTime).getTime();
+  const isEndOpen = now - new Date(board.openEndTime).getTime();
 
   if (isOnWrite < 0) {
     // 현재가 메모 쓰기 시작보다 과거

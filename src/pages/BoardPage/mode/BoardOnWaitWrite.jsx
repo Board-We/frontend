@@ -1,15 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import ChipButton from "../../../components/buttons/chipButton";
-import { boardState } from "../../../store";
 import BoardBackground from "../components/boardBackground";
 import Buttons from "../components/buttons";
 import Timer from "../components/timer";
 
-const BoardOnWaitWrite = () => {
-  const board = useRecoilValue(boardState);
+const BoardOnWaitWrite = ({ boardCode, boardInfo }) => {
   const navigate = useNavigate();
 
   const onTimeOver = () => {
@@ -19,7 +16,7 @@ const BoardOnWaitWrite = () => {
   const getTimer = () => {
     return (
       <Timer
-        duedate={board.writingStartTime}
+        duedate={boardInfo.writingStartTime}
         onTimeOver={onTimeOver}
         text="후에 작성할 수 있습니다."
       />
@@ -33,7 +30,7 @@ const BoardOnWaitWrite = () => {
   return (
     <PageWrapper>
       <BoardBackground
-        boardInfo={board}
+        boardInfo={boardInfo}
         centerContent={getTimer()}
       ></BoardBackground>
       <Buttons>

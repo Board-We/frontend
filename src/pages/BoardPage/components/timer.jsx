@@ -4,7 +4,6 @@ import { useEffect } from "react"
 import styled from "styled-components"
 
 const Timer = ({ duedate, onTimeOver, text = "" }) => {
-
     const [timeRemain, setTimeRemain] = useState(0)
     const [date, setDate] = useState(0)
     const [hour, setHour] = useState(0)
@@ -16,7 +15,10 @@ const Timer = ({ duedate, onTimeOver, text = "" }) => {
     const interval = useRef(null)
 
     useEffect(() => {
-        const newTimeRemain = duedate.getTime() - (new Date()).getTime()
+        console.log(duedate, new Date(duedate).getTime())
+        console.log(new Date(), new Date().getTime())
+        const newTimeRemain = new Date(duedate).getTime() - (new Date()).getTime()
+        console.log(newTimeRemain)
         setTimeRemain(newTimeRemain)
     }, [duedate])
 
@@ -24,8 +26,8 @@ const Timer = ({ duedate, onTimeOver, text = "" }) => {
         refreshTimePannel(timeRemain)
         if (timeRemain < 1) {
             timeOver()
-        }  else {
-            if(interval.current === null) setTimer()
+        } else {
+            if (interval.current === null) setTimer()
         }
     }, [timeRemain])
 
@@ -58,7 +60,7 @@ const Timer = ({ duedate, onTimeOver, text = "" }) => {
     }
 
     const initTimer = () => {
-        if(interval.current !== null ) clearInterval(interval.current)
+        if (interval.current !== null) clearInterval(interval.current)
     }
 
     const getNumberpad = (number, string) => {
