@@ -8,6 +8,7 @@ import DropDownMenu from "./dropDownMenu";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { createBoardStepId } from "../../../store";
+import serviceLogo from "../../../assets/icons/serviceLogo.png"
 
 const ServiceNameHeader = ({
   headerState = {
@@ -67,9 +68,7 @@ const ServiceNameHeader = ({
     <ComponentWrapper>
       <ServiceNameHeaderContainer>
         {!headerState.isSearchMode && (
-          <ServiceNameHeaderTitle onClick={onClickTitle}>
-            보드미
-          </ServiceNameHeaderTitle>
+          <ServiceNameHeaderTitle src={serviceLogo} onClick={onClickTitle} />
         )}
         {headerState.isSearchMode && (
           <ChevronLeftButton>
@@ -86,7 +85,7 @@ const ServiceNameHeader = ({
             </SearchButton>
           )}
           {headerState.menu.includes("share") && !headerState.isSearchMode && (
-            <ShareButton onClick={() => {}}>
+            <ShareButton onClick={() => { }}>
               <Share />
             </ShareButton>
           )}
@@ -112,8 +111,8 @@ const ServiceNameHeader = ({
             headerState.searchType === "board"
               ? "보드를 검색하세요."
               : headerState.searchType === "memo"
-              ? "메모 내용을 검색하세요"
-              : "내용을 검색하세요"
+                ? "메모 내용을 검색하세요"
+                : "내용을 검색하세요"
           }
         />
         {headerState.searchType === "deleteMemo" &&
@@ -149,13 +148,11 @@ const ServiceNameHeaderContainer = styled.div`
   position: relative;
 `;
 
-const ServiceNameHeaderTitle = styled.div`
-  font-size: 1.2rem;
-  font-weight: 600;
+const ServiceNameHeaderTitle = styled.img`
+  height: fit-content;
+  width: fit-content;
   display: flex;
   align-items: center;
-  left: 0;
-  color: ${(props) => props.theme.colors.black};
   cursor: pointer;
 `;
 
@@ -257,10 +254,10 @@ const HeaderInput = styled.input`
           ${expandSearchInput} 0.3s linear
         `
       : props.searchType === "deleteMemo"
-      ? css`
+        ? css`
           ${expandDeleteMemoInput} 0.3s linear
         `
-      : ""};
+        : ""};
   animation-fill-mode: forwards;
 `;
 
