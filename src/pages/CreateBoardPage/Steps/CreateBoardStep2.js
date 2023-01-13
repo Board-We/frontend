@@ -18,39 +18,38 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   const textAreaRef = useRef(null);
 
   const handleChangeTextInput = (e) => {
-    prevBoardDescription.current = board.description;
-    setBoard({ ...board, description: e.target.value });
+    prevBoardDescription.current = board.boardDescription;
+    setBoard({ ...board, boardDescription: e.target.value });
     setHeightInput(e.target.scrollHeight);
   };
 
   const handleClickDeleteText = (e) => {
-    setBoard({ ...board, description: "" });
+    setBoard({ ...board, boardDescription: "" });
   };
 
   const handleKeyDown = (e) => {
-    console.log(e.keyCode);
     if (e.keyCode === 13) {
       e.preventDefault();
     }
   };
 
   useEffect(() => {
-    board.description.length >= 1 && board.description.length < maxLength + 1
+    board.boardDescription.length >= 1 && board.boardDescription.length < maxLength + 1
       ? setDisabledFooterButton(false)
       : setDisabledFooterButton(true);
-  }, [setDisabledFooterButton, board.description.length]);
+  }, [setDisabledFooterButton, board.boardDescription.length]);
 
   useEffect(() => {
-    if (board.description.length > maxLength) setIsValidLength(false);
+    if (board.boardDescription.length > maxLength) setIsValidLength(false);
     else setIsValidLength(true);
-  }, [board.description, setIsValidLength]);
+  }, [board.boardDescription, setIsValidLength]);
 
   useEffect(() => {
-    if (board.description.length > maxLength + 1) {
+    if (board.boardDescription.length > maxLength + 1) {
       setBoard({ ...board, description: prevBoardDescription.current });
       return;
     }
-  }, [board.description, board, setBoard]);
+  }, [board.boardDescription, board, setBoard]);
 
   useEffect(() => {
     if (textAreaRef) {
@@ -59,13 +58,13 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
 
       textAreaRef.current.style.height = scrollHeight + "px";
     }
-  }, [textAreaRef, board.description]);
+  }, [textAreaRef, board.boardDescription]);
 
   return (
     <CreateBoardStepContainer>
       <TextInputSection>
         <MultilineTextInput
-          value={board.description}
+          value={board.boardDescription}
           onChange={handleChangeTextInput}
           onKeyDown={handleKeyDown}
           height={heightInput}
@@ -87,7 +86,7 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
-          text={board.description}
+          text={board.boardDescription}
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>

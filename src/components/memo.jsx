@@ -39,7 +39,7 @@ const Memo = ({ text, onChangeText, color = "black", background = "white", size,
             {
                 onChangeText ?
                     <MemoTextTA value={memoText} color={color} onChange={onChangeMemoTextTA} fontSize={sizeUnit} placeholder={"남기고 싶은 내용을\n마음껏 작성해주세요!"} height={heightTA} />
-                    : <MemoText color={color} fontSize={sizeUnit} >{text}{background}</MemoText>
+                    : <MemoText color={color} fontSize={sizeUnit} >{text}</MemoText>
             }
             {children}
         </ComponentWrapper>

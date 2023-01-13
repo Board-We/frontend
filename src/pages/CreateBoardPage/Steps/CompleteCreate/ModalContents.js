@@ -41,13 +41,15 @@ const ModalContents = ({ boardURL }) => {
           <DescriptionContainer>
             <CommonParagraph>롤링페이퍼 받는 기간</CommonParagraph>{" "}
             <BoardValue>
-              {formattingDateObject(board.openStartTime)} 부터
+              <span>{formattingDateObject(board.writingStartTime)} 부터</span>
+              <span>{formattingDateObject(board.writingEndTime)} 까지</span>
             </BoardValue>
           </DescriptionContainer>
           <DescriptionContainer>
             <CommonParagraph>롤링페이퍼 확인 기간</CommonParagraph>{" "}
             <BoardValue>
-              {formattingDateObject(board.openEndTime)} 까지
+              <span>{formattingDateObject(board.openStartTime)} 부터</span>
+              <span>{formattingDateObject(board.openEndTime)} 까지</span>
             </BoardValue>
           </DescriptionContainer>
           <DescriptionContainer>
@@ -120,6 +122,7 @@ const BoardLinkCopyButton = styled.button`
 
 const CommonParagraph = styled.div`
   display: flex;
+  flex-direction: column;
   font-size: 0.9rem;
   text-align: left;
   margin: 0.5rem 0;
@@ -135,4 +138,5 @@ const BoardValue = styled(CommonParagraph)`
 const DescriptionContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;

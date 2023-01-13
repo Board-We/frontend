@@ -9,9 +9,9 @@ export const boardState = atom({
   key: "boardState",
   default: {
     id: null,
-    name: "",
-    description: "",
-    tags: [],
+    boardName: "",
+    boardDescription: "",
+    boardTags: [],
     writingStartTime: new Date(),
     writingEndTime: new Date(new Date().getTime() + 1209600000),
     openStartTime: new Date(new Date().getTime() + 1209600000),

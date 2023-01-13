@@ -18,6 +18,7 @@ import Title from "../../components/label/title";
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
+  const board = useRecoilValue(boardState)
   const resetBoard = useResetRecoilState(boardState)
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);

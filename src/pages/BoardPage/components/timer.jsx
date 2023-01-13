@@ -15,10 +15,7 @@ const Timer = ({ duedate, onTimeOver, text = "" }) => {
     const interval = useRef(null)
 
     useEffect(() => {
-        console.log(duedate, new Date(duedate).getTime())
-        console.log(new Date(), new Date().getTime())
-        const newTimeRemain = new Date(duedate).getTime() - (new Date()).getTime()
-        console.log(newTimeRemain)
+        const newTimeRemain = (new Date(duedate).getTime() - (new Date()).getTime()) / 1000
         setTimeRemain(newTimeRemain)
     }, [duedate])
 
