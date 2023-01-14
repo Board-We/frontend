@@ -26,6 +26,7 @@ const CompleteCreate = () => {
 
   const modalRef = useRef(null);
   const desciprtionComponentRef = useRef(null);
+  const memoContainer = useRef(null);
   const mainComponentRef = useRef(null);
 
   const deviceScreenSize = useRecoilValue(deviceScreenState);
@@ -38,10 +39,10 @@ const CompleteCreate = () => {
     const marginTop = Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
     setHeightOfMemoGrid(
       deviceScreenSize.y -
-      bottomOfDescription -
-      heightOfModalArea -
-      marginTop +
-      2
+        bottomOfDescription -
+        heightOfModalArea -
+        marginTop +
+        2
     );
   }, [
     deviceScreenSize,
@@ -63,25 +64,29 @@ const CompleteCreate = () => {
 
     board.memoThemes.forEach((el, i) => {
       result.push(
-        <Memo1
+        <Memo
+          size={memoContainer.current.clientWidth}
           memoBackground={el.memoBackground}
           fontColor={el.memoTextColor}
+          fontType={board.boardFont}
           key={el + i}
         >
           {sampleText[i]}
-        </Memo1>
+        </Memo>
       );
     });
 
     for (let i = 0; i < 6 - board.memoThemes.length; i++) {
       result.push(
-        <Memo1
-          memoBackground={theme.colors.defaultMemoBg}
-          fontColor={theme.colors.black}
+        <Memo
+          size={memoContainer.current.clientWidth}
+          memoBackground={board.memoThemes[0].memoBackground}
+          fontColor={board.memoThemes[0].memoTextColor}
+          fontType={board.boardFont}
           key={`sampleMemo${i}`}
         >
           {sampleText[i + board.memoThemes.length]}
-        </Memo1>
+        </Memo>
       );
     }
 
@@ -154,7 +159,9 @@ const CompleteCreate = () => {
           </TagContainer>
           <p>{board.boardDescription}</p>
         </BoardDescriptionContainer>
-        <MemoContainer height={heightOfMemoGrid}>{memos}</MemoContainer>
+        <MemoContainer ref={memoContainer} height={heightOfMemoGrid}>
+          {memos}
+        </MemoContainer>
       </BoardContainer>
       {modalOpen && (
         <SlideModal
@@ -228,23 +235,25 @@ const MemoContainer = styled.div`
   }
 `;
 
-const Memo1 = styled.div`
+const Memo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 42%;
-  height: 15vh;
+  width: ${(props) => props.size * 0.4}px;
+  height: ${(props) => props.size * 0.4}px;
   background: ${(props) =>
+    props.memoBackground.includes("base64") ? "white" : props.memoBackground};
+  background-image: ${(props) =>
     props.memoBackground.includes("base64")
       ? `url(${props.memoBackground})`
-      : props.memoBackground};
-  background-size: contain;
-  background-position: center;
+      : undefined};
+  background-size: cover;
   background-repeat: no-repeat;
   color: ${(props) => props.fontColor};
   margin-bottom: 1.5rem;
   border-radius: 4px;
   border: 1px solid ${theme.colors.grey_40};
+  font-family: ${(props) => props.fontType};
   padding: 0.75rem;
   span {
     padding: 0.5rem;
