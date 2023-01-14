@@ -1,10 +1,5 @@
 export const getBoardLifeCycle = (board) => {
   const now = new Date().getTime();
-  console.log(now);
-  console.log(board.writingStartTime);
-  console.log(board.writingEndTime);
-  console.log(board.openStartTime);
-  console.log(board.openEndTime);
   const isOnWrite = now - new Date(board.writingStartTime).getTime();
   const isEndWrite = now - new Date(board.writingEndTime).getTime();
   const isOnOpen = now - new Date(board.openStartTime).getTime();

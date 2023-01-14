@@ -3,7 +3,10 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
-import { requestCreateMemo, requestGetMemoThemeList } from "../../../api/memoApi";
+import {
+  requestCreateMemo,
+  requestGetMemoThemeList,
+} from "../../../api/memoApi";
 import FooterButton from "../../../components/buttons/FooterButton";
 import SmallTitle from "../../../components/label/smallTitle";
 import StepHeader from "../../../components/layout/headers/stepHeader";
@@ -15,18 +18,21 @@ import { theme } from "../../../styles/theme";
 const MakingStep = ({ boardCode }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const [memo, setMemo] = useRecoilState(memoState);
-  const resetMemo = useResetRecoilState(memoState)
+  const resetMemo = useResetRecoilState(memoState);
   const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getMemoThemes()
+    getMemoThemes();
   }, [boardCode]);
 
   const getMemoThemes = async () => {
-    const newMemoThemes = await requestGetMemoThemeList({ boardCode: boardCode })
-    setBoard({ ...board, memoThemes: newMemoThemes })
-  }
+    const newMemoThemes = await requestGetMemoThemeList({
+      boardCode: boardCode,
+    });
+
+    setBoard({ ...board, memoThemes: newMemoThemes });
+  };
 
   const onChangeText = (text) => {
     const newText = text;
@@ -50,13 +56,12 @@ const MakingStep = ({ boardCode }) => {
       boardCode: boardCode,
       memoContent: memo.text,
       memoThemeId: memo.style.memoThemeId,
-    }); // boardCode와 memoThemeId는 임시로 넣어놓음
+    });
 
     if (created) {
-      resetMemo()
+      resetMemo();
       navigate(`/board/${boardCode}/memo/end`);
     } else {
-
     }
   };
 
@@ -96,7 +101,7 @@ const MakingStep = ({ boardCode }) => {
           <SmallTitle text={"메모지를 선택해 롤링페이퍼를 남겨보세요."} />
         </OptionAreaTitleContainer>
         <OptionContainer>
-          {board.memoThemes.map((el) => {
+          {board?.memoThemes?.map((el) => {
             return (
               <Option
                 key={JSON.stringify(el)}
