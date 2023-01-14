@@ -1,9 +1,9 @@
 import { atom } from "recoil";
 import { theme } from "../../src/styles/theme";
-const basicThemeBG = require(`../assets/images/basicThemeBG.png`)
-const basicThemeMemo1 = require(`../assets/images/basicThemeMemo1.png`)
-const basicThemeMemo2 = require(`../assets/images/basicThemeMemo2.png`)
-const basicThemeMemo3 = require(`../assets/images/basicThemeMemo3.png`)
+const basicThemeBG = require(`../assets/images/basicThemeBG.png`);
+const basicThemeMemo1 = require(`../assets/images/basicThemeMemo1.png`);
+const basicThemeMemo2 = require(`../assets/images/basicThemeMemo2.png`);
+const basicThemeMemo3 = require(`../assets/images/basicThemeMemo3.png`);
 
 export const boardState = atom({
   key: "boardState",
@@ -16,6 +16,7 @@ export const boardState = atom({
     writingEndTime: new Date(new Date().getTime() + 1209600000),
     openStartTime: new Date(new Date().getTime() + 1209600000),
     openEndTime: new Date(new Date().getTime() + 2419200000),
+    boardStatus: "",
     password: "",
     openType: "", // "PUBLIC" or "PRIVATE"
     boardThemeId: null,
@@ -27,19 +28,19 @@ export const boardState = atom({
         memoThemeId: null,
         memoBackgroundType: "IMAGE",
         memoBackground: basicThemeMemo1,
-        memoTextColor: theme.colors.black
+        memoTextColor: theme.colors.black,
       },
       {
         memoThemeId: null,
         memoBackgroundType: "IMAGE",
         memoBackground: basicThemeMemo2,
-        memoTextColor: theme.colors.black
+        memoTextColor: theme.colors.black,
       },
       {
         memoThemeId: null,
         memoBackgroundType: "IMAGE",
         memoBackground: basicThemeMemo3,
-        memoTextColor: theme.colors.black
+        memoTextColor: theme.colors.black,
       },
     ],
   },

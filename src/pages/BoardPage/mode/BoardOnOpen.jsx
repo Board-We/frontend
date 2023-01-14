@@ -255,6 +255,7 @@ const PageWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
+  background-color: white;
 `;
 
 const MemoContainer = styled.div`

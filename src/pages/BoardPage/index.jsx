@@ -101,13 +101,16 @@ const BoardPage = () => {
     accessBoard();
   }, [boardCode]);
 
-  useEffect(()=>{
-    const boardLifeCycle = getBoardLifeCycle(board);
-    setBoardLifeCycle(boardLifeCycle);
-  }, [board])
+  console.log(board);
+  useEffect(() => {
+    if (board.boardStatus) {
+      const boardLifeCycle = getBoardLifeCycle(board);
+      setBoardLifeCycle(boardLifeCycle);
+    }
+  }, [board]);
 
   useEffect(() => {
-    setHeaderOption()
+    setHeaderOption();
   }, [boardLifeCycle]);
 
   const setHeaderOption = () => {
@@ -139,7 +142,7 @@ const BoardPage = () => {
       default:
         break;
     }
-  }
+  };
 
   return (
     <PageWrapper>
@@ -151,14 +154,16 @@ const BoardPage = () => {
         <DeleteMemoSubHeader> 삭제할 메모를 선택하세요. </DeleteMemoSubHeader>
       )}
       <BodyContainer>
-        <BoardPageFactory
-          boardLifeCycle={boardLifeCycle}
-          boardInfo={board}
-          boardCode={boardCode}
-          headerState={headerState}
-          setHeaderState={setHeaderState}
-          searchResults={searchResults}
-        />
+        {boardLifeCycle && (
+          <BoardPageFactory
+            boardLifeCycle={boardLifeCycle}
+            boardInfo={board}
+            boardCode={boardCode}
+            headerState={headerState}
+            setHeaderState={setHeaderState}
+            searchResults={searchResults}
+          />
+        )}
         <PasswordModal
           password={password}
           setPassword={setPassword}

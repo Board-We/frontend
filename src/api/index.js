@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://192.168.156.145:16383";
+const BASE_URL = "http://localhost:16383";
 
 export const request = ({ method, url, data }) => {
   return axios({

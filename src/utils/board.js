@@ -1,10 +1,16 @@
 export const getBoardLifeCycle = (board) => {
   const now = new Date().getTime();
+  console.log(now);
+  console.log(board.writingStartTime);
+  console.log(board.writingEndTime);
+  console.log(board.openStartTime);
+  console.log(board.openEndTime);
   const isOnWrite = now - new Date(board.writingStartTime).getTime();
   const isEndWrite = now - new Date(board.writingEndTime).getTime();
   const isOnOpen = now - new Date(board.openStartTime).getTime();
   const isEndOpen = now - new Date(board.openEndTime).getTime();
 
+  console.log(isOnWrite, isEndWrite, isOnOpen, isEndOpen);
   if (isOnWrite < 0) {
     // 현재가 메모 쓰기 시작보다 과거
     return "onWaitWrite";

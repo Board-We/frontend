@@ -7,13 +7,13 @@ import BoardOnWrite from "./mode/BoardOnWrite";
 
 const BoardPageFactory = ({
   boardInfo,
-  boardState,
+  boardLifeCycle,
   boardCode,
   headerState,
   setHeaderState,
   searchResults,
 }) => {
-  switch (boardState) {
+  switch (boardLifeCycle) {
     case "onWaitWrite":
       return <BoardOnWaitWrite boardCode={boardCode} boardInfo={boardInfo} />;
     case "onWrite":
