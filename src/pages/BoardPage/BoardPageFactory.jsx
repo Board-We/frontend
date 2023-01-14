@@ -15,7 +15,7 @@ const BoardPageFactory = ({
 }) => {
   switch (boardState) {
     case "onWaitWrite":
-      return <BoardOnWaitWrite boardCode={boardCode} />;
+      return <BoardOnWaitWrite boardCode={boardCode} boardInfo={boardInfo} />;
     case "onWrite":
       return <BoardOnWrite boardCode={boardCode} boardInfo={boardInfo} />;
     case "onWaitOpen":

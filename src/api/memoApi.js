@@ -44,7 +44,6 @@ export const requestDeleteMemo = async ({ boardCode, memoIds }) => {
 };
 
 export const requestSearchMemo = async ({ boardCode, query }) => {
-  console.log(query);
   const res = await request({
     method: "GET",
     url: `/board/${boardCode}/memo/search?query=${query}`,

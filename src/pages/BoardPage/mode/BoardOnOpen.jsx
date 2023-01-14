@@ -43,6 +43,7 @@ const BoardOnOpen = ({
 
   useEffect(() => {
     getMemos();
+    getMemoThemes();
   }, [boardCode]);
 
   const handleClickDeleteMemo = () => {
@@ -93,10 +94,6 @@ const BoardOnOpen = ({
 
     if (newMemos) setMemoList(newMemos);
   };
-
-  useEffect(() => {
-    getMemoThemes();
-  }, [boardCode]);
 
   useEffect(() => {
     makeMemoThemes();

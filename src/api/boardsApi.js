@@ -11,7 +11,8 @@ export const postUserBoardState = async ({ boardState }) => {
 
 export const requestBoard = async (boardCode) => {
   const res = await request({ method: "GET", url: `/board/${boardCode}` });
-  return res;
+  if (res.status === 200) return res.data;
+  return null;
 };
 
 export const requestReccomendBoardList = async () => {

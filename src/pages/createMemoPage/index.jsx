@@ -16,8 +16,8 @@ const CreateMemoPage = () => {
   return (
     <PageWrapper>
       <Routes>
-        <Route path={"/making"} element={<MakingStep />} />
-        <Route path={"/end"} element={<EndStep />} />
+        <Route path={"/making"} element={<MakingStep boardCode={boardCode} />} />
+        <Route path={"/end"} element={<EndStep boardCode={boardCode} />} />
       </Routes>
     </PageWrapper>
   );

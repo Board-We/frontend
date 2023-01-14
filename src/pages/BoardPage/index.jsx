@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { deleteBoard, requestBoard } from "../../api/boardsApi";
 import { requestSearchMemo } from "../../api/memoApi";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
-import { getBoardState } from "../../utils/board";
+import { boardState } from "../../store";
+import { getBoardLifeCycle } from "../../utils/board";
 import BoardPageFactory from "./BoardPageFactory";
 import PasswordModal from "./BoardPageModal/PasswordModal";
 
 const BoardPage = () => {
   const { boardCode } = useParams();
   const navigate = useNavigate();
-
-  const [board, setBoard] = useState(null);
-  const [boardState, setBoardState] = useState(null);
-
+  const [board, setBoard] = useRecoilState(boardState);
+  const [boardLifeCycle, setBoardLifeCycle] = useState(null);
   const [password, setPassword] = useState("");
-
   const [headerState, setHeaderState] = useState({
     isSearchMode: false,
     searchType: null, // board | memo | deleteMemo
@@ -30,7 +29,6 @@ const BoardPage = () => {
     checkedMemoList: [],
     setCheckedMemoList: null,
   });
-
   const [query, setQuery] = useState("");
 
   const [searchResults, setSearchResults] = useState(null);
@@ -98,16 +96,22 @@ const BoardPage = () => {
   useEffect(() => {
     const accessBoard = async () => {
       const board = await requestBoard(boardCode);
-      const boardState = getBoardState(board);
-      setBoardState(boardState);
-      setBoard(board.data);
-      console.log(board);
+      setBoard(board);
     };
     accessBoard();
   }, [boardCode]);
 
+  useEffect(()=>{
+    const boardLifeCycle = getBoardLifeCycle(board);
+    setBoardLifeCycle(boardLifeCycle);
+  }, [board])
+
   useEffect(() => {
-    switch (boardState) {
+    setHeaderOption()
+  }, [boardLifeCycle]);
+
+  const setHeaderOption = () => {
+    switch (boardLifeCycle) {
       case "onWaitWrite":
       case "onWrite":
       case "onWaitOpen":
@@ -135,7 +139,7 @@ const BoardPage = () => {
       default:
         break;
     }
-  }, [boardState]);
+  }
 
   return (
     <PageWrapper>
@@ -148,14 +152,13 @@ const BoardPage = () => {
       )}
       <BodyContainer>
         <BoardPageFactory
-          boardState={boardState}
+          boardLifeCycle={boardLifeCycle}
           boardInfo={board}
           boardCode={boardCode}
           headerState={headerState}
           setHeaderState={setHeaderState}
           searchResults={searchResults}
         />
-
         <PasswordModal
           password={password}
           setPassword={setPassword}

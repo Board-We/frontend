@@ -117,8 +117,8 @@ const CreateBoardStep3 = ({ footerRef }) => {
     <ComponentWrapper ref={$component}>
       <SampleBoard>
         <MemoArea ref={$memoArea} background={board.boardBackground}>
-          <SmallTitle>{board.name}</SmallTitle>
-          <Description ref={$desciprion}>{board.description}</Description>
+          <SmallTitle>{board.boardName}</SmallTitle>
+          <Description ref={$desciprion}>{board.boardDescription}</Description>
           <MemoGrid height={heightOfMemoGrid}>{memos}</MemoGrid>
         </MemoArea>
       </SampleBoard>

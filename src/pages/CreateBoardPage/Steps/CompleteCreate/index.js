@@ -98,9 +98,9 @@ const CompleteCreate = () => {
     });
 
     const currentBoardState = {
-      boardName: board.name,
-      boardDescription: board.description,
-      tags: [...board.tags],
+      boardName: board.boardName,
+      boardDescription: board.boardDescription,
+      tags: [...board.boardTags],
       writingStartTime: setDateISOstring(board.writingStartTime),
       writingEndTime: setDateISOstring(board.writingEndTime),
       openStartTime: setDateISOstring(board.openStartTime),
@@ -142,9 +142,9 @@ const CompleteCreate = () => {
     <>
       <BoardContainer background={board.boardBackground} ref={mainComponentRef}>
         <BoardDescriptionContainer ref={desciprtionComponentRef}>
-          <h1>{board.name}</h1>
+          <h1>{board.boardName}</h1>
           <TagContainer>
-            {board.tags?.map((item, idx) => {
+            {board.boardTags?.map((item, idx) => {
               return (
                 <React.Fragment key={`${item}${idx}`}>
                   <span>{`#${item}`}</span>
@@ -152,7 +152,7 @@ const CompleteCreate = () => {
               );
             })}
           </TagContainer>
-          <p>{board.description}</p>
+          <p>{board.boardDescription}</p>
         </BoardDescriptionContainer>
         <MemoContainer height={heightOfMemoGrid}>{memos}</MemoContainer>
       </BoardContainer>

@@ -16,7 +16,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleChangeBoardName = (e) => {
-    const currentBoardState = { ...board, name: e.target.value };
+    const currentBoardState = { ...board, boardName: e.target.value };
     setBoard(currentBoardState);
   };
 
@@ -32,7 +32,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
     if (e.key === "Enter") {
       setInputValue("");
 
-      let copyTag = [...board.tags];
+      let copyTag = [...board.boardTags];
       copyTag.push(inputValue);
 
       let boardState = { ...board, tags: copyTag };
@@ -41,7 +41,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   };
 
   const handleDeleteTag = (index) => {
-    let copyTag = [...board.tags];
+    let copyTag = [...board.boardTags];
     const newTagArray = copyTag.filter((_, idx) => {
       return idx !== index;
     });
@@ -51,15 +51,15 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   };
 
   useEffect(() => {
-    board.name.length >= 1 && board.name.length < maxLength + 1
+    board.boardName.length >= 1 && board.boardName.length < maxLength + 1
       ? setDisabledFooterButton(false)
       : setDisabledFooterButton(true);
-  }, [board.name, setDisabledFooterButton]);
+  }, [board.boardName, setDisabledFooterButton]);
 
   useEffect(() => {
-    if (board.name.length > maxLength) setIsValidLength(false);
+    if (board.boardName.length > maxLength) setIsValidLength(false);
     else setIsValidLength(true);
-  }, [board.name, setIsValidLength]);
+  }, [board.boardName, setIsValidLength]);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -68,7 +68,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   return (
     <CreateBoardStepContainer>
       <TextInput
-        value={board.name}
+        value={board.boardName}
         commonSize={true}
         placeholder="ex. 김땡땡 생일 축하해~!"
         type="text"
@@ -81,7 +81,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
       <CreateBoardGuide>
         <TextLengthValidator
           maxLength={maxLength}
-          text={board.name}
+          text={board.boardName}
           isValidLength={isValidLength}
         />
       </CreateBoardGuide>
@@ -94,7 +94,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
             value={inputValue}
           />
         )}
-        {board.tags?.map((val, idx) => {
+        {board.boardTags?.map((val, idx) => {
           return (
             <React.Fragment key={`${val}${idx}`}>
               <Tag>

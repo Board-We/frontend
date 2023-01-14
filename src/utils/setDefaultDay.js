@@ -1,4 +1,5 @@
 export const formattingDateObject = (date) => {
+  date = new Date(date)
   let year = date.getFullYear();
   let month;
   let day;

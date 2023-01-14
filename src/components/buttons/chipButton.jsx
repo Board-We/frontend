@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const ChipButton = ({ fixed, onClick, children, style = {} }) => {
+const ChipButton = ({ fixed, onClick, children, background }) => {
   return (
     <ComponentWrapper fixed={fixed}>
-      <ButtonContainer onClick={onClick} style={style}>
+      <ButtonContainer onClick={onClick} background={background}>
         {children}
       </ButtonContainer>
     </ComponentWrapper>
@@ -39,8 +39,8 @@ const ButtonContainer = styled.div`
   cursor: pointer;
   ${(props) => (props.style ? props.style : null)};
   background-color: ${(props) =>
-    props.style.backgroundColor
-      ? props.theme.colors[props.style.backgroundColor]
+    props.background
+      ? props.background
       : props.theme.colors.primary};
 `;
 
