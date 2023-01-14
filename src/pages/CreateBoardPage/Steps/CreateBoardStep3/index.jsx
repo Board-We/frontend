@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -14,6 +14,7 @@ const CreateBoardStep3 = ({ footerRef }) => {
   const [memos, setMemos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState();
+
   const $desciprion = useRef();
   const $memoArea = useRef();
   const $buttonArea = useRef();
@@ -40,11 +41,11 @@ const CreateBoardStep3 = ({ footerRef }) => {
     const marginTop = Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
     setHeightOfMemoGrid(
       deviceScreenSize.y -
-      bottomOfDescription -
-      footerRef.current.clientHeight -
-      heightOfButtonArea -
-      marginTop +
-      2
+        bottomOfDescription -
+        footerRef.current.clientHeight -
+        heightOfButtonArea -
+        marginTop +
+        2
     );
   }, [
     deviceScreenSize,
@@ -74,6 +75,7 @@ const CreateBoardStep3 = ({ footerRef }) => {
           size={$memoArea.current.clientWidth}
           background={el.memoBackground}
           color={el.memoTextColor}
+          fontType={board.boardFont}
           key={el + i}
         >
           {sampleText[i]}
@@ -87,6 +89,7 @@ const CreateBoardStep3 = ({ footerRef }) => {
           size={$memoArea.current.clientWidth}
           background={board.memoThemes[0].memoBackground}
           color={board.memoThemes[0].memoTextColor}
+          fontType={board.boardFont}
           key={`sampleMemo${i}`}
         >
           {sampleText[i + board.memoThemes.length]}
@@ -234,6 +237,7 @@ const SampleMemo = styled.div`
   border: 1px solid ${theme.colors.grey_40};
   border-radius: 0.5rem;
   font-size: ${(props) => props.size * 0.04}px;
+  font-family: ${(props) => props.fontType};
 `;
 
 const ButtonArea = styled.div`
