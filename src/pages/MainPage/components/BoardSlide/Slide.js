@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Eye } from "../../../../assets/icons/eye.svg";
 

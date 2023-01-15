@@ -58,6 +58,9 @@ const BoardOnOpen = ({
       boardCode,
       memoIds: headerState.checkedMemoList,
     });
+    if (deleted) {
+      getMemos();
+    }
     setIsOpenDeleteMemoModal(false);
   };
 
@@ -185,6 +188,7 @@ const BoardOnOpen = ({
                   );
                 })
               : null}
+            {/* search memo */}
             {headerState.isSearchMode &&
               searchResults &&
               searchResults.memos.map((el, i) => {
@@ -202,7 +206,7 @@ const BoardOnOpen = ({
           </MemoContainer>
         </>
       )}
-
+      {/* delete memo */}
       {headerState.isSearchMode && headerState.searchType === "deleteMemo" && (
         <DeleteMemoContianer>
           {visibleMemos.map((el, i) => (
