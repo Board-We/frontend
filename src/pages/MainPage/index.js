@@ -21,7 +21,6 @@ const Main = () => {
   const [reccomendBoardList, setReccomendBoardList] = useState([]);
   const [isBoardDeleted, setIsBoardDeleted] = useState(false);
 
-  const [query, setQuery] = useState(""); // input을 통해 실제로 backend로 전달되는 키워드 값
   const [keyword, setKeyword] = useState(""); // 결과창 키워드 표시를 위한 값
   const [searchResults, setSearchResults] = useState([]);
 
@@ -31,10 +30,9 @@ const Main = () => {
     menu: [],
     configMenu: [],
     configMenuHandler: [],
-    setQuery,
+    query: "",
     onKeydown: null,
     checkedMemoList: [],
-    setCheckedMemoList: null,
   });
 
   const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
@@ -59,10 +57,9 @@ const Main = () => {
 
   const handleKeyDownSearchInput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
-      console.log("dd", query);
-      setKeyword(query);
+      setKeyword(headerState.query);
       const searchBoardsResult = await requestSearchBoard({
-        query,
+        query: headerState.query,
       });
 
       if (searchBoardsResult) setSearchResults(searchBoardsResult);

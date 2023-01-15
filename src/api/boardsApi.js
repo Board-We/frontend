@@ -1,13 +1,11 @@
 import { request } from ".";
 
 export const postUserBoardState = async ({ boardState }) => {
-  console.log(boardState);
   const res = await request({
     method: "POST",
     url: "/board",
     data: boardState,
   });
-  console.log(res);
   return res.data.boardLink;
 };
 
@@ -32,7 +30,6 @@ export const requestSearchBoard = async ({ query, page = 0, size = 10 }) => {
 
 export const requestHotBoardList = async () => {
   const res = await request({ method: "GET", url: "/boards/hot" });
-  console.log(res);
   return res.data;
 };
 

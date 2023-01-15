@@ -2,7 +2,6 @@ import styled from "styled-components";
 import BoardSlider from "./BoardSlider";
 
 const BoardSlide = ({ title, description, boards, positionValue }) => {
-  console.log(boards);
   return (
     <ReccomendBoardSlideContainer positionValue={positionValue}>
       <ReccomendBoardSlideHeader>

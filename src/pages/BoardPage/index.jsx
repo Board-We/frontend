@@ -24,14 +24,12 @@ const BoardPage = () => {
     menu: [],
     configMenu: [],
     configMenuHandler: [],
-    setQuery: null,
+    query: "",
     onKeydown: null,
     checkedMemoList: [],
-    setCheckedMemoList: null,
   });
-  const [query, setQuery] = useState("");
 
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
   const [passwordModalState, setPasswordModalState] = useState({
     type: "",
     open: false,
@@ -39,7 +37,6 @@ const BoardPage = () => {
 
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
-  const [checkedMemoList, setCheckedMemoList] = useState([]);
 
   const handleClosePasswordModal = () => {
     setPasswordModalState({ ...passwordModalState, open: false });
@@ -72,7 +69,10 @@ const BoardPage = () => {
 
   const handleKeyDownSearchIput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
-      const searchMemoResult = await requestSearchMemo({ boardCode, query });
+      const searchMemoResult = await requestSearchMemo({
+        boardCode,
+        query: e.target.value,
+      });
       if (searchMemoResult) setSearchResults(searchMemoResult);
     }
   };
@@ -101,7 +101,6 @@ const BoardPage = () => {
     accessBoard();
   }, [boardCode]);
 
-  console.log(board);
   useEffect(() => {
     if (board.boardStatus) {
       const boardLifeCycle = getBoardLifeCycle(board);
@@ -121,7 +120,6 @@ const BoardPage = () => {
         setHeaderState({
           ...headerState,
           menu: ["share", "config"],
-
           configMenu: ["보드 삭제"],
           configMenuHandler: [handleClickDeleteBoard],
         });
@@ -133,10 +131,7 @@ const BoardPage = () => {
           menu: ["search", "share", "config"],
           configMenu: ["보드 삭제", "메모 삭제"],
           configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
-          setQuery,
           onKeydown: handleKeyDownSearchIput,
-          checkedMemoList,
-          setCheckedMemoList,
         });
         break;
       default:

@@ -24,7 +24,6 @@ const BoardOnOpen = ({
 }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
-
   const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
 
   const [openToast, setOpenToast] = useState(true);
@@ -65,7 +64,6 @@ const BoardOnOpen = ({
   };
 
   const handleChangeCheckableMemo = (e) => {
-    console.log(typeof e.target.value);
     if (e.target.checked) {
       setHeaderState({
         ...headerState,
@@ -161,6 +159,7 @@ const BoardOnOpen = ({
     )
       addVisibleMemos();
   };
+
   return (
     <PageWrapper>
       {!(
@@ -173,7 +172,7 @@ const BoardOnOpen = ({
             onScroll={onScrollMemoContainer}
             paddingTop={paddingTop}
           >
-            {visibleMemos && privateModeForTest
+            {visibleMemos && privateModeForTest && !searchResults
               ? visibleMemos.map((el, i) => {
                   // memoThemeId
                   const theme = memoThemes[el.memoThemeId];
@@ -188,9 +187,9 @@ const BoardOnOpen = ({
                   );
                 })
               : null}
-            {/* search memo */}
-            {headerState.isSearchMode &&
-              searchResults &&
+            {/* search memo results */}
+            {searchResults.memos &&
+              searchResults.memos.length > 0 &&
               searchResults.memos.map((el, i) => {
                 const theme = memoThemes[el.memoThemeId];
                 return (
@@ -209,15 +208,28 @@ const BoardOnOpen = ({
       {/* delete memo */}
       {headerState.isSearchMode && headerState.searchType === "deleteMemo" && (
         <DeleteMemoContianer>
-          {visibleMemos.map((el, i) => (
-            <CheckableMemo
-              key={`${el}${i}`}
-              id={el.memoId}
-              text={el.memoContent}
-              onChange={handleChangeCheckableMemo}
-              checkedMemoList={headerState.checkedMemoList}
-            />
-          ))}
+          {/* 1. search result delete memo */}
+          {/* 2. default list and if result is empty */}
+          {searchResults && searchResults.memos.length > 0
+            ? searchResults.memos.map((el, i) => (
+                <CheckableMemo
+                  key={`${el}${i}`}
+                  id={el.memoId}
+                  text={el.memoContent}
+                  onChange={handleChangeCheckableMemo}
+                  checkedMemoList={headerState.checkedMemoList}
+                />
+              ))
+            : visibleMemos.map((el, i) => (
+                <CheckableMemo
+                  key={`${el}${i}`}
+                  id={el.memoId}
+                  text={el.memoContent}
+                  onChange={handleChangeCheckableMemo}
+                  checkedMemoList={headerState.checkedMemoList}
+                />
+              ))}
+
           <DeleteMemoButton
             isExistCheckedmemo={headerState.checkedMemoList.length !== 0}
             onClick={handleClickDeleteMemo}

@@ -15,8 +15,6 @@ const BoardOnEnd = () => {
     navigate("/");
   };
 
-  console.log("on");
-
   return (
     <PageWrapper>
       <BodyContainer>
