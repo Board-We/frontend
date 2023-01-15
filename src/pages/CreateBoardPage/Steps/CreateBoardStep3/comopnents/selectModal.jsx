@@ -253,6 +253,7 @@ const SelectModal = ({
       <MenuContainer>
         <TapButton
           text={`${option} 이미지`}
+          isFill={true}
           isSelected={
             (selectedTab === "memo" &&
               selectedMemoMenu[selectedMemoIndex] === "bgImage") ||
@@ -262,6 +263,7 @@ const SelectModal = ({
         />
         <TapButton
           text="배경 색"
+          isFill={true}
           isSelected={
             (selectedTab === "memo" &&
               selectedMemoMenu[selectedMemoIndex] === "bgColor") ||
@@ -312,11 +314,11 @@ const SelectModal = ({
         </SetFontArea>
       )}
       <Footer>
-        <div onClick={onClose}>
+        <div onClick={onClose} style={{ cursor: "pointer" }}>
           <img src={closeIcon} />
         </div>
         <div>{title}</div>
-        <div onClick={onClose}>
+        <div onClick={onClose} style={{ cursor: "pointer" }}>
           <img src={confirmIcon} />
         </div>
       </Footer>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Eye } from "../../../../assets/icons/eye.svg";
 
@@ -10,16 +11,18 @@ const Slide = ({
   sx,
 }) => {
   return (
-    <SlideContainer boardBackground={boardBackground} sx={sx}>
-      <SlideTopDescription>
-        <BoardStatus>작성 가능</BoardStatus>
-        <BaordViewCount>
-          <Eye />
-          <span>{boardViews}</span>
-        </BaordViewCount>
-      </SlideTopDescription>
-      <SlideBottomDescription>{boardName}</SlideBottomDescription>
-    </SlideContainer>
+    <Link to={boardLink}>
+      <SlideContainer boardBackground={boardBackground} sx={sx}>
+        <SlideTopDescription>
+          <BoardStatus>작성 가능</BoardStatus>
+          <BaordViewCount>
+            <Eye />
+            <span>{boardViews}</span>
+          </BaordViewCount>
+        </SlideTopDescription>
+        <SlideBottomDescription>{boardName}</SlideBottomDescription>
+      </SlideContainer>
+    </Link>
   );
 };
 export default Slide;
@@ -29,7 +32,6 @@ const SlideContainer = styled.div`
   border-radius: 1.2rem;
   background-color: ${(props) =>
     props.boardBackground === "#FFFFFF" ? "#8d8d8d" : props.boardBackground};
-  margin-right: 1rem;
   aspect-ratio: 1 / 1.2;
   color: white;
   display: flex;

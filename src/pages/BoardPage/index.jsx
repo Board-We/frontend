@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { deleteBoard, requestBoard } from "../../api/boardsApi";
+import { requestDeleteBoard, requestBoard } from "../../api/boardsApi";
 import { requestSearchMemo } from "../../api/memoApi";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
@@ -63,7 +63,7 @@ const BoardPage = () => {
   };
 
   const handleConfirmDeleteBoard = async () => {
-    const deleted = await deleteBoard({ boardCode, password });
+    const deleted = await requestDeleteBoard({ boardCode, password });
     if (deleted) {
       setIsOpenConfirmDeleteModal(false);
       navigate("/", { state: { isDeleted: true } });

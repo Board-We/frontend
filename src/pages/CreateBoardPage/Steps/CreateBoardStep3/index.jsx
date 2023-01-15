@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { useState } from "react";
 import { useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -24,7 +24,11 @@ const CreateBoardStep3 = ({ footerRef }) => {
 
   const [selectedTab, setSelectedTab] = useState("");
   const [selectedMemoIndex, setSelectedMemoIndex] = useState(0);
-  const [selectedMemoMenu, setSelectedMemoMenu] = useState(["bgImage"]);
+  const [selectedMemoMenu, setSelectedMemoMenu] = useState([
+    "bgImage",
+    "bgImage",
+    "bgImage",
+  ]);
   const [selectedBgMenu, setSelectedBgMenu] = useState("bgColor");
 
   useEffect(() => {

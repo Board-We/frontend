@@ -85,4 +85,5 @@ const Slides = styled.div`
   position: absolute;
   width: 100%;
   display: flex;
+  gap: 1rem;
 `;

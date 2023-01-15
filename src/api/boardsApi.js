@@ -36,7 +36,7 @@ export const requestHotBoardList = async () => {
   return res.data;
 };
 
-export const deleteBoard = async ({ boardCode, password }) => {
+export const requestDeleteBoard = async ({ boardCode, password }) => {
   const res = await request({
     method: "DELETE",
     url: `/board/${boardCode}/delete`,
