@@ -210,7 +210,7 @@ const BoardOnOpen = ({
         <DeleteMemoContianer>
           {/* 1. search result delete memo */}
           {/* 2. default list and if result is empty */}
-          {searchResults && searchResults.memos.length > 0
+          {searchResults.memos && searchResults.memos.length > 0
             ? searchResults.memos.map((el, i) => (
                 <CheckableMemo
                   key={`${el}${i}`}

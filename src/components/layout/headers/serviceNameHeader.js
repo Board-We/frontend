@@ -28,12 +28,21 @@ const ServiceNameHeader = ({
   const [step, setStep] = useRecoilState(createBoardStepId);
 
   const handleClickChevronLeft = () => {
-    setHeaderState((prev) =>
-      prev.searchType === "deleteMemo"
-        ? { ...headerState, isSearchMode: false, searchType: "memo" }
-        : { ...headerState, isSearchMode: false }
-    );
-    setHeaderState({ ...headerState, query: "" });
+    console.log(headerState.searchType, headerState.isSearchMode);
+    if (headerState.searchType === "deleteMemo")
+      setHeaderState({
+        ...headerState,
+        isSearchMode: false,
+        searchType: "memo",
+        query: "",
+      });
+    else {
+      setHeaderState({
+        ...headerState,
+        isSearchMode: false,
+        query: "",
+      });
+    }
   };
 
   const handleChangeHeaderInput = (e) => {

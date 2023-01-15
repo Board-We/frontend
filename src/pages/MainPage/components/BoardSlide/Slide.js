@@ -42,6 +42,7 @@ const SlideContainer = styled.div`
   justify-content: space-between;
   padding: 0.8rem;
   ${(props) => props.sx}
+  cursor: pointer;
 `;
 
 const SlideTopDescription = styled.div`
