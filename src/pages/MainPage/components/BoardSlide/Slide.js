@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Eye } from "../../../../assets/icons/eye.svg";
 
@@ -10,19 +10,22 @@ const Slide = ({
   boardBackground,
   sx,
 }) => {
+  const navigate = useNavigate();
   return (
-    <Link to={boardLink}>
-      <SlideContainer boardBackground={boardBackground} sx={sx}>
-        <SlideTopDescription>
-          <BoardStatus>작성 가능</BoardStatus>
-          <BaordViewCount>
-            <Eye />
-            <span>{boardViews}</span>
-          </BaordViewCount>
-        </SlideTopDescription>
-        <SlideBottomDescription>{boardName}</SlideBottomDescription>
-      </SlideContainer>
-    </Link>
+    <SlideContainer
+      boardBackground={boardBackground}
+      sx={sx}
+      onClick={() => navigate(boardLink)}
+    >
+      <SlideTopDescription>
+        <BoardStatus>작성 가능</BoardStatus>
+        <BaordViewCount>
+          <Eye />
+          <span>{boardViews}</span>
+        </BaordViewCount>
+      </SlideTopDescription>
+      <SlideBottomDescription>{boardName}</SlideBottomDescription>
+    </SlideContainer>
   );
 };
 export default Slide;
