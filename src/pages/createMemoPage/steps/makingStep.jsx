@@ -44,7 +44,7 @@ const MakingStep = ({ boardCode }) => {
   };
 
   const goBack = () => {
-    navigate(-1);
+    navigate(`/board/${boardCode}`);
   };
 
   const cancelBack = () => {
