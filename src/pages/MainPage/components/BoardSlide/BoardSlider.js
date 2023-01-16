@@ -57,6 +57,7 @@ const BoardSlider = ({ boards }) => {
         {boards.map((board, i) => (
           <Slide
             key={board.boardName + i}
+            boardStatus={board.boardStatus}
             boardLink={board.boardLink}
             boardName={board.boardName}
             boardViews={board.boardViews}
@@ -84,4 +85,5 @@ const Slides = styled.div`
   position: absolute;
   width: 100%;
   display: flex;
+  gap: 1rem;
 `;

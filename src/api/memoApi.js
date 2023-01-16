@@ -38,6 +38,7 @@ export const requestDeleteMemo = async ({ boardCode, memoIds }) => {
     url: `/board/${boardCode}/memo/delete`,
     data: { memoIds },
   });
+
   if (res.status === 200) return true;
   return false;
 };
@@ -47,6 +48,5 @@ export const requestSearchMemo = async ({ boardCode, query }) => {
     method: "GET",
     url: `/board/${boardCode}/memo/search?query=${query}`,
   });
-  console.log(res);
   return res.data;
 };

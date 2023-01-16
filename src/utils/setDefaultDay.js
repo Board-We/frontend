@@ -1,5 +1,5 @@
 export const formattingDateObject = (date) => {
-  date = new Date(date)
+  date = new Date(date);
   let year = date.getFullYear();
   let month;
   let day;
@@ -14,7 +14,6 @@ export const formattingDateObject = (date) => {
 };
 
 export const setDateISOstring = (date) => {
-  console.log(date);
   const TIME_ZONE = 3240 * 10000;
   const filterDateString = new Date(+date + TIME_ZONE)
     .toISOString()

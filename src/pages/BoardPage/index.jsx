@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { deleteBoard, requestBoard } from "../../api/boardsApi";
+import { requestDeleteBoard, requestBoard } from "../../api/boardsApi";
 import { requestSearchMemo } from "../../api/memoApi";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
@@ -24,13 +24,12 @@ const BoardPage = () => {
     menu: [],
     configMenu: [],
     configMenuHandler: [],
-    setQuery: null,
+    query: "",
     onKeydown: null,
     checkedMemoList: [],
-    setCheckedMemoList: null,
   });
-  const [query, setQuery] = useState("");
-  const [searchResults, setSearchResults] = useState(null);
+
+  const [searchResults, setSearchResults] = useState([]);
   const [passwordModalState, setPasswordModalState] = useState({
     type: "",
     open: false,
@@ -38,7 +37,6 @@ const BoardPage = () => {
 
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
-  const [checkedMemoList, setCheckedMemoList] = useState([]);
 
   const handleClosePasswordModal = () => {
     setPasswordModalState({ ...passwordModalState, open: false });
@@ -62,7 +60,7 @@ const BoardPage = () => {
   };
 
   const handleConfirmDeleteBoard = async () => {
-    const deleted = await deleteBoard({ boardCode, password });
+    const deleted = await requestDeleteBoard({ boardCode, password });
     if (deleted) {
       setIsOpenConfirmDeleteModal(false);
       navigate("/", { state: { isDeleted: true } });
@@ -71,7 +69,10 @@ const BoardPage = () => {
 
   const handleKeyDownSearchIput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
-      const searchMemoResult = await requestSearchMemo({ boardCode, query });
+      const searchMemoResult = await requestSearchMemo({
+        boardCode,
+        query: e.target.value,
+      });
       if (searchMemoResult) setSearchResults(searchMemoResult);
     }
   };
@@ -100,13 +101,15 @@ const BoardPage = () => {
     accessBoard();
   }, [boardCode]);
 
-  useEffect(()=>{
-    const boardLifeCycle = getBoardLifeCycle(board);
-    setBoardLifeCycle(boardLifeCycle);
-  }, [board])
+  useEffect(() => {
+    if (board.boardStatus) {
+      const boardLifeCycle = getBoardLifeCycle(board);
+      setBoardLifeCycle(boardLifeCycle);
+    }
+  }, [board]);
 
   useEffect(() => {
-    setHeaderOption()
+    setHeaderOption();
   }, [boardLifeCycle]);
 
   const setHeaderOption = () => {
@@ -117,7 +120,6 @@ const BoardPage = () => {
         setHeaderState({
           ...headerState,
           menu: ["share", "config"],
-
           configMenu: ["보드 삭제"],
           configMenuHandler: [handleClickDeleteBoard],
         });
@@ -129,16 +131,13 @@ const BoardPage = () => {
           menu: ["search", "share", "config"],
           configMenu: ["보드 삭제", "메모 삭제"],
           configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
-          setQuery,
           onKeydown: handleKeyDownSearchIput,
-          checkedMemoList,
-          setCheckedMemoList,
         });
         break;
       default:
         break;
     }
-  }
+  };
 
   return (
     <PageWrapper>
@@ -146,19 +145,20 @@ const BoardPage = () => {
         headerState={headerState}
         setHeaderState={setHeaderState}
       />
-      {headerState.isSearchMode && headerState.searchType === "dleteMemo" && (
+      {headerState.isSearchMode && headerState.searchType === "deleteMemo" && (
         <DeleteMemoSubHeader> 삭제할 메모를 선택하세요. </DeleteMemoSubHeader>
       )}
       <BodyContainer>
-        <BoardPageFactory
-          boardLifeCycle={boardLifeCycle}
-          boardInfo={board}
-          boardCode={boardCode}
-          passwordModalState={passwordModalState}
-          setPasswordModalState={setPasswordModalState}
-          headerState={headerState}
-          searchResults={searchResults}
-        />
+        {boardLifeCycle && (
+          <BoardPageFactory
+            boardLifeCycle={boardLifeCycle}
+            boardInfo={board}
+            boardCode={boardCode}
+            headerState={headerState}
+            setHeaderState={setHeaderState}
+            searchResults={searchResults}
+          />
+        )}
         <PasswordModal
           password={password}
           setPassword={setPassword}

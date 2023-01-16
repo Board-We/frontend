@@ -27,14 +27,14 @@ const SelectModal = ({
   setSelectedBgMenu,
 }) => {
   const [color, setColor] = useState("#FFFFFF");
-  const [fontButtonValue, setFontButtonValue] = useState("0");
+  const [fontButtonValue, setFontButtonValue] = useState("기본 글씨체");
   const $file = useRef();
 
   const font = [
-    "기본 글씨체",
-    "에스코어 드림체",
-    "강원교육모두체",
-    "코트라희망체",
+    { buttonText: "기본 글씨체", fontType: "Pretendard" },
+    { buttonText: "에스코어 드림체", fontType: "SCDream" },
+    { buttonText: "강원교육모두체", fontType: "강원교육모두" },
+    { buttonText: "코트라희망체", fontType: "KOTRAHOPE" },
   ];
 
   useEffect(() => {
@@ -75,6 +75,18 @@ const SelectModal = ({
       );
     }
   }, [option, selectedMemoMenu, selectedMemoIndex]);
+
+  useEffect(() => {
+    if (fontButtonValue === "기본 글씨체") {
+      setBoard({ ...board, boardFont: "Pretendard" });
+    } else if (fontButtonValue === "에스코어 드림체") {
+      setBoard({ ...board, boardFont: "SCDream" });
+    } else if (fontButtonValue === "강원교육모두체") {
+      setBoard({ ...board, boardFont: "강원교육모두" });
+    } else if (fontButtonValue === "코트라희망체") {
+      setBoard({ ...board, boardFont: "KOTRAHOPE" });
+    }
+  }, [fontButtonValue]);
 
   const onClickTapMenu = (e) => {
     if (selectedTab === "bg") {
@@ -218,7 +230,10 @@ const SelectModal = ({
               onClick={() => onClickTapBar(i)}
               icon={
                 board.memoThemes.length > 1 && (
-                  <IconContainer src={closeIcon} onClick={(e) => onClickRemoveMemoTheme(e, i)} />
+                  <IconContainer
+                    src={closeIcon}
+                    onClick={(e) => onClickRemoveMemoTheme(e, i)}
+                  />
                 )
               }
               key={`메모지${i + 1}`}
@@ -238,6 +253,7 @@ const SelectModal = ({
       <MenuContainer>
         <TapButton
           text={`${option} 이미지`}
+          isFill={true}
           isSelected={
             (selectedTab === "memo" &&
               selectedMemoMenu[selectedMemoIndex] === "bgImage") ||
@@ -247,6 +263,7 @@ const SelectModal = ({
         />
         <TapButton
           text="배경 색"
+          isFill={true}
           isSelected={
             (selectedTab === "memo" &&
               selectedMemoMenu[selectedMemoIndex] === "bgColor") ||
@@ -258,7 +275,6 @@ const SelectModal = ({
           <TapButton
             text="글자 종류"
             isFill={true}
-
             isSelected={selectedBgMenu === "font"}
             onClick={() => onClickTapMenu("font")}
           />
@@ -275,8 +291,8 @@ const SelectModal = ({
         (selectedMemoMenu[selectedMemoIndex] === "bgColor" ||
           selectedMemoMenu[selectedMemoIndex] === "fontColor")) ||
         (selectedTab === "bg" && selectedBgMenu === "bgColor")) && (
-          <ColorPicker color={color} onChange={onChangeColor} />
-        )}
+        <ColorPicker color={color} onChange={onChangeColor} />
+      )}
       {((selectedTab === "memo" &&
         selectedMemoMenu[selectedMemoIndex] === "bgImage") ||
         (selectedTab === "bg" && selectedBgMenu === "bgImage")) &&
@@ -286,20 +302,25 @@ const SelectModal = ({
           {font.map((val, idx) => {
             return (
               <SetFontButton
-                className={idx == fontButtonValue ? "active" : ""}
+                className={val.buttonText == fontButtonValue ? "active" : ""}
                 onClick={onClickSetFontOption}
-                value={idx}
+                value={val.buttonText}
+                fontType={val.fontType}
               >
-                {val}
+                {val.buttonText}
               </SetFontButton>
             );
           })}
         </SetFontArea>
       )}
       <Footer>
-        <div onClick={onClose}><img src={closeIcon} /></div>
+        <div onClick={onClose} style={{ cursor: "pointer" }}>
+          <img src={closeIcon} />
+        </div>
         <div>{title}</div>
-        <div onClick={onClose}><img src={confirmIcon} /></div>
+        <div onClick={onClose} style={{ cursor: "pointer" }}>
+          <img src={confirmIcon} />
+        </div>
       </Footer>
     </ComponentWrapper>
   );
@@ -382,7 +403,7 @@ const Camera = styled.img`
 const IconContainer = styled.img`
   width: 1.25rem;
   height: 1.25rem;
-`
+`;
 
 const SetFontArea = styled.div`
   display: flex;
@@ -401,12 +422,12 @@ const SetFontButton = styled.button`
   margin-bottom: 1rem;
   border-radius: 8px;
   border: none;
+  font-family: ${(props) => props.fontType};
   background-color: ${theme.colors.grey_50};
   &.active {
     background-color: ${theme.colors.white};
     border: 1px solid ${theme.colors.primary};
   }
 `;
-
 
 export default SelectModal;

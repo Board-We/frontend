@@ -8,7 +8,7 @@ import DropDownMenu from "./dropDownMenu";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { createBoardStepId } from "../../../store";
-import serviceLogo from "../../../assets/icons/serviceLogo.png"
+import serviceLogo from "../../../assets/icons/serviceLogo.png";
 
 const ServiceNameHeader = ({
   headerState = {
@@ -17,31 +17,36 @@ const ServiceNameHeader = ({
     menu: [],
     configMenu: [],
     configMenuHandler: [],
-    setQuery: null,
+    query: "",
     onKeydown: null,
     checkedMemoList: [],
-    setCheckedMemoList: null,
   },
   setHeaderState,
 }) => {
   const navigate = useNavigate();
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
   const [step, setStep] = useRecoilState(createBoardStepId);
-  const [inputText, setInputText] = useState("");
 
   const handleClickChevronLeft = () => {
-    setHeaderState((prev) =>
-      prev.searchType === "deleteMemo"
-        ? { ...headerState, isSearchMode: false, searchType: "memo" }
-        : { ...headerState, isSearchMode: false }
-    );
-    setInputText("");
-    headerState.setQuery("");
+    console.log(headerState.searchType, headerState.isSearchMode);
+    if (headerState.searchType === "deleteMemo")
+      setHeaderState({
+        ...headerState,
+        isSearchMode: false,
+        searchType: "memo",
+        query: "",
+      });
+    else {
+      setHeaderState({
+        ...headerState,
+        isSearchMode: false,
+        query: "",
+      });
+    }
   };
 
   const handleChangeHeaderInput = (e) => {
-    setInputText(e.target.value);
-    headerState.setQuery(e.target.value);
+    setHeaderState({ ...headerState, query: e.target.value });
   };
 
   const handleClickSearch = () => {
@@ -56,7 +61,7 @@ const ServiceNameHeader = ({
   };
 
   const handleClickUnselect = () => {
-    headerState.setCheckedMemoList([]);
+    setHeaderState({ ...headerState, checkedMemoList: [] });
   };
 
   const onClickTitle = () => {
@@ -85,7 +90,7 @@ const ServiceNameHeader = ({
             </SearchButton>
           )}
           {headerState.menu.includes("share") && !headerState.isSearchMode && (
-            <ShareButton onClick={() => { }}>
+            <ShareButton onClick={() => {}}>
               <Share />
             </ShareButton>
           )}
@@ -102,17 +107,17 @@ const ServiceNameHeader = ({
           )}
         </ServiceNameHeaderButtonGroup>
         <HeaderInput
-          value={inputText}
+          value={headerState.query}
           onChange={handleChangeHeaderInput}
           isSearchMode={headerState.isSearchMode}
           searchType={headerState.searchType}
-          onKeyDown={headerState.onKeyDown}
+          onKeyDown={headerState.onKeydown}
           placeholder={
             headerState.searchType === "board"
               ? "보드를 검색하세요."
               : headerState.searchType === "memo"
-                ? "메모 내용을 검색하세요"
-                : "내용을 검색하세요"
+              ? "메모 내용을 검색하세요"
+              : "내용을 검색하세요"
           }
         />
         {headerState.searchType === "deleteMemo" &&
@@ -254,10 +259,10 @@ const HeaderInput = styled.input`
           ${expandSearchInput} 0.3s linear
         `
       : props.searchType === "deleteMemo"
-        ? css`
+      ? css`
           ${expandDeleteMemoInput} 0.3s linear
         `
-        : ""};
+      : ""};
   animation-fill-mode: forwards;
 `;
 

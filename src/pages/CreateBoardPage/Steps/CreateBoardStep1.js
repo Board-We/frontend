@@ -147,6 +147,7 @@ const AddTagButton = styled.button`
   color: ${(props) => props.theme.colors.grey_30};
   margin-right: 0.75rem;
   margin-bottom: 0.75em;
+  cursor: pointer;
 `;
 
 const AddTagInput = styled.input`
