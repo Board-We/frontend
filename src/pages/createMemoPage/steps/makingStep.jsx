@@ -96,22 +96,23 @@ const MakingStep = ({ boardCode }) => {
           <SmallTitle text={"메모지를 선택해 롤링페이퍼를 남겨보세요."} />
         </OptionAreaTitleContainer>
         <OptionContainer>
-          {board.memoThemes.map((el) => {
-            return (
-              <Option
-                key={JSON.stringify(el)}
-                onClick={() => onClickMemoPaper(el)}
-              >
-                <Memo
-                  background={el.memoBackground}
-                  color={el.memoTextColor}
-                  size={"4.5rem"}
-                  text={"Aa"}
-                  isSelected={JSON.stringify(el) === JSON.stringify(memo.style)}
-                />
-              </Option>
-            );
-          })}
+          {board.memoThemes &&
+            board.memoThemes.map((el) => {
+              return (
+                <Option
+                  key={JSON.stringify(el)}
+                  onClick={() => onClickMemoPaper(el)}
+                >
+                  <Memo
+                    background={el.memoBackground}
+                    color={el.memoTextColor}
+                    size={"4.5rem"}
+                    text={"Aa"}
+                    isSelected={JSON.stringify(el) === JSON.stringify(memo.style)}
+                  />
+                </Option>
+              );
+            })}
         </OptionContainer>
       </OptionArea>
       <FooterButtonArea>
