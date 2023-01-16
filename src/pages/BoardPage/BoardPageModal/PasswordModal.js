@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
 import { ReactComponent as Close } from "../../../assets/icons/close.svg";
-import { requestLoginBoard } from "../../../api/boardsApi";
-import { deleteBoard } from "../../../api/boardsApi";
+import { requestLogin } from "../../../api/boardsApi";
 
 const PasswordModal = ({
   password,
@@ -12,22 +11,20 @@ const PasswordModal = ({
   open,
   onClose,
   onValid,
+  onFail,
 }) => {
   const handleOnChangePasswordInput = (e) => {
     setPassword(e.target.value);
   };
 
   const handleClickConfrimPassword = async () => {
-    // boardCode는 임의로 처리
-    // const isSuccess = await requestLoginBoard({ password, boardCode });
-
-    // 해당 보드 비밀번호 검증 API 필요할듯
-    // 검증 후 삭제 확인 모달
-
-    if (true) {
+    const isSuccess = await requestLogin({ password, boardCode });
+    if (isSuccess) {
       onValid();
       setPassword("");
       onClose();
+    } else {
+      // onFail();
     }
   };
 

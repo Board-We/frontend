@@ -43,7 +43,7 @@ export const requestDeleteBoard = async ({ boardCode, password }) => {
   return false;
 };
 
-export const requestLoginBoard = async ({ password, boardCode }) => {
+export const requestLogin = async ({ password, boardCode }) => {
   const res = await request({
     method: "POST",
     url: `/board/login`,
