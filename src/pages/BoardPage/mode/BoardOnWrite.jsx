@@ -13,7 +13,9 @@ const BoardOnWrite = ({ boardCode, boardInfo }) => {
 
   const onClickMMP = () => {
     getMemoInfo(board.id);
-    navigate(`/board/${boardCode}/memo/making`);
+    navigate(`/board/${boardCode}/memo/making`, {
+      state: { currentFontType: boardInfo.boardFont },
+    });
   };
 
   const getMemoInfo = (boardId) => {

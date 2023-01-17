@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 import {
@@ -18,13 +18,19 @@ import { theme } from "../../../styles/theme";
 const MakingStep = ({ boardCode }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const [memo, setMemo] = useRecoilState(memoState);
+  const [currentFontType, setCurrentFontType] = useState("");
   const resetMemo = useResetRecoilState(memoState);
   const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     getMemoThemes();
   }, [boardCode]);
+
+  useEffect(() => {
+    if (location.state) setCurrentFontType(location.state.currentFontType);
+  }, []);
 
   const getMemoThemes = async () => {
     const newMemoThemes = await requestGetMemoThemeList({
@@ -32,7 +38,7 @@ const MakingStep = ({ boardCode }) => {
     });
 
     setBoard({ ...board, memoThemes: newMemoThemes });
-    setMemo({ ...memo, style: newMemoThemes[0] })
+    setMemo({ ...memo, style: newMemoThemes[0] });
   };
 
   const onChangeText = (text) => {
@@ -93,6 +99,7 @@ const MakingStep = ({ boardCode }) => {
           color={memo.style.memoTextColor}
           text={memo.text}
           onChangeText={onChangeText}
+          fontType={currentFontType}
         >
           <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
         </Memo>
@@ -102,8 +109,7 @@ const MakingStep = ({ boardCode }) => {
           <SmallTitle text={"메모지를 선택해 롤링페이퍼를 남겨보세요."} />
         </OptionAreaTitleContainer>
         <OptionContainer>
-          {
-            board.memoThemes &&
+          {board.memoThemes &&
             board.memoThemes.map((el) => {
               return (
                 <Option
@@ -115,7 +121,9 @@ const MakingStep = ({ boardCode }) => {
                     color={el.memoTextColor}
                     size={"4.5rem"}
                     text={"Aa"}
-                    isSelected={JSON.stringify(el) === JSON.stringify(memo.style)}
+                    isSelected={
+                      JSON.stringify(el) === JSON.stringify(memo.style)
+                    }
                   />
                 </Option>
               );
