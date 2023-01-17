@@ -27,7 +27,7 @@ const SelectModal = ({
   setSelectedBgMenu,
 }) => {
   const [color, setColor] = useState("#FFFFFF");
-  const [fontButtonValue, setFontButtonValue] = useState("기본 글씨체");
+  const [fontButtonValue, setFontButtonValue] = useState();
   const $file = useRef();
 
   const font = [
@@ -302,7 +302,7 @@ const SelectModal = ({
           {font.map((val, idx) => {
             return (
               <SetFontButton
-                className={val.buttonText == fontButtonValue ? "active" : ""}
+                className={val.fontType == board.boardFont ? "active" : ""}
                 onClick={onClickSetFontOption}
                 value={val.buttonText}
                 fontType={val.fontType}
