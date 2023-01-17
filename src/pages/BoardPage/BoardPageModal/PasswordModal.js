@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import SlideModal from "../../../components/modals/slideModal";
 import { ReactComponent as Close } from "../../../assets/icons/close.svg";
+import { ReactComponent as AlertExclamation } from "../../../assets/icons/alertExclamation.svg";
 import { requestLogin } from "../../../api/boardsApi";
+import { useRef } from "react";
+import { useState } from "react";
 
 const PasswordModal = ({
   password,
@@ -11,9 +14,12 @@ const PasswordModal = ({
   open,
   onClose,
   onValid,
-  onFail,
 }) => {
+  const inputRef = useRef();
+  const [isInvalid, setIsInvalid] = useState(false);
+
   const handleOnChangePasswordInput = (e) => {
+    if (isInvalid) setIsInvalid(false);
     setPassword(e.target.value);
   };
 
@@ -24,7 +30,8 @@ const PasswordModal = ({
       setPassword("");
       onClose();
     } else {
-      // onFail();
+      inputRef.current.focus();
+      setIsInvalid(true);
     }
   };
 
@@ -41,8 +48,10 @@ const PasswordModal = ({
         </PasswordModalHeader>
         <PasswordInputBox>
           <PasswordInput
+            ref={inputRef}
             value={password}
             onChange={handleOnChangePasswordInput}
+            isInvalid={isInvalid}
             type="text"
             pattern="[0-9]*"
             placeholder="비밀번호를 입력해주세요."
@@ -54,6 +63,10 @@ const PasswordModal = ({
             확인
           </ConfirmButton>
         </PasswordInputBox>
+        <ErrorMessage isInvalid={isInvalid}>
+          <AlertExclamation />
+          다시 입력하세요.
+        </ErrorMessage>
       </ContentWrapper>
     </SlideModal>
   );
@@ -112,7 +125,11 @@ const PasswordInput = styled.input`
   flex: 8;
   &:focus {
     outline: none;
-    border: 1px solid ${(props) => props.theme.colors.primary};
+    border: 1px solid
+      ${(props) =>
+        props.isInvalid
+          ? props.theme.colors.error
+          : props.theme.colors.primary};
   }
 `;
 
@@ -133,4 +150,13 @@ const ConfirmButton = styled.button`
   border: 0;
   padding: 0 1.2rem 0 1.2rem;
   border-radius: 0.5rem;
+`;
+
+const ErrorMessage = styled.div`
+  color: ${(props) => props.theme.colors.error};
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 0.2rem;
+  visibility: ${(props) => (props.isInvalid ? "visible" : "hidden")};
 `;
