@@ -7,7 +7,6 @@ import {
 } from "../../api/boardsApi";
 import ChipButton from "../../components/buttons/chipButton";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
-import AlertModal from "../../components/modals/alertModal";
 import EnterLinkInput from "./components/EnterLinkInput";
 import BoardSlide from "./components/BoardSlide/index";
 import SearchPage from "./components/SearchPage";
@@ -34,8 +33,6 @@ const Main = () => {
     onKeydown: null,
     checkedMemoList: [],
   });
-
-  const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
 
   const [isFooter, setIsFooter] = useState(false);
   const [mobileStartY, setMobileStartY] = useState(0);
@@ -128,15 +125,6 @@ const Main = () => {
             <SearchPage keyword={keyword} searchResults={searchResults} />
           )}
         </MainPageContainer>
-        {isOpenInvalidLinkModal && (
-          <AlertModal
-            open={isOpenInvalidLinkModal}
-            text="유효하지 않은 링크입니다."
-            buttonTextArray={["확인"]}
-            onClickArray={[() => setIsOpenInvalidLinkModal(false)]}
-            onClose={() => setIsOpenInvalidLinkModal(false)}
-          />
-        )}
         {isBoardDeleted && <Toast text="보드가 삭제되었습니다." />}
       </PageWrapper>
     </>

@@ -11,7 +11,7 @@ const EnterLinkInput = () => {
   };
 
   const handleClickEnterLinkButton = () => {
-    navigate(linkText);
+    navigate(`board/${linkText}`);
   };
 
   return (

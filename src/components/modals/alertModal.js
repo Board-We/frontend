@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import Backdrop from "./backdrop";
 import { ReactComponent as Alert } from "../../assets/icons/alert.svg";
@@ -11,10 +10,6 @@ const AlertModal = ({
   subText,
   onClose,
 }) => {
-  useEffect(() => {
-    const body = document.querySelector("body");
-    body.style.overflow = open ? "hidden" : "auto";
-  });
   return (
     <>
       <ModalContainer open={open}>

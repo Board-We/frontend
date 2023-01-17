@@ -1,13 +1,9 @@
-import { React, forwardRef, useEffect } from "react";
+import { React, forwardRef } from "react";
 import styled from "styled-components";
 import Backdrop from "./backdrop";
 
 const SlideModal = forwardRef(
   ({ children, open, onClose, height, isBackdrop }, ref) => {
-    // useEffect(() => {
-    //   const body = document.querySelector("body");
-    //   body.style.overflow = open ? "hidden" : "auto";
-    // });
     return (
       <>
         <ModalContainer open={open} height={height} ref={ref}>

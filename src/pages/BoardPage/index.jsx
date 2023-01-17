@@ -37,6 +37,7 @@ const BoardPage = () => {
 
   const [isOpenConfirmDeleteModal, setIsOpenConfirmDeleteModal] =
     useState(false);
+  const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
 
   const handleClosePasswordModal = () => {
     setPasswordModalState({ ...passwordModalState, open: false });
@@ -59,6 +60,10 @@ const BoardPage = () => {
     setIsOpenConfirmDeleteModal(false);
   };
 
+  const handleCloseInvalidLinkModal = () => {
+    setIsOpenInvalidLinkModal(false);
+    navigate("/");
+  };
   const handleConfirmDeleteBoard = async () => {
     const deleted = await requestDeleteBoard({ boardCode, password });
     if (deleted) {
@@ -96,7 +101,9 @@ const BoardPage = () => {
   useEffect(() => {
     const accessBoard = async () => {
       const board = await requestBoard(boardCode);
-      setBoard(board);
+      console.log(board);
+      if (board) setBoard(board);
+      else setIsOpenInvalidLinkModal(true);
     };
     accessBoard();
   }, [boardCode]);
@@ -177,6 +184,15 @@ const BoardPage = () => {
           text="보드를 삭제하면 되돌릴 수 없습니다."
           onClose={handleCloseConfirmDeleteModal}
         />
+        {isOpenInvalidLinkModal && (
+          <AlertModal
+            open={isOpenInvalidLinkModal}
+            text="정확한 링크를 입력해주십시오."
+            buttonTextArray={["확인"]}
+            onClickArray={[handleCloseInvalidLinkModal]}
+            onClose={handleCloseInvalidLinkModal}
+          />
+        )}
       </BodyContainer>
     </PageWrapper>
   );

@@ -1,11 +1,6 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 
 const Backdrop = ({ open, onClick }) => {
-  useEffect(() => {
-    const body = document.querySelector("body");
-    body.style.overflow = open ? "hidden" : "auto";
-  });
   return <BackDropOverlay open={open} onClick={onClick} />;
 };
 
