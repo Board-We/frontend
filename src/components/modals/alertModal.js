@@ -49,10 +49,10 @@ const ModalContainer = styled.div`
   z-index: 9999999;
   display: ${(props) => (props.open ? "flex" : "none")};
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   border-radius: 0.3rem;
-  padding: 2rem;
+  padding: 1rem;
 `;
 
 const ModalDescription = styled.div`

@@ -154,7 +154,7 @@ const ConfirmButton = styled.button`
   right: 0;
   top: 0;
   border: 0;
-  padding: 0 1.2rem 0 1.2rem;
+  padding: 0 1rem 0 1rem;
   border-radius: 0.5rem;
 `;
 
