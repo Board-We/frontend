@@ -52,7 +52,6 @@ const OnEndImage = styled.div`
   max-height: 400px;
   background-image: url(${LoadingImage});
   background-size: contain;
-  border: none;
 `;
 
 export default Loading;

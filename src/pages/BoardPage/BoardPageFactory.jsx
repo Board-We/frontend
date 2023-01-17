@@ -13,6 +13,7 @@ const BoardPageFactory = ({
   setHeaderState,
   searchResults,
 }) => {
+  console.log(boardLifeCycle);
   switch (boardLifeCycle) {
     case "onWaitWrite":
       return <BoardOnWaitWrite boardCode={boardCode} boardInfo={boardInfo} />;

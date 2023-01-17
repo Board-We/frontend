@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ChipButton from "../../../components/buttons/chipButton";
 import SmallTitle from "../../../components/label/smallTitle";
+import LoadingImage from "../../../assets/images/loading.png";
 
 const Board404 = () => {
   const navigate = useNavigate();
@@ -65,12 +66,13 @@ const BodyContainer = styled.div`
   margin: auto auto;
 `;
 
-const OnEndImage = styled.img`
+const OnEndImage = styled.div`
   width: 75vw;
   height: 75vw;
   max-width: 400px;
   max-height: 400px;
-  background-color: #d9d9d9;
+  background-image: url(${LoadingImage});
+  background-size: contain;
 `;
 
 const ButtonContainer = styled.div`

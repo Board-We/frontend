@@ -19,6 +19,6 @@ export const getBoardLifeCycle = (board) => {
     return "onOpen";
   } else if (isEndOpen >= 0) {
     // 현재가 보드 종료보다 미래
-    return "endOpen";
+    return "onEnd";
   }
 };
