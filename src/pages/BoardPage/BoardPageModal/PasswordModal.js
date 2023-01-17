@@ -35,14 +35,20 @@ const PasswordModal = ({
     }
   };
 
+  const handleCloseModal = () => {
+    setIsInvalid(false);
+    setPassword("");
+    onClose();
+  };
+
   return (
-    <SlideModal open={open} onClose={onClose} height="50vh">
+    <SlideModal open={open} height="50vh">
       <ContentWrapper>
         <PasswordModalHeader>
           <PasswordModalDescription>
             비밀번호를 입력해주세요
           </PasswordModalDescription>
-          <CloseButton onClick={onClose}>
+          <CloseButton onClick={handleCloseModal}>
             <Close />
           </CloseButton>
         </PasswordModalHeader>
