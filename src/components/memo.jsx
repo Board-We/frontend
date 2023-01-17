@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Memo = ({
   text,
   onChangeText,
-  color = "black",
+  color,
   background = "white",
   size,
   fontType,
