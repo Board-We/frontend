@@ -178,7 +178,7 @@ const SearchResultSection = styled.div`
 
 const SearchResultList = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 0fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin-top: 1rem;
   align-items: center;
