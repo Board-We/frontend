@@ -60,7 +60,7 @@ const CreateBoardStep3 = ({ footerRef }) => {
 
   useEffect(() => {
     setMemos(getMemos());
-  }, [board.memoThemes]);
+  }, [board.memoThemes, board.boardFont]);
 
   const getMemos = () => {
     const result = [];
