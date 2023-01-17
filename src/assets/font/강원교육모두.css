@@ -1,0 +1,10 @@
+@font-face {
+	font-family: '강원교육모두';
+	font-weight: bold;
+	src: url('./ttf/강원교육모두Bold.ttf') format("truetype")
+}
+
+@font-face {
+	font-family: '강원교육모두';
+	src: url('./ttf/강원교육모두Light.ttf') format("truetype")
+}

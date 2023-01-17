@@ -1,6 +1,4 @@
 @font-face {
 	font-family: 'SCDream';
-	font-weight: 500;
-	font-display: swap;
-	src: local('SCDream'), url('./otf-subset/SCDream5.subset.otf') format('otf');
+	src: url('./otf/SCDream5.otf') format('opentype');
 }
