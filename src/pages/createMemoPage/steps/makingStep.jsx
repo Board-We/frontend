@@ -32,6 +32,7 @@ const MakingStep = ({ boardCode }) => {
     });
 
     setBoard({ ...board, memoThemes: newMemoThemes });
+    setMemo({ ...memo, style: newMemoThemes[0] })
   };
 
   const onChangeText = (text) => {
