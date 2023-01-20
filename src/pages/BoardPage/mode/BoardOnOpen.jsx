@@ -16,12 +16,7 @@ import BlockAccessBoard from "../components/blockAccessBoard";
 import Memo from "../../../components/memo";
 import AlertModal from "../../../components/modals/alertModal";
 
-const BoardOnOpen = ({
-  boardCode,
-  searchResults,
-  headerState,
-  setHeaderState,
-}) => {
+const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
   const board = useRecoilValue(boardState);
   const privateModeForTest = true;
   const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
@@ -31,6 +26,7 @@ const BoardOnOpen = ({
 
   const [memoList, setMemoList] = useState([]);
   const [meemoThemeList, setMemoThemeList] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   const deviceScreenSize = useRecoilValue(deviceScreenState);
   const [paddingTop, setPaddingTop] = useState(0);
@@ -85,7 +81,6 @@ const BoardOnOpen = ({
 
   const getMemos = async () => {
     const newMemos = await requestGetMemoList({ boardCode });
-
     newMemos.forEach((el) => {
       el["index"] = Math.random();
     });
@@ -100,6 +95,16 @@ const BoardOnOpen = ({
     makeMemoThemes();
     makeVisibleMemos();
   }, [memoList]);
+
+  useEffect(() => {
+    if (headerState.isEnterPress) {
+      const results = memoList.filter((memo) =>
+        memo.memoContent.includes(headerState.query)
+      ); // 검색 로직
+      setSearchResults(results);
+      setHeaderState({ ...headerState, isEnterPress: false });
+    }
+  }, [headerState.isEnterPress]);
 
   useEffect(() => {
     // 14 = service header 3rem + top 9 rem + padding bottom 2rem
@@ -172,7 +177,7 @@ const BoardOnOpen = ({
             onScroll={onScrollMemoContainer}
             paddingTop={paddingTop}
           >
-            {visibleMemos && privateModeForTest && !searchResults
+            {visibleMemos && privateModeForTest && searchResults.length === 0
               ? visibleMemos.map((el, i) => {
                   // memoThemeId
                   const theme = memoThemes[el.memoThemeId];
@@ -188,9 +193,9 @@ const BoardOnOpen = ({
                 })
               : null}
             {/* search memo results */}
-            {searchResults.memos &&
-              searchResults.memos.length > 0 &&
-              searchResults.memos.map((el, i) => {
+            {searchResults &&
+              searchResults.length > 0 &&
+              searchResults.map((el, i) => {
                 const theme = memoThemes[el.memoThemeId];
                 return (
                   <Memo
@@ -210,8 +215,8 @@ const BoardOnOpen = ({
         <DeleteMemoContianer>
           {/* 1. search result delete memo */}
           {/* 2. default list and if result is empty */}
-          {searchResults.memos && searchResults.memos.length > 0
-            ? searchResults.memos.map((el, i) => (
+          {searchResults && searchResults.length > 0
+            ? searchResults.map((el, i) => (
                 <CheckableMemo
                   key={`${el}${i}`}
                   id={el.memoId}

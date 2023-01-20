@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { requestDeleteBoard, requestBoard } from "../../api/boardsApi";
-import { requestSearchMemo } from "../../api/memoApi";
 import ServiceNameHeader from "../../components/layout/headers/serviceNameHeader";
 import AlertModal from "../../components/modals/alertModal";
 import { boardState } from "../../store";
@@ -21,15 +20,14 @@ const BoardPage = () => {
   const [headerState, setHeaderState] = useState({
     isSearchMode: false,
     searchType: null, // board | memo | deleteMemo
+    isEnterPress: false,
     menu: [],
     configMenu: [],
     configMenuHandler: [],
     query: "",
-    onKeydown: null,
     checkedMemoList: [],
   });
 
-  const [searchResults, setSearchResults] = useState([]);
   const [passwordModalState, setPasswordModalState] = useState({
     type: "",
     open: false,
@@ -69,16 +67,6 @@ const BoardPage = () => {
     if (deleted) {
       setIsOpenConfirmDeleteModal(false);
       navigate("/", { state: { isDeleted: true } });
-    }
-  };
-
-  const handleKeyDownSearchIput = async (e) => {
-    if (e.code === "Enter" && !e.nativeEvent.isComposing) {
-      const searchMemoResult = await requestSearchMemo({
-        boardCode,
-        query: e.target.value,
-      });
-      if (searchMemoResult) setSearchResults(searchMemoResult);
     }
   };
 
@@ -138,7 +126,6 @@ const BoardPage = () => {
           menu: ["search", "share", "config"],
           configMenu: ["보드 삭제", "메모 삭제"],
           configMenuHandler: [handleClickDeleteBoard, handleClickDeleteMemo],
-          onKeydown: handleKeyDownSearchIput,
         });
         break;
       default:
@@ -163,7 +150,6 @@ const BoardPage = () => {
             boardCode={boardCode}
             headerState={headerState}
             setHeaderState={setHeaderState}
-            searchResults={searchResults}
           />
         )}
         <PasswordModal

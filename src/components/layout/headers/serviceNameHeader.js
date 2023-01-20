@@ -14,11 +14,11 @@ const ServiceNameHeader = ({
   headerState = {
     isSearchMode: false,
     searchType: null,
+    isEnterPress: false,
     menu: [],
     configMenu: [],
     configMenuHandler: [],
     query: "",
-    onKeydown: null,
     checkedMemoList: [],
   },
   setHeaderState,
@@ -68,6 +68,12 @@ const ServiceNameHeader = ({
     navigate("/");
   };
 
+  const handleKeyDownSearchIput = async (e) => {
+    if (e.code === "Enter" && !e.nativeEvent.isComposing) {
+      setHeaderState({ ...headerState, isEnterPress: true });
+    }
+  };
+
   return (
     <ComponentWrapper>
       <ServiceNameHeaderContainer>
@@ -110,7 +116,7 @@ const ServiceNameHeader = ({
           onChange={handleChangeHeaderInput}
           isSearchMode={headerState.isSearchMode}
           searchType={headerState.searchType}
-          onKeyDown={headerState.onKeydown}
+          onKeyDown={handleKeyDownSearchIput}
           placeholder={
             headerState.searchType === "board"
               ? "보드를 검색하세요."
