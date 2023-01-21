@@ -21,16 +21,16 @@ const Main = () => {
   const [isBoardDeleted, setIsBoardDeleted] = useState(false);
 
   const [keyword, setKeyword] = useState(""); // 결과창 키워드 표시를 위한 값
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
 
   const [headerState, setHeaderState] = useState({
     isSearchMode: false,
     searchType: null, // board | memo | deleteMemo
+    isEnterPress: false,
     menu: [],
     configMenu: [],
     configMenuHandler: [],
     query: "",
-    onKeydown: null,
     checkedMemoList: [],
   });
 
@@ -52,17 +52,6 @@ const Main = () => {
     if (deltaY > 0) setIsFooter(true);
   };
 
-  const handleKeyDownSearchInput = async (e) => {
-    if (e.code === "Enter" && !e.nativeEvent.isComposing) {
-      setKeyword(headerState.query);
-      const searchBoardsResult = await requestSearchBoard({
-        query: headerState.query,
-      });
-
-      if (searchBoardsResult) setSearchResults(searchBoardsResult);
-    }
-  };
-
   const getReccomendBoardList = useCallback(async () => {
     const data = await requestReccomendBoardList();
     if (data) setReccomendBoardList(data);
@@ -75,6 +64,29 @@ const Main = () => {
     };
     getReccomendBoardList();
   }, [getReccomendBoardList]);
+
+  useEffect(() => {
+    const searchBoard = async () => {
+      setKeyword(headerState.query);
+      const searchBoardsResult = await requestSearchBoard({
+        query: headerState.query,
+      });
+
+      if (searchBoardsResult) setSearchResults(searchBoardsResult);
+    };
+
+    if (headerState.isEnterPress) {
+      searchBoard();
+      setHeaderState({ ...headerState, isEnterPress: false });
+    }
+  }, [headerState.isEnterPress]);
+
+  useEffect(() => {
+    if (!headerState.isSearchMode) {
+      setSearchResults(null);
+      setKeyword("");
+    }
+  }, [headerState.isSearchMode]);
 
   useEffect(() => {
     if (location.state && location.state.isDeleted) {
@@ -92,7 +104,11 @@ const Main = () => {
         onWheel={handleWheelPage}
         onTouchStart={handleTouchStartPage}
         onTouchMove={handleTouchMovePage}
-        noSearchResult={headerState.isSearchMode && searchResults.length === 0}
+        noSearchResult={
+          headerState.isSearchMode &&
+          searchResults &&
+          searchResults.length === 0
+        }
       >
         <MainPageContainer>
           <ServiceNameHeader
@@ -100,7 +116,6 @@ const Main = () => {
               ...headerState,
               menu: ["search"],
               searchType: "board",
-              onKeydown: handleKeyDownSearchInput,
             }}
             setHeaderState={setHeaderState}
           />

@@ -20,6 +20,7 @@ const SearchPage = ({ keyword, searchResults }) => {
     getHotBoardsData();
   }, [getHotBoardsData]);
 
+  console.log(searchResults);
   return (
     <>
       {keyword ? (
@@ -81,7 +82,7 @@ const SearchPage = ({ keyword, searchResults }) => {
                   </ChevronTopButton>
                 </ButtonWrapper>
               </>
-            ) : (
+            ) : searchResults && searchResults.length === 0 ? (
               <HotBoardSection>
                 <BoardSlide
                   title="지금 핫한 인기보드"
@@ -89,7 +90,7 @@ const SearchPage = ({ keyword, searchResults }) => {
                   positionValue="0"
                 />
               </HotBoardSection>
-            )}
+            ) : null}
           </SearchResultSection>
         </SearchPageBody>
       ) : null}
