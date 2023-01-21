@@ -78,7 +78,7 @@ export default BoardSlider;
 
 const BoardSliderContainer = styled.div`
   position: absolute;
-  width: 100%;
+  width: 90%;
   height: 31vh;
   overflow: hidden;
   display: flex;
