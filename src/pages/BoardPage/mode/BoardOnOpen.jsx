@@ -25,7 +25,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
   const [openDueDate, setOpenDueDate] = useState(false);
 
   const [memoList, setMemoList] = useState([]);
-  const [meemoThemeList, setMemoThemeList] = useState([]);
+  const [memoThemeList, setMemoThemeList] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
   const deviceScreenSize = useRecoilValue(deviceScreenState);
@@ -91,12 +91,10 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
     if (newMemos) setMemoList(newMemos);
   };
 
-  console.log(memoList);
-
   useEffect(() => {
     makeMemoThemes();
     makeVisibleMemos();
-  }, [memoList]);
+  }, [memoList, memoThemeList]);
 
   useEffect(() => {
     if (headerState.isEnterPress) {
@@ -130,12 +128,13 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
 
   const getMemoThemes = async () => {
     const memoThemes = await requestGetMemoThemeList({ boardCode });
+    console.log(memoThemes);
     if (memoThemes) setMemoThemeList(memoThemes);
   };
 
   const makeMemoThemes = () => {
     const newMemoThemes = {};
-    meemoThemeList.forEach((el) => {
+    memoThemeList.forEach((el) => {
       newMemoThemes[el.memoThemeId] = el;
     });
     setMemoThemes(newMemoThemes);
