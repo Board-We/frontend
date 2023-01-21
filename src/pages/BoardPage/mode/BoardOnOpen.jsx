@@ -91,6 +91,8 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
     if (newMemos) setMemoList(newMemos);
   };
 
+  console.log(memoList);
+
   useEffect(() => {
     makeMemoThemes();
     makeVisibleMemos();
@@ -100,11 +102,17 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
     if (headerState.isEnterPress) {
       const results = memoList.filter((memo) =>
         memo.memoContent.includes(headerState.query)
-      ); // 검색 로직
+      );
       setSearchResults(results);
       setHeaderState({ ...headerState, isEnterPress: false });
     }
-  }, [headerState.isEnterPress]);
+  }, [headerState.isEnterPress, memoList]);
+
+  useEffect(() => {
+    if (!headerState.isSearchMode) {
+      setSearchResults([]);
+    }
+  }, [headerState.isSearchMode]);
 
   useEffect(() => {
     // 14 = service header 3rem + top 9 rem + padding bottom 2rem
