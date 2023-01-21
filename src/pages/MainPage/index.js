@@ -52,18 +52,13 @@ const Main = () => {
     if (deltaY > 0) setIsFooter(true);
   };
 
-  const getReccomendBoardList = useCallback(async () => {
-    const data = await requestReccomendBoardList();
-    if (data) setReccomendBoardList(data);
-  }, []);
-
   useEffect(() => {
     const getReccomendBoardList = async () => {
       const data = await requestReccomendBoardList();
       if (data) setReccomendBoardList(data);
     };
     getReccomendBoardList();
-  }, [getReccomendBoardList]);
+  }, []);
 
   useEffect(() => {
     const searchBoard = async () => {

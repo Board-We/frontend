@@ -4,6 +4,7 @@ import { ReactComponent as ChevronTop } from "../../../../assets/icons/chevronTo
 import BoardSlide from "../BoardSlide";
 import { useCallback, useEffect, useState } from "react";
 import { requestHotBoardList } from "../../../../api/boardsApi";
+import { getBoardDdayStatus } from "../../../../utils/board";
 
 const SearchPage = ({ keyword, searchResults }) => {
   const [hotBoardList, setHotBoardList] = useState([]);
@@ -20,7 +21,6 @@ const SearchPage = ({ keyword, searchResults }) => {
     getHotBoardsData();
   }, [getHotBoardsData]);
 
-  console.log(searchResults);
   return (
     <>
       {keyword ? (
@@ -72,6 +72,10 @@ const SearchPage = ({ keyword, searchResults }) => {
                       boardName={result.boardName}
                       boardViews={result.boardViews}
                       boardBackground={result.boardBackground}
+                      boardDdayStatus={getBoardDdayStatus({
+                        openStartTime: result.openStartTime,
+                        writingStartTime: result.writingStartTime,
+                      })}
                       sx={"margin: 0;"}
                     />
                   ))}

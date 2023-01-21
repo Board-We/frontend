@@ -4,7 +4,7 @@ import { ReactComponent as Eye } from "../../../../assets/icons/eye.svg";
 
 const Slide = ({
   boardLink,
-  boardStatus,
+  boardDdayStatus,
   boardName,
   boardViews,
   boardBackground,
@@ -18,7 +18,7 @@ const Slide = ({
       onClick={() => navigate(boardLink)}
     >
       <SlideTopDescription>
-        <BoardStatus>작성 가능</BoardStatus>
+        <BoardDdayStatus>{boardDdayStatus}</BoardDdayStatus>
         <BaordViewCount>
           <Eye />
           <span>{boardViews}</span>
@@ -62,11 +62,12 @@ const SlideBottomDescription = styled.div`
   font-size: 1.1rem;
 `;
 
-const BoardStatus = styled.div`
+const BoardDdayStatus = styled.div`
   border: 0.1rem solid white;
   width: fit-content;
   padding: 0.2rem 0.5rem;
   border-radius: 0.8rem;
+  font-size: 0.8rem;
 `;
 
 const BaordViewCount = styled.div`

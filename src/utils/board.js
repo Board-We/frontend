@@ -22,3 +22,40 @@ export const getBoardLifeCycle = (board) => {
     return "onEnd";
   }
 };
+
+export const getBoardDdayStatus = ({ openStartTime, writingStartTime }) => {
+  const now = new Date().getTime();
+  const dDayBoardOpen = (now - new Date(openStartTime)) / (1000 * 60 * 60 * 24); // 소수점을 제거 하지 않은 남은 일수
+  const dDayBoardWriting =
+    (now - new Date(writingStartTime)) / (1000 * 60 * 60 * 24); // 소수점을 제거하지 않은 남은 일수
+
+  if (dDayBoardOpen >= 0) {
+    return "확인 가능";
+  } else if (dDayBoardWriting >= 0 && dDayBoardOpen >= 0) {
+    return "작성 가능";
+  } else if (dDayBoardWriting < 0 && dDayBoardWriting > -1) {
+    const restTime = Math.abs(dDayBoardWriting * (1000 * 60 * 60 * 24)); // 남은시간이 1일 미만일 경우 먼저 rawtime(milliseccond 값)으로 재환산
+    if (restTime < 3600000) {
+      const miniute = Math.floor(restTime / (1000 * 60)); // 남은시간이 1시간 미만이면 분으로 환산
+      return `작성 ${miniute}분 전`;
+    } else {
+      const hour = Math.floor(Math.abs(restTime / (1000 * 60 * 60))); // 남은시간이 1시간 이상이면 시간으로 환산
+      return `작성 ${hour}시간 전`;
+    }
+  } else if (dDayBoardWriting < 0) {
+    const day = Math.floor(Math.abs(dDayBoardWriting)); // 남은시간이 1일 이상일 경우
+    return `작성 ${day}일 전`;
+  } else if (dDayBoardOpen < 0 && dDayBoardOpen > -1) {
+    const restTime = Math.abs(dDayBoardOpen * (1000 * 60 * 60 * 24));
+    if (restTime < 3600000) {
+      const miniute = Math.floor(restTime / (1000 * 60));
+      return `확인 ${miniute}분 전`;
+    } else {
+      const hour = Math.floor(Math.abs(restTime / (1000 * 60 * 60)));
+      return `확인 ${hour}시간 전`;
+    }
+  } else if (dDayBoardOpen < 0) {
+    const day = Math.floor(Math.abs(dDayBoardOpen));
+    return `확인 ${day}일 전`;
+  }
+};

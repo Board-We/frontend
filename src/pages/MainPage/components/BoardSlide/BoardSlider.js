@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
+import { getBoardDdayStatus } from "../../../../utils/board";
 import MoreBoardSlide from "./MoreBoardSlide";
 import Slide from "./Slide";
 
@@ -57,7 +58,10 @@ const BoardSlider = ({ boards }) => {
         {boards.map((board, i) => (
           <Slide
             key={board.boardName + i}
-            boardStatus={board.boardStatus}
+            boardDdayStatus={getBoardDdayStatus({
+              openStartTime: board.openStartTime,
+              writingStartTime: board.writingStartTime,
+            })}
             boardLink={board.boardLink}
             boardName={board.boardName}
             boardViews={board.boardViews}

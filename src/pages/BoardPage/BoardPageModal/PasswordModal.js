@@ -149,7 +149,7 @@ const ConfirmButton = styled.button`
     props.disabled ? props.theme.colors.grey_40 : props.theme.colors.primary_2};
   color: ${(props) => props.theme.colors.gery_20};
   align-items: center;
-  font-size: 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
   right: 0;
   top: 0;
