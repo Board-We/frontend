@@ -15,6 +15,7 @@ import CalendarButton from "../../../components/buttons/calendarButton";
 import BlockAccessBoard from "../components/blockAccessBoard";
 import Memo from "../../../components/memo";
 import AlertModal from "../../../components/modals/alertModal";
+import GotoTopButton from "../../../components/buttons/GotoTopButton";
 
 const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
   const board = useRecoilValue(boardState);
@@ -256,6 +257,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
       {isMemoLoading ? <Spinner /> : null}
       {!headerState.isSearchMode && privateModeForTest && (
         <>
+          <GotoTopButton bottom="5rem" onClick={null} />
           <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
           <CalendarButton open={openDueDate} />
         </>

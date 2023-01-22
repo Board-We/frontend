@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { ReactComponent as ArrowBack } from "../../../../assets/icons/arrowBack.svg";
 
-const MoreBoardSlide = () => {
+const MoreBoardSlide = ({ onClick }) => {
   return (
-    <MoreBoardContainer>
+    <MoreBoardContainer onClick={onClick}>
       <p>인기보드 더 보기</p>
       <ArrowBack />
     </MoreBoardContainer>
@@ -21,7 +21,6 @@ const MoreBoardContainer = styled.div`
   align-items: center;
   border-radius: 1.2rem;
   aspect-ratio: 1 / 1.6;
-
   path {
     fill: ${(props) => props.theme.colors.grey_30};
   }

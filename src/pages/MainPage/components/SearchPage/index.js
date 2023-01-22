@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import Slide from "../BoardSlide/Slide";
-import { ReactComponent as ChevronTop } from "../../../../assets/icons/chevronTop.svg";
 import BoardSlide from "../BoardSlide";
 import { useCallback, useEffect, useState } from "react";
 import { requestHotBoardList } from "../../../../api/boardsApi";
 import { getBoardDdayStatus } from "../../../../utils/board";
+import GotoTopButton from "../../../../components/buttons/GotoTopButton";
 
 const SearchPage = ({ keyword, searchResults }) => {
   const [hotBoardList, setHotBoardList] = useState([]);
+
   const handleClickChevronTop = () => {
     window.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
@@ -80,11 +81,7 @@ const SearchPage = ({ keyword, searchResults }) => {
                     />
                   ))}
                 </SearchResultList>
-                <ButtonWrapper>
-                  <ChevronTopButton onClick={handleClickChevronTop}>
-                    <ChevronTop />
-                  </ChevronTopButton>
-                </ButtonWrapper>
+                <GotoTopButton bottom="2rem" onClick={handleClickChevronTop} />
               </>
             ) : searchResults && searchResults.length === 0 ? (
               <HotBoardSection>
@@ -188,27 +185,4 @@ const SearchResultList = styled.div`
   margin-top: 1rem;
   align-items: center;
   justify-items: center;
-`;
-
-const ButtonWrapper = styled.div`
-  position: fixed;
-  width: 100%;
-  max-width: 600px;
-  bottom: 2rem;
-  display: flex;
-  justify-content: end;
-  padding-right: 1rem; ;
-`;
-
-const ChevronTopButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 3rem;
-  height: 3rem;
-  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.25));
-  padding: 0.5rem;
-  border-radius: 1.5rem;
-  border: none;
-  cursor: pointer;
 `;

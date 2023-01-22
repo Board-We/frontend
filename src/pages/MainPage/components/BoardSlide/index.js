@@ -1,7 +1,14 @@
 import styled from "styled-components";
 import BoardSlider from "./BoardSlider";
 
-const BoardSlide = ({ title, description, boards, positionValue }) => {
+const BoardSlide = ({
+  type,
+  title,
+  description,
+  boards,
+  onClickMoreBoard,
+  positionValue,
+}) => {
   return (
     <ReccomendBoardSlideContainer positionValue={positionValue}>
       <ReccomendBoardSlideHeader>
@@ -9,7 +16,11 @@ const BoardSlide = ({ title, description, boards, positionValue }) => {
         <p>{description}</p>
       </ReccomendBoardSlideHeader>
       <ReccomendBoardSlideBody>
-        <BoardSlider boards={boards} />
+        <BoardSlider
+          type={type}
+          boards={boards}
+          onClickMoreBoard={onClickMoreBoard}
+        />
       </ReccomendBoardSlideBody>
     </ReccomendBoardSlideContainer>
   );

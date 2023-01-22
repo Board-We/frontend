@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -123,9 +123,16 @@ const Main = () => {
               <MainPageBody>
                 <EnterLinkInput />
                 <BoardSlide
+                  type="reccomend"
                   title="추천 보드"
                   description="공개한 보드는 랜덤으로 추천됩니다!"
                   boards={reccomendBoardList}
+                  onClickMoreBoard={() =>
+                    setHeaderState({
+                      ...headerState,
+                      isSearchMode: true,
+                    })
+                  }
                   positionValue="70%"
                 />
               </MainPageBody>

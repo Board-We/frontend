@@ -6,7 +6,7 @@ import Slide from "./Slide";
 
 const slidingValue = 10;
 
-const BoardSlider = ({ boards }) => {
+const BoardSlider = ({ type, boards, onClickMoreBoard }) => {
   const sliderContainerRef = useRef();
   const [mobileStartX, setMobileStartX] = useState(0);
 
@@ -68,7 +68,7 @@ const BoardSlider = ({ boards }) => {
             boardBackground={board.boardBackground}
           />
         ))}
-        <MoreBoardSlide />
+        {type === "reccomend" && <MoreBoardSlide onClick={onClickMoreBoard} />}
       </Slides>
     </BoardSliderContainer>
   );
@@ -78,7 +78,7 @@ export default BoardSlider;
 
 const BoardSliderContainer = styled.div`
   position: absolute;
-  width: 90%;
+  width: 100%;
   height: 31vh;
   overflow: hidden;
   display: flex;
@@ -86,8 +86,8 @@ const BoardSliderContainer = styled.div`
 `;
 
 const Slides = styled.div`
-  position: absolute;
-  width: 100%;
+  width: fit-content;
   display: flex;
   gap: 1rem;
+  margin-right: 3rem;
 `;
