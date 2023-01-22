@@ -9,7 +9,7 @@ import GotoTopButton from "../../../../components/buttons/GotoTopButton";
 const SearchPage = ({ keyword, searchResults }) => {
   const [hotBoardList, setHotBoardList] = useState([]);
 
-  const handleClickChevronTop = () => {
+  const handleClickGotoTop = () => {
     window.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
 
@@ -81,7 +81,7 @@ const SearchPage = ({ keyword, searchResults }) => {
                     />
                   ))}
                 </SearchResultList>
-                <GotoTopButton bottom="2rem" onClick={handleClickChevronTop} />
+                <GotoTopButton bottom="2rem" onClick={handleClickGotoTop} />
               </>
             ) : searchResults && searchResults.length === 0 ? (
               <HotBoardSection>

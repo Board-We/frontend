@@ -29,25 +29,15 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
   };
 
   const handleonKeyDownEnter = (e) => {
-    if (e.key === "Enter") {
+    if (e.code === "Enter" && !e.nativeEvent.isComposing) {
+      setBoard({ ...board, boardTags: [...board.boardTags, inputValue] });
       setInputValue("");
-
-      let copyTag = [...board.boardTags];
-      copyTag.push(inputValue);
-
-      let boardState = { ...board, tags: copyTag };
-      setBoard(boardState);
     }
   };
 
   const handleDeleteTag = (index) => {
-    let copyTag = [...board.boardTags];
-    const newTagArray = copyTag.filter((_, idx) => {
-      return idx !== index;
-    });
-
-    let boardState = { ...board, tags: newTagArray };
-    setBoard(boardState);
+    const newBoardTags = board.boardTags.filter((_, idx) => idx !== index);
+    setBoard({ ...board, boardTags: newBoardTags });
   };
 
   useEffect(() => {
@@ -100,7 +90,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
               <Tag>
                 {val}
                 <CloseButton onClick={() => handleDeleteTag(idx)} value={idx}>
-                  <Close />{" "}
+                  <Close />
                 </CloseButton>
               </Tag>
             </React.Fragment>

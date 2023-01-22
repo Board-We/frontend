@@ -10,7 +10,6 @@ const CalendarButton = ({ openState, setOpenState }) => {
   const board = useRecoilValue(boardState);
   const dueDateRef = useRef();
 
-  console.log(openState);
   useEffect(() => {
     if (openState.open) {
       setTimeout(() => {

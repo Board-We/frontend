@@ -186,7 +186,7 @@ const moveSearchButton = keyframes`
 }
 100% {
   position: absolute;
-  right: 87%;
+  right: 85%;
 }
 `;
 
@@ -194,7 +194,7 @@ const SearchButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
-  right: 0;
+  right: 10%;
   animation: ${(props) =>
     props.isSearchMode
       ? css`
