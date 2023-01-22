@@ -23,7 +23,10 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
   const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
 
   const [openToast, setOpenToast] = useState(true);
-  const [openDueDate, setOpenDueDate] = useState(false);
+  const [openDueDateState, setOpenDueDateState] = useState({
+    open: false,
+    auto: true,
+  });
 
   const [memoList, setMemoList] = useState([]);
   const [memoThemeList, setMemoThemeList] = useState([]);
@@ -160,10 +163,11 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
     const memoContainerObject = e.target;
     if (memoContainerObject.scrollTop > 0) {
       setOpenToast(false);
-      setOpenDueDate(true);
+      if (openDueDateState.auto)
+        setOpenDueDateState({ ...openDueDateState, open: true });
     } else if (memoContainerObject.scrollTop === 0) {
       setOpenToast(true);
-      setOpenDueDate(false);
+      setOpenDueDateState({ ...openDueDateState, open: false });
     }
 
     if (
@@ -259,7 +263,10 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
         <>
           <GotoTopButton bottom="5rem" onClick={null} />
           <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
-          <CalendarButton open={openDueDate} />
+          <CalendarButton
+            openState={openDueDateState}
+            setOpenState={setOpenDueDateState}
+          />
         </>
       )}
       {!privateModeForTest && <BlockAccessBoard />}

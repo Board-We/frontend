@@ -4,26 +4,45 @@ import styled, { keyframes, css } from "styled-components";
 import { ReactComponent as Calendar } from "../../assets/icons/calendar.svg";
 import { boardState } from "../../store";
 import { formattingDateObject } from "../../utils/setDefaultDay";
+import { ReactComponent as ArrowRight } from "../../assets/icons/arrowRight.svg";
 
-const CalendarButton = ({ open }) => {
+const CalendarButton = ({ openState, setOpenState }) => {
   const board = useRecoilValue(boardState);
-
   const dueDateRef = useRef();
 
+  console.log(openState);
   useEffect(() => {
-    if (open) {
+    if (openState.open) {
       setTimeout(() => {
         dueDateRef.current.innerText = `${formattingDateObject(
           board.openEndTime
         )}까지 공개됩니다.`;
       }, 250);
     }
-  }, [open, board.openEndTime]);
+  }, [openState.open, board.openEndTime]);
 
   return (
     <ComponentWrapper>
-      <CalendarContainer open={open} ref={dueDateRef}>
-        {open ? "" : <Calendar />}
+      <CalendarContainer
+        open={openState.open}
+        onClick={
+          !openState.open
+            ? () => setOpenState({ ...openState, open: true })
+            : null
+        }
+      >
+        {openState.open ? (
+          <>
+            <DueDateText ref={dueDateRef} />
+            <ArrowRight
+              onClick={() =>
+                setOpenState({ ...openState, open: false, auto: false })
+              }
+            />
+          </>
+        ) : (
+          <Calendar />
+        )}
       </CalendarContainer>
     </ComponentWrapper>
   );
@@ -70,7 +89,7 @@ const CalendarContainer = styled.div`
   right: 0;
   width: 50px;
   height: 50px;
-  padding: 1rem;
+  padding: 0rem 1rem;
   border-radius: 25px;
   background-color: ${(props) => props.theme.colors.white};
   animation: ${(props) =>
@@ -82,4 +101,8 @@ const CalendarContainer = styled.div`
         css`
           ${collapseCalendarButton} 0.3s ease-in-out forwards
         `};
+`;
+
+const DueDateText = styled.div`
+  width: 100%;
 `;
