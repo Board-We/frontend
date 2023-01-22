@@ -169,6 +169,7 @@ const CompleteCreate = () => {
           isBackdrop={false}
           height={"fit-content"}
           ref={modalRef}
+          type="slide-up"
         >
           <ModalContents boardURL={boardURL} />
         </SlideModal>
@@ -181,7 +182,6 @@ export default CompleteCreate;
 
 const BoardContainer = styled.div`
   width: 100%;
-  height: 80vh;
   border-radius: 4px;
   background: ${(props) =>
     props.background.includes("base64")
@@ -225,6 +225,7 @@ const TagContainer = styled.div`
 const MemoContainer = styled.div`
   overflow-y: scroll;
   display: flex;
+
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 1.5rem;
