@@ -115,6 +115,8 @@ const CreateBoardGuide = styled.div`
 `;
 
 const TextInputSection = styled.div`
+  display: flex;
+  justify-content: center;
   position: relative;
   width: 100%;
 `;
@@ -154,7 +156,7 @@ const MultilineTextInput = styled.textarea`
 const DeleteButton = styled.button`
   position: absolute;
   right: 1%;
-  top: 50%;
+  top: 40%;
   margin: auto;
   transform: translate(-50%);
   border: none;
