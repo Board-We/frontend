@@ -60,7 +60,7 @@ const Memo = ({
           height={heightTA}
         />
       ) : (
-        <MemoText color={color} fontSize={sizeUnit}>
+        <MemoText color={color} fontSize={sizeUnit} fontType={fontType}>
           {text}
         </MemoText>
       )}
@@ -109,6 +109,7 @@ const MemoTextTA = styled.textarea`
 `;
 
 const MemoText = styled.div`
+  font-family: ${(props) => props.fontType};
   font-size: ${(props) => props.fontSize}px;
   color: ${(props) => props.color};
 `;

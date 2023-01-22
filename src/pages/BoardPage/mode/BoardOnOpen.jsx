@@ -206,6 +206,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
                       text={el.memoContent}
                       background={theme?.memoBackground}
                       color={theme?.memoTextColor}
+                      fontType={board.boardFont}
                     />
                   );
                 })
