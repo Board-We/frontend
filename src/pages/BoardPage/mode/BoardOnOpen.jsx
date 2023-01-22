@@ -132,7 +132,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
 
   const getMemoThemes = async () => {
     const memoThemes = await requestGetMemoThemeList({ boardCode });
-    console.log(memoThemes);
+
     if (memoThemes) setMemoThemeList(memoThemes);
   };
 
@@ -161,6 +161,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
 
   const onScrollMemoContainer = (e) => {
     const memoContainerObject = e.target;
+
     if (memoContainerObject.scrollTop > 0) {
       setOpenToast(false);
       if (openDueDateState.auto)
@@ -175,6 +176,11 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
       memoContainerObject.offsetHeight + memoContainerObject.scrollTop
     )
       addVisibleMemos();
+  };
+
+  const scrollToTop = () => {
+    $memoContainer.current.style.scrollBehavior = "smooth";
+    $memoContainer.current.scrollTop = 0;
   };
 
   return (
@@ -219,6 +225,9 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
                   />
                 );
               })}
+            {!headerState.isSearchMode && privateModeForTest && (
+              <GotoTopButton bottom="5rem" onClick={scrollToTop} />
+            )}
           </MemoContainer>
         </>
       )}
@@ -261,7 +270,6 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
       {isMemoLoading ? <Spinner /> : null}
       {!headerState.isSearchMode && privateModeForTest && (
         <>
-          <GotoTopButton bottom="5rem" onClick={null} />
           <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
           <CalendarButton
             openState={openDueDateState}
