@@ -42,14 +42,13 @@ const CreateBoardStep3 = ({ footerRef }) => {
     const bottomOfDescription =
       $desciprion.current.offsetTop + $desciprion.current.clientHeight;
     const heightOfButtonArea = $buttonArea.current.clientHeight;
-    const marginTop = Number(deviceScreenSize.rem.replace("px", "")) * 0.5;
+    const marginTop = Number(deviceScreenSize.rem.replace("px", ""));
     setHeightOfMemoGrid(
       deviceScreenSize.y -
         bottomOfDescription -
         footerRef.current.clientHeight -
         heightOfButtonArea -
-        marginTop +
-        2
+        marginTop
     );
   }, [
     deviceScreenSize,

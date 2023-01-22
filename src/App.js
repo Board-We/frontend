@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import CreateBoardPage from "./pages/CreateBoardPage";
 import CreateMemoPage from "./pages/createMemoPage";
 import Main from "./pages/MainPage";
 import { deviceScreenState } from "./store";
 import BoardPage from "./pages/BoardPage";
+import styled from "styled-components";
 
 function App() {
-  const setDeviceScreenSize = useSetRecoilState(deviceScreenState);
+  const [deviceScreenSize, setDeviceScreenSize] = useRecoilState(deviceScreenState);
 
   useEffect(() => {
     addEventListenerResize();
-  });
+  }, []);
 
   const addEventListenerResize = () => {
     setDeviceScreenSize({
@@ -31,7 +31,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <AppContainer height={deviceScreenSize.y}>
       <Routes>
         <Route path="/board/new" element={<CreateBoardPage />} />
         <Route
@@ -41,8 +41,22 @@ function App() {
         <Route path="/board/:boardCode/" element={<BoardPage />} />
         <Route path="/" element={<Main />} />
       </Routes>
-    </div>
+    </AppContainer>
   );
 }
+
+const AppContainer = styled.div`
+  text-align: center;
+  width: 100vw;
+  /* galaxy fold half screen size: 280px */
+  min-width: 280px;
+  max-width: 600px;
+  height: ${props => props.height}px;
+  min-height: ${props => props.height}px;
+  max-height: ${props => props.height}px;
+  margin: 0;
+  padding: 0;
+  background-color: #FFFFFF;
+`
 
 export default App;

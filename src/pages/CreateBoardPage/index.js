@@ -47,13 +47,14 @@ const CreateBoardPage = () => {
     )
       return;
     const bottomOfDescription =
+      $stepDescription.current.offsetTop +
       $stepDescription.current.clientHeight +
       Number(deviceScreenSize.rem.replace("px", "")) * 0.8125;
     const heightOfFooter = $footer.current.clientHeight;
     setHeightOfContentArea(
       deviceScreenSize.y - heightOfFooter - bottomOfDescription
     );
-  }, [$stepDescription.current, $footer.current, deviceScreenSize]);
+  }, [$stepDescription.current, $footer.current, deviceScreenSize.y]);
 
   const handleClickNext = () => {
     setCurrentStepId((prev) => prev + 1);
