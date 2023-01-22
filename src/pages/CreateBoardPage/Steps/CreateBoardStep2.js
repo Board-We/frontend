@@ -34,7 +34,8 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   };
 
   useEffect(() => {
-    board.boardDescription.length >= 1 && board.boardDescription.length < maxLength + 1
+    board.boardDescription.length >= 1 &&
+    board.boardDescription.length < maxLength + 1
       ? setDisabledFooterButton(false)
       : setDisabledFooterButton(true);
   }, [setDisabledFooterButton, board.boardDescription.length]);
@@ -45,11 +46,10 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
   }, [board.boardDescription, setIsValidLength]);
 
   useEffect(() => {
-    if (board.boardDescription.length > maxLength + 1) {
+    if (board.boardDescription.length === maxLength + 1) {
       setBoard({ ...board, description: prevBoardDescription.current });
-      return;
     }
-  }, [board.boardDescription, board, setBoard]);
+  }, [board.boardDescription]);
 
   useEffect(() => {
     if (textAreaRef) {
@@ -69,6 +69,7 @@ const CreateBoardStep2 = ({ setDisabledFooterButton }) => {
           onKeyDown={handleKeyDown}
           height={heightInput}
           ref={textAreaRef}
+          maxLength={maxLength + 1}
           rows={1}
           isValidLength={isValidLength}
           placeholder="ex. 이 보드에 3일동안 메모를 남겨줘!"
@@ -123,11 +124,12 @@ const MultilineTextInput = styled.textarea`
   font-size: 1.2rem;
   margin-top: 1rem;
   text-align: start;
-  padding-right: 2rem;
+  padding-right: 4rem;
+  padding-bottom: 0.9rem;
   border: 0;
   overflow: hidden;
+  border-style: hidden;
   resize: none;
-  line-height: 1.5;
   border-bottom: ${(props) =>
     props.isValidLength
       ? `0.1rem solid ${props.theme.colors.primary}`
@@ -152,7 +154,7 @@ const MultilineTextInput = styled.textarea`
 const DeleteButton = styled.button`
   position: absolute;
   right: 1%;
-  bottom: 10%;
+  top: 50%;
   margin: auto;
   transform: translate(-50%);
   border: none;
@@ -164,7 +166,7 @@ const DeleteButton = styled.button`
 const AlertExclamationWrapper = styled.div`
   position: absolute;
   right: 1%;
-  bottom: 10%;
+  top: 50%;
   margin: auto;
   transform: translate(-50%);
 `;
