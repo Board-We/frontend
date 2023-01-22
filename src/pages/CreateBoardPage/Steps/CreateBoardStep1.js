@@ -74,7 +74,7 @@ const CreateBoardStep1 = ({ setDisabledFooterButton }) => {
         type="text"
         onChange={handleChangeBoardName}
         inputMaxLength={maxLength + 1}
-        onClickDelete={() => setBoard({ ...board, name: "" })}
+        onClickDelete={() => setBoard({ ...board, boardName: "" })}
         isValidLength={isValidLength}
         ref={inputRef}
       />
