@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import styled from "styled-components";
 import Description from "../../../components/label/description";
 import SmallTitle from "../../../components/label/smallTitle";
@@ -7,7 +6,9 @@ import Tag from "../../../components/label/tag";
 
 const BoardBackground = ({ boardInfo, centerContent }) => {
   return (
-    <ComponentWrapper background={boardInfo.boardBackground}>
+    <ComponentWrapper
+      background={boardInfo.boardBackground ? boardInfo.boardBackground : ""}
+    >
       <Blind />
       <CenterContentContainer>{centerContent}</CenterContentContainer>
       <ContentContainer>

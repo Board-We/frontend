@@ -17,11 +17,16 @@ import Memo from "../../../components/memo";
 import AlertModal from "../../../components/modals/alertModal";
 import GotoTopButton from "../../../components/buttons/GotoTopButton";
 
-const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
+const BoardOnOpen = ({
+  boardCode,
+  headerState,
+  setHeaderState,
+  isAccessble,
+  setIsAccessble,
+}) => {
   const board = useRecoilValue(boardState);
-  const privateModeForTest = true;
-  const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
 
+  const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
   const [openToast, setOpenToast] = useState(true);
   const [openDueDateState, setOpenDueDateState] = useState({
     open: false,
@@ -195,7 +200,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
             onScroll={onScrollMemoContainer}
             paddingTop={paddingTop}
           >
-            {visibleMemos && privateModeForTest && searchResults.length === 0
+            {visibleMemos && isAccessble && searchResults.length === 0
               ? visibleMemos.map((el, i) => {
                   // memoThemeId
                   const theme = memoThemes[el.memoThemeId];
@@ -226,7 +231,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
                   />
                 );
               })}
-            {!headerState.isSearchMode && privateModeForTest && (
+            {!headerState.isSearchMode && isAccessble && (
               <GotoTopButton bottom="5rem" onClick={scrollToTop} />
             )}
           </MemoContainer>
@@ -269,7 +274,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
         </DeleteMemoContianer>
       )}
       {isMemoLoading ? <Spinner /> : null}
-      {!headerState.isSearchMode && privateModeForTest && (
+      {!headerState.isSearchMode && isAccessble && (
         <>
           <Toast open={openToast}>스크롤해서 확인해보세요!</Toast>
           <CalendarButton
@@ -278,7 +283,7 @@ const BoardOnOpen = ({ boardCode, headerState, setHeaderState }) => {
           />
         </>
       )}
-      {!privateModeForTest && <BlockAccessBoard />}
+      {!isAccessble && <BlockAccessBoard setIsAccessble={setIsAccessble} />}
       <AlertModal
         open={isOpenDeleteMemoModal}
         onClickArray={[handleCloseDeleteMemoModal, handleConfirmDeleteMemo]}

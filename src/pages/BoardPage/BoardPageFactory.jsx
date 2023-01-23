@@ -12,6 +12,8 @@ const BoardPageFactory = ({
   headerState,
   setHeaderState,
   searchResults,
+  isAccessble,
+  setIsAccessble,
 }) => {
   switch (boardLifeCycle) {
     case "onWaitWrite":
@@ -27,6 +29,8 @@ const BoardPageFactory = ({
           headerState={headerState}
           setHeaderState={setHeaderState}
           searchResults={searchResults}
+          isAccessble={isAccessble}
+          setIsAccessble={setIsAccessble}
         />
       );
     case "onEnd":
