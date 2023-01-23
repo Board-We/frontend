@@ -81,8 +81,8 @@ const ServiceNameHeader = ({
           <ServiceNameHeaderTitle src={serviceLogo} onClick={onClickTitle} />
         )}
         {headerState.isSearchMode && (
-          <ChevronLeftButton>
-            <ChevronLeft onClick={handleClickChevronLeft} />
+          <ChevronLeftButton onClick={handleClickChevronLeft}>
+            <ChevronLeft />
           </ChevronLeftButton>
         )}
         <ServiceNameHeaderButtonGroup>
@@ -183,11 +183,11 @@ const ChevronLeftButton = styled.button`
 const moveSearchButton = keyframes`
 0% {
   position: absolute;
- right:0;
+  right:0;
 }
 100% {
   position: absolute;
-  right: 83%;
+  left: -62%;
 }
 `;
 
