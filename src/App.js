@@ -53,7 +53,6 @@ const AppContainer = styled.div`
   max-width: 600px;
   height: ${props => props.height}px;
   min-height: ${props => props.height}px;
-  max-height: ${props => props.height}px;
   margin: 0;
   padding: 0;
   background-color: #FFFFFF;
