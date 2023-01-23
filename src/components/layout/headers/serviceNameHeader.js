@@ -177,6 +177,7 @@ const ChevronLeftButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   position: relative;
+  left: 1%;
 `;
 
 const moveSearchButton = keyframes`
@@ -225,7 +226,7 @@ const expandSearchInput = keyframes`
 }
 100% {
   display: block;
-  width: 92%;
+  width: 90%;
 }
 `;
 
@@ -246,7 +247,7 @@ const HeaderInput = styled.input`
   width: 0;
   margin: 0.5rem;
   padding: 0.5rem;
-  padding-left: 2.5rem;
+  padding-left: 2.2rem;
   background-color: ${(props) => props.theme.colors.grey_50};
   border: none;
   border-radius: 0.5rem;
