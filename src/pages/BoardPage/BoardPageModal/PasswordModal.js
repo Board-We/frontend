@@ -25,14 +25,17 @@ const PasswordModal = ({
 
   const handleClickConfrimPassword = async () => {
     const isSuccess = await requestLogin({ password, boardCode });
-    if (isSuccess) {
-      onValid();
-      setPassword("");
-      onClose();
-    } else {
-      inputRef.current.focus();
-      setIsInvalid(true);
-    }
+    // if (isSuccess) {
+    //   onValid();
+    //   setPassword("");
+    //   onClose();
+    // } else {
+    //   inputRef.current.focus();
+    //   setIsInvalid(true);
+    // }
+    onValid();
+    setPassword("");
+    onClose();
   };
 
   const handleCloseModal = () => {

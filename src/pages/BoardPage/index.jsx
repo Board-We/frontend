@@ -16,6 +16,7 @@ const BoardPage = () => {
   const navigate = useNavigate();
   const [board, setBoard] = useRecoilState(boardState);
   const [boardLifeCycle, setBoardLifeCycle] = useState(null);
+  const [isAccessble, setIsAccessble] = useState(true);
   const [password, setPassword] = useState("");
   const [headerState, setHeaderState] = useState({
     isSearchMode: false,
@@ -89,9 +90,10 @@ const BoardPage = () => {
   useEffect(() => {
     const accessBoard = async () => {
       const board = await requestBoard(boardCode);
-      console.log(board);
-      if (board) setBoard(board);
-      else setIsOpenInvalidLinkModal(true);
+      if (board) {
+        setBoard(board);
+        if (board.openType === "PRIVATE") setIsAccessble(false);
+      } else setIsOpenInvalidLinkModal(true);
     };
     accessBoard();
   }, [boardCode]);
@@ -150,6 +152,8 @@ const BoardPage = () => {
             boardCode={boardCode}
             headerState={headerState}
             setHeaderState={setHeaderState}
+            isAccessble={isAccessble}
+            setIsAccessble={setIsAccessble}
           />
         )}
         <PasswordModal

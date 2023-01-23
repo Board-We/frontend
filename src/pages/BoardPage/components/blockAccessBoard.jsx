@@ -4,16 +4,10 @@ import { ReactComponent as Lock } from "../../../assets/icons/lock.svg";
 import { useState } from "react";
 import PasswordModal from "../BoardPageModal/PasswordModal";
 
-const BlockAccessBoard = () => {
+const BlockAccessBoard = ({ setIsAccessble }) => {
   const [isOpenPasswordModal, setIsOpenPasswordModal] = useState(false);
+  const [password, setPassword] = useState("");
 
-  const handleClickPasswordButton = () => {
-    setIsOpenPasswordModal(true);
-  };
-
-  const handleClosePasswordModal = () => {
-    setIsOpenPasswordModal(false);
-  };
   return (
     <ComponentWrapper>
       <BlockDescription>
@@ -21,14 +15,16 @@ const BlockAccessBoard = () => {
         <p>해당보드는 비공개 보드입니다.</p>
       </BlockDescription>
       <ButtonContainer>
-        <ChipButton onClick={handleClickPasswordButton}>
+        <ChipButton onClick={() => setIsOpenPasswordModal(true)}>
           비밀번호 입력하기
         </ChipButton>
       </ButtonContainer>
       <PasswordModal
+        password={password}
+        setPassword={setPassword}
         open={isOpenPasswordModal}
-        onClose={handleClosePasswordModal}
-        onValid={() => {}}
+        onClose={() => setIsOpenPasswordModal(false)}
+        onValid={() => setIsAccessble(true)}
       />
     </ComponentWrapper>
   );
