@@ -225,10 +225,13 @@ const TagContainer = styled.div`
 const MemoContainer = styled.div`
   overflow-y: scroll;
   display: flex;
-
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 1.5rem;
+  gap: 0.5rem;
+    justify-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   &::-webkit-scrollbar {
     display: none;
   }
