@@ -81,8 +81,8 @@ const ServiceNameHeader = ({
           <ServiceNameHeaderTitle src={serviceLogo} onClick={onClickTitle} />
         )}
         {headerState.isSearchMode && (
-          <ChevronLeftButton>
-            <ChevronLeft onClick={handleClickChevronLeft} />
+          <ChevronLeftButton onClick={handleClickChevronLeft}>
+            <ChevronLeft />
           </ChevronLeftButton>
         )}
         <ServiceNameHeaderButtonGroup>
