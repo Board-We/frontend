@@ -177,17 +177,17 @@ const ChevronLeftButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   position: relative;
-  padding: 0.5rem;
+  left: 2%;
 `;
 
 const moveSearchButton = keyframes`
 0% {
-  position: absolute;
-  right:0;
+ position: absolute;
+ right:0;
 }
 100% {
   position: absolute;
-  left: -62%;
+  right: 85%;
 }
 `;
 
