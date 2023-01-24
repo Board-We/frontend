@@ -27,6 +27,7 @@ const ServiceNameHeader = ({
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
   const [step, setStep] = useRecoilState(createBoardStepId);
 
+  const { innerWidth: width } = window;
   const handleClickChevronLeft = () => {
     if (headerState.searchType === "deleteMemo")
       setHeaderState({
@@ -90,6 +91,7 @@ const ServiceNameHeader = ({
             <SearchButton
               onClick={handleClickSearch}
               isSearchMode={headerState.isSearchMode}
+              viewportWidth={width}
             >
               <Search />
             </SearchButton>
@@ -173,33 +175,52 @@ const ServiceNameHeaderButtonGroup = styled.div`
 `;
 
 const ChevronLeftButton = styled.button`
-  border: none;
+  border: 1px solid black;
   background-color: transparent;
   cursor: pointer;
   position: absolute;
+  left: 0;
+  padding: 0.25rem 0.5rem;
 `;
 
 const moveSearchButton = keyframes`
 0% {
-  position: absolute;
+position: absolute;
  right:0;
 }
 100% {
   position: absolute;
-  right: 89%;
+  right: 88%;
+ 
+}
+`;
+
+const moveSearchButtonMobile = keyframes`
+0% {
+position: absolute;
+ right:0;
+}
+100% {
+  position: absolute;
+  right: 82%;
+ 
 }
 `;
 
 const SearchButton = styled.button`
   border: none;
+  width: fit-content;
   background-color: transparent;
   cursor: pointer;
-  right: 10%;
   animation: ${(props) =>
     props.isSearchMode
-      ? css`
-          ${moveSearchButton} 0.3s linear
-        `
+      ? props.viewportWidth > 700
+        ? css`
+            ${moveSearchButton} 0.3s linear
+          `
+        : css`
+            ${moveSearchButtonMobile} 0.3s linear
+          `
       : ""};
   animation-fill-mode: forwards;
   z-index: 1;
@@ -225,7 +246,7 @@ const expandSearchInput = keyframes`
 }
 100% {
   display: block;
-  width: 93%;
+  width: 92%;
 }
 `;
 
@@ -241,14 +262,13 @@ const expandDeleteMemoInput = keyframes`
 `;
 
 const HeaderInput = styled.input`
-  position: absolute;
-  right: 0;
   width: 0;
   margin: 0.5rem;
+  margin-left: 2rem;
   padding: 0.5rem;
   padding-left: 2rem;
   background-color: ${(props) => props.theme.colors.grey_50};
-  border: none;
+  border: 1px solid black;
   border-radius: 0.5rem;
   display: ${(props) => (props.isSearchMode ? "block" : "none")};
   z-index: 0;
