@@ -26,11 +26,6 @@ function CreateBoardStep4() {
     setModalOpen(false);
   };
 
-  useEffect(() => {
-    if (modalOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "auto";
-  }, [modalOpen]);
-
   return (
     <ComponentWrapper modalOpen={modalOpen}>
       <CreateBoardStepContainer>
@@ -89,7 +84,7 @@ const ComponentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 0.5rem;
-  overflow: ${(props) => (props.modalOpen ? "hidden" : "scroll")};
+  overflow: scroll;
 `;
 
 const CreateBoardStepContainer = styled.div`
