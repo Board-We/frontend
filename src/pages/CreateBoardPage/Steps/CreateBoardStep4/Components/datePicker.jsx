@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SmallTitle from "../../../../../components/label/smallTitle";
 import { get4WeekDateTime } from "../../../../../utils/datetime";
@@ -43,7 +43,7 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
     setDateTime();
   }, [selectedYear, selectedDate, selectedHour]);
 
-  const setDateTime = useCallback(() => {
+  const setDateTime = () => {
     const newDateTime = new Date();
     newDateTime.setFullYear(selectedYear.replace("년", ""));
     newDateTime.setMonth(selectedDate.split("월")[0] - 1);
@@ -52,7 +52,7 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
     newDateTime.setMinutes(0);
     newDateTime.setSeconds(0);
     setter(newDateTime);
-  }, []);
+  };
 
   const createDateObjects = () => {
     const newDateObjects = get4WeekDateTime(
@@ -105,20 +105,20 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
     setSelectedHour(initHour);
   };
 
-  const setDateByYear = useCallback(() => {
+  const setDateByYear = () => {
     if (getKeys(years).length === 0) return;
     const newSelectedDate = getKeys(years[selectedYear])[0];
     setSelectedDate(newSelectedDate);
-  }, []);
+  };
 
-  const setHourByDate = useCallback(() => {
+  const setHourByDate = () => {
     if (getKeys(dates).length === 0) return;
     const newHours = getKeys(dates[selectedDate]);
     const newSelectedHour = newHours.includes(selectedHour)
       ? selectedHour
       : newHours[0];
     setSelectedHour(newSelectedHour);
-  }, []);
+  };
 
   const getKeys = (obj) => {
     if (!obj) return [];
