@@ -175,7 +175,7 @@ const ServiceNameHeaderButtonGroup = styled.div`
 `;
 
 const ChevronLeftButton = styled.button`
-  border: 1px solid black;
+  border: none;
   background-color: transparent;
   cursor: pointer;
   position: absolute;
@@ -202,7 +202,7 @@ position: absolute;
 }
 100% {
   position: absolute;
-  right: 82%;
+  right: 81.7%;
  
 }
 `;
@@ -268,7 +268,7 @@ const HeaderInput = styled.input`
   padding: 0.5rem;
   padding-left: 2rem;
   background-color: ${(props) => props.theme.colors.grey_50};
-  border: 1px solid black;
+  border: none;
   border-radius: 0.5rem;
   display: ${(props) => (props.isSearchMode ? "block" : "none")};
   z-index: 0;
