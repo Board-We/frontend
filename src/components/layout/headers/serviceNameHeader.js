@@ -177,7 +177,6 @@ const ChevronLeftButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   position: absolute;
-  left: 1.5%;
 `;
 
 const moveSearchButton = keyframes`
@@ -187,7 +186,7 @@ const moveSearchButton = keyframes`
 }
 100% {
   position: absolute;
-  right: 85%;
+  right: 89%;
 }
 `;
 
@@ -226,7 +225,7 @@ const expandSearchInput = keyframes`
 }
 100% {
   display: block;
-  width: 90%;
+  width: 93%;
 }
 `;
 
