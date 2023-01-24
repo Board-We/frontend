@@ -18,8 +18,8 @@ import Title from "../../components/label/title";
 
 const CreateBoardPage = () => {
   const finalStepId = 6;
-  const board = useRecoilValue(boardState)
-  const resetBoard = useResetRecoilState(boardState)
+  const board = useRecoilValue(boardState);
+  const resetBoard = useResetRecoilState(boardState);
   const [currentStepId, setCurrentStepId] = useRecoilState(createBoardStepId);
   const [disabledFooterButton, setDisabledFooterButton] = useState(true);
   const stepDescription = [
@@ -37,7 +37,7 @@ const CreateBoardPage = () => {
 
   useEffect(() => {
     resetBoard();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (
@@ -125,7 +125,10 @@ const CreateBoardPage = () => {
           </Title>
         </StepDescriptionContainer>
       )}
-      <BoardInfoConatiner height={heightOfContentArea}>
+      <BoardInfoConatiner
+        height={heightOfContentArea}
+        currentStepId={currentStepId}
+      >
         {controlCreatBoardStep(currentStepId, setDisabledFooterButton, $footer)}
       </BoardInfoConatiner>
       {currentStepId < 6 && (
@@ -178,7 +181,8 @@ const StepDescriptionContainer = styled.div`
 
 const BoardInfoConatiner = styled.div`
   width: 100%;
-  height: ${(props) => props.height}px;
+  height: ${(props) =>
+    props.currentStepId < 6 ? `${props.height}px` : "auto"};
   overflow: hidden;
 `;
 

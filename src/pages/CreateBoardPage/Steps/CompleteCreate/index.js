@@ -168,6 +168,7 @@ const CompleteCreate = () => {
           open={modalOpen}
           isBackdrop={false}
           height={"68vh"}
+          type="slide-up"
           ref={modalRef}
         >
           <ModalContents boardURL={boardURL} />
@@ -223,7 +224,6 @@ const TagContainer = styled.div`
 `;
 
 const MemoContainer = styled.div`
-  height: ${(props) => props.height}px;
   overflow-y: scroll;
   display: flex;
   justify-content: space-between;
