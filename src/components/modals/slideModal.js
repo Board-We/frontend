@@ -14,7 +14,7 @@ const SlideModal = forwardRef(
         ref.current.style.height = "3.25rem";
       } else {
         setToggleUp(false);
-        ref.current.style.height = "";
+        // ref.current.style.height = "";
       }
     };
 
@@ -37,7 +37,7 @@ const SlideModal = forwardRef(
 
           {children}
         </ModalContainer>
-        {/* {isBackdrop ? <Backdrop open={open} onClick={onClose} /> : null} */}
+        {isBackdrop ? <Backdrop open={open} onClick={onClose} /> : null}
       </>
     );
   }
