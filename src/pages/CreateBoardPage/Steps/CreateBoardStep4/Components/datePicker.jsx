@@ -54,14 +54,14 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
     setter(newDateTime);
   }, []);
 
-  const createDateObjects = useCallback(() => {
+  const createDateObjects = () => {
     const newDateObjects = get4WeekDateTime(
       datetime() ? datetime() : new Date()
     );
     setDateObjects(newDateObjects);
-  }, []);
+  };
 
-  const parseDateObjects = useCallback(() => {
+  const parseDateObjects = () => {
     if (dateObjects.length === 0) return;
 
     const newYears = {};
@@ -86,9 +86,9 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
     setYears(newYears);
     setDates(newDates);
     setHours(newHours);
-  }, []);
+  };
 
-  const initSelectedTime = useCallback(() => {
+  const initSelectedTime = () => {
     if (
       getKeys(years).length === 0 ||
       getKeys(dates).length === 0 ||
@@ -103,7 +103,7 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
     setSelectedYear(initYear);
     setSelectedDate(initDate);
     setSelectedHour(initHour);
-  }, []);
+  };
 
   const setDateByYear = useCallback(() => {
     if (getKeys(years).length === 0) return;
