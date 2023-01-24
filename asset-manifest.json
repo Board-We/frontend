@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.92d3b1a4.css",
-    "main.js": "/frontend/static/js/main.c7e9943c.js",
+    "main.css": "/frontend/static/css/main.b1bc7252.css",
+    "main.js": "/frontend/static/js/main.88f17d30.js",
     "static/media/강원교육모두Bold.ttf": "/frontend/static/media/강원교육모두Bold.adac6f2c51d17c5240a9.ttf",
     "static/media/강원교육모두Light.ttf": "/frontend/static/media/강원교육모두Light.a9ac1ac32ef9942da4f7.ttf",
     "static/media/KOTRAHOPE.otf": "/frontend/static/media/KOTRAHOPE.2d558bc9c3f684983718.otf",
@@ -37,11 +37,11 @@
     "static/media/chevronTop.svg": "/frontend/static/media/chevronTop.8ee1defac43a7c004c6518120e829482.svg",
     "static/media/delete.svg": "/frontend/static/media/delete.98e5dd89f1de1cfe7fdd5586486880a8.svg",
     "static/media/chevronRight.svg": "/frontend/static/media/chevronRight.247edb1a1c0561f9f5fe34a2f2c0979b.svg",
-    "main.92d3b1a4.css.map": "/frontend/static/css/main.92d3b1a4.css.map",
-    "main.c7e9943c.js.map": "/frontend/static/js/main.c7e9943c.js.map"
+    "main.b1bc7252.css.map": "/frontend/static/css/main.b1bc7252.css.map",
+    "main.88f17d30.js.map": "/frontend/static/js/main.88f17d30.js.map"
   },
   "entrypoints": [
-    "static/css/main.92d3b1a4.css",
-    "static/js/main.c7e9943c.js"
+    "static/css/main.b1bc7252.css",
+    "static/js/main.88f17d30.js"
   ]
 }
