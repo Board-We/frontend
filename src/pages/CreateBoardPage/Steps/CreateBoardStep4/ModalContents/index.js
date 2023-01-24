@@ -7,7 +7,7 @@ import DatePicker from "../Components/datePicker";
 
 function ModalContents({ setModalOpen }) {
   const [step, setStep] = useRecoilState(setDateStepId);
-  const [board, setBoard] = useRecoilState(boardState)
+  const [board, setBoard] = useRecoilState(boardState);
   const [tempDatetime, setTempDatetime] = useState(new Date());
 
   useEffect(() => {
@@ -17,57 +17,54 @@ function ModalContents({ setModalOpen }) {
   }, [setModalOpen, setStep, step]);
 
   const getSetter = () => {
-    if (step === 0) return setWritingStartTime
-    else if (step === 1) return setWritingEndTime
-    else if (step === 2) return setOpenStartTime
-    else if (step === 3) return setOpenEndTime
-  }
+    if (step === 0) return setWritingStartTime;
+    else if (step === 1) return setWritingEndTime;
+    else if (step === 2) return setOpenStartTime;
+    else if (step === 3) return setOpenEndTime;
+  };
 
   const getDateTime = () => {
-    if (step === 0) return new Date()
-    else if (step === 1) return board.writingStartTime
-    else if (step === 2) return board.writingEndTime
-    else if (step === 3) return board.openStartTime
-  }
+    if (step === 0) return new Date();
+    else if (step === 1) return board.writingStartTime;
+    else if (step === 2) return board.writingEndTime;
+    else if (step === 3) return board.openStartTime;
+  };
 
   const getSelectedDateTime = () => {
-    if (step === 0) return board.writingStartTime
-    else if (step === 1) return board.writingEndTime
-    else if (step === 2) return board.openStartTime
-    else if (step === 3) return board.openEndTime
-  }
+    if (step === 0) return board.writingStartTime;
+    else if (step === 1) return board.writingEndTime;
+    else if (step === 2) return board.openStartTime;
+    else if (step === 3) return board.openEndTime;
+  };
 
   const onClickConfirm = () => {
-    getSetter()(tempDatetime)
+    getSetter()(tempDatetime);
     setStep((prev) => prev + 1);
   };
 
   const setWritingStartTime = () => {
-    setBoard({ ...board, writingStartTime: tempDatetime })
-  }
+    setBoard({ ...board, writingStartTime: tempDatetime });
+  };
 
   const setWritingEndTime = () => {
-    setBoard({ ...board, writingEndTime: tempDatetime })
-  }
+    setBoard({ ...board, writingEndTime: tempDatetime });
+  };
 
   const setOpenStartTime = () => {
-    setBoard({ ...board, openStartTime: tempDatetime })
-  }
+    setBoard({ ...board, openStartTime: tempDatetime });
+  };
 
   const setOpenEndTime = () => {
-    setBoard({ ...board, openEndTime: tempDatetime })
-  }
+    setBoard({ ...board, openEndTime: tempDatetime });
+  };
 
   const setTempDatetimeData = (datetime) => {
-    setTempDatetime(datetime)
-  }
+    setTempDatetime(datetime);
+  };
 
   return (
     <ModalContainer>
-      <StepDiscription
-        step={step}
-        setModalOpen={setModalOpen}
-      />
+      <StepDiscription step={step} setModalOpen={setModalOpen} />
       <DatePicker
         text={step % 2 === 0 ? `부터` : `까지`}
         setter={setTempDatetimeData}
@@ -131,7 +128,6 @@ const StepDiscription = ({ step, setModalOpen }) => {
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-
   p {
     text-align: left;
     font-size: 1.5rem;

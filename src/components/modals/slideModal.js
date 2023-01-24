@@ -17,7 +17,7 @@ const SlideModal = forwardRef(
         ref.current.style.height = "";
       }
     };
-    // deploy 때문에 일부러 변경하나 남김
+
     return (
       <>
         <ModalContainer open={open} height={height} ref={ref} type={type}>
