@@ -169,7 +169,6 @@ const CompleteCreate = () => {
           isBackdrop={false}
           height={"fit-content"}
           ref={modalRef}
-          type="slide-up"
         >
           <ModalContents boardURL={boardURL} />
         </SlideModal>
@@ -229,9 +228,9 @@ const MemoContainer = styled.div`
   flex-wrap: wrap;
   margin-top: 1.5rem;
   gap: 0.5rem;
-    justify-items: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   &::-webkit-scrollbar {
     display: none;
   }
