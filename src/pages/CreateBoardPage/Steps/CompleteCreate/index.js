@@ -167,7 +167,7 @@ const CompleteCreate = () => {
         <SlideModal
           open={modalOpen}
           isBackdrop={false}
-          height={"45vh"}
+          height={"48vh"}
           ref={modalRef}
         >
           <ModalContents boardURL={boardURL} />
@@ -181,6 +181,7 @@ export default CompleteCreate;
 
 const BoardContainer = styled.div`
   width: 100%;
+
   border-radius: 4px;
   background: ${(props) =>
     props.background.includes("base64")

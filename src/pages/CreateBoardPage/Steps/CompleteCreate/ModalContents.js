@@ -52,15 +52,16 @@ const ModalContents = ({ boardURL }) => {
               <span>{formattingDateObject(board.openEndTime)} 까지</span>
             </BoardValue>
           </DescriptionContainer>
-          <DescriptionContainer>
+          <DescriptionContainer style={{ marginBottom: "1.75rem" }}>
             <CommonParagraph>비밀번호</CommonParagraph>{" "}
             <BoardValue>{board.password}</BoardValue>
           </DescriptionContainer>
         </>
+        <ChipButton onClick={() => navigate(`${boardURL}`)}>
+          만든 보드 확인하기
+        </ChipButton>
       </ContentBody>
-      <ChipButton onClick={() => navigate(`${boardURL}`)}>
-        만든 보드 확인하기
-      </ChipButton>
+
       {openToast && <Toast text={"URL이 복사되었습니다."} />}
     </ContentContainer>
   );
