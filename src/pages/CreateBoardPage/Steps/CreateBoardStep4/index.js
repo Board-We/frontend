@@ -27,7 +27,7 @@ function CreateBoardStep4() {
   };
 
   return (
-    <ComponentWrapper>
+    <ComponentWrapper modalOpen={modalOpen}>
       <CreateBoardStepContainer>
         <CreateBoardDescriptionText>
           <p>롤링페이퍼 받는 기간</p>
@@ -84,7 +84,7 @@ const ComponentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 0.5rem;
-  overflow: scroll;
+  overflow: ${(props) => (props.modalOpen ? "hidden" : "scroll")};
 `;
 
 const CreateBoardStepContainer = styled.div`
