@@ -37,7 +37,7 @@ const SlideModal = forwardRef(
 
           {children}
         </ModalContainer>
-        {/* {isBackdrop ? <Backdrop open={open} onClick={onClose} /> : null} */}
+        {isBackdrop ? <Backdrop open={open} onClick={onClose} /> : null}
       </>
     );
   }
