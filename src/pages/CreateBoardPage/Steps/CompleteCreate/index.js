@@ -222,6 +222,7 @@ const TagContainer = styled.div`
 `;
 
 const MemoContainer = styled.div`
+  height: ${(props) => props.height}px;
   overflow-y: scroll;
   display: flex;
   justify-content: space-between;
