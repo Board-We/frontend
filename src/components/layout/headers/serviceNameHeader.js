@@ -246,7 +246,7 @@ const expandSearchInput = keyframes`
 }
 100% {
   display: block;
-  width: 92%;
+  width: 90%;
 }
 `;
 

@@ -159,7 +159,7 @@ const PageWrapper = styled.div`
   align-items: flex-start;
   overflow: hidden;
   background-color: ${(props) =>
-    props.noSearchResult && props.theme.colors.grey_50};
+    props.noSearchResult ? props.theme.colors.grey_50 : "white"};
 `;
 
 const MainPageContainer = styled.div`
