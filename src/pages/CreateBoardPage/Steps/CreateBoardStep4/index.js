@@ -23,8 +23,8 @@ function CreateBoardStep4() {
   };
 
   const closeModal = () => {
-    setModalOpen(false)
-  }
+    setModalOpen(false);
+  };
 
   return (
     <ComponentWrapper>
@@ -85,7 +85,7 @@ const ComponentWrapper = styled.div`
   flex-direction: column;
   margin-top: 0.5rem;
   overflow: scroll;
-`
+`;
 
 const CreateBoardStepContainer = styled.div`
   width: 100%;
@@ -105,9 +105,9 @@ const CreateBoardDescriptionText = styled.div`
   p {
     text-align: left;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin: 0;
-    margin-bottom: 0.8rem;
+    color: ${(props) => props.theme.colors.grey_20};
   }
   span {
     text-align: left;
@@ -122,12 +122,12 @@ const SetTimeWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #d9d9d9;
-  margin-bottom: 8vh;
+  margin-bottom: 5vh;
   padding: 0 0.8rem 0 0;
   cursor: pointer;
   p {
     text-align: left;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 `;
 
