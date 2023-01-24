@@ -27,6 +27,7 @@ const ServiceNameHeader = ({
   const [isOpenConfigMenu, setIsOpenConfigMenu] = useState(false);
   const [step, setStep] = useRecoilState(createBoardStepId);
 
+  const { innerWidth: width } = window;
   const handleClickChevronLeft = () => {
     if (headerState.searchType === "deleteMemo")
       setHeaderState({
@@ -83,6 +84,8 @@ const ServiceNameHeader = ({
         {headerState.isSearchMode && (
           <ChevronLeftButton onClick={handleClickChevronLeft}>
             <ChevronLeft />
+          <ChevronLeftButton onClick={handleClickChevronLeft}>
+            <ChevronLeft />
           </ChevronLeftButton>
         )}
         <ServiceNameHeaderButtonGroup>
@@ -90,6 +93,7 @@ const ServiceNameHeader = ({
             <SearchButton
               onClick={handleClickSearch}
               isSearchMode={headerState.isSearchMode}
+              viewportWidth={width}
             >
               <Search />
             </SearchButton>
@@ -176,31 +180,49 @@ const ChevronLeftButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
-  position: relative;
-  left: 2%;
+  position: absolute;
+  left: 0;
+  padding: 0.25rem 0.5rem;
 `;
 
 const moveSearchButton = keyframes`
 0% {
- position: absolute;
+position: absolute;
  right:0;
 }
 100% {
   position: absolute;
-  right: 85%;
+  right: 88%;
+ 
+}
+`;
+
+const moveSearchButtonMobile = keyframes`
+0% {
+position: absolute;
+ right:0;
+}
+100% {
+  position: absolute;
+  right: 81.7%;
+ 
 }
 `;
 
 const SearchButton = styled.button`
   border: none;
+  width: fit-content;
   background-color: transparent;
   cursor: pointer;
-  right: 10%;
   animation: ${(props) =>
     props.isSearchMode
-      ? css`
-          ${moveSearchButton} 0.3s linear
-        `
+      ? props.viewportWidth > 700
+        ? css`
+            ${moveSearchButton} 0.3s linear
+          `
+        : css`
+            ${moveSearchButtonMobile} 0.3s linear
+          `
       : ""};
   animation-fill-mode: forwards;
   z-index: 1;
@@ -242,12 +264,11 @@ const expandDeleteMemoInput = keyframes`
 `;
 
 const HeaderInput = styled.input`
-  position: absolute;
-  right: 0;
   width: 0;
   margin: 0.5rem;
+  margin-left: 2rem;
   padding: 0.5rem;
-  padding-left: 2.5rem;
+  padding-left: 2rem;
   background-color: ${(props) => props.theme.colors.grey_50};
   border: none;
   border-radius: 0.5rem;
