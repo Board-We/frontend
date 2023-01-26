@@ -1,10 +1,6 @@
 @font-face {
 	font-family: '강원교육모두';
-	font-weight: bold;
-	src: url('./ttf/강원교육모두Bold.ttf') format("truetype")
-}
-
-@font-face {
-	font-family: '강원교육모두';
-	src: url('./ttf/강원교육모두Light.ttf') format("truetype")
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
