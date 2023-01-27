@@ -20,26 +20,38 @@ export const boardState = atom({
     password: "",
     openType: "", // "PUBLIC" or "PRIVATE"
     boardThemeId: null,
-    boardBackground: basicThemeBG, // "Base-64" or "#FFFFFF"
+    boardBackground: "#FFF9EB", // "Base-64" or "#FFFFFF"
     boardFont: "Pretendard",
     memos: [],
     memoThemes: [
       {
         memoThemeId: null,
-        memoBackgroundType: "IMAGE",
-        memoBackground: basicThemeMemo1,
+        memoBackgroundType: "COLOR",
+        memoBackground: "#FFF9EB",
         memoTextColor: theme.colors.black,
       },
       {
         memoThemeId: null,
-        memoBackgroundType: "IMAGE",
-        memoBackground: basicThemeMemo2,
+        memoBackgroundType: "COLOR",
+        memoBackground: "#FFEB38",
         memoTextColor: theme.colors.black,
       },
       {
         memoThemeId: null,
-        memoBackgroundType: "IMAGE",
-        memoBackground: basicThemeMemo3,
+        memoBackgroundType: "COLOR",
+        memoBackground: "#F8BD55",
+        memoTextColor: theme.colors.black,
+      },
+      {
+        memoThemeId: null,
+        memoBackgroundType: "COLOR",
+        memoBackground: "#FDD037",
+        memoTextColor: theme.colors.black,
+      },
+      {
+        memoThemeId: null,
+        memoBackgroundType: "COLOR",
+        memoBackground: "#FFE766",
         memoTextColor: theme.colors.black,
       },
     ],
