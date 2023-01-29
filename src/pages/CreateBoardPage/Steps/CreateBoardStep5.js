@@ -81,14 +81,14 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
             className={board.openType === "PUBLIC" ? "active" : ""}
             onClick={handleIsPublicMode}
           >
-            공개
+            공개ttttttttt
           </ModeButton>{" "}
           <ModeButton
             value="PRIVATE"
             className={board.openType === "PRIVATE" ? "active" : ""}
             onClick={handleIsPublicMode}
           >
-            비공개
+            비공개ttttttttttt
           </ModeButton>
         </ButtonContainer>
       </ModeContainer>
