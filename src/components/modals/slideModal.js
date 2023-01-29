@@ -61,6 +61,7 @@ const ModalContainer = styled.div`
   z-index: 1500;
   padding: 1.5rem;
   padding-top: ${(props) => props.type === "slide-up" && 0};
+  padding-bottom: ${(props) => props.type === "slide-up" && 0};
   visibility: ${(props) => (props.open ? "visible" : "hidden")};
 `;
 
