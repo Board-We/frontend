@@ -81,14 +81,14 @@ function CreateBoardStep5({ setDisabledFooterButton }) {
             className={board.openType === "PUBLIC" ? "active" : ""}
             onClick={handleIsPublicMode}
           >
-            공개ttttttttt
+            공개
           </ModeButton>{" "}
           <ModeButton
             value="PRIVATE"
             className={board.openType === "PRIVATE" ? "active" : ""}
             onClick={handleIsPublicMode}
           >
-            비공개ttttttttttt
+            비공개
           </ModeButton>
         </ButtonContainer>
       </ModeContainer>
@@ -168,7 +168,7 @@ const ModeButton = styled.button`
   border-radius: 4px;
   font-weight: 400;
   box-shadow: ${(props) => props.theme.shadows.shadow_2};
-  color: red;
+  color: ${(props) => props.theme.colors.black};
   &.active {
     background-color: ${(props) => props.theme.colors.white};
     font-weight: 600;
