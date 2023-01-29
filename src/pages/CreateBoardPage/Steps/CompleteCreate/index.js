@@ -167,7 +167,7 @@ const CompleteCreate = () => {
         <SlideModal
           open={modalOpen}
           isBackdrop={false}
-          height={"50vh"}
+          height={"auto"}
           type="slide-up"
           ref={modalRef}
         >
