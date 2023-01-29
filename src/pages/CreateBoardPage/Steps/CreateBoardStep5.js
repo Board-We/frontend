@@ -168,7 +168,7 @@ const ModeButton = styled.button`
   border-radius: 4px;
   font-weight: 400;
   box-shadow: ${(props) => props.theme.shadows.shadow_2};
-
+  color: red;
   &.active {
     background-color: ${(props) => props.theme.colors.white};
     font-weight: 600;
