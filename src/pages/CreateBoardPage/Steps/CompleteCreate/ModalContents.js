@@ -112,6 +112,7 @@ const BoardLinkCopyButton = styled.button`
   width: 20%;
   justify-content: center;
   align-items: center;
+  color: ${(props) => props.theme.colors.black};
   background-color: ${(props) => props.theme.colors.primary_2};
   border: none;
   padding: 0.75rem;
