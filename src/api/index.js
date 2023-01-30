@@ -9,6 +9,7 @@ export const request = ({ method, url, data }) => {
   return axios({
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
+      "Referrer-Policy": "unsafe_url",
     },
     method,
     url: BASE_URL + url,
