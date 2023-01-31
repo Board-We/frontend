@@ -251,7 +251,7 @@ const SelectModal = ({
     <ComponentWrapper open={open}>
       {option === "메모지" && getMemoOption()}
       <MenuContainer>
-        <TapButton
+        {/* <TapButton
           text={`${option} 이미지`}
           isFill={true}
           isSelected={
@@ -260,7 +260,7 @@ const SelectModal = ({
             (selectedTab === "bg" && selectedBgMenu === "bgImage")
           }
           onClick={() => onClickTapMenu("bgImage")}
-        />
+        /> */}
         <TapButton
           text="배경 색"
           isFill={true}
@@ -291,8 +291,8 @@ const SelectModal = ({
         (selectedMemoMenu[selectedMemoIndex] === "bgColor" ||
           selectedMemoMenu[selectedMemoIndex] === "fontColor")) ||
         (selectedTab === "bg" && selectedBgMenu === "bgColor")) && (
-        <ColorPicker color={color} onChange={onChangeColor} />
-      )}
+          <ColorPicker color={color} onChange={onChangeColor} />
+        )}
       {((selectedTab === "memo" &&
         selectedMemoMenu[selectedMemoIndex] === "bgImage") ||
         (selectedTab === "bg" && selectedBgMenu === "bgImage")) &&
