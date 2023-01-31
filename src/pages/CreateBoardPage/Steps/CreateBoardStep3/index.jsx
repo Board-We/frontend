@@ -7,6 +7,7 @@ import Description from "../../../../components/label/description";
 import SmallTitle from "../../../../components/label/smallTitle";
 import { boardState, deviceScreenState } from "../../../../store";
 import { theme } from "../../../../styles/theme";
+import { parsingFontNumber } from "../../../../utils/board";
 import SelectModal from "./comopnents/selectModal";
 
 const CreateBoardStep3 = ({ footerRef }) => {
@@ -78,7 +79,7 @@ const CreateBoardStep3 = ({ footerRef }) => {
           size={$memoArea.current.clientWidth}
           background={el.memoBackground}
           color={el.memoTextColor}
-          fontType={board.boardFont}
+          fontType={parsingFontNumber(board.boardFont)}
           key={el + i}
         >
           {sampleText[i]}

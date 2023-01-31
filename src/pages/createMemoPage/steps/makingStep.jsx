@@ -14,11 +14,12 @@ import Memo from "../../../components/memo";
 import AlertModal from "../../../components/modals/alertModal";
 import { boardState, memoState } from "../../../store";
 import { theme } from "../../../styles/theme";
+import { parsingFontNumber } from "../../../utils/board";
 
 const MakingStep = ({ boardCode }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const [memo, setMemo] = useRecoilState(memoState);
-  const [currentFontType, setCurrentFontType] = useState("");
+  // const [currentFontType, setCurrentFontType] = useState("");
   const resetMemo = useResetRecoilState(memoState);
   const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();
@@ -27,10 +28,6 @@ const MakingStep = ({ boardCode }) => {
   useEffect(() => {
     getMemoThemes();
   }, [boardCode]);
-
-  useEffect(() => {
-    if (location.state) setCurrentFontType(location.state.currentFontType);
-  }, []);
 
   const getMemoThemes = async () => {
     const newMemoThemes = await requestGetMemoThemeList({
@@ -99,7 +96,7 @@ const MakingStep = ({ boardCode }) => {
           color={memo.style.memoTextColor}
           text={memo.text}
           onChangeText={onChangeText}
-          fontType={currentFontType}
+          fontType={parsingFontNumber(board.boardFont)}
         >
           <MemoTextIndicator>{memo.text.length}/100</MemoTextIndicator>
         </Memo>

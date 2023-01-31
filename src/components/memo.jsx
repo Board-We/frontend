@@ -42,6 +42,8 @@ const Memo = ({
     setMemoText(newText);
   };
 
+  useEffect(() => {}, []);
+
   return (
     <ComponentWrapper
       ref={$memo}

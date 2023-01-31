@@ -12,6 +12,7 @@ import {
 import { setDateISOstring } from "../../../../utils/setDefaultDay";
 import { theme } from "../../../../styles/theme";
 import ModalContents from "./ModalContents";
+import { parsingFontNumber } from "../../../../utils/board";
 
 const CompleteCreate = () => {
   const board = useRecoilValue(boardState);
@@ -68,7 +69,7 @@ const CompleteCreate = () => {
           size={memoContainer.current.clientWidth}
           memoBackground={el.memoBackground}
           fontColor={el.memoTextColor}
-          fontType={board.boardFont}
+          fontType={parsingFontNumber(board.boardFont)}
           key={el + i}
         >
           {sampleText[i]}
@@ -82,7 +83,7 @@ const CompleteCreate = () => {
           size={memoContainer.current.clientWidth}
           memoBackground={board.memoThemes[0].memoBackground}
           fontColor={board.memoThemes[0].memoTextColor}
-          fontType={board.boardFont}
+          fontType={parsingFontNumber(board.boardFont)}
           key={`sampleMemo${i}`}
         >
           {sampleText[i + board.memoThemes.length]}
@@ -121,6 +122,8 @@ const CompleteCreate = () => {
         textColors: memoTextColorsList,
       },
     };
+
+    console.log(board.boardFont);
 
     const boardLinkRes = await postUserBoardState({
       boardState: currentBoardState,

@@ -21,7 +21,7 @@ export const boardState = atom({
     openType: "", // "PUBLIC" or "PRIVATE"
     boardThemeId: null,
     boardBackground: "#FFF9EB", // "Base-64" or "#FFFFFF"
-    boardFont: "Pretendard",
+    boardFont: "0",
     memos: [],
     memoThemes: [
       {
