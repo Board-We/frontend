@@ -216,6 +216,7 @@ const FooterButtonArea = styled.div`
   bottom: 0;
   left: 0;
   flex-grow: 1;
+  background-color: ${(props) => props.theme.colors.white};
 `;
 
 export default MakingStep;
