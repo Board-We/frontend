@@ -55,6 +55,7 @@ const BoardOnOpen = ({
     setIsOpenDeleteMemoModal(true);
   };
   const handleCloseDeleteMemoModal = () => {
+    setIsOpenDeleteMemoModal(false);
     setHeaderState({ ...headerState, isSearchMode: false });
   };
 
