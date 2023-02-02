@@ -55,8 +55,13 @@ const BoardOnOpen = ({
     setIsOpenDeleteMemoModal(true);
   };
   const handleCloseDeleteMemoModal = () => {
+    console.log("close");
     setIsOpenDeleteMemoModal(false);
-    setHeaderState({ ...headerState, isSearchMode: false });
+    setHeaderState({
+      ...headerState,
+      isSearchMode: false,
+      checkedMemoList: [],
+    });
   };
 
   const handleConfirmDeleteMemo = async () => {
@@ -98,9 +103,12 @@ const BoardOnOpen = ({
     newMemos.sort((o1, o2) => {
       return o1.index - o2.index;
     });
-
     if (newMemos) setMemoList(newMemos);
+    if (headerState.isSearchMode) {
+      setHeaderState({ ...headerState, isEnterPress: true });
+    }
   };
+  console.log("메모리스트", memoList);
 
   useEffect(() => {
     makeMemoThemes();
@@ -109,9 +117,11 @@ const BoardOnOpen = ({
 
   useEffect(() => {
     if (headerState.isEnterPress) {
+      console.log("엔터치면", memoList);
       const results = memoList.filter((memo) =>
         memo.memoContent.includes(headerState.query)
       );
+      console.log(results);
       setSearchResults(results);
       setHeaderState({ ...headerState, isEnterPress: false });
     }
