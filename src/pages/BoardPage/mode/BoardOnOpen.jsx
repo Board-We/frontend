@@ -25,6 +25,7 @@ const BoardOnOpen = ({
   isAccessble,
   setIsAccessble,
 }) => {
+  console.log(headerState);
   const board = useRecoilValue(boardState);
 
   const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
@@ -60,6 +61,7 @@ const BoardOnOpen = ({
     setHeaderState({
       ...headerState,
       isSearchMode: false,
+      searchType: "memo",
       checkedMemoList: [],
     });
   };
@@ -108,7 +110,6 @@ const BoardOnOpen = ({
       setHeaderState({ ...headerState, isEnterPress: true });
     }
   };
-  console.log("메모리스트", memoList);
 
   useEffect(() => {
     makeMemoThemes();
@@ -117,7 +118,6 @@ const BoardOnOpen = ({
 
   useEffect(() => {
     if (headerState.isEnterPress) {
-      console.log("엔터치면", memoList);
       const results = memoList.filter((memo) =>
         memo.memoContent.includes(headerState.query)
       );
