@@ -19,7 +19,6 @@ import { parsingFontNumber } from "../../../utils/board";
 const MakingStep = ({ boardCode }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const [memo, setMemo] = useRecoilState(memoState);
-  // const [currentFontType, setCurrentFontType] = useState("");
   const resetMemo = useResetRecoilState(memoState);
   const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();
@@ -44,6 +43,7 @@ const MakingStep = ({ boardCode }) => {
   };
 
   const onClickBack = () => {
+    resetMemo();
     setAlertOpen(true);
   };
 

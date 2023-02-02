@@ -9,7 +9,7 @@ import SmallTitle from "../../../components/label/smallTitle";
 import ServiceNameHeader from "../../../components/layout/headers/serviceNameHeader";
 import { boardState } from "../../../store";
 import { formattingDateObject } from "../../../utils/setDefaultDay";
-import onSendMemoImage from "../../../assets/images/onSendMemoImage.png"
+import onSendMemoImage from "../../../assets/images/onSendMemoImage.png";
 import { theme } from "../../../styles/theme";
 
 const EndStep = ({ boardCode }) => {
@@ -20,7 +20,7 @@ const EndStep = ({ boardCode }) => {
     setTimerForFlip();
   }, []);
 
-  const setTimerForFlip = () => { };
+  const setTimerForFlip = () => {};
 
   const onClickMoreMemo = () => {
     navigate(`/board/${boardCode}`);
@@ -40,7 +40,9 @@ const EndStep = ({ boardCode }) => {
       </BodyContainer>
       <ButtonContainer>
         <ChipButton onClick={onClickMoreMemo}>롤링페이퍼 더 붙이기</ChipButton>
-        <ChipButton onClick={() => { }} background={theme.colors.grey_50} >공유하기</ChipButton>
+        <ChipButton onClick={() => {}} background={theme.colors.grey_50}>
+          공유하기
+        </ChipButton>
       </ButtonContainer>
     </PageWrapper>
   );
@@ -78,7 +80,6 @@ const EndStepImage = styled.img`
   height: 15rem;
   max-width: 400px;
   max-height: 400px;
-  background-color: #d9d9d9;
 `;
 
 const ButtonContainer = styled.div`
