@@ -71,7 +71,11 @@ const ServiceNameHeader = ({
 
   const handleKeyDownSearchIput = async (e) => {
     if (e.code === "Enter" && !e.nativeEvent.isComposing) {
-      setHeaderState({ ...headerState, isEnterPress: true });
+      setHeaderState({
+        ...headerState,
+        isEnterPress: true,
+        checkedMemoList: [],
+      });
     }
   };
 
