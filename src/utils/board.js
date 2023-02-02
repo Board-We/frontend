@@ -63,7 +63,7 @@ export const getBoardDdayStatus = ({ openStartTime, writingStartTime }) => {
 export const parsingFontNumber = (fontNumber) => {
   switch (fontNumber) {
     case "0":
-      return "SCDream";
+      return "Pretendard";
     case "1":
       return "SCDream";
     case "2":
