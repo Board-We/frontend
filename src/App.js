@@ -9,7 +9,8 @@ import BoardPage from "./pages/BoardPage";
 import styled from "styled-components";
 
 function App() {
-  const [deviceScreenSize, setDeviceScreenSize] = useRecoilState(deviceScreenState);
+  const [deviceScreenSize, setDeviceScreenSize] =
+    useRecoilState(deviceScreenState);
 
   useEffect(() => {
     addEventListenerResize();
@@ -51,11 +52,11 @@ const AppContainer = styled.div`
   /* galaxy fold half screen size: 280px */
   min-width: 280px;
   max-width: 600px;
-  height: ${props => props.height}px;
-  min-height: ${props => props.height}px;
+  height: ${(props) => props.height}px;
+  min-height: ${(props) => props.height}px;
   margin: 0;
   padding: 0;
-  background-color: #FFFFFF;
-`
+  background-color: #ffffff;
+`;
 
 export default App;

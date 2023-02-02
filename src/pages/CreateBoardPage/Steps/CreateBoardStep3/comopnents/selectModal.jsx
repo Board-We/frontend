@@ -9,6 +9,7 @@ import TapButton from "../../../../../components/buttons/tapButton";
 import { theme } from "../../../../../styles/theme";
 import ColorPicker from "./colorPicker";
 import { useRef } from "react";
+import { parsingFontNumber } from "../../../../../utils/board";
 
 const SelectModal = ({
   open,
@@ -31,10 +32,10 @@ const SelectModal = ({
   const $file = useRef();
 
   const font = [
-    { buttonText: "기본 글씨체", fontType: "Pretendard" },
-    { buttonText: "에스코어 드림체", fontType: "SCDream" },
-    { buttonText: "강원교육모두체", fontType: "강원교육모두" },
-    { buttonText: "코트라희망체", fontType: "KOTRAHOPE" },
+    { buttonText: "기본 글씨체", fontType: "0" },
+    { buttonText: "에스코어 드림체", fontType: "1" },
+    { buttonText: "강원교육모두체", fontType: "2" },
+    { buttonText: "코트라희망체", fontType: "3" },
   ];
 
   useEffect(() => {
@@ -78,13 +79,13 @@ const SelectModal = ({
 
   useEffect(() => {
     if (fontButtonValue === "기본 글씨체") {
-      setBoard({ ...board, boardFont: "Pretendard" });
+      setBoard({ ...board, boardFont: "0" });
     } else if (fontButtonValue === "에스코어 드림체") {
-      setBoard({ ...board, boardFont: "SCDream" });
+      setBoard({ ...board, boardFont: "1" });
     } else if (fontButtonValue === "강원교육모두체") {
-      setBoard({ ...board, boardFont: "강원교육모두" });
+      setBoard({ ...board, boardFont: "2" });
     } else if (fontButtonValue === "코트라희망체") {
-      setBoard({ ...board, boardFont: "KOTRAHOPE" });
+      setBoard({ ...board, boardFont: "3" });
     }
   }, [fontButtonValue]);
 
@@ -291,8 +292,8 @@ const SelectModal = ({
         (selectedMemoMenu[selectedMemoIndex] === "bgColor" ||
           selectedMemoMenu[selectedMemoIndex] === "fontColor")) ||
         (selectedTab === "bg" && selectedBgMenu === "bgColor")) && (
-          <ColorPicker color={color} onChange={onChangeColor} />
-        )}
+        <ColorPicker color={color} onChange={onChangeColor} />
+      )}
       {((selectedTab === "memo" &&
         selectedMemoMenu[selectedMemoIndex] === "bgImage") ||
         (selectedTab === "bg" && selectedBgMenu === "bgImage")) &&
@@ -302,10 +303,11 @@ const SelectModal = ({
           {font.map((val, idx) => {
             return (
               <SetFontButton
+                key={val.fontType}
                 className={val.fontType == board.boardFont ? "active" : ""}
                 onClick={onClickSetFontOption}
                 value={val.buttonText}
-                fontType={val.fontType}
+                fontType={parsingFontNumber(val.fontType)}
               >
                 {val.buttonText}
               </SetFontButton>

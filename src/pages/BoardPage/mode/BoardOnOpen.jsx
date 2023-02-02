@@ -16,6 +16,7 @@ import BlockAccessBoard from "../components/blockAccessBoard";
 import Memo from "../../../components/memo";
 import AlertModal from "../../../components/modals/alertModal";
 import GotoTopButton from "../../../components/buttons/GotoTopButton";
+import { parsingFontNumber } from "../../../utils/board";
 
 const BoardOnOpen = ({
   boardCode,
@@ -211,7 +212,7 @@ const BoardOnOpen = ({
                       text={el.memoContent}
                       background={theme?.memoBackground}
                       color={theme?.memoTextColor}
-                      fontType={board.boardFont}
+                      fontType={parsingFontNumber(board.boardFont)}
                     />
                   );
                 })

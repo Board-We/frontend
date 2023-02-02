@@ -59,3 +59,18 @@ export const getBoardDdayStatus = ({ openStartTime, writingStartTime }) => {
     return `확인 ${day}일 전`;
   }
 };
+
+export const parsingFontNumber = (fontNumber) => {
+  switch (fontNumber) {
+    case "0":
+      return "SCDream";
+    case "1":
+      return "SCDream";
+    case "2":
+      return "강원교육모두";
+    case "3":
+      return "KOTRAHOPE";
+    default:
+      return "Pretendard";
+  }
+};

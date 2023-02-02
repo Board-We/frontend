@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -10,12 +10,9 @@ import Buttons from "../components/buttons";
 const BoardOnWrite = ({ boardCode, boardInfo }) => {
   const [board, setBoard] = useRecoilState(boardState);
   const navigate = useNavigate();
-
   const onClickMMP = () => {
     getMemoInfo(board.id);
-    navigate(`/board/${boardCode}/memo/making`, {
-      state: { currentFontType: boardInfo.boardFont },
-    });
+    navigate(`/board/${boardCode}/memo/making`);
   };
 
   const getMemoInfo = (boardId) => {
