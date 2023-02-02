@@ -38,7 +38,7 @@ export default AlertModal;
 const ModalContainer = styled.div`
   width: 90%;
   max-width: 500px;
-  height: 20%;
+  height: 25%;
   background-color: white;
   position: fixed;
   bottom: 0;
@@ -52,7 +52,7 @@ const ModalContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   border-radius: 0.3rem;
-  padding: 1rem;
+  padding: 0.5rem;
 `;
 
 const ModalDescription = styled.div`
