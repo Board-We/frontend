@@ -35,17 +35,18 @@ const DatePicker = ({ text, datetime, selectedDatetime, setSelectedDatetime, ste
 
   useEffect(() => {
     setDateTime();
-  }, [selectedYear, selectedDate, selectedHour]);
+  }, [selectedYear, selectedDate, selectedHour, setSelectedDatetime]);
 
   const setDateTime = useCallback(() => {
     if (!selectedYear || !selectedDate || !selectedHour) return
     const newDateTime = new Date();
+    newDateTime.setMinutes(0);
+    newDateTime.setSeconds(0);
+
     newDateTime.setFullYear(selectedYear.replace("년", ""));
     newDateTime.setMonth(selectedDate.split("월")[0] - 1);
     newDateTime.setDate(selectedDate.split("월")[1].replace("일", ""));
     newDateTime.setHours(selectedHour.replace("시", ""));
-    newDateTime.setMinutes(0);
-    newDateTime.setSeconds(0);
     setSelectedDatetime(newDateTime);
   }, [selectedYear, selectedDate, selectedHour, setSelectedDatetime]);
 
