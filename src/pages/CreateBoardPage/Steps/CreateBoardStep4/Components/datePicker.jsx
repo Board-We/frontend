@@ -4,20 +4,14 @@ import SmallTitle from "../../../../../components/label/smallTitle";
 import { get4WeekDateTime } from "../../../../../utils/datetime";
 import Picker from "./picker";
 
-const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
+const DatePicker = ({ text, datetime, selectedDatetime, setSelectedDatetime, step }) => {
   const [dateObjects, setDateObjects] = useState([]);
   const [years, setYears] = useState({});
   const [dates, setDates] = useState({});
   const [hours, setHours] = useState({});
-  const [selectedYear, setSelectedYear] = useState(
-    `${selectedDatetime?.getFullYear()}년`
-  );
-  const [selectedDate, setSelectedDate] = useState(
-    `${selectedDatetime?.getMonth() + 1}월${selectedDatetime?.getDate()}일`
-  );
-  const [selectedHour, setSelectedHour] = useState(
-    `${selectedDatetime?.getHours()}시`
-  );
+  const [selectedYear, setSelectedYear] = useState();
+  const [selectedDate, setSelectedDate] = useState();
+  const [selectedHour, setSelectedHour] = useState();
 
   useEffect(() => {
     createDateObjects();
@@ -44,6 +38,7 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
   }, [selectedYear, selectedDate, selectedHour]);
 
   const setDateTime = useCallback(() => {
+    if (!selectedYear || !selectedDate || !selectedHour) return
     const newDateTime = new Date();
     newDateTime.setFullYear(selectedYear.replace("년", ""));
     newDateTime.setMonth(selectedDate.split("월")[0] - 1);
@@ -51,41 +46,41 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
     newDateTime.setHours(selectedHour.replace("시", ""));
     newDateTime.setMinutes(0);
     newDateTime.setSeconds(0);
-    setter(newDateTime);
-  }, []);
+    setSelectedDatetime(newDateTime);
+  }, [selectedYear, selectedDate, selectedHour, setSelectedDatetime]);
 
   const createDateObjects = () => {
     const newDateObjects = get4WeekDateTime(
-      datetime() ? datetime() : new Date()
+      datetime ? datetime : new Date()
     );
     setDateObjects(newDateObjects);
   };
 
   const parseDateObjects = () => {
-    if (dateObjects.length === 0) return;
+    if (dateObjects.length === 0) return
 
-    const newYears = {};
-    const newDates = {};
-    const newHours = {};
+    const newYears = {}
+    const newDates = {}
+    const newHours = {}
 
     dateObjects.forEach((el) => {
-      const yearStr = `${el.getFullYear()}년`;
-      const dateStr = `${el.getMonth() + 1}월${el.getDate()}일`;
-      const hourStr = `${el.getHours()}시`;
-      const yearObj = newYears[yearStr];
-      const dateObj = newDates[dateStr];
-      const hourObj = newHours[hourStr];
+      const yearStr = `${el.getFullYear()}년`
+      const dateStr = `${el.getMonth() + 1}월${el.getDate()}일`
+      const hourStr = `${el.getHours()}시`
+      const yearObj = newYears[yearStr]
+      const dateObj = newDates[dateStr]
+      const hourObj = newHours[hourStr]
 
-      if (!yearObj) newYears[yearStr] = {};
-      newYears[yearStr][dateStr] = true;
-      if (!dateObj) newDates[dateStr] = {};
-      newDates[dateStr][hourStr] = true;
-      if (!hourObj) newHours[hourStr] = true;
+      if (!yearObj) newYears[yearStr] = {}
+      newYears[yearStr][dateStr] = true
+      if (!dateObj) newDates[dateStr] = {}
+      newDates[dateStr][hourStr] = true
+      if (!hourObj) newHours[hourStr] = true
     });
 
-    setYears(newYears);
-    setDates(newDates);
-    setHours(newHours);
+    setYears(newYears)
+    setDates(newDates)
+    setHours(newHours)
   };
 
   const initSelectedTime = () => {
@@ -94,15 +89,15 @@ const DatePicker = ({ text, datetime, selectedDatetime, setter, step }) => {
       getKeys(dates).length === 0 ||
       getKeys(hours).length === 0
     )
-      return;
+      return
 
-    const initYear = selectedYear;
-    const initDate = selectedDate;
-    const initHour = selectedHour;
+    const initYear = `${selectedDatetime?.getFullYear()}년`
+    const initDate = `${selectedDatetime?.getMonth() + 1}월${selectedDatetime?.getDate()}일`
+    const initHour = `${selectedDatetime?.getHours()}시`
 
-    setSelectedYear(initYear);
-    setSelectedDate(initDate);
-    setSelectedHour(initHour);
+    setSelectedYear(initYear)
+    setSelectedDate(initDate)
+    setSelectedHour(initHour)
   };
 
   const setDateByYear = useCallback(() => {

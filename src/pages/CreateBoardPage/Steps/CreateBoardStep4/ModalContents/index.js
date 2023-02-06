@@ -8,12 +8,13 @@ import DatePicker from "../Components/datePicker";
 function ModalContents({ setModalOpen }) {
   const [step, setStep] = useRecoilState(setDateStepId);
   const [board, setBoard] = useRecoilState(boardState);
-  const [tempDatetime, setTempDatetime] = useState(new Date());
+  const [selectedDatetime, setSelectedDatetime] = useState();
 
   useEffect(() => {
     if (step > 3) {
       setModalOpen(false);
     }
+    setSelectedDatetime(getSelectedDateTime)
   }, [setModalOpen, setStep, step]);
 
   const getSetter = () => {
@@ -37,29 +38,25 @@ function ModalContents({ setModalOpen }) {
     else if (step === 3) return board.openEndTime;
   };
 
-  const onClickConfirm = () => {
-    getSetter()(tempDatetime);
+  const onClickConfirm = (selectedDatetime) => {
+    getSetter()(selectedDatetime);
     setStep((prev) => prev + 1);
   };
 
   const setWritingStartTime = () => {
-    setBoard({ ...board, writingStartTime: tempDatetime });
+    setBoard({ ...board, writingStartTime: selectedDatetime });
   };
 
   const setWritingEndTime = () => {
-    setBoard({ ...board, writingEndTime: tempDatetime });
+    setBoard({ ...board, writingEndTime: selectedDatetime });
   };
 
   const setOpenStartTime = () => {
-    setBoard({ ...board, openStartTime: tempDatetime });
+    setBoard({ ...board, openStartTime: selectedDatetime });
   };
 
   const setOpenEndTime = () => {
-    setBoard({ ...board, openEndTime: tempDatetime });
-  };
-
-  const setTempDatetimeData = (datetime) => {
-    setTempDatetime(datetime);
+    setBoard({ ...board, openEndTime: selectedDatetime });
   };
 
   return (
@@ -67,9 +64,9 @@ function ModalContents({ setModalOpen }) {
       <StepDiscription step={step} setModalOpen={setModalOpen} />
       <DatePicker
         text={step % 2 === 0 ? `부터` : `까지`}
-        setter={setTempDatetimeData}
-        datetime={getDateTime}
-        selectedDatetime={getSelectedDateTime()}
+        datetime={getDateTime()}
+        selectedDatetime={selectedDatetime}
+        setSelectedDatetime={setSelectedDatetime}
         step={step}
       />
       <FooterButton onClick={onClickConfirm}>확인</FooterButton>

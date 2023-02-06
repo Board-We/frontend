@@ -28,10 +28,6 @@ const Picker = ({ data, selectedData, setSelectedData }) => {
         }, 500)
     }
 
-    const onClickData = (el) => {
-        setSelectedData(el)
-    }
-
     const initEventTimer = () => {
         eventTimer.current = 500
     }
@@ -67,7 +63,7 @@ const Picker = ({ data, selectedData, setSelectedData }) => {
                 {
                     data.map((el) => {
                         return (
-                            <Entity onClick={() => onClickData(el)} isSelected={el === selectedData} isSingle={data.length === 1} key={el}>{el}</Entity>
+                            <Entity isSelected={el === selectedData} isSingle={data.length === 1} key={el}>{el}</Entity>
                         )
                     })
                 }
