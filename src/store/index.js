@@ -13,9 +13,9 @@ export const boardState = atom({
     boardDescription: "",
     boardTags: [],
     writingStartTime: new Date(),
-    writingEndTime: new Date(new Date().getTime() + 1209600000),
-    openStartTime: new Date(new Date().getTime() + 1209600000),
-    openEndTime: new Date(new Date().getTime() + 2419200000),
+    writingEndTime: new Date(new Date().getTime() + 1209600000/2),
+    openStartTime: new Date(new Date().getTime() + 1209600000/2),
+    openEndTime: new Date(new Date().getTime() + 2419200000/2),
     boardStatus: "",
     password: "",
     openType: "", // "PUBLIC" or "PRIVATE"

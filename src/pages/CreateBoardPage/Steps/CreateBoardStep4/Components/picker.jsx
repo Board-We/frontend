@@ -20,7 +20,7 @@ const Picker = ({ data, selectedData, setSelectedData }) => {
 
     useEffect(() => {
         if (data.length) setScrollToSelectedData()
-    }, [selectedData])
+    }, [data, selectedData])
 
     const setIntervalForInitValue = () => {
         setInterval(() => {

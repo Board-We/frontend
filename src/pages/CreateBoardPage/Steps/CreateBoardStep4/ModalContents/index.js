@@ -62,13 +62,16 @@ function ModalContents({ setModalOpen }) {
   return (
     <ModalContainer>
       <StepDiscription step={step} setModalOpen={setModalOpen} />
-      <DatePicker
-        text={step % 2 === 0 ? `부터` : `까지`}
-        datetime={getDateTime()}
-        selectedDatetime={selectedDatetime}
-        setSelectedDatetime={setSelectedDatetime}
-        step={step}
-      />
+      {
+        step < 4 &&
+        <DatePicker
+          text={step % 2 === 0 ? `부터` : `까지`}
+          datetime={getDateTime()}
+          selectedDatetime={selectedDatetime}
+          setSelectedDatetime={setSelectedDatetime}
+          step={step}
+        />
+      }
       <FooterButton onClick={onClickConfirm}>확인</FooterButton>
     </ModalContainer>
   );

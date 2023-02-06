@@ -51,9 +51,7 @@ const DatePicker = ({ text, datetime, selectedDatetime, setSelectedDatetime, ste
   }, [selectedYear, selectedDate, selectedHour, setSelectedDatetime]);
 
   const createDateObjects = () => {
-    const newDateObjects = get4WeekDateTime(
-      datetime ? datetime : new Date()
-    );
+    const newDateObjects = get4WeekDateTime(datetime, step===0);
     setDateObjects(newDateObjects);
   };
 
@@ -92,9 +90,9 @@ const DatePicker = ({ text, datetime, selectedDatetime, setSelectedDatetime, ste
     )
       return
 
-    const initYear = `${selectedDatetime?.getFullYear()}년`
-    const initDate = `${selectedDatetime?.getMonth() + 1}월${selectedDatetime?.getDate()}일`
-    const initHour = `${selectedDatetime?.getHours()}시`
+    const initYear = `${selectedDatetime.getFullYear()}년`
+    const initDate = `${selectedDatetime.getMonth() + 1}월${selectedDatetime.getDate()}일`
+    const initHour = `${selectedDatetime.getHours()}시`
 
     setSelectedYear(initYear)
     setSelectedDate(initDate)
