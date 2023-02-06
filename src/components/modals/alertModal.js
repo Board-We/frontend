@@ -52,11 +52,12 @@ const ModalContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   border-radius: 0.3rem;
-  padding: 0.5rem;
+  padding: 0.75rem 0.3rem;
 `;
 
 const ModalDescription = styled.div`
   color: ${(props) => props.theme.colors.black};
+  font-size: 1.25rem;
 `;
 
 const ModalSubDescription = styled.div`
