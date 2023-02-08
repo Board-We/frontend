@@ -17,6 +17,7 @@ const Slide = ({
       sx={sx}
       onClick={() => navigate(boardLink)}
     >
+      <Blind />
       <SlideTopDescription>
         <BoardDdayStatus>{boardDdayStatus}</BoardDdayStatus>
         <BaordViewCount>
@@ -31,6 +32,7 @@ const Slide = ({
 export default Slide;
 
 const SlideContainer = styled.div`
+  position: relative;
   height: 30vh;
   border-radius: 1.2rem;
   background: ${(props) =>
@@ -58,6 +60,18 @@ const SlideTopDescription = styled.div`
   gap: 0.5rem;
 `;
 
+const Blind = styled.div`
+  position: absolute;
+  border-radius: 1.2rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.1;
+  z-index: 1;
+`;
+
 const SlideBottomDescription = styled.div`
   width: 100%;
   text-align: start;
@@ -65,6 +79,7 @@ const SlideBottomDescription = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 1.1rem;
+  z-index: 3;
 `;
 
 const BoardDdayStatus = styled.div`
@@ -73,6 +88,7 @@ const BoardDdayStatus = styled.div`
   padding: 0.2rem 0.5rem;
   border-radius: 0.8rem;
   font-size: 0.8rem;
+  z-index: 3;
 `;
 
 const BaordViewCount = styled.div`
@@ -82,4 +98,5 @@ const BaordViewCount = styled.div`
   span {
     margin-left: 0.3rem;
   }
+  z-index: 3;
 `;

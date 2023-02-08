@@ -52,7 +52,7 @@ const Blind = styled.div`
   width: 100%;
   height: 100%;
   background-color: black;
-  opacity: 0.3;
+  opacity: 0.1;
   z-index: 1;
 `;
 
