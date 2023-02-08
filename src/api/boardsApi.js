@@ -33,12 +33,12 @@ export const requestHotBoardList = async () => {
   return res.data;
 };
 
-export const requestDeleteBoard = async ({ boardCode, password }) => {
+export const requestDeleteBoard = async ({ boardCode }) => {
   const res = await request({
-    method: "DELETE",
+    method: "POST",
     url: `/board/${boardCode}/delete`,
-    data: { password },
   });
+  console.log(res);
   if (res.status === 200) return true;
   return false;
 };
@@ -49,6 +49,7 @@ export const requestLogin = async ({ password, boardCode }) => {
     url: `/board/login`,
     data: { password, boardCode },
   });
+  console.log(res);
   if (res.status === 200) return true;
   return res.data;
 };
