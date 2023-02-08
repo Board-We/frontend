@@ -55,7 +55,6 @@ const BoardOnOpen = ({
     setIsOpenDeleteMemoModal(true);
   };
   const handleCloseDeleteMemoModal = () => {
-   
     setIsOpenDeleteMemoModal(false);
     setHeaderState({
       ...headerState,
@@ -120,7 +119,7 @@ const BoardOnOpen = ({
       const results = memoList.filter((memo) =>
         memo.memoContent.includes(headerState.query)
       );
-     
+
       setSearchResults(results);
       setHeaderState({ ...headerState, isEnterPress: false });
     }

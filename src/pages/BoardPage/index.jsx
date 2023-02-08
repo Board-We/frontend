@@ -39,7 +39,7 @@ const BoardPage = () => {
   const [isOpenInvalidLinkModal, setIsOpenInvalidLinkModal] = useState(false);
 
   const handleClosePasswordModal = () => {
-    setPasswordModalState({ ...passwordModalState, open: false });
+    setPasswordModalState({ ...passwordModalState, type: "", open: false });
   };
 
   const handleValidPassword = () => {
@@ -51,8 +51,6 @@ const BoardPage = () => {
         isSearchMode: true,
         searchType: "deleteMemo",
       });
-    else if (passwordModalState.type === "privateBoard")
-      console.log("진입 허가");
   };
 
   const handleCloseConfirmDeleteModal = () => {
@@ -70,7 +68,6 @@ const BoardPage = () => {
       navigate("/", { state: { isDeleted: true } });
     }
   };
-
   const handleClickDeleteBoard = useCallback(() => {
     setPasswordModalState({
       ...passwordModalState,
