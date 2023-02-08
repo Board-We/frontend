@@ -32,9 +32,6 @@ const PasswordModal = ({
       inputRef.current.focus();
       setIsInvalid(true);
     }
-    onValid();
-    setPassword("");
-    onClose();
   };
 
   const handleCloseModal = () => {

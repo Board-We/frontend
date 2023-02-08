@@ -38,7 +38,6 @@ export const requestDeleteBoard = async ({ boardCode }) => {
     method: "POST",
     url: `/board/${boardCode}/delete`,
   });
-
   if (res.status === 200) return true;
   return false;
 };
@@ -49,7 +48,6 @@ export const requestLogin = async ({ password, boardCode }) => {
     url: `/board/login`,
     data: { password, boardCode },
   });
-
   if (res.status === 200) return true;
   return res.data;
 };
