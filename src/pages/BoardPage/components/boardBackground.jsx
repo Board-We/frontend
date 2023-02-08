@@ -5,6 +5,7 @@ import SmallTitle from "../../../components/label/smallTitle";
 import Tag from "../../../components/label/tag";
 
 const BoardBackground = ({ boardInfo, centerContent }) => {
+
   return (
     <ComponentWrapper
       background={boardInfo.boardBackground ? boardInfo.boardBackground : ""}
@@ -32,7 +33,7 @@ const ComponentWrapper = styled.div`
   justify-content: flex-start;
   padding: 1.5rem;
   background: ${(props) =>
-    props.background.includes("base64")
+    props.background.includes("https")
       ? `url(${props.background})`
       : props.background};
   background-position: center;

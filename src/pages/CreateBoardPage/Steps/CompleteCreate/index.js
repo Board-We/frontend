@@ -123,8 +123,6 @@ const CompleteCreate = () => {
       },
     };
 
-    console.log(board.boardFont);
-
     const boardLinkRes = await postUserBoardState({
       boardState: currentBoardState,
     });

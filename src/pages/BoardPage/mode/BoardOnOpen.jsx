@@ -25,7 +25,6 @@ const BoardOnOpen = ({
   isAccessble,
   setIsAccessble,
 }) => {
-  console.log(headerState);
   const board = useRecoilValue(boardState);
 
   const [isOpenDeleteMemoModal, setIsOpenDeleteMemoModal] = useState(false);
@@ -56,7 +55,7 @@ const BoardOnOpen = ({
     setIsOpenDeleteMemoModal(true);
   };
   const handleCloseDeleteMemoModal = () => {
-    console.log("close");
+   
     setIsOpenDeleteMemoModal(false);
     setHeaderState({
       ...headerState,
@@ -121,7 +120,7 @@ const BoardOnOpen = ({
       const results = memoList.filter((memo) =>
         memo.memoContent.includes(headerState.query)
       );
-      console.log(results);
+     
       setSearchResults(results);
       setHeaderState({ ...headerState, isEnterPress: false });
     }
