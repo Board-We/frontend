@@ -17,7 +17,6 @@ const PasswordModal = ({
 }) => {
   const inputRef = useRef();
   const [isInvalid, setIsInvalid] = useState(false);
-
   const handleOnChangePasswordInput = (e) => {
     if (isInvalid) setIsInvalid(false);
     setPassword(e.target.value);
@@ -33,9 +32,9 @@ const PasswordModal = ({
       inputRef.current.focus();
       setIsInvalid(true);
     }
-    /* onValid();
+    onValid();
     setPassword("");
-    onClose(); */
+    onClose();
   };
 
   const handleCloseModal = () => {
