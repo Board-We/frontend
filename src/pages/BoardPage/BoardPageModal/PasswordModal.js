@@ -25,17 +25,17 @@ const PasswordModal = ({
 
   const handleClickConfrimPassword = async () => {
     const isSuccess = await requestLogin({ password, boardCode });
-    // if (isSuccess) {
-    //   onValid();
-    //   setPassword("");
-    //   onClose();
-    // } else {
-    //   inputRef.current.focus();
-    //   setIsInvalid(true);
-    // }
-    onValid();
+    if (isSuccess) {
+      onValid();
+      setPassword("");
+      onClose();
+    } else {
+      inputRef.current.focus();
+      setIsInvalid(true);
+    }
+    /* onValid();
     setPassword("");
-    onClose();
+    onClose(); */
   };
 
   const handleCloseModal = () => {
@@ -61,7 +61,7 @@ const PasswordModal = ({
             value={password}
             onChange={handleOnChangePasswordInput}
             isInvalid={isInvalid}
-            type="text"
+            type="password"
             pattern="[0-9]*"
             placeholder="비밀번호를 입력해주세요."
           />
@@ -98,6 +98,7 @@ const PasswordModalHeader = styled.div`
 
 const PasswordModalDescription = styled.div`
   margin-bottom: 3rem;
+  margin-top: 0.25rem;
   font-weight: 600;
   font-size: 1.2rem;
 `;

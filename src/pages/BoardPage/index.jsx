@@ -64,7 +64,7 @@ const BoardPage = () => {
     navigate("/");
   };
   const handleConfirmDeleteBoard = async () => {
-    const deleted = await requestDeleteBoard({ boardCode, password });
+    const deleted = await requestDeleteBoard({ boardCode });
     if (deleted) {
       setIsOpenConfirmDeleteModal(false);
       navigate("/", { state: { isDeleted: true } });
