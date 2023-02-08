@@ -119,6 +119,7 @@ const BoardOnOpen = ({
       const results = memoList.filter((memo) =>
         memo.memoContent.includes(headerState.query)
       );
+
       setSearchResults(results);
       setHeaderState({ ...headerState, isEnterPress: false });
     }

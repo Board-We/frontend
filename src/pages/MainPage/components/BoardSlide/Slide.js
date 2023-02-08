@@ -33,8 +33,13 @@ export default Slide;
 const SlideContainer = styled.div`
   height: 30vh;
   border-radius: 1.2rem;
-  background-color: ${(props) =>
-    props.boardBackground === "#FFFFFF" ? "#8d8d8d" : props.boardBackground};
+  background: ${(props) =>
+    props.boardBackground.includes("https")
+      ? `url(${props.boardBackground})`
+      : props.boardBackground};
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   aspect-ratio: 1 / 1.2;
   color: white;
   display: flex;
