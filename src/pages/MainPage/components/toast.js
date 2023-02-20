@@ -12,16 +12,15 @@ const Toast = ({ text }) => {
 export default Toast;
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px 0px;
   z-index: 999;
-  top: 68%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
+  bottom: 10%;
+  width: 100%;
+  max-width: 500px;
   height: 2.75rem;
   background: rgba(58, 58, 58, 0.8);
   box-shadow: ${(props) => props.theme.shadows.shadow_2};
