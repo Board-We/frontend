@@ -151,6 +151,7 @@ const BoardPage = () => {
             setHeaderState={setHeaderState}
             isAccessble={isAccessble}
             setIsAccessble={setIsAccessble}
+            setBoardLifeCycle={setBoardLifeCycle}
           />
         )}
         <PasswordModal

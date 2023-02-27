@@ -6,11 +6,11 @@ import BoardBackground from "../components/boardBackground";
 import Buttons from "../components/buttons";
 import Timer from "../components/timer";
 
-const BoardOnWaitWrite = ({ boardCode, boardInfo }) => {
+const BoardOnWaitWrite = ({ boardInfo, setBoardLifeCycle }) => {
   const navigate = useNavigate();
 
   const onTimeOver = () => {
-    navigate("/board/onwrite");
+    setBoardLifeCycle("onWrite");
   };
 
   const getTimer = () => {

@@ -14,14 +14,26 @@ const BoardPageFactory = ({
   searchResults,
   isAccessble,
   setIsAccessble,
+  setBoardLifeCycle,
 }) => {
   switch (boardLifeCycle) {
     case "onWaitWrite":
-      return <BoardOnWaitWrite boardCode={boardCode} boardInfo={boardInfo} />;
+      return (
+        <BoardOnWaitWrite
+          boardCode={boardCode}
+          boardInfo={boardInfo}
+          setBoardLifeCycle={setBoardLifeCycle}
+        />
+      );
     case "onWrite":
       return <BoardOnWrite boardCode={boardCode} boardInfo={boardInfo} />;
     case "onWaitOpen":
-      return <BoardOnWaitOpen boardCode={boardCode} />;
+      return (
+        <BoardOnWaitOpen
+          boardCode={boardCode}
+          setBoardLifeCycle={setBoardLifeCycle}
+        />
+      );
     case "onOpen":
       return (
         <BoardOnOpen

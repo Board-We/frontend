@@ -8,12 +8,12 @@ import BoardBackground from "../components/boardBackground";
 import Buttons from "../components/buttons";
 import Timer from "../components/timer";
 
-const BoardOnWaitOpen = () => {
+const BoardOnWaitOpen = ({ setBoardLifeCycle }) => {
   const board = useRecoilValue(boardState);
   const navigate = useNavigate();
 
   const onTimeOver = () => {
-    navigate("/board/onopen");
+    setBoardLifeCycle("onOpen");
   };
 
   const getTimer = () => {
