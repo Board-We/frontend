@@ -8,7 +8,7 @@ import DropDownMenu from "./dropDownMenu";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { createBoardStepId } from "../../../store";
-import serviceLogo from "../../../assets/icons/serviceLogo.png";
+import serviceLogo from "../../../assets/icons/logo.svg";
 
 const ServiceNameHeader = ({
   headerState = {
